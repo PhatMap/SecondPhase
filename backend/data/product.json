@@ -1,0 +1,770 @@
+[{
+
+  "name": "Quần Tây Sợi Tự Nhiên Co Giãn HG11",
+  "colors": {
+    "colorName": "black",
+    "colorHex": "#111111"
+  },
+  "price": 15,
+  "description": "Chất liệu: Vải Quần Tây\n\nThành phần: 70% poly 28% rayon 2% spandex\n\n- Mềm mại, bề mặt vải trơn mịn, cảm giác mát nhẹ khi mặc.\n\n- Thiết kế quần ống đứng mang đến sự lịch lãm, tự tin và nam tính cho người mặc.\n\n- Phù hợp với nhiều môi trường khác nhau như đi làm, đi tiệc, đi học, đi chơi.",
+  "ratings": 0,
+
+  "images": [
+    {
+      "public_id": "products/z0fajema0ioepbutlbnj",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711872905/products/z0fajema0ioepbutlbnj.jpg"
+    },
+    {
+      "public_id": "products/b2kevalnmpaiclwt6vfw",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711872908/products/b2kevalnmpaiclwt6vfw.jpg"
+      
+    }
+    
+  ],
+  "sizes": [
+    "M",
+    "L",
+    "XL",
+    "XXL"
+  ],
+  "category": "Trousers",
+  "seller": "La Quy Quan",
+  "stock": 50,
+  "numOfReviews": 0,
+  "user": "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt": "2024-03-31T08:15:08.907Z",
+  "__v": 0
+},
+{
+  "name": "Quần Tây Sợi Tự Nhiên Co Giãn  M3",
+  "colors": {
+    "colorName": "gray",
+    "colorHex": "#A9A9A9"
+  },
+  "price": 30,
+  "description": "Quần Tây Tối Giản M3\n\nChất liệu: Poly Plus\n\nThành phần: 69% Polyester 29% Rayon 2% Spandex",
+  "ratings": 0,
+  
+  "images": [
+    {
+      "public_id": "products/vjhr4g8yjqajvqnfv1wj",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711873016/products/vjhr4g8yjqajvqnfv1wj.jpg"
+    },
+    {
+      "public_id": "products/yrldavvbleswf2fozlex",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711873017/products/yrldavvbleswf2fozlex.jpg"
+    }
+  ],
+  "sizes": [
+    "M",
+    "L",
+    "XL",
+    "XXL"
+  ],
+  "category": "Trousers",
+  "seller": "La Quy Quan",
+  "stock": 100,
+  "numOfReviews": 0,
+  "user": "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt": "2024-03-31T08:16:58.017Z",
+  "__v": 0
+},
+{
+  
+  "name": "Quần Jean Lưng Gài Ống Đứng B35",
+  "colors": {
+    "colorName": "blue",
+    "colorHex": "#0000CC"
+  },
+  "price": 20,
+  "description": "Quần Jean Slimfit Đơn Giản B35\n\nChất liệu: Vải Jean\n\nThành phần: 100% Cotton\n\n+ Họa tiết thêu",
+  "ratings": 0,
+
+
+  "images": [
+    {
+      "public_id": "products/luqyaikz39ukfbvdvxfu",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711873221/products/luqyaikz39ukfbvdvxfu.jpg"
+      
+    },
+    {
+      "public_id": "products/oypjoqkuhxvskpymuuwk",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711873223/products/oypjoqkuhxvskpymuuwk.jpg"
+      
+    }
+  ],
+  "sizes": [
+    "XXL",
+    "XL",
+    "L"
+  ],
+  "category": "Trousers",
+  "seller": "La Quy Quan",
+  "stock": 40,
+  "numOfReviews": 1,
+  "user":  "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt":  "2024-03-31T08:20:23.992Z",
+  "__v": 1
+},
+{
+  "name": " Áo Thun Nam 100% Cotton",
+  "colors": {
+    "colorName": "black",
+    "colorHex": "#111111"
+  },
+  "price": 42,
+  "description": "Form dáng :   Regular\n\nGiới tính :       Nam\n\nChất liệu:        Cotton\n\nThiết kế:          Trơn\n\nKiểu tay:          Tay ngắn\n\nKiểu cổ:            Cổ tròn",
+  "ratings": 0,
+ 
+  "images": [
+    {
+      "public_id": "products/jcvbbqlevgo947wg5wpx",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711874630/products/jcvbbqlevgo947wg5wpx.webp"
+      
+    },
+    {
+      "public_id": "products/bwwtmgikwcfa0eanayzs",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711874634/products/bwwtmgikwcfa0eanayzs.webp"
+    }
+  ],
+  "sizes": [
+    "M",
+    "L"
+  ],
+  "category": "Shirt",
+  "seller": "La Quy Quan",
+  "stock": 88,
+  "numOfReviews": 5,
+  "user": "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt":  "2024-03-31T08:43:54.560Z",
+  "__v": 0
+},
+{
+  "name": "Áo Polo Nữ Lửng Tay Ngắn Cotton Trơn",
+  "colors": {
+    "colorName": "pink",
+    "colorHex": "#FFC0CB"
+  },
+  "price": 12,
+  "description": "Áo Polo Nữ Lửng Tay Ngắn Cotton Trơn Form Regular Cropped - 10F23POLW004 là một thiết kế mang phong cách tươi trẻ dành cho các cô nàng năng động:\n\nChất vải cotton thoáng mát, thấm hút mồ hôi và có khả năng chống mùi \n\nForm áo vừa vặn có độ rộng nhẹ giữ sự thoải mái khi mặc\n\nDáng áo lửng mang sự trẻ trung và năng động cho các nàng",
+  "ratings": 0,
+ 
+
+  "images": [
+    {
+      "public_id": "products/plfymvcula6ujq14ouph",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711874764/products/plfymvcula6ujq14ouph.webp"
+   
+    },
+    {
+      "public_id": "products/eprhjwl2rixfaqdauyjm",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711874768/products/eprhjwl2rixfaqdauyjm.webp"
+    }
+  ],
+  "sizes": [
+    "M",
+    "L",
+    "S",
+    "XL"
+  ],
+  "category": "Shirt",
+  "seller": "La Quy Quan",
+  "stock": 54,
+  "numOfReviews": 0,
+  "user": "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt": "2024-03-31T08:46:08.779Z",
+  "__v": 0
+},
+{
+ 
+  "name": "Áo Thun Nữ Tay Ngắn Cổ Tròn Sọc Gân Trơn",
+  "colors": {
+    "colorName": "blue",
+    "colorHex": "#0000CC"
+  },
+  "price": 20,
+  "description": "Áo Thun Nữ Tay Ngắn Cổ Tròn Sọc Gân Trơn Form Fitted - 10S23TSSW001 là chiếc áo thun được thiết kế theo phong cách đơn giản, hiện đại",
+  "ratings": 0,
+ 
+  "images": [
+    {
+      "public_id": "products/nvtlrzdxw0qfosga7l1f",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875257/products/nvtlrzdxw0qfosga7l1f.webp"
+    },
+    {
+      "public_id": "products/zt5rb2mvnyi5bo8limbm",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875259/products/zt5rb2mvnyi5bo8limbm.webp"
+    }
+  ],
+  "sizes": [
+    "S",
+    "L"
+  ],
+  "category": "Shirt",
+  "seller": "Tran Trung Phat",
+  "stock": 113,
+  "numOfReviews": 0,
+  "user":  "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt": "2024-03-31T08:54:19.976Z",
+  "__v": 0
+},
+{
+  
+  "name": "Quần Kaki Nam Ống Rộng",
+  "colors": {
+    "colorName": "black",
+    "colorHex": "#111111"
+  },
+  "price": 18,
+  "description": "Quần Kaki\n\nForm dáng      Straight\n\nGiới tính           Nam\n\nChất liệu :         Cotton\n\nThiết kế :           Trơn",
+  "ratings": 0,
+ 
+  "images": [
+    {
+      "public_id": "products/low89v9ht1plsn93olrj",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875698/products/low89v9ht1plsn93olrj.webp"
+    },
+    {
+      "public_id": "products/hhba5u8wvwbtvpfrq1uk",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875701/products/hhba5u8wvwbtvpfrq1uk.webp"
+    }
+  ],
+  "sizes": [
+    "XXL",
+    "XL"
+  ],
+  "category": "Trousers",
+  "seller": "Tran",
+  "stock": 60,
+  "numOfReviews": 0,
+  "user": "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt":  "2024-03-31T09:01:42.055Z",
+  "__v": 0
+},
+{
+  
+  "name": "Áo Sơ Mi Cổ Bẻ Tay Ngắn PREMIUM 56",
+  "colors": {
+    "colorName": "orange",
+    "colorHex": "#FF7F50"
+  },
+  "price": 14,
+  "description": "Chất liệu: Cotton Poly\n\nThành phần: 45% Cotton 55% Polyester\n\n+ May trơn đơn giản, họa tiết vải sọc nhỏ\n\n+ Nẹp áo may dạng nẹp liền\n\n+ Túi nhỏ trước ngực",
+  "ratings": 0,
+ 
+  "images": [
+    {
+      "public_id": "products/ubsyqzkn9lp4zxs9qzct",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875821/products/ubsyqzkn9lp4zxs9qzct.jpg"
+      
+    },
+    {
+      "public_id": "products/moyin5ew5klfrqjroudg",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875822/products/moyin5ew5klfrqjroudg.webp"
+    }
+  ],
+  "sizes": [
+    "L",
+    "XL",
+    "XXL"
+  ],
+  "category": "Shirt",
+  "seller": "tran trung phat",
+  "stock": 30,
+  "numOfReviews": 0,
+  "user":"66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt":  "2024-03-31T09:03:43.145Z",
+  "__v": 0
+},
+{
+  
+  "name": "Áo Sơ Mi Cổ Lãnh tụ Tay Dài",
+  "colors": {
+    "colorName": "white",
+    "colorHex": "#FFFFFF"
+  },
+  "price": 12,
+  "description": "Sơ Mi Cổ Lãnh Tụ Đơn Giản Y Nguyên Bản Ver15\n\nChất liệu: Sợi Cà Phê\n\nThành phần: 50% Coffee 50% Polyester\n\n+ Odor Control - Kiểm soát mùi\n\n+ Fast Drying - Nhanh khô",
+  "ratings": 0,
+ 
+  "images": [
+    {
+      "public_id": "products/mgcc92myllsbt13amdnw",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876006/products/mgcc92myllsbt13amdnw.jpg"
+    },
+    {
+      "public_id": "products/k6gmgbyxiwn1rfigdpqh",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876008/products/k6gmgbyxiwn1rfigdpqh.jpg"
+    }
+  ],
+  "sizes": [
+    "M",
+    "L"
+  ],
+  "category": "Shirt",
+  "seller": "Tran Trung Phat",
+  "stock": 33,
+  "numOfReviews": 0,
+  "user":  "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt":  "2024-03-31T09:06:48.697Z",
+  "__v": 0
+},
+{
+ 
+  "name": "Áo Sơ Mi Cổ Bẻ Tay Dài WRINKLE FREE 13",
+  "colors": {
+    "colorName": "black",
+    "colorHex": "#111111"
+  },
+  "price": 29,
+  "description": "Chất liệu: Sợi cà phê (CAFÉ FABRIC)\n\nThành phần : 50% Coffee 50% Polyester\n\n+ Odor Control - Kiểm soát mùi\n\n+ Fast Drying - Nhanh khô\n\n+ Ice Cool Touch - Làm mát cơ thể\n\n+ UV Protechtion - Chống nắng",
+  "ratings": 0,
+  
+  "images": [
+    {
+      "public_id": "products/wsw0hsim74rhdtzuwmlj",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876127/products/wsw0hsim74rhdtzuwmlj.jpg"
+    },
+    {
+      "public_id": "products/fv8g4d01i8ocahyrbot4",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876129/products/fv8g4d01i8ocahyrbot4.jpg"
+    }
+  ],
+  "sizes": [
+    "XL",
+    "L"
+  ],
+  "category": "Shirt",
+  "seller": "Tran Trung Phat",
+  "stock": 33,
+  "numOfReviews": 0,
+  "user":  "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt": "2024-03-31T09:08:49.811Z",
+  "__v": 0
+},
+{
+  
+  "name": "Quần Short Lưng Gài",
+  "colors": {
+    "colorName": "gray",
+    "colorHex": "#C0C0C0"
+  },
+  "price": 15,
+  "description": "Quần Short Đơn Giản Y Nguyên Bản Ver44\n\nChất liệu: Kaki Nhung Cotton\n\nThành phần: 55% Cotton 27% Nylon 15% Rayon 3% Spandex\n\n+ Họa tiết thêu túi sau + Kẹp logo Y ORIGINALS",
+  "ratings": 0,
+  
+  "images": [
+    {
+      "public_id": "products/pogmcwgycp6buzfhjdf5",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876251/products/pogmcwgycp6buzfhjdf5.jpg"
+    },
+    {
+      "public_id": "products/jz66co25srdhdkpxtka3",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876254/products/jz66co25srdhdkpxtka3.jpg"
+    }
+  ],
+  "sizes": [
+    "L",
+    "XL"
+  ],
+  "category": "Trousers",
+  "seller": "Tran Trung Phat",
+  "stock": 444,
+  "numOfReviews": 0,
+  "user": "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt":"2024-03-31T09:10:54.690Z",
+  "__v": 0
+},
+{
+  "name": "Giày Tây Lười Da",
+  "colors": {
+    "colorName": "black",
+    "colorHex": "#111111"
+  },
+  "price": 31,
+  "description": "Giày Tây Lười Nguyên Bản A4 2022.\n\n- Chất liệu: Da bò 100% + lót da heo\n\n- Mảnh thun co giãn kéo dài từ cổ giày xuống dưới mắt cá nhưng không dài đến đế giày\n\n- Đế cao su 100%\n\n- May đế",
+  "ratings": 0,
+  
+  "images": [
+    {
+      "public_id": "products/htgxalbbf8upqcaj4cm2",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876363/products/htgxalbbf8upqcaj4cm2.jpg"
+    },
+    {
+      "public_id": "products/obexf0dgwhu8hhoh5tis",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876365/products/obexf0dgwhu8hhoh5tis.jpg"
+     
+    }
+  ],
+  "sizes": [
+    "XL",
+    "M"
+  ],
+  "category": "Shoe",
+  "seller": "Tran Trung Phat",
+  "stock": 33,
+  "numOfReviews": 0,
+  "user":  "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt": "2024-03-31T09:12:45.595Z",
+  "__v": 0
+},
+{
+  
+  "name": "4D09A-DV018",
+  "colors": {
+    "colorName": "white",
+    "colorHex": "#F8F8F8"
+  },
+  "price": 50,
+  "description": "Chất liệu mặt giày\n\nDa siêu mỏng\n\nCao gót sau\n\nGót vừa (3cm-5cm)\n\nChất liệu đế giày Cao su",
+  "ratings": 0,
+ 
+  "images": [
+    {
+      "public_id": "products/r4hyhkyfmhquiit2btaj",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876501/products/r4hyhkyfmhquiit2btaj.webp"
+      
+    },
+    {
+      "public_id": "products/h3ovhbfhxg3qy3wazj8n",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876505/products/h3ovhbfhxg3qy3wazj8n.webp"
+    }
+  ],
+  "sizes": [
+    "XXL",
+    "XL",
+    "L"
+  ],
+  "category": "Shoe",
+  "seller": "Tran Trung Phat",
+  "stock": 44,
+  "numOfReviews": 0,
+  "user":  "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt": "2024-03-31T09:15:06.292Z",
+  "__v": 0
+},
+{
+  "name": "Giày Casual",
+  "colors": {
+    "colorName": "white",
+    "colorHex": "#F8F8F8"
+  },
+  "price": 42,
+  "description": "Chất liệu: Microfiber\n\n- Lót thân + Lưỡi gà mousse 3mm + Mesh êm chân\n\n- Talon mesh + mousse 3.5mm\n\n- Đế cao su\n\n- May đế\nn- Khắc lazer logo \"7.7\"",
+  "ratings": 0,
+
+  "images": [
+    {
+      "public_id": "products/naz4dukapjmdqurg2pw6",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876574/products/naz4dukapjmdqurg2pw6.jpg"
+    },
+    {
+      "public_id": "products/frn6vo5gpaco9uoh5djl",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876576/products/frn6vo5gpaco9uoh5djl.jpg"
+    }
+  ],
+  "sizes": [
+    "M",
+    "XL"
+  ],
+  "category": "Shoe",
+  "seller": "Tran Trung Phat",
+  "stock": 66,
+  "numOfReviews": 0,
+  "user":  "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt": "2024-03-31T09:16:16.486Z",
+  "__v": 0
+},
+{
+  "name": "Giày Chạy Bộ Nam Biti's Hunter Running DSMH10000",
+  "colors": {
+    "colorName": "yellow",
+    "colorHex": "#FFFF00"
+  },
+  "price": 25,
+  "description": "Giày Chạy Bộ Nam Biti's Hunter Running DSMH10000 là mẫu giày chạy với bộ đế thế hệ vượt trội và công nghệ độc quyền từ BITI’S Hunter không những đem đến sự thoải mái khi vận động mà còn mang đến cho người sử dụng phong cách thể thao năng động và sự ấn tượng cho mọi người.",
+  "ratings": 0,
+  
+  "images": [
+    {
+      "public_id": "products/ohew2b3buojnwjjyvsqs",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876870/products/ohew2b3buojnwjjyvsqs.jpg"
+    },
+    {
+      "public_id": "products/sojol4imzzv3bn7lbymr",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876871/products/sojol4imzzv3bn7lbymr.webp"
+    }
+  ],
+  "sizes": [
+    "XL",
+    "XXL"
+  ],
+  "category": "Shoe",
+  "seller": "Tran Trung Phat",
+  "stock": 23,
+  "numOfReviews": 0,
+  "user":"66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt": "2024-03-31T09:21:12.283Z",
+  "__v": 0
+},
+{
+  
+  "name": "Giày Thể Thao Nam Biti's BSM002300",
+  "colors": {
+    "colorName": "black",
+    "colorHex": "#111111"
+  },
+  "price": 23,
+  "description": "Nhẹ nhàng thoáng mát ",
+  "ratings": 0,
+ 
+  "images": [
+    {
+      "public_id": "products/yzsxjscunkdxrtarjrlb",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876990/products/yzsxjscunkdxrtarjrlb.jpg"
+    },
+    {
+      "public_id": "products/nr2hfjdqj3maxhm7d2gu",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876995/products/nr2hfjdqj3maxhm7d2gu.jpg"
+    }
+  ],
+  "sizes": [
+    "L",
+    "XL",
+    "M"
+  ],
+  "category": "Shoe",
+  "seller": "Tran Trung Phat",
+  "stock": 32,
+  "numOfReviews": 0,
+  "user": "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt":  "2024-03-31T09:23:15.804Z"
+  ,
+  "__v": 0
+},
+{
+  
+  "name": "Giày Đá Bóng Nam Biti's Hunter Football HSM003600",
+  "colors": {
+    "colorName": "orange",
+    "colorHex": "#FF8C00"
+  },
+  "price": 32,
+  "description": "Nếu bạn muốn tìm một đôi giày đá banh chất lượng, thiết kế thể thao và êm ái khi sử dụng thì hãy chọn Giày Đá Banh Nam Biti's Football HSM003600. Cùng tìm hiểu chi tiết về sản phẩm trong bài viết dưới đây.",
+  "ratings": 0,
+  
+  "images": [
+    {
+      "public_id": "products/rjmtszcom0fdikcprpzt",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877066/products/rjmtszcom0fdikcprpzt.webp"
+      
+    },
+    {
+      "public_id": "products/wtso7wlh4krovapn1dtu",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877067/products/wtso7wlh4krovapn1dtu.webp"
+      
+    }
+  ],
+  "sizes": [
+    "XL",
+    "L"
+  ],
+  "category": "Shoe",
+  "seller": "Tran Trung Phat",
+  "stock": 82,
+  "numOfReviews": 0,
+  "user":  "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt":  "2024-03-31T09:24:27.964Z",
+  "__v": 0
+},
+{
+ 
+  "name": "Giày Bóng Đá Nam Biti's Hunter Football DSMH03800",
+  "colors": {
+    "colorName": "red",
+    "colorHex": "#FF0000"
+  },
+  "price": 34,
+  "description": " ",
+  "ratings": 0,
+  
+  "images": [
+    {
+      "public_id": "products/bdrht96u684p5vqwp6ya",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877171/products/bdrht96u684p5vqwp6ya.webp"
+    },
+    {
+      "public_id": "products/mfcyh078fzqvvvjleklx",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877172/products/mfcyh078fzqvvvjleklx.webp"
+    }
+  ],
+  "sizes": [
+    "XL",
+    "S"
+  ],
+  "category": "Shoe",
+  "seller": "Tran Trung Phat",
+  "stock": 44,
+  "numOfReviews": 0,
+  "user":  "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt": "2024-03-31T09:26:12.791Z",
+  "__v": 0
+},
+{
+  "name": "QUẦN TÂY SLIMFIT ĐỈA ĐÔI QT053 MÀU XÁM",
+  "colors": {
+    "colorName": "gray",
+    "colorHex": "#A9A9A9"
+  },
+  "price": 21,
+  "description": " ",
+  "ratings": 0,
+ 
+  "images": [
+    {
+      "public_id": "products/a4e4uyspmicowq0ugydd",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877317/products/a4e4uyspmicowq0ugydd.jpg"
+    },
+    {
+      "public_id": "products/do5pdjwa1rm0mqchadda",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877319/products/do5pdjwa1rm0mqchadda.jpg"
+    }
+  ],
+  "sizes": [
+    "M",
+    "XL",
+    "XXL"
+  ],
+  "category": "Trousers",
+  "seller": "Tran Trung Phat",
+  "stock": 22,
+  "numOfReviews": 0,
+  "user": "66018bce395aedce15ba9de0"
+  ,
+  "reviews": [],
+  "createAt": "2024-03-31T09:28:40.239Z",
+  "__v": 0
+},
+{
+  
+  "name": "Quần tây nam slimfit viền túi QTA0041",
+  "colors": {
+    "colorName": "black",
+    "colorHex": "#222222"
+  },
+  "price": 45,
+  "description": "Quần Tây nam Kenta với form dáng vừa vặn, sang trọng đầy lịch lãm, điểm nhấn viền ở túi trước và túi sau.",
+  "ratings": 0,
+  
+  "images": [
+    {
+      "public_id": "products/zrycnm2fuuvpwkng324c",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877564/products/zrycnm2fuuvpwkng324c.webp"
+    },
+    {
+      "public_id": "products/auc3mvmb0fus8jwhqh28",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877566/products/auc3mvmb0fus8jwhqh28.webp"
+    }
+  ],
+  "sizes": [
+    "XL",
+    "L"
+  ],
+  "category": "Trousers",
+  "seller": "Tran Trung Phat",
+  "stock": 34,
+  "numOfReviews": 0,
+  "user": "66018bce395aedce15ba9de0"
+  ,
+  "reviews": [],
+  "createAt":  "2024-03-31T09:32:46.951Z",
+  "__v": 0
+},
+{
+  
+  "name": "Chó Ngao",
+  "colors": {
+    "colorName": "black",
+    "colorHex": "#111111"
+  },
+  "price": 0,
+  "description": "ss",
+  "ratings": 0,
+  
+  "images": [
+    {
+      "public_id": "products/trsaaq2dprd1aytthm2s",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141640/products/trsaaq2dprd1aytthm2s.jpg"
+    },
+    {
+      "public_id": "products/w1qgno9uachw2tmcuwdd",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141642/products/w1qgno9uachw2tmcuwdd.webp"
+    }
+    
+  ],
+  "sizes": [
+    "XS",
+    "S"
+  ],
+  "category": "Shirt",
+  "seller": "212",
+  "stock": 212,
+  "numOfReviews": 0,
+  "user":  "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt":  "2024-04-02T20:05:13.029Z",
+  "__v": 0
+},
+{
+  
+  "name": "Quần Kaki Nam Ống Rộng",
+  "colors": {
+    "colorName": "black",
+    "colorHex": "#111111"
+  },
+  "price": 18,
+  "description": "Quần Kaki\n\nForm dáng      Straight\n\nGiới tính           Nam\n\nChất liệu :         Cotton\n\nThiết kế :           Trơn",
+  "ratings": 0,
+
+  "images": [
+    {
+      "public_id": "products/low89v9ht1plsn93olrj",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875698/products/low89v9ht1plsn93olrj.webp"
+      
+    },
+    {
+      "public_id": "products/hhba5u8wvwbtvpfrq1uk",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875701/products/hhba5u8wvwbtvpfrq1uk.webp"
+    }
+  ],
+  "sizes": [
+    "XXL",
+    "XL"
+  ],
+  "category": "Trousers",
+  "seller": "Tran",
+  "stock": 60,
+  "numOfReviews": 0,
+  "user": "66018bce395aedce15ba9de0",
+  "reviews": [],
+  "createAt": "2024-03-31T09:01:42.055Z",
+  "__v": 0
+}]
