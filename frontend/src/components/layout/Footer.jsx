@@ -4,10 +4,10 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="ftco-footer ftco-section">
-      <div className="footer-container">
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
+      <div className="footer-container flex flex-col">
+        <div className="flex justify-around font-sans">
           <div>
-            <h2 className="footer-heading">About us</h2>
+            <h2 className="font-bold text-2xl">About us</h2>
             <div
               style={{
                 display: "flex",
@@ -88,7 +88,7 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h2 className="footer-heading">Link</h2>
+            <h2 className="font-bold text-2xl">Link</h2>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <Link
                 to="/shop"
@@ -105,7 +105,7 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <h2 className="footer-heading">Payment</h2>
+            <h2 className="font-bold text-2xl">Payment</h2>
             <div style={{ display: "flex" }}>
               <svg
                 version="1.1"
@@ -748,7 +748,7 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <h2 className="footer-heading">Introduce</h2>
+            <h2 className="font-bold text-2xl">Introduce</h2>
             <p
               style={{
                 fontSize: "15px",
@@ -763,12 +763,8 @@ const Footer = () => {
             </p>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-12 text-center">
-            <p className="footer-text">
-              Vita &copy; 2024. All Rights Reserved.
-            </p>
-          </div>
+        <div className="self-center	">
+          <p className="font-sans">Vita &copy; 2024. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

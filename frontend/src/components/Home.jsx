@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect } from "react";
-import Pagination from "react-js-pagination";
 import MetaData from "./layout/MetaData";
 import Product from "./product/Product";
 import Loader from "./layout/Loader";
@@ -7,10 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getProducts } from "../actions/productActions";
-import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
-import ProductCarousel from "./layout/Carousel";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,22 +46,6 @@ const Home = () => {
       });
     }
   }, [dispatch, keyword, currentPage, price, rating, error]);
-
-  const renderProducts = () => {
-    return (
-      <div className="row">
-        {products.slice(0, 4).map((product) => (
-          <Product
-            key={product._id}
-            product={product}
-            col={cols}
-            className="product-item"
-            style={{ width: "70px", marginLeft: "-150px" }}
-          />
-        ))}
-      </div>
-    );
-  };
 
   useEffect(() => {
     if (products.length > 0) {
@@ -115,15 +96,7 @@ const Home = () => {
     return () => clearInterval(intervalId);
   }, [backgroundImages.length]);
 
-  const handleShowMore = () => {
-    navigate("/shop");
-  };
-
-  const defaultProductsGrid = <div className="row">{renderProducts()}</div>;
-
   const isSearchKeyword = keyword && keyword.trim() !== "";
-
-  const productsGrid = isSearchKeyword ? renderProducts() : defaultProductsGrid;
 
   let count = productsCount;
   if (isSearchKeyword) {
@@ -193,92 +166,60 @@ const Home = () => {
       ) : (
         <Fragment>
           <MetaData title={"Home"} />
-          <h1
-            id="products_heading"
-            style={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              color: "#333",
-              textAlign: "center",
-              textTransform: "uppercase",
-              margin: "40px 0",
-              textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-            }}
-          >
-            Sản Phẩm Mới Nhất
-          </h1>
-          <div>
-            {/* Hiển thị hình ảnh từ mảng backgroundImages */}
+          <div className="flex flex-col font-sans items-center">
             <img
               src={backgroundImages[currentBackgroundIndex]}
               alt="Background Image"
-              style={{ width: "100%", maxHeight: "500px" }}
+              className="w-full h-96 object-cover mt-4"
             />
-          </div>
-          <h1 id="products_heading" style={getStyle()}></h1>
-          <section id="products">{productsGrid}</section>
-          <button
-            onClick={handleShowMore}
-            style={{ float: "right", marginTop: "10px" }}
-          >
-            Show More
-          </button>
-          <div className="home-line-between"></div>
-
-          {/* Other parts of your component remain unchanged */}
-
-          <h2 style={getStyle()}>Danh Mục Sản Phẩm</h2>
-          <div
-            className="categories-container"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: "20px",
-              margin: "0 auto",
-              maxWidth: "1200px", // Adjust this value according to your layout's maximum width
-              marginBottom: "20px",
-            }}
-          >
-            {categories.map((category, index) => (
-              <div
-                key={index}
-                onClick={() => navigate(category.path)}
-                style={{
-                  cursor: "pointer",
-                  padding: "10px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center", // Center align the content for each category box
-                }}
-              >
-                <p className="category" style={{ marginBottom: "10px" }}>
-                  {category.name}
-                </p>
-                <img
-                  src={category.images[currentImageIndex]}
-                  alt={category.name}
-                  style={{
-                    width: "100%", // Make images take full width of the container
-                    height: "400px", // Set a fixed height for uniformity, adjust as needed
-                    objectFit: "cover", // Ensure the images cover the area without distorting aspect ratio
-                  }}
+            <h1 className="mt-12 mb-2 text-4xl font-bold">Sản Phẩm Mới Nhất</h1>
+            <div className="home-new-products">
+              {products.slice(0, 4).map((product) => (
+                <Product
+                  key={product._id}
+                  product={product}
                 />
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+            <button
+              onClick={() => navigate("/shop")}
+              className="text-2xl font-bold hover:text-blue-500"
+            >
+              Show More
+            </button>
 
-          {/* Other parts of your component remain unchanged */}
+            <h1 className="mt-12 mb-4 text-4xl font-bold ">
+              Danh Mục Sản Phẩm
+            </h1>
+            <div className="flex w-screen justify-evenly">
+              {categories.map((category, index) => (
+                <div
+                  className="flex flex-col items-center hover:text-blue-500"
+                  key={index}
+                  onClick={() => navigate(category.path)}
+                >
+                  <img
+                    src={category.images[currentImageIndex]}
+                    alt={category.name}
+                    style={{
+                      height: "400px",
+                      width: "300px",
+                    }}
+                  />
+                  <p className="text-2xl font-bold">{category.name}</p>
+                </div>
+              ))}
+            </div>
 
-          <div className="home-line-between">
-            <h2 style={getStyle()}>Sản Phẩm Được Đánh Giá Cao</h2>
+            {/* Other parts of your component remain unchanged */}
+
+            <h1 className="mt-12 mb-2 text-4xl font-bold">
+              Sản Phẩm Được Đánh Giá Cao
+            </h1>
             {renderProductsStar()}
             <button
               onClick={handleShowMorestar}
-              style={{
-                float: "right",
-                marginTop: "10px",
-                marginBottom: "50px",
-              }}
+              className="text-2xl font-bold hover:text-blue-500"
             >
               Show More
             </button>

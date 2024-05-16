@@ -74,35 +74,58 @@ const Login = () => {
       ) : (
         <Fragment>
           <MetaData title={"Login"} />
-
-          <form onSubmit={submitHandler}>
-            <div>
-              <h1>Login</h1>
-              <div>
-                <label>Email</label>
+          <div className="-z-50 absolute top-0 left-0 w-full h-full flex mt-20 justify-evenly bg-white	"></div>
+          <div
+            className="flex justify-center h-auto p-8"
+            style={{ fontFamily: "Lobster, cursive" }}
+          >
+            <form
+              className="flex flex-col items-center border-solid divide-black border-4 w-96 bg-slate-50	"
+              onSubmit={submitHandler}
+            >
+              <h1 className="text-6xl pb-4">Login</h1>
+              <div className="w-80 mb-4">
+                <label className="font-bold">Email</label>
                 <input
                   type="email"
+                  id="email_field"
+                  className="form-control"
+                  placeholder="Enter email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
 
-              <div>
-                <label style={{marginRight:"100px"}}>Password</label>
+              <div className="w-80">
+                <label className="font-bold">Password</label>
                 <input
                   type="password"
+                  id="password_field"
+                  className="form-control"
+                  placeholder="Enter password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
 
-              <Link to="/password/forgot">Forgot Password?</Link>
+              <Link to="/password/forgot" className="self-end mr-4 mb-4">
+                Forgot Password?
+              </Link>
 
-              <button type="submit">LOGIN</button>
+              <button
+                id="login_button"
+                type="submit"
+                className="border-solid border-2 w-80 h-12 mb-4 bg-slate-950	text-white hover:bg-slate-100 rounded"
+              >
+                LOGIN
+              </button>
               <LoginButton />
-              <Link to="/register">New User?</Link>
-            </div>
-          </form>
+              <div className="mt-4 mb-4 flex gap-1">
+                <p className="text-slate-400	">Not a member?</p>
+                <Link to="/register">Register</Link>
+              </div>
+            </form>
+          </div>
         </Fragment>
       )}
     </Fragment>

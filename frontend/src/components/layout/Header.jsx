@@ -6,7 +6,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logout } from "../../actions/userActions";
 import Search from "./Search";
-import "../../App.css";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Popper } from "@mui/material";
@@ -124,7 +123,9 @@ const Header = () => {
         <div className="Header-container">
           <div className="Header-container-right">
             <Link to="/" style={{ textDecoration: "none" }}>
-              <h1 data-value="VITASHOP">VITASHOP</h1>
+              <h1 className="font-bold text-5xl" style={{fontFamily:"Lobster, cursive"}} data-value="VITASHOP">
+                VITASHOP
+              </h1>
             </Link>
           </div>
           <div className="Header-container-center">
@@ -261,14 +262,14 @@ const Header = () => {
                   <Link className="dropdown-item" to="/me">
                     Profile
                   </Link>
-                 
-                    <Link
-                      className="dropdown-item text-danger"
-                      to="/"
-                      onClick={logoutHandler}
-                    >
-                      Logout
-                    </Link>
+
+                  <Link
+                    className="dropdown-item text-danger"
+                    to="/"
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                  </Link>
                 </div>
               </div>
             ) : (
