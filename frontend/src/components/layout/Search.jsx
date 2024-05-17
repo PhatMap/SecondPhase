@@ -29,7 +29,9 @@ const Search = () => {
           }
         }}
       />
-      <i className="fa fa-search Search-icon"></i>
+      <button onClick={searchHandler}>
+        <i className="fa fa-search Search-icon"></i>
+      </button>
     </form>
   );
 };

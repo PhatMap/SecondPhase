@@ -97,14 +97,21 @@ const UpdateProfile = () => {
       <ToastContainer />
       <MetaData title={"Update Profile"} />
 
-      <div className="row wrapper">
-        <div className="col-10 col-lg-5">
-          <form
-            className="shadow-lg"
-            onSubmit={submitHandler}
-            encType="multipart/form-data"
-          >
-            <h1 className="mt-2 mb-5">Update Profile</h1>
+      <div className="profile-update-container">
+        <div className="profile-update-box">
+          <form onSubmit={submitHandler} encType="multipart/form-data">
+            <h1
+              style={{
+                fontFamily: "sans-serif",
+                display: "flex",
+                justifyContent: "center",
+                fontSize: "50px",
+                fontWeight: "bold",
+                marginBottom: "50px",
+              }}
+            >
+              Update Profile
+            </h1>
 
             <div className="form-group">
               <label htmlFor="email_field">Name</label>
@@ -157,14 +164,15 @@ const UpdateProfile = () => {
                 </div>
               </div>
             </div>
-
-            <button
-              type="submit"
-              className="btn update-btn btn-block mt-4 mb-3"
-              disabled={loading ? true : false}
-            >
-              Update
-            </button>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <button
+                type="submit"
+                className="profile-btn"
+                disabled={loading ? true : false}
+              >
+                Update
+              </button>
+            </div>
           </form>
         </div>
       </div>

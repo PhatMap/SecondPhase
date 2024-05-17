@@ -48,15 +48,14 @@ const Cart = () => {
           <h2 className="mt-5">Your Cart is Empty</h2>
         ) : (
           <Fragment>
-            <h2 className="mt-5">
+            <h2 className="cart-status">
               Your Cart: <b>{cartItems.length} items</b>
             </h2>
 
-            <div className="row d-flex justify-content-between">
-              <div className="col-12 col-lg-8">
+            <div className="cart-items-container">
+              <div className="cart-items">
                 {cartItems.map((item, index) => (
                   <Fragment key={item.product}>
-                    <hr />
 
                     <div className="cart-item">
                       <div className="row">
@@ -76,21 +75,50 @@ const Cart = () => {
                         </div>
 
                         <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                          <p id="card_item_price">${item.price}</p>
+                          <p className="cart-text cart-text-price ">
+                            ${item.price}
+                          </p>
                         </div>
 
                         <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                          <p id="card_item_price">{item.size}</p>
+                          <p className="cart-text cart-text-size">
+                            {item.size}
+                          </p>
                         </div>
 
-                        <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                          <p id="card_item_price">{item.color.colorName}</p>
+                        <div>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 10,
+                            }}
+                          >
+                            <p
+                              style={{
+                                fontSize: "20px",
+                                textTransform: "uppercase",
+                              }}
+                            >
+                              {item.color.colorName}{" "}
+                            </p>
+                            <div
+                              style={{
+                                backgroundColor: item.color.colorHex,
+                                width: "20px",
+                                height: "20px",
+                                borderRadius: "50%",
+                              }}
+                            ></div>
+                          </div>
                         </div>
 
                         <div className="col-4 col-lg-3 mt-4 mt-lg-0">
                           <div className="stockCounter d-inline">
                             <span
-                              className={`btn btn-danger minus ${item.quantity <= 1 ? 'disabled' : ''}`} // Thêm class disabled nếu số lượng là 1 hoặc nhỏ hơn
+                              className={`btn btn-danger minus ${
+                                item.quantity <= 1 ? "disabled" : ""
+                              }`} // Thêm class disabled nếu số lượng là 1 hoặc nhỏ hơn
                               onClick={() =>
                                 decreaseQty(
                                   index,
@@ -138,7 +166,6 @@ const Cart = () => {
                         </div>
                       </div>
                     </div>
-                    <hr />
                   </Fragment>
                 ))}
               </div>
@@ -184,7 +211,7 @@ const Cart = () => {
           </Fragment>
         )
       ) : (
-        <h2 className="mt-5">Login to see your cart</h2>
+        <h2 className="cart-not-login">Login to see your cart</h2>
       )}
     </Fragment>
   );

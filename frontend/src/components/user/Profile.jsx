@@ -16,8 +16,21 @@ const Profile = () => {
         <Fragment>
           <MetaData title={"Your Profile"} />
 
-          <h2 className="mt-5 ml-5">My Profile</h2>
-          <div className="row justify-content-around mt-5 user-info">
+          <h2
+            style={{
+              fontFamily: "sans-serif",
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "50px",
+              fontWeight: "bold",
+            }}
+          >
+            My Profile
+          </h2>
+          <div
+            style={{ fontFamily: "sans-serif" }}
+            className="row justify-content-around mt-5 user-info"
+          >
             <div className="col-12 col-md-3">
               <figure className="avatar avatar-profile">
                 <img
@@ -26,16 +39,12 @@ const Profile = () => {
                   alt={user.name}
                 />
               </figure>
-              <Link
-                to="/me/update"
-                id="edit_profile"
-                className="btn btn-primary btn-block my-5"
-              >
+              <Link to="/me/update" className="profile-btn">
                 Edit Profile
               </Link>
             </div>
 
-            <div className="col-12 col-md-5">
+            <div className="">
               <h4>Full Name</h4>
               <p>{user.name}</p>
 
@@ -51,12 +60,11 @@ const Profile = () => {
                 </Link>
               )}
 
-              <Link
-                to="/password/update"
-                className="btn btn-primary btn-block mt-3"
-              >
-                Change Password
-              </Link>
+              <div className="profile-btn">
+                <Link to="/password/update" className="profile-btn">
+                  Change Password
+                </Link>
+              </div>
             </div>
           </div>
         </Fragment>

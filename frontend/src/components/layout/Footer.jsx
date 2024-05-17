@@ -4,7 +4,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="ftco-footer ftco-section">
-      <div className="footer-container flex flex-col">
+      <div className="footer-container">
         <div className="flex justify-around font-sans">
           <div>
             <h2 className="font-bold text-2xl">About us</h2>
@@ -14,33 +14,15 @@ const Footer = () => {
                 flexDirection: "column",
               }}
             >
-              <p
-                style={{
-                  fontSize: "15px",
-                  color: "#333",
-                  fontWeight: "normal",
-                }}
-              >
+              <p>
                 <strong>Địa chỉ:</strong> 01 Võ Văn Ngân, Linh Chiểu, Thủ Đức,
                 Thành phố Hồ Chí Minh
               </p>
 
-              <p
-                style={{
-                  fontSize: "15px",
-                  color: "#333",
-                  fontWeight: "normal",
-                }}
-              >
+              <p>
                 <strong>Hotline:</strong> +84 123 456 78
               </p>
-              <p
-                style={{
-                  fontSize: "15px",
-                  color: "#333",
-                  fontWeight: "normal",
-                }}
-              >
+              <p>
                 <strong>Email:</strong> cskh@vita.com
               </p>
             </div>
@@ -90,16 +72,10 @@ const Footer = () => {
           <div>
             <h2 className="font-bold text-2xl">Link</h2>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <Link
-                to="/shop"
-                style={{ color: "black", textDecoration: "none" }}
-              >
+              <Link to="/shop" style={{ textDecoration: "none" }}>
                 Shop
               </Link>
-              <Link
-                to="/cart"
-                style={{ color: "black", textDecoration: "none" }}
-              >
+              <Link to="/cart" style={{ textDecoration: "none" }}>
                 Cart
               </Link>
             </div>
@@ -752,7 +728,6 @@ const Footer = () => {
             <p
               style={{
                 fontSize: "15px",
-                color: "#333",
                 fontWeight: "normal",
                 width: "250px",
               }}

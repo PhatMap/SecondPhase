@@ -13,14 +13,26 @@ import { getUserCart } from "../../actions/cartActions";
 
 const Header = () => {
   const location = useLocation();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+
+  const [menu, setMenu] = useState(false);
+  const menuRef = useRef(null);
+  const handleClick = () => {
+    setMenu(true);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setMenu(false);
+    }
   };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const [anchorE2, setAnchorE2] = React.useState(null);
 
   const openCart = Boolean(anchorE2);
@@ -82,40 +94,6 @@ const Header = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const header = document.querySelector("h1");
-
-    if (header) {
-      header.addEventListener("mouseover", (event) => {
-        let iterations = 0;
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        const interval = setInterval(() => {
-          event.target.innerText = event.target.innerText
-            .split("")
-            .map((letter, index) => {
-              if (index < iterations) {
-                return event.target.dataset.value[index];
-              }
-              return letters[Math.floor(Math.random() * 26)];
-            })
-            .join("");
-
-          if (iterations >= event.target.dataset.value.length) {
-            clearInterval(interval);
-          }
-
-          iterations += 1 / 3;
-        }, 30);
-
-        return () => {
-          header.removeEventListener("mouseover", () => {});
-          clearInterval(interval);
-        };
-      });
-    }
-  }, []);
-
   return (
     <Fragment>
       <ToastContainer />
@@ -123,7 +101,10 @@ const Header = () => {
         <div className="Header-container">
           <div className="Header-container-right">
             <Link to="/" style={{ textDecoration: "none" }}>
-              <h1 className="font-bold text-5xl" style={{fontFamily:"Lobster, cursive"}} data-value="VITASHOP">
+              <h1
+                className="header-logo"
+                style={{ fontFamily: "Lobster, cursive" }}
+              >
                 VITASHOP
               </h1>
             </Link>
@@ -132,41 +113,24 @@ const Header = () => {
             <Search />
           </div>
           <div className="Header-container-left">
-            <div className="Header-category">
-              <i
-                className="fa fa-bars burger-menu"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onMouseEnter={handleClick}
-              ></i>
-              <Menu
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-              >
-                {categories.map((cate, index) => (
-                  <MenuItem key={index} className="Header-menu-item">
-                    <Link
-                      style={{ textDecoration: "none", color: "black" }}
-                      to={`/category/${cate}`}
-                      onClick={() => {
-                        setAnchorEl(false);
-                      }}
-                    >
-                      {cate}
-                    </Link>
-                  </MenuItem>
-                ))}
-              </Menu>
+            <div className="Header-category" ref={menuRef}>
+              <i className="fa fa-bars burger-menu" onClick={handleClick}></i>
+              {menu ? (
+                <div className="header-menu">
+                  {categories.map((cate, index) => (
+                    <div key={index} className="header-menu-items">
+                      <Link
+                        to={`/category/${cate}`}
+                        className="header-menu-item"
+                      >
+                        {cate}
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
             <Link
               to="/shop"

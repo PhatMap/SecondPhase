@@ -211,34 +211,47 @@ const ProductDetails = () => {
       ) : (
         <Fragment>
           <MetaData title={product.name} />
-          <div className="row d-flex justify-content-around">
-            <div className="product-thumbnails">
-              {product &&
-                product.images &&
-                product.images.map((image, index) => (
-                  <img
-                    key={image.public_id}
-                    src={image.url}
-                    alt={`Product Preview ${index}`}
-                    className={`product-thumbnail ${
-                      activeImage === image.url ? "active" : ""
-                    }`}
-                    onMouseEnter={() => setActiveImage(image.url)}
-                  />
-                ))}
+          <div className="detail-container">
+            <div className="detail-image-container">
+              <div className="detail-images">
+                {product &&
+                  product.images &&
+                  product.images.map((image, index) => (
+                    <img
+                      key={image.public_id}
+                      src={image.url}
+                      alt={`Product Preview ${index}`}
+                      className={`${activeImage === image.url ? "mark" : ""} `}
+                      onMouseEnter={() => setActiveImage(image.url)}
+                    />
+                  ))}
+              </div>
+
+              <div className="detail-current-image">
+                <ProductImageZoom image={activeImage} />
+              </div>
             </div>
 
-            <div className="col-12 col-lg-5 img-fluid" id="product_image">
-              <ProductImageZoom image={activeImage} />
-            </div>
-            <div className="col-12 col-lg-5 mt-5">
-              <h3>{product.name}</h3>
+            <div className="detail-content">
+              <h1>{product.name}</h1>
               <p id="product_id">Product # {product._id}</p>
 
               <hr />
 
-              <div style={{ marginRight: "30px", fontSize: "20px" }}>
-                Ratings:{" "}
+              <p>
+                Status:{" "}
+                <span
+                  id="stock_status"
+                  className={product.stock > 0 ? "greenColor" : "redColor"}
+                >
+                  {product.stock > 0 ? "In Stock" : "Out of Stock"}
+                </span>
+              </p>
+
+              <hr />
+
+              <div className="detail-color">
+                <h1>Ratings:</h1>
                 {product?.ratings?.toFixed(1).replace(".", ",") ?? "No Ratings"}
                 <div className="rating-outer">
                   <div
@@ -247,12 +260,9 @@ const ProductDetails = () => {
                   ></div>
                 </div>
               </div>
-
-              <h4 className="mt-2">Description:</h4>
-              <p>{product.description}</p>
               <hr />
-              <div className="mt-5 d-flex align-items-center">
-                <h4 style={{ margin: "0 10px 0 0" }}>Color:</h4>
+              <div className="detail-color">
+                <h1>Color:</h1>
                 <div
                   style={{
                     backgroundColor: product?.colors?.colorHex ?? "transparent",
@@ -266,9 +276,8 @@ const ProductDetails = () => {
 
               <hr />
 
-              {/* Hiển thị size */}
-              <div className="mt-5">
-                <h4 className="mb-3">Available Sizes</h4>
+              <div className="detail-size">
+                <h1>Available Sizes:</h1>
                 {product &&
                   product.sizes &&
                   product.sizes.map((size, index) => (
@@ -285,10 +294,16 @@ const ProductDetails = () => {
               </div>
               <hr />
 
+              <div className="detail-description">
+                <h1 className="">Description:</h1>
+                <p>{product.description}</p>
+              </div>
+              <hr />
+
               <div className="d-flex justify-content-between align-items-center">
-                <div>
-                  {/* Di chuyển giá vào đây để đặt cùng hàng với Add to Cart */}
-                  <p id="product_price">${product.price}</p>
+                <div className="detail-color">
+                  <h1>Price:</h1>
+                  <p style={{fontSize:"30px", color:"green"}}>${product.price}</p>
                 </div>
 
                 <div className="stockCounter d-inline">
@@ -317,18 +332,6 @@ const ProductDetails = () => {
                   Add to Cart
                 </button>
               </div>
-
-              <hr />
-
-              <p>
-                Status:{" "}
-                <span
-                  id="stock_status"
-                  className={product.stock > 0 ? "greenColor" : "redColor"}
-                >
-                  {product.stock > 0 ? "In Stock" : "Out of Stock"}
-                </span>
-              </p>
 
               <hr />
 

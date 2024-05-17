@@ -167,11 +167,6 @@ const Home = () => {
         <Fragment>
           <MetaData title={"Home"} />
           <div className="flex flex-col font-sans items-center">
-            <img
-              src={backgroundImages[currentBackgroundIndex]}
-              alt="Background Image"
-              className="w-full h-96 object-cover mt-4"
-            />
             <h1 className="mt-12 mb-2 text-4xl font-bold">Sản Phẩm Mới Nhất</h1>
             <div className="home-new-products">
               {products.slice(0, 4).map((product) => (
