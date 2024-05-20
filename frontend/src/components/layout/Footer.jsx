@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="ftco-footer ftco-section">
+    <footer>
       <div className="footer-container">
         <div className="flex justify-around font-sans">
           <div>

@@ -15,7 +15,7 @@ router.route("/cart").post(isAuthenticatedUser, addToCart);
 
 router.route("/cart/me").get(isAuthenticatedUser, getUserCart);
 
-router.route("/cart/:id").delete(isAuthenticatedUser, removeProductFromCart);
+router.route("/cart/:id/:size").delete(isAuthenticatedUser, removeProductFromCart);
 
 router.route("/cart/empty").put(isAuthenticatedUser, emptyTheCart);
 

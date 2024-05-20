@@ -33,7 +33,7 @@ export const cartReducer = (
       return {
         ...state,
         isRemoved: action.payload,
-        error: null, // Clear error on successful action
+        error: null, 
       };
 
     case REMOVE_ITEM_FROM_CART_FAIL:

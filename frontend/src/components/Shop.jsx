@@ -22,7 +22,6 @@ const Shop = () => {
 
   const categories = ["Trousers", "Shirt", "Dress", "Shoe", "Belt"];
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const {
@@ -57,7 +56,6 @@ const Shop = () => {
   }
 
   const handleCategoryClick = (selectedCategory) => {
-    // Thực hiện chuyển hướng đến trang Search với từ khóa là danh mục được chọn
     navigate(`/category/${selectedCategory}`);
   };
 
@@ -121,7 +119,7 @@ const Shop = () => {
       ) : (
         <Fragment>
           <MetaData title={"Shop"} />
-          <div className="shop-container">
+          <div className="shop-container background-1">
             <h1>SHOP</h1>
             <div className="shop-products-filter-container">
               <div className="shop-filter">
@@ -180,12 +178,7 @@ const Shop = () => {
               </div>
               <div className="shop-products-container">
                 {products.map((product) => (
-                  <Product
-                    key={product._id}
-                    product={product}
-                    col={cols}
-                    className=""
-                  />
+                  <Product key={product._id} product={product} />
                 ))}
               </div>
             </div>

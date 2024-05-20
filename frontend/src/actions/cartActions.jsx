@@ -69,9 +69,9 @@ export const addItemToCart =
     }
   };
 
-export const removeItemFromCart = (id) => async (dispatch, getState) => {
+export const removeItemFromCart = (id, size) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.delete(`/api/v1/cart/${id}`);
+    const { data } = await axios.delete(`/api/v1/cart/${id}/${size}`);
 
     dispatch({
       type: REMOVE_ITEM_FROM_CART_SUCCESS,

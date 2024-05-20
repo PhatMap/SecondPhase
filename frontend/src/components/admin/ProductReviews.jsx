@@ -95,20 +95,6 @@ const setProducts = () => {
     return data;
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   useEffect(() => {
     if (error) {
       toast.error(error, {

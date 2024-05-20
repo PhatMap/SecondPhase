@@ -80,7 +80,7 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-        <div className="container container-fluid">
+        <div className="app-container">
           <Routes>
             <Route path="/" element={<Home />} />
             {/* <Route path="/" element={<Test />} /> */}

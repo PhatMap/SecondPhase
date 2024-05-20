@@ -66,8 +66,10 @@ exports.removeProductFromCart = catchAsyncErrors(async (req, res, next) => {
     return res.status(404).json({ success: false, message: "Cart not found" });
   }
 
+  const { id, size } = req.params;
+
   const updatedCartItems = cart.cartItems.filter(
-    (item) => item.product.toString() !== req.params.id
+    (item) => !(item.product.toString() === id && item.size.toString() === size)
   );
 
   try {

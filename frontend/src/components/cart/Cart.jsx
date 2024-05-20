@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,30 +7,32 @@ import {
   removeItemFromCart,
   getUserCart,
 } from "../../actions/cartActions";
+import DeleteNotify from "../layout/DeleteNotify";
 
 const Cart = () => {
   const history = useNavigate();
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
 
   const { cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
 
-  const removeCartItemHandler = (id) => {
-    dispatch(removeItemFromCart(id));
+  const removeCartItemHandler = async (id, size) => {
+    await dispatch(removeItemFromCart(id, size));
     dispatch(getUserCart());
   };
 
-  const increaseQty = (index, id, size, colorName, colorHex) => {
+  const increaseQty = async (index, id, size, colorName, colorHex) => {
     let newQty = cartItems[index].quantity + 1;
 
-    dispatch(addItemToCart(id, newQty, size, colorName, colorHex));
+    await dispatch(addItemToCart(id, newQty, size, colorName, colorHex));
     dispatch(getUserCart());
   };
 
-  const decreaseQty = (index, id, size, colorName, colorHex) => {
+  const decreaseQty = async (index, id, size, colorName, colorHex) => {
     let newQty = cartItems[index].quantity - 1;
 
-    dispatch(addItemToCart(id, newQty, size, colorName, colorHex));
+    await dispatch(addItemToCart(id, newQty, size, colorName, colorHex));
     dispatch(getUserCart());
   };
 
@@ -38,14 +40,12 @@ const Cart = () => {
     history("/login?redirect=/shipping");
   };
 
-  useEffect(() => {}, [dispatch]);
-
   return (
     <Fragment>
       <MetaData title={"Your Cart"} />
       {user ? (
         cartItems.length === 0 ? (
-          <h2 className="mt-5">Your Cart is Empty</h2>
+          <h2 className="cart-not-login">Your Cart is Empty</h2>
         ) : (
           <Fragment>
             <h2 className="cart-status">
@@ -56,7 +56,6 @@ const Cart = () => {
               <div className="cart-items">
                 {cartItems.map((item, index) => (
                   <Fragment key={item.product}>
-
                     <div className="cart-item">
                       <div className="row">
                         <div className="col-4 col-lg-3">
@@ -156,56 +155,54 @@ const Cart = () => {
                             </span>
                           </div>
                         </div>
+                      </div> 
 
-                        <div className="col-4 col-lg-1 mt-4 mt-lg-0">
-                          <i
-                            id="delete_cart_item"
-                            className="fa fa-trash btn btn-danger"
-                            onClick={() => removeCartItemHandler(item.product)}
-                          ></i>
-                        </div>
-                      </div>
+                      <i
+                        className="fa fa-trash cart-delete-btn"
+                        onClick={() => setShow(true)}
+                      ></i>
+                      {show && (
+                        <DeleteNotify
+                          func={removeCartItemHandler}
+                          paras={[item.product, item.size]}
+                          show={setShow}
+                        />
+                      )}
                     </div>
                   </Fragment>
                 ))}
               </div>
 
-              <div className="col-12 col-lg-3 my-4">
-                <div id="order_summary">
-                  <h4>Order Summary</h4>
-                  <hr />
-                  <p>
-                    Subtotal:{" "}
-                    <span className="order-summary-values">
-                      {cartItems.reduce(
-                        (acc, item) => acc + Number(item.quantity),
+              <div className="cart-checkout-container">
+                <h4>Order Summary</h4>
+                <hr />
+                <p>
+                  Subtotal:{" "}
+                  <span className="order-summary-values">
+                    {cartItems.reduce(
+                      (acc, item) => acc + Number(item.quantity),
+                      0
+                    )}{" "}
+                    (Units)
+                  </span>
+                </p>
+                <p>
+                  Est. total:{" "}
+                  <span className="order-summary-values">
+                    $
+                    {cartItems
+                      .reduce(
+                        (acc, item) => acc + item.quantity * item.price,
                         0
-                      )}{" "}
-                      (Units)
-                    </span>
-                  </p>
-                  <p>
-                    Est. total:{" "}
-                    <span className="order-summary-values">
-                      $
-                      {cartItems
-                        .reduce(
-                          (acc, item) => acc + item.quantity * item.price,
-                          0
-                        )
-                        .toFixed(2)}
-                    </span>
-                  </p>
+                      )
+                      .toFixed(2)}
+                  </span>
+                </p>
 
-                  <hr />
-                  <button
-                    id="checkout_btn"
-                    className="btn btn-primary btn-block"
-                    onClick={checkoutHandler}
-                  >
-                    Check out
-                  </button>
-                </div>
+                <hr />
+                <button className="cart-checkout-btn" onClick={checkoutHandler}>
+                  Check out
+                </button>
               </div>
             </div>
           </Fragment>

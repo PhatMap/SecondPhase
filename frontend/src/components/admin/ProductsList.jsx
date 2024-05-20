@@ -144,10 +144,13 @@ const ProductsList = () => {
           <Sidebar />
         </div>
 
-        <div className="col-12 col-md-10">
+        <div className="manage-product-container">
           <Fragment>
-            <h1 className="my-5">All Products</h1>
-
+            <h1>All Products</h1>
+            <Link to="/admin/product" className="product-add-btn-container">
+              <i className="fa fa-plus product-add-btn"></i>
+              <p>Add New Product</p>
+            </Link>
             {loading ? (
               <Loader />
             ) : (

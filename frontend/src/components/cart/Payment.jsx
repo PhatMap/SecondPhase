@@ -163,7 +163,7 @@ const Payment = () => {
 
       <CheckoutSteps shipping confirmOrder payment />
 
-      <div className="row wrapper">
+      <div className="row wrapper payment-container">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>
             <h1 className="mb-4">Card Info</h1>
@@ -197,7 +197,7 @@ const Payment = () => {
               />
             </div>
 
-            <button id="pay_btn" type="submit" className="btn btn-block py-3">
+            <button id="pay_btn" type="submit" className="payment-btn">
               Pay {` - ${orderInfo && orderInfo.totalPrice}`}
             </button>
           </form>

@@ -18,13 +18,15 @@ const Category = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, products, error, productsCount, resPerPage, filteredProductsCount } = useSelector((state) => state.category);
-  const categories = [  
-          "Trousers",
-          "Shirt",
-          "Dress",
-          "Shoe",
-          "Belt",];
+  const {
+    loading,
+    products,
+    error,
+    productsCount,
+    resPerPage,
+    filteredProductsCount,
+  } = useSelector((state) => state.category);
+  const categories = ["Trousers", "Shirt", "Dress", "Shoe", "Belt"];
 
   const { keyword, category } = useParams();
   const navigate = useNavigate();
@@ -34,7 +36,9 @@ const Category = () => {
   }
 
   useEffect(() => {
-    dispatch(getProductsByCategory(keyword, currentPage, price, category, rating));
+    dispatch(
+      getProductsByCategory(keyword, currentPage, price, category, rating)
+    );
     if (error) {
       toast.error(error, {
         position: "top-center",
@@ -57,13 +61,23 @@ const Category = () => {
     setRating(selectedRating);
   };
   const [color, setColor] = useState(""); // State để lưu màu được chọn
-const colors = ["black", "white", "red", "blue", "green", "yellow", "orange", "purple", "pink", "gray"]; // Danh sách màu
+  const colors = [
+    "black",
+    "white",
+    "red",
+    "blue",
+    "green",
+    "yellow",
+    "orange",
+    "purple",
+    "pink",
+    "gray",
+  ]; // Danh sách màu
 
-const handleColorChange = (selectedColor) => {
-  setColor(selectedColor);
-  navigate(`/shop/color/${selectedColor}`); // Chuyển hướng người dùng
-};
-  
+  const handleColorChange = (selectedColor) => {
+    setColor(selectedColor);
+    navigate(`/shop/color/${selectedColor}`); // Chuyển hướng người dùng
+  };
 
   return (
     <Fragment>
@@ -73,132 +87,91 @@ const handleColorChange = (selectedColor) => {
       ) : (
         <Fragment>
           <MetaData title={"Real comfy"} />
-          <h1
-            id="products_heading"
-            style={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              color: "#333",
-              textAlign: "center",
-              textTransform: "uppercase",
-              margin: "20px 0",
-              textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-            }}
-          >
-            {category}
-          </h1>
-
-          <section id="products" className="container mt-5">
-            <div className="row">
-              <div className="col-md-3"  style={{ marginRight: '-150px' }}>
-                <div className="px-2"style={{ width: "200px", marginLeft: '-140px' }}>
+          <div className="shop-container">
+            <h1>{category}</h1>
+            <div className="shop-products-filter-container">
+              <div className="shop-filter">
+                <div className="shop-slider">
+                  <div className="shop-slider-values">
+                    <p>${price[0]}</p>
+                    <p>${price[price.length - 1]}</p>
+                  </div>
                   <Slider
-                    marks={{ 1: "$1", 1000: "$1000" }}
                     min={1}
                     max={1000}
                     defaultValue={[1, 1000]}
-                    tipFormatter={(values) => values.map((value) => `$${value}`)}
-                    tipProps={{ placement: "top", visible: true }}
+                    tipFormatter={(values) =>
+                      values.map((value) => `$${value}`)
+                    }
+                    tipProps={{
+                      placement: "top",
+                      visible: true,
+                    }}
                     range
                     value={price}
                     onChange={(price) => setPrice(price)}
                   />
-
-                  <div className="mt-4">
-                  <h4 className="mb-3" style={{ marginLeft: '5px', marginBottom: '10px' }}>Categories</h4>
-                    <ul className="list-unstyled">
-                      {categories.map((cate, index) => (
-                        <li
-                          key={index}
-                          onClick={() => handleCategoryClick(cate)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          {cate}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-5">
-                      <h4 className="mb-3">Ratings</h4>
-                      <ul className="pl-0">
-                        {[5, 4, 3, 2, 1].map((star) => (
-                          <li
+                </div>
+                <div className="shop-filter-categories">
+                  <h4>Categories</h4>
+                  <ul className="shop-filter-category">
+                    {categories.map((category) => (
+                      <li
+                        key={category}
+                        onClick={() => handleCategoryClick(category)} // Sử dụng hàm handleCategoryClick khi nhấp vào danh mục
+                      >
+                        {category}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="shop-filter-ratings">
+                  <h4>Ratings</h4>
+                  <ul className="shop-filter-rating">
+                    {[5, 4, 3, 2, 1].map((star) => (
+                      <li key={star} onClick={() => setRating(star)}>
+                        <div className="rating-outer">
+                          <div
+                            className="rating-inner"
                             style={{
-                              cursor: "pointer",
-                              listStyleType: "none",
+                              width: `${star * 20}%`,
                             }}
-                            key={star}
-                            onClick={() => setRating(star)}
-                          >
-                            <div className="rating-outer">
-                              <div
-                                className="rating-inner"
-                                style={{
-                                  width: `${star * 20}%`,
-                                }}
-                              ></div>
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="mt-5">
-                  <hr style={{ border: '1px solid #ccc' }} />
-                  <h4 className="mb-3" style={{ marginTop: '20px', marginBottom: '10px', fontSize: '18px', fontWeight: 'bold',marginLeft:"5px" }}>Choose a color:</h4>
-                    <select
-                        id="color-select"
-                        value={color}
-                        onChange={(e) => handleColorChange(e.target.value)}
-                        style={{
-                            width: '200px',
-                            height: '40px',
-                            borderRadius: '5px',
-                            borderColor: '#ccc',
-                            marginBottom: '20px',
-                            fontSize: '16px'  // Ensuring the font size inside the select matches other controls
-                        }}
-                    >
-                      <option value="">Select a Color</option>
-                      {colors.map((color, index) => (
-                          <option key={index} value={color}>{color}</option>
-                      ))}
-                  </select>
-              </div>
-
+                          ></div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                
+                <button className="shop-filter-btn">Filter</button>
               </div>
-
-              <div className="col-md-9">
-                <div className="row">
-                  {products.map((product) => (
-                    <Product key={product._id} product={product} col={4} />
-                  ))}
-                </div>
+              <div className="shop-products-container">
+                {products.map((product) => (
+                  <Product
+                    key={product._id}
+                    product={product}
+                  />
+                ))}
               </div>
-              
             </div>
-          </section>
-          {resPerPage <= productsCount && (
-            <div className="d-flex justify-content-center mt-5">
-              <Pagination
-                activePage={currentPage}
-                itemsCountPerPage={resPerPage}
-                totalItemsCount={productsCount}
-                onChange={setCurrentPageNo}
-                nextPageText={"Next"}
-                prevPageText={"Prev"}
-                firstPageText={"First"}
-                lastPageText={"Last"}
-                itemClass="page-item"
-                linkClass="page-link"
-              />
-            </div>
-          )}
+            {productsCount > resPerPage && (
+              <div className="shop-pagination">
+                <Pagination
+                  activePage={currentPage}
+                  itemsCountPerPage={resPerPage}
+                  totalItemsCount={productsCount}
+                  onChange={setCurrentPageNo}
+                  nextPageText={"Next"}
+                  prevPageText={"Prev"}
+                  firstPageText={"First"}
+                  lastPageText={"Last"}
+                  itemClass="page-item"
+                  linkClass="page-link"
+                />
+              </div>
+            )}
+          </div>
         </Fragment>
       )}
-
     </Fragment>
   );
 };

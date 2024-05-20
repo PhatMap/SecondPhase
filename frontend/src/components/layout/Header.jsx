@@ -96,8 +96,8 @@ const Header = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
       <nav className={isSticky ? "Header" : ""}>
+        <ToastContainer />
         <div className="Header-container">
           <div className="Header-container-right">
             <Link to="/" style={{ textDecoration: "none" }}>

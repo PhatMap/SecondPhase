@@ -90,7 +90,7 @@ const ConfirmOrder = () => {
       <ToastContainer />
       <CheckoutSteps shipping confirmOrder />
 
-      <div className="row d-flex justify-content-between">
+      <div className="confirm-order-container">
         <div className="col-12 col-lg-8 mt-5 order-confirm">
           <h4 className="mb-3">Shipping Info</h4>
           <p>
@@ -133,44 +133,40 @@ const ConfirmOrder = () => {
           ))}
         </div>
 
-        <div className="col-12 col-lg-3 my-4">
-          <div id="order_summary">
-            <h4>Order Summary</h4>
-            <hr />
-            <p>
-              Subtotal:{" "}
-              <span className="order-summary-values">${itemsPrice}</span>
-            </p>
-            <p>
-              Shipping:{" "}
-              <span className="order-summary-values">${shippingPrice}</span>
-            </p>
-            <p>
-              Tax: <span className="order-summary-values">${taxPrice}</span>
-            </p>
+        <div className="confirm-order-form">
+          <h4>Order Summary</h4>
+          <hr />
+          <p>
+            Subtotal:{" "}
+            <span className="order-summary-values">${itemsPrice}</span>
+          </p>
+          <p>
+            Shipping:{" "}
+            <span className="order-summary-values">${shippingPrice}</span>
+          </p>
+          <p>
+            Tax: <span className="order-summary-values">${taxPrice}</span>
+          </p>
 
-            <hr />
+          <hr />
 
-            <p>
-              Total: <span className="order-summary-values">${totalPrice}</span>
-            </p>
+          <p>
+            Total: <span className="order-summary-values">${totalPrice}</span>
+          </p>
 
-            <hr />
-            <button
-              id="checkout_btn"
-              className="btn btn-primary btn-block"
-              onClick={processToPayment}
-            >
-              Prepayment (Bank card)
-            </button>
-            <button
-              id="checkout_btn"
-              className="btn btn-primary btn-block"
-              onClick={processToCashPayment}
-            >
-              Cash on Delivery (COD)
-            </button>
-          </div>
+          <hr />
+          <button
+            className="confirm-order-card-btn"
+            onClick={processToPayment}
+          >
+            Prepayment (Bank card)
+          </button>
+          <button
+            className="confirm-order-cash-btn"
+            onClick={processToCashPayment}
+          >
+            Cash on Delivery (COD)
+          </button>
         </div>
       </div>
     </Fragment>

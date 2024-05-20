@@ -166,14 +166,11 @@ const Home = () => {
       ) : (
         <Fragment>
           <MetaData title={"Home"} />
-          <div className="flex flex-col font-sans items-center">
+          <div className="flex flex-col font-sans items-center background-1">
             <h1 className="mt-12 mb-2 text-4xl font-bold">Sản Phẩm Mới Nhất</h1>
             <div className="home-new-products">
               {products.slice(0, 4).map((product) => (
-                <Product
-                  key={product._id}
-                  product={product}
-                />
+                <Product key={product._id} product={product} />
               ))}
             </div>
             <button
@@ -219,10 +216,7 @@ const Home = () => {
               Show More
             </button>
           </div>
-          <div
-            className="home-page-container"
-            style={{ marginBottom: "100px" }}
-          ></div>
+          <div className="home-page-container"></div>
         </Fragment>
       )}
     </Fragment>

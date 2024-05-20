@@ -373,9 +373,8 @@ const NewProduct = () => {
                 </div>
 
                 <button
-                  id="login_button"
                   type="submit"
-                  className="btn btn-block py-3"
+                  className="new-product-btn"
                   disabled={loading ? true : false}
                 >
                   CREATE
