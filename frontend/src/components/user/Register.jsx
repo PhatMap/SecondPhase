@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 
 import MetaData from "../layout/MetaData";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { register, clearErrors } from "../../actions/userActions";
@@ -36,16 +36,7 @@ const Register = () => {
     }
 
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
   }, [dispatch, isAuthenticated, error, history]);
@@ -81,7 +72,6 @@ const Register = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
       <MetaData title={"Register User"} />
 
       <div className="register-wrapper">

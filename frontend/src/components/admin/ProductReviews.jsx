@@ -4,7 +4,7 @@ import {  useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
 import Loader from "../layout/Loader";
-import {  ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -30,16 +30,7 @@ const ProductReviews = () => {
     dispatch(getAdminProducts());
 
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
 
       history("/admin/products");
@@ -97,30 +88,12 @@ const setProducts = () => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (deleteError) {
-      toast.error(deleteError, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(deleteError);
       dispatch(clearErrors());
     }
 
@@ -129,16 +102,7 @@ const setProducts = () => {
     }
 
     if (isDeleted) {
-      toast.success("Review deleted successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("Review deleted successfully");
       dispatch({ type: DELETE_REVIEW_RESET });
     }
   }, [dispatch, error, productId, isDeleted, deleteError]);
@@ -206,7 +170,6 @@ const setProducts = () => {
 
   return (
     <Fragment>
-      <ToastContainer/>
       <MetaData title={"Product Reviews"} />
       <div className="row">
         <div className="col-12 col-md-2">

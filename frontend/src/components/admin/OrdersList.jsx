@@ -6,7 +6,7 @@ import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import Sidebar from "./Sidebar";
 
-import {  ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,30 +27,12 @@ const OrdersList = () => {
     dispatch(allOrders());
 
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (isDeleted) {
-      toast.success("Order deleted successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("Order deleted successfully");
       history("/admin/orders");
       dispatch({ type: DELETE_ORDER_RESET });
     }
@@ -127,7 +109,6 @@ const OrdersList = () => {
 
   return (
     <Fragment>
-      <ToastContainer/>
       <MetaData title={"All Orders"} />
       <div className="row">
         <div className="col-12 col-md-2">

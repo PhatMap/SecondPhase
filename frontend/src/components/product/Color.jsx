@@ -4,7 +4,7 @@ import MetaData from "../layout/MetaData";
 import Product from "./Product";
 import Loader from "../layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
@@ -79,7 +79,6 @@ const Color = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
       {loading ? (
         <Loader />
       ) : (

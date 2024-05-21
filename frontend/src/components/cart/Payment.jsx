@@ -3,7 +3,7 @@ import React, { Fragment, useEffect } from "react";
 import MetaData from "../layout/MetaData";
 import CheckoutSteps from "./CheckoutSteps";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder, clearErrors } from "../../actions/orderActions";
@@ -42,16 +42,7 @@ const Payment = () => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
   }, [dispatch, error]);
@@ -106,16 +97,7 @@ const Payment = () => {
       });
 
       if (result.error) {
-        toast.error(result.error.message, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error(result.error.message);
         document.querySelector("#pay_btn").disabled = false;
       } else {
         // The payment is processed or not
@@ -129,36 +111,17 @@ const Payment = () => {
 
           history("/success");
         } else {
-          toast.error("There is some issue while payment processing", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.error("There is some issue while payment processing");
         }
       }
     } catch (error) {
       document.querySelector("#pay_btn").disabled = false;
-      toast.error(error.response.data.message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error.response.data.message);
     }
   };
 
   return (
     <Fragment>
-      <ToastContainer />
       <MetaData title={"Payment"} />
 
       <CheckoutSteps shipping confirmOrder payment />

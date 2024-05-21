@@ -4,7 +4,7 @@ import MetaData from "../layout/MetaData";
 import Product from "./Product";
 import Loader from "../layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
@@ -40,16 +40,7 @@ const Category = () => {
       getProductsByCategory(keyword, currentPage, price, category, rating)
     );
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
     }
   }, [dispatch, keyword, currentPage, price, category, rating, error]);
 
@@ -81,7 +72,6 @@ const Category = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
       {loading ? (
         <Loader />
       ) : (

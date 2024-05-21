@@ -7,7 +7,7 @@ import CheckoutSteps from "./CheckoutSteps";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder, clearErrors } from "../../actions/orderActions";
 
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -69,16 +69,7 @@ const ConfirmOrder = () => {
   };
   useEffect(() => {
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
   });
@@ -87,7 +78,6 @@ const ConfirmOrder = () => {
   return (
     <Fragment>
       <MetaData title={"Confirm Order"} />
-      <ToastContainer />
       <CheckoutSteps shipping confirmOrder />
 
       <div className="confirm-order-container">

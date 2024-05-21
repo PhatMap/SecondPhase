@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 
 import MetaData from "../layout/MetaData";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword, clearErrors } from "../../actions/userActions";
@@ -21,30 +21,12 @@ const NewPassword = () => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (success) {
-      toast.success("Password updated successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("Password updated successfully");
       history("/login");
     }
   }, [dispatch, error, success, history]);
@@ -61,7 +43,6 @@ const NewPassword = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
       <MetaData title={"New Password Reset"} />
 
       <div className="row wrapper">

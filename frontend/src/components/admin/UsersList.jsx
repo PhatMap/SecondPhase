@@ -24,30 +24,12 @@ const UsersList = () => {
     dispatch(allUsers());
 
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (isDeleted) {
-      toast.success("User deleted successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("User deleted successfully");
       history("/admin/users");
       dispatch({ type: DELETE_USER_RESET });
     }
@@ -119,7 +101,6 @@ const UsersList = () => {
 
   return (
     <Fragment>
-      <ToastContainer/>
       <MetaData title={"All Users"} />
       <div className="row">
         <div className="col-12 col-md-2">

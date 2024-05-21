@@ -34,16 +34,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(getProducts(keyword, currentPage, price, rating));
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
     }
   }, [dispatch, keyword, currentPage, price, rating, error]);
 
@@ -159,8 +150,6 @@ const Home = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
-
       {loading ? (
         <Loader />
       ) : (

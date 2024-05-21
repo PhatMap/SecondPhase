@@ -3,7 +3,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -40,30 +40,12 @@ const UpdateUser = () => {
     }
 
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      toast.error("User updated successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("User updated successfully");
 
       history("/admin/users");
 
@@ -86,7 +68,6 @@ const UpdateUser = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
       <MetaData title={`Update User`} />
       <div className="row">
         <div className="col-12 col-md-2">

@@ -17,12 +17,18 @@ const productSchema = new mongoose.Schema({
       required: [true, "please enter color hex"],
     },
   },
-  
+
   price: {
     type: Number,
     required: [true, "please enter product price"],
     maxLength: [5, "Product price can not exceed 5 characters"],
     default: 0.0,
+    validate: {
+      validator: function (value) {
+        return value >= 0;
+      },
+      message: "Product price cannot be negative",
+    },
   },
   description: {
     type: String,
@@ -44,32 +50,21 @@ const productSchema = new mongoose.Schema({
       },
     },
   ],
-  sizes: [{
-    type: String,
-    required: false,
-    enum: {
-      values: [
-        "XS",
-        "S",
-        "M",
-        "L",
-        "XL",
-        "XXL",
-      ],
-      message: "Please select correct size for product",
+  sizes: [
+    {
+      type: String,
+      required: false,
+      enum: {
+        values: ["XS", "S", "M", "L", "XL", "XXL"],
+        message: "Please select correct size for product",
+      },
     },
-  }],
+  ],
   category: {
     type: String,
     required: [true, "please select category for this product"],
     enum: {
-      values: [
-        "Trousers",
-        "Shirt",
-        "Dress",
-        "Shoe",
-        "Belt",
-      ],
+      values: ["Trousers", "Shirt", "Dress", "Shoe", "Belt"],
       message: "Please select correct category for product",
     },
   },
@@ -82,6 +77,12 @@ const productSchema = new mongoose.Schema({
     required: [true, "please enter product stock"],
     maxLength: [5, "Product stock can not exceed 5 characters"],
     default: 0,
+    validate: {
+      validator: function (value) {
+        return value >= 0;
+      },
+      message: "Product price cannot be negative",
+    },
   },
   numOfReviews: {
     type: Number,
@@ -115,7 +116,7 @@ const productSchema = new mongoose.Schema({
   },
   createAt: {
     type: Date,
-    default: Date.now, 
+    default: Date.now,
   },
 });
 

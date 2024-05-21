@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 
 import MetaData from "../layout/MetaData";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -36,30 +36,12 @@ const UpdateProfile = () => {
     }
 
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      toast.success("User updated successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("User updated successfully");
       dispatch(loadUser());
 
       history("/me");
@@ -94,7 +76,6 @@ const UpdateProfile = () => {
   };
   return (
     <Fragment>
-      <ToastContainer />
       <MetaData title={"Update Profile"} />
 
       <div className="profile-update-container">

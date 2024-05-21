@@ -5,7 +5,7 @@ import { MDBDataTable } from "mdbreact";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { myOrders, clearErrors } from "../../actions/orderActions";
@@ -19,16 +19,7 @@ const ListOrders = () => {
     dispatch(myOrders());
 
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
   }, [dispatch, error]);
@@ -90,7 +81,6 @@ const ListOrders = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
       <MetaData title={"My Orders"} />
 
       <h1 className="my-5">My Orders</h1>

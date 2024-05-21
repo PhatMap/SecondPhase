@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaBars } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logout } from "../../actions/userActions";
 import Search from "./Search";
@@ -53,16 +53,7 @@ const Header = () => {
   const categories = ["Trousers", "Shirt", "Dress", "Shoe", "Belt"];
 
   const logoutHandler = () => {
-    toast.error("Logged out successfully", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    toast.error("Logged out successfully");
     dispatch(logout());
   };
   useEffect(() => {
@@ -97,7 +88,6 @@ const Header = () => {
   return (
     <Fragment>
       <nav className={isSticky ? "Header" : ""}>
-        <ToastContainer />
         <div className="Header-container">
           <div className="Header-container-right">
             <Link to="/" style={{ textDecoration: "none" }}>

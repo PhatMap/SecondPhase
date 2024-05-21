@@ -6,7 +6,7 @@ import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import Sidebar from "./Sidebar";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -29,44 +29,17 @@ const ProductsList = () => {
     dispatch(getAdminProducts());
 
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (deleteError) {
-      toast.error(deleteError, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(deleteError);
       dispatch(clearErrors());
     }
 
     if (isDeleted) {
-      toast.error("Product deleted successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Product deleted successfully");
       history("/admin/products");
       dispatch({ type: DELETE_PRODUCT_RESET });
     }
@@ -123,7 +96,6 @@ const ProductsList = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
       <MetaData title={"All Products"} />
       <div className="row">
         <div className="col-12 col-md-2">

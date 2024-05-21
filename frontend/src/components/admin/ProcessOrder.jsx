@@ -5,7 +5,7 @@ import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import Sidebar from "./Sidebar";
 
-import {  ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -38,30 +38,12 @@ const ProcessOrder = () => {
     dispatch(getOrderDetails(orderId));
 
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      toast.success("Order updated successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("Order updated successfully");
       dispatch({ type: UPDATE_ORDER_RESET });
     }
   }, [dispatch, error, isUpdated, orderId]);
@@ -84,7 +66,7 @@ const ProcessOrder = () => {
     
     return (
       <div className="order-progress-container">
-        <div className="progress-track"></div> {/* Thêm phần tử này để tạo thanh ngang */}
+        <div className="progress-track"></div> 
           {steps.map((step, index) => (
             <div key={step} className={`progress-step ${index <= currentStepIndex ? 'active' : ''}`}>
               {index <= currentStepIndex ? (
@@ -101,7 +83,6 @@ const ProcessOrder = () => {
 
   return (
     <Fragment>
-      <ToastContainer/>
       <MetaData title={`Process Order # ${order && order._id}`} />
       <div className="row">
         <div className="col-12 col-md-2">

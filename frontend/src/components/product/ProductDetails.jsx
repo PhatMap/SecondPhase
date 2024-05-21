@@ -4,7 +4,7 @@ import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
 import ListReviews from "../review/ListReviews";
 
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -46,44 +46,17 @@ const ProductDetails = () => {
     dispatch(getProductDetails(id));
 
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (reviewError) {
-      toast.error(reviewError, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(reviewError);
       dispatch(clearErrors());
     }
 
     if (success) {
-      toast.success("Reivew posted successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("Reivew posted successfully");
       dispatch({ type: NEW_REVIEW_RESET });
     }
   }, [dispatch, error, id, reviewError, success]);
@@ -118,16 +91,7 @@ const ProductDetails = () => {
         product.colors.colorHex
       )
     );
-    toast.success("Item Added to Cart", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    toast.success("Item Added to Cart");
   };
 
   const increaseQty = () => {
@@ -205,7 +169,6 @@ const ProductDetails = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
       {loading ? (
         <Loader />
       ) : (

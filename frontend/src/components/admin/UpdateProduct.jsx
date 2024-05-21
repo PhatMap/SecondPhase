@@ -3,8 +3,9 @@ import React, { Fragment, useState, useEffect } from "react";
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateProduct,
@@ -13,7 +14,6 @@ import {
 } from "../../actions/productActions";
 import { UPDATE_PRODUCT_RESET } from "../../constants/productConstants";
 import { useNavigate, useParams } from "react-router-dom";
-import { set } from "mongoose";
 
 const UpdateProduct = () => {
   const history = useNavigate();
@@ -81,45 +81,20 @@ const UpdateProduct = () => {
     }
 
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (updateError) {
-      toast.error(updateError, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(updateError);
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
       history("/admin/products");
-      toast.success("Product updated successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+
+      toast.success("Product updated successfully");
+
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
   }, [dispatch, error, isUpdated, updateError, product, productId]);
@@ -195,19 +170,17 @@ const UpdateProduct = () => {
         reader.readAsDataURL(file);
       });
 
-      setImages(newImages); // Update images state only if new files were selected
+      setImages(newImages);
     }
   };
 
   const handleColorNameChange = (e) => {
     setColorName(e.target.value);
-    // Reset hex value when color name changes
     setColorHex("");
   };
 
   return (
     <Fragment>
-      <ToastContainer />
       <MetaData title={"Update Product"} />
       <div className="row">
         <div className="col-12 col-md-2">
@@ -237,17 +210,27 @@ const UpdateProduct = () => {
 
                 <div className="form-group">
                   <div className="color-display-container d-flex align-items-center mb-3">
-                    <label htmlFor="color_name_field" style={{ marginRight: '10px', marginBottom: '0' }}>Current color:</label>
-                    <div style={{ 
-                      backgroundColor: product?.colors?.colorHex ?? 'transparent', 
-                      width: '30px', 
-                      height: '30px', 
-                      borderRadius: '50%',
-                      marginRight: '10px'
-                    }}></div>
+                    <label
+                      htmlFor="color_name_field"
+                      style={{ marginRight: "10px", marginBottom: "0" }}
+                    >
+                      Current color:
+                    </label>
+                    <div
+                      style={{
+                        backgroundColor:
+                          product?.colors?.colorHex ?? "transparent",
+                        width: "30px",
+                        height: "30px",
+                        borderRadius: "50%",
+                        marginRight: "10px",
+                      }}
+                    ></div>
                   </div>
 
-                  <label htmlFor="color_name_field" className="form-label">Color changes</label>
+                  <label htmlFor="color_name_field" className="form-label">
+                    Color changes
+                  </label>
                   <select
                     id="color_name_field"
                     className="form-control"
@@ -262,7 +245,6 @@ const UpdateProduct = () => {
                     ))}
                   </select>
                 </div>
-
 
                 {colorName && (
                   <div id="color_hex_field" className="d-flex flex-wrap">

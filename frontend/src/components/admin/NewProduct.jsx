@@ -2,12 +2,13 @@ import React, { Fragment, useState, useEffect } from "react";
 
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { newProduct, clearErrors } from "../../actions/productActions";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 import { useNavigate } from "react-router-dom";
+import { set } from "mongoose";
 
 const NewProduct = () => {
   const history = useNavigate();
@@ -40,36 +41,17 @@ const NewProduct = () => {
     { colorName: "purple", colorHex: ["#800080", "#9932CC", "#9400D3"] },
     { colorName: "pink", colorHex: ["#FFC0CB", "#FFB6C1", "#FF69B4"] },
     { colorName: "gray", colorHex: ["#808080", "#A9A9A9", "#C0C0C0"] },
-    // Add other colors as needed
   ];
 
   useEffect(() => {
     if (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (success) {
       history("/admin/products");
-      toast.success("Product created successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("Product created successfully");
       dispatch({ type: NEW_PRODUCT_RESET });
     }
     if (size) {
@@ -148,9 +130,38 @@ const NewProduct = () => {
     setSize(size);
   };
 
+  const handlePriceChange = (e) => {
+    const inputValue = e.target.value;
+
+    if (!isNaN(inputValue) && inputValue !== "") {
+      const numericValue = parseFloat(inputValue);
+      if (numericValue >= 0) {
+        setPrice(numericValue);
+      } else {
+        setPrice(-numericValue);
+      }
+    } else {
+      setPrice(0);
+    }
+  };
+
+  const handleStockChange = (e) => {
+    const inputValue = e.target.value;
+
+    if (!isNaN(inputValue) && inputValue !== "") {
+      const numericValue = parseFloat(inputValue);
+      if (numericValue >= 0) {
+        setStock(numericValue);
+      } else {
+        setStock(-numericValue);
+      }
+    } else {
+      setStock(0);
+    }
+  };
+
   return (
     <Fragment>
-      <ToastContainer />
       <MetaData title={"New Product"} />
       <div className="row">
         <div className="col-12 col-md-2">
@@ -252,10 +263,9 @@ const NewProduct = () => {
                   <label htmlFor="price_field">Price</label>
                   <input
                     type="text"
-                    id="price_field"
                     className="form-control"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={price < 0 ? 0 : price}
+                    onChange={(e) => handlePriceChange(e)}
                   />
                 </div>
 
@@ -324,11 +334,11 @@ const NewProduct = () => {
                 <div className="form-group">
                   <label htmlFor="stock_field">Stock</label>
                   <input
-                    type="number"
+                    type="text"
                     id="stock_field"
                     className="form-control"
                     value={stock}
-                    onChange={(e) => setStock(e.target.value)}
+                    onChange={(e) => handleStockChange(e)}
                   />
                 </div>
 
