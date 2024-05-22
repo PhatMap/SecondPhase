@@ -42,7 +42,7 @@ export const getProducts =
       dispatch({ type: ALL_PRODUCTS_REQUEST });
 
       let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&ratings[gte]=${rating}`;
-      
+
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -92,6 +92,25 @@ export const getProductsByCategory =
     }
   };
 
+export const uploadImages = (image) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const { data } = await axios.post(
+      `/api/v1/admin/uploadImages`,
+      image,
+      config
+    );
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const newProduct = (productData) => async (dispatch) => {
   try {
     dispatch({ type: NEW_PRODUCT_REQUEST });
@@ -101,7 +120,6 @@ export const newProduct = (productData) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-
     const { data } = await axios.post(
       `/api/v1/admin/product/new`,
       productData,
@@ -279,4 +297,3 @@ export const clearErrors = () => async (dispatch) => {
     type: CLEAR_ERRORS,
   });
 };
-

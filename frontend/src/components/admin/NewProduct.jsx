@@ -5,30 +5,54 @@ import Sidebar from "./Sidebar";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { newProduct, clearErrors } from "../../actions/productActions";
+import {
+  newProduct,
+  clearErrors,
+  uploadImages,
+} from "../../actions/productActions";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 import { useNavigate } from "react-router-dom";
 import { set } from "mongoose";
+import axios from "axios";
 
 const NewProduct = () => {
   const history = useNavigate();
-  const [name, setName] = useState("");
-  const [colorName, setColorName] = useState("");
+  const dispatch = useDispatch();
 
-  const [colorHex, setColorHex] = useState("");
-
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
-  const [sizes, setSizes] = useState([]);
+  const [name, setName] = useState("Test Product");
+  const [colorName, setColorName] = useState("red");
+  const [colorHex, setColorHex] = useState("#E60000");
+  const [price, setPrice] = useState(19);
+  const [description, setDescription] = useState("AAA");
+  const [sizes, setSizes] = useState(["XS"]);
   const [size, setSize] = useState("");
-  const [category, setCategory] = useState("");
-  const [stock, setStock] = useState(0);
-  const [seller, setSeller] = useState("");
+  const [category, setCategory] = useState("Trousers");
+  const [stock, setStock] = useState(10);
+  const [seller, setSeller] = useState("Phat");
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
+
+  // const [name, setName] = useState("");
+  // const [colorName, setColorName] = useState("");
+  // const [colorHex, setColorHex] = useState("");
+  // const [price, setPrice] = useState(0);
+  // const [description, setDescription] = useState("");
+  // const [sizes, setSizes] = useState([]);
+  // const [size, setSize] = useState("");
+  // const [category, setCategory] = useState("");
+  // const [stock, setStock] = useState(0);
+  // const [seller, setSeller] = useState("");
+  // const [images, setImages] = useState([]);
+  // const [imagesPreview, setImagesPreview] = useState([]);
+
+  const [emptyPrice, setEmptyPrice] = useState(false);
+  const [emptyStock, setEmptyStock] = useState(false);
+  const [emptyName, setEmptyName] = useState(false);
+  const [emptyDescription, setEmptyDescription] = useState(false);
+  const [emptyCategory, setEmptyCategory] = useState(false);
+
   const categories = ["Trousers", "Shirt", "Dress", "Shoe", "Belt"];
   const sizeType = ["XS", "S", "M", "L", "XL", "XXL"];
-  const dispatch = useDispatch();
   const { loading, error, success } = useSelector((state) => state.newProduct);
   const colors = [
     { colorName: "black", colorHex: ["#222222", "#111111", "#000000"] },
@@ -69,8 +93,33 @@ const NewProduct = () => {
     setSizes((oldArray) => [...oldArray, size]);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+
+    if (
+      name === "" ||
+      price === 0 ||
+      description === "" ||
+      category === "" ||
+      stock === 0
+    ) {
+      if (name === "") {
+        setEmptyName(true);
+      }
+      if (price === 0) {
+        setEmptyPrice(true);
+      }
+      if (description === "") {
+        setEmptyDescription(true);
+      }
+      if (category === "") {
+        setEmptyCategory(true);
+      }
+      if (stock === 0) {
+        setEmptyStock(true);
+      }
+      return toast.error("Chưa điền đủ thông tin sản phẩm");
+    }
 
     const formData = new FormData();
     formData.set("name", name);
@@ -86,9 +135,22 @@ const NewProduct = () => {
       formData.append(`sizes[${index}]`, size);
     });
 
+    let cloudinaryImages = [];
+
     images.forEach((image) => {
-      formData.append("images", image);
+      const upload = new FormData();
+      upload.append("images", image);
+      cloudinaryImages.push(dispatch(uploadImages(upload)));
     });
+
+    const cloudinaryResult = await Promise.all(cloudinaryImages);
+    let imagesLinks = [];
+
+    cloudinaryResult.forEach((result) => {
+      imagesLinks.push(result.image);
+    });
+
+    formData.set("images", JSON.stringify(imagesLinks));
 
     dispatch(newProduct(formData));
   };
@@ -132,6 +194,7 @@ const NewProduct = () => {
 
   const handlePriceChange = (e) => {
     const inputValue = e.target.value;
+    setEmptyPrice(false);
 
     if (!isNaN(inputValue) && inputValue !== "") {
       const numericValue = parseFloat(inputValue);
@@ -147,6 +210,7 @@ const NewProduct = () => {
 
   const handleStockChange = (e) => {
     const inputValue = e.target.value;
+    setEmptyStock(false);
 
     if (!isNaN(inputValue) && inputValue !== "") {
       const numericValue = parseFloat(inputValue);
@@ -176,17 +240,33 @@ const NewProduct = () => {
                 onSubmit={submitHandler}
                 encType="multipart/form-data"
               >
-                <h1 className="mb-4">New Product</h1>
+                <h1 className="mb-4">Thêm sản phẩm</h1>
 
                 <div className="form-group">
-                  <label htmlFor="name_field">Name</label>
+                  <label htmlFor="name_field">Tên sản phẩm</label>
                   <input
                     type="text"
                     id="name_field"
-                    className="form-control"
+                    className={`form-control ${emptyName ? "invalid" : ""}`}
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => {
+                      setEmptyName(false);
+                      setName(e.target.value);
+                    }}
                   />
+                  {emptyName ? (
+                    <p
+                      style={{
+                        fontWeight: "normal",
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Sản phẩm chưa có tên
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="form-group">
@@ -260,24 +340,55 @@ const NewProduct = () => {
                   </div>
                 )}
                 <div className="form-group">
-                  <label htmlFor="price_field">Price</label>
+                  <label htmlFor="price_field">Giá</label>
                   <input
                     type="text"
-                    className="form-control"
+                    className={`form-control ${emptyPrice ? "invalid" : ""}`}
                     value={price < 0 ? 0 : price}
                     onChange={(e) => handlePriceChange(e)}
                   />
+                  {emptyPrice ? (
+                    <p
+                      style={{
+                        fontWeight: "normal",
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Sản phẩm chưa có giá
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="description_field">Description</label>
+                  <label htmlFor="description_field">Mô tả</label>
                   <textarea
-                    className="form-control"
+                    className={`form-control ${
+                      emptyDescription ? "invalid" : ""
+                    }`}
                     id="description_field"
                     rows="8"
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(e) => {
+                      setEmptyDescription(false);
+                      setDescription(e.target.value);
+                    }}
                   ></textarea>
+                  {emptyDescription ? (
+                    <p
+                      style={{
+                        fontWeight: "normal",
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Sản phẩm chưa có mô tả
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="form-group">
@@ -312,34 +423,61 @@ const NewProduct = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="category_field">Category</label>
+                  <label htmlFor="category_field">Danh mục</label>
                   <select
-                    className="form-control"
+                    className={`form-control ${emptyCategory ? "invalid" : ""}`}
                     id="category_field"
                     value={category}
                     onChange={(e) => {
+                      setEmptyCategory(false);
                       if (e.target.value !== "") {
                         setCategory(e.target.value);
                       }
                     }}
                   >
-                    <option value="">Select a catagory</option>
+                    <option value="">Chọn một danh mục</option>
                     {categories.map((category) => (
                       <option key={category} value={category}>
                         {category}
                       </option>
                     ))}
                   </select>
+                  {emptyCategory ? (
+                    <p
+                      style={{
+                        fontWeight: "normal",
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Sản phẩm chưa chọn danh mục
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="stock_field">Stock</label>
+                  <label htmlFor="stock_field">Số lượng</label>
                   <input
                     type="text"
                     id="stock_field"
-                    className="form-control"
+                    className={`form-control ${emptyStock ? "invalid" : ""}`}
                     value={stock}
                     onChange={(e) => handleStockChange(e)}
                   />
+                  {emptyStock ? (
+                    <p
+                      style={{
+                        fontWeight: "normal",
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Sản phẩm chưa có số lượng
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="form-group">

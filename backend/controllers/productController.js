@@ -4,13 +4,10 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const APIFeatures = require("../utils/apiFeatures");
 const cloudinary = require("cloudinary");
 
-exports.newProduct = catchAsyncErrors(async (req, res, next) => {
-  let images = [];
-  if (typeof req.body.images === "string") {
-    images.push(req.body.images);
-  } else {
-    images = req.body.images;
-  }
+exports.uploadImages = catchAsyncErrors(async (req, res, next) => {
+  let images = Array.isArray(req.body.images)
+    ? req.body.images
+    : [req.body.images];
 
   let imagesLinks = [];
 
@@ -24,8 +21,18 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
       url: result.secure_url,
     });
   }
+  const image = imagesLinks[0];
 
-  req.body.images = imagesLinks;
+  res.status(201).json({
+    success: true,
+    image,
+  });
+});
+
+exports.newProduct = catchAsyncErrors(async (req, res, next) => {
+  const valueArray = JSON.parse(req.body.images);
+
+  req.body.images = valueArray;
   req.body.user = req.user.id;
 
   const product = await Product.create(req.body);
@@ -221,7 +228,9 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
-  const products = await Product.find();
+  const apiFeatures = new APIFeatures(Product.find(), req.query).sort();
+
+  const products = await apiFeatures.query;
 
   res.status(200).json({
     success: true,

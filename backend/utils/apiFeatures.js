@@ -38,23 +38,16 @@ class APIFeatures {
     this.query = this.query.limit(resPerPage).skip(skip);
     return this;
   }
-  
 
   sort() {
     if (this.queryStr.sort) {
-      const sortBy = this.queryStr.sort.split(',').join(' ');
+      const sortBy = this.queryStr.sort.split(",").join(" ");
       this.query = this.query.sort(sortBy);
     } else {
-      // Nếu không có trường sort được chỉ định, mặc định sắp xếp theo createdAt giảm dần
-     this.query.sort({createAt: -1});
+      this.query = this.query.sort({ createAt: -1 });
     }
     return this;
   }
-  
-  
-
-  
-  
 }
 
 module.exports = APIFeatures;

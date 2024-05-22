@@ -12,12 +12,17 @@ const {
   deleteReview,
   getAdminProducts,
   getProductsByCategory,
+  uploadImages,
 } = require("../controllers/productController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
 
 router
   .route("/admin/product/new")
   .post(isAuthenticatedUser, authorizeRoles("admin"), newProduct);
+
+router
+  .route("/admin/uploadImages")
+  .post(isAuthenticatedUser, authorizeRoles("admin"), uploadImages);
 
 router
   .route("/admin/product/:id")
@@ -28,8 +33,6 @@ router.route("/products").get(getProducts);
 router.route("/products/:category").get(getProductsByCategory);
 router.route("/product/:id").get(getSingleProduct);
 router.route("/admin/products").get(getAdminProducts);
-
-
 
 router.route("/review").put(isAuthenticatedUser, createProductReview);
 router.route("/reviews").get(isAuthenticatedUser, getProductReviews);
