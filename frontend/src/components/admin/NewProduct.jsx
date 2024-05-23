@@ -11,9 +11,10 @@ import {
   uploadImages,
 } from "../../actions/productActions";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { set } from "mongoose";
 import axios from "axios";
+import Back from "../layout/Back";
 
 const NewProduct = () => {
   const history = useNavigate();
@@ -224,6 +225,25 @@ const NewProduct = () => {
     }
   };
 
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
+    const files = e.dataTransfer.files;
+    onChange({ target: { files } });
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.add("hover");
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
+  };
+
   return (
     <Fragment>
       <MetaData title={"New Product"} />
@@ -236,11 +256,20 @@ const NewProduct = () => {
           <Fragment>
             <div className="wrapper my-5">
               <form
-                className="shadow-lg"
+                className="new-product-form"
                 onSubmit={submitHandler}
                 encType="multipart/form-data"
               >
-                <h1 className="mb-4">Thêm sản phẩm</h1>
+                <Back />
+                <h1
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    fontSize: "25px",
+                  }}
+                >
+                  Thêm sản phẩm
+                </h1>
 
                 <div className="form-group">
                   <label htmlFor="name_field">Tên sản phẩm</label>
@@ -492,19 +521,31 @@ const NewProduct = () => {
                 </div>
 
                 <div className="form-group">
-                  <label>Images</label>
+                  <label>Ảnh </label>
 
-                  <div className="custom-file">
-                    <input
-                      type="file"
-                      name="product_images"
-                      className="custom-file-input"
-                      id="customFile"
-                      onChange={onChange}
-                      multiple
-                    />
-                    <label className="custom-file-label" htmlFor="customFile">
-                      Choose Images
+                  <div className="">
+                    <label
+                      className="upload-form"
+                      onDrop={handleDrop}
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                    >
+                      <input
+                        type="file"
+                        name="images"
+                        onChange={onChange}
+                        multiple
+                        hidden
+                      />
+                      <i
+                        class="fa fa-cloud-upload"
+                        aria-hidden="true"
+                        style={{ fontSize: "30px" }}
+                      ></i>
+                      <p>
+                        <strong>Kéo Thả </strong>hoặc <strong>Nhấn </strong>
+                        để đưa ảnh lên
+                      </p>
                     </label>
                   </div>
 
