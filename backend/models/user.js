@@ -16,10 +16,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: [validator.isEmail, "Please enter valid email address"],
   },
-  phone: {
-    type: String,
-    required: false,
-  },
+  
   password: {
     type: String,
     required: [true, "Please enter your password"],
@@ -43,7 +40,7 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: false,
     },
-    Orderphone: {
+    phone: {
       type: String,
       required: false,
     },
@@ -62,10 +59,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
-
-  
-
-
   createAt: {
     type: Date,
     default: Date.now,

@@ -22,13 +22,7 @@ const Register = () => {
   const [selectedAddressInfo, setSelectedAddressInfo] = useState(null);
 
   const isCompleteAddress = (address) => {
-    if (
-      address &&
-      address.province &&
-      address.district &&
-      address.town &&
-      address.location
-    ) {
+    if (address && address.province && address.district && address.town && address.location) {
       return (
         address.province.trim() !== "" &&
         address.district.trim() !== "" &&
@@ -38,53 +32,43 @@ const Register = () => {
     }
     return false;
   };
+
   const handleAddressChange = (key, value) => {
-    // Tạo một bản sao của địa chỉ hiện tại
     const updatedAddress = [...user.address];
-    // Cập nhật giá trị của trường key trong địa chỉ hiện tại
     updatedAddress[0][key] = value;
 
-    // Cập nhật state của user với địa chỉ mới
     setUser((prevState) => ({
       ...prevState,
       address: updatedAddress,
     }));
 
-    // Kiểm tra xem địa chỉ đã hoàn chỉnh hay chưa
-    const complete = isCompleteAddress(user.address[0]); // Truyền vào địa chỉ hiện tại
+    const complete = isCompleteAddress(user.address[0]);
 
-    // Cập nhật trạng thái của addressSelected
     setAddressSelected(complete);
 
-    // Nếu địa chỉ chưa hoàn chỉnh và có trường nào đó trống, hiển thị thông báo lỗi
     if (!complete && value.trim() === "") {
       setFormError("Vui lòng chọn địa chỉ");
     } else {
-      setFormError(""); // Xóa thông báo lỗi nếu tất cả các trường đã được nhập
+      setFormError("");
     }
   };
 
   const [user, setUser] = useState({
     name: "",
     email: "",
-    phone: "",
     password: "",
     confirmPassword: "",
-    address: [{ province: "", district: "", town: "", location: "" }],
+    address: [{ province: "", district: "", town: "", location: "", phone: "" }],
   });
 
-  const { name, email, phone, password, confirmPassword, address } = user;
+  const { name, email, password, confirmPassword, address } = user;
 
   const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState(
-    "/images/default_avatar.jpg"
-  );
+  const [avatarPreview, setAvatarPreview] = useState("/images/default_avatar.jpg");
 
   const dispatch = useDispatch();
 
-  const { isAuthenticated, error, loading } = useSelector(
-    (state) => state.auth
-  );
+  const { isAuthenticated, error, loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -98,15 +82,16 @@ const Register = () => {
   }, [dispatch, isAuthenticated, error, history]);
 
   const isValidPhoneNumber = (phone) => {
-    const phoneRegex = /^[0-9]{10}$/; // Adjust regex as needed
+    const phoneRegex = /^[0-9]{10}$/;
     return phoneRegex.test(phone);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     setErrorMessage("");
-
     setFormError("");
+
+    const phone = address[0].phone;
 
     if (!name) {
       setNameError("Họ Tên Không Được Để Trống");
@@ -149,22 +134,13 @@ const Register = () => {
       return;
     }
 
-    // If any error is set, prevent form submission
-    if (
-      nameError ||
-      emailError ||
-      phoneError ||
-      passwordError ||
-      confirmPasswordError
-    ) {
+    if (nameError || emailError || phoneError || passwordError || confirmPasswordError) {
       return;
     }
 
-    // Tạo đối tượng dữ liệu để gửi đến backend
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
-    formData.append("phone", phone);
     formData.append("password", password);
     formData.append("avatar", avatar);
     address.forEach((address, index) => {
@@ -172,7 +148,7 @@ const Register = () => {
       formData.append(`address[${index}][district]`, address.district);
       formData.append(`address[${index}][town]`, address.town);
       formData.append(`address[${index}][location]`, address.location);
-      formData.append(`address[${index}][orderphone]`, phone);
+      formData.append(`address[${index}][phone]`, address.phone);
     });
 
     dispatch(register(formData))
@@ -186,33 +162,37 @@ const Register = () => {
 
   const onChange = (e) => {
     const { name, value } = e.target;
-
+  
     if (name === "avatar") {
       const reader = new FileReader();
-
+  
       reader.onload = () => {
         if (reader.readyState === 2) {
           setAvatarPreview(reader.result);
           setAvatar(reader.result);
         }
       };
-
+  
       reader.readAsDataURL(e.target.files[0]);
-    } else if (name === "phone") {
-      // Lưu giá trị vào trường phone của user state
-      setUser({ ...user, phone: value });
     } else {
-      setUser({ ...user, [name]: value });
+      setUser((prevState) => {
+        if (name === "phone") {
+          const updatedAddress = [...prevState.address];
+          address[0].phone = value;
+          return { ...prevState, address: updatedAddress };
+        } else {
+          return { ...prevState, [name]: value };
+        }
+      });
     }
-
-    // Clear any existing error messages when user starts typing in any field
+  
     switch (name) {
       case "name":
         setNameError("");
         break;
       case "email":
         setEmailError("");
-        setEmailFormatError(""); // Clear email format error message
+        setEmailFormatError("");
         break;
       case "phone":
         setPhoneError("");
@@ -227,15 +207,13 @@ const Register = () => {
         break;
     }
   };
+  
+
   return (
     <Fragment>
       <MetaData title={"Register User"} />
       <div className="register-wrapper">
-        <form
-          className="register-form-container"
-          onSubmit={submitHandler}
-          encType="multipart/form-data"
-        >
+        <form className="register-form-container" onSubmit={submitHandler} encType="multipart/form-data">
           <h1 className="register-heading">Đăng Kí</h1>
           <div className="register-form-group">
             <label htmlFor="name_field">Họ Tên</label>
@@ -248,11 +226,7 @@ const Register = () => {
               value={name}
               onChange={onChange}
             />
-            {nameError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {nameError}
-              </p>
-            )}
+            {nameError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{nameError}</p>}
           </div>
           <div className="register-form-group">
             <label htmlFor="email_field">Email</label>
@@ -265,17 +239,8 @@ const Register = () => {
               value={email}
               onChange={onChange}
             />
-            {emailError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {emailError}
-              </p>
-            )}
-
-            {emailFormatError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {emailFormatError}
-              </p>
-            )}
+            {emailError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{emailError}</p>}
+            {emailFormatError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{emailFormatError}</p>}
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           </div>
           <div className="register-form-group">
@@ -286,14 +251,10 @@ const Register = () => {
               className="register-form-control"
               placeholder="Phone"
               name="phone"
-              value={phone}
+              value={address[0].phone}
               onChange={onChange}
             />
-            {phoneError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {phoneError}
-              </p>
-            )}
+            {phoneError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{phoneError}</p>}
           </div>
           <div className="register-form-group">
             <label htmlFor="password_field">Mật Khẩu</label>
@@ -306,11 +267,7 @@ const Register = () => {
               value={password}
               onChange={onChange}
             />
-            {passwordError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {passwordError}
-              </p>
-            )}
+            {passwordError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{passwordError}</p>}
           </div>
           <div className="register-form-group">
             <label htmlFor="confirm_password_field">Nhập Lại Mật Khẩu</label>
@@ -323,20 +280,11 @@ const Register = () => {
               value={confirmPassword}
               onChange={onChange}
             />
-            {confirmPasswordError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {confirmPasswordError}
-              </p>
-            )}
+            {confirmPasswordError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{confirmPasswordError}</p>}
           </div>
-
           <div className="register-form-group">
             <Address handleAddressChange={handleAddressChange} />
-            {formError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {formError}
-              </p>
-            )}
+            {formError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{formError}</p>}
           </div>
           <div className="register-form-group">
             <label htmlFor="avatar_upload">Ảnh Đại Diện</label>
@@ -355,10 +303,7 @@ const Register = () => {
                   accept="image/*"
                   onChange={onChange}
                 />
-                <label
-                  className="register-custom-file-label"
-                  htmlFor="customFile"
-                >
+                <label className="register-custom-file-label" htmlFor="customFile">
                   Chọn Ảnh
                 </label>
               </div>
@@ -402,4 +347,5 @@ const Register = () => {
     </Fragment>
   );
 };
+
 export default Register;
