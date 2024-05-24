@@ -16,12 +16,38 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: [validator.isEmail, "Please enter valid email address"],
   },
+  phone: {
+    type: String,
+    required: false,
+  },
   password: {
     type: String,
     required: [true, "Please enter your password"],
     minLength: [6, "Your password must be longer than 6 characters"],
     select: false,
   },
+  address: [{
+    province: {
+      type: String,
+      required: false,
+    },
+    district: {
+      type: String,
+      required: false,
+    },
+    town: {
+      type: String,
+      required: false,
+    },
+    location: {
+      type: String,
+      required: false,
+    },
+    Orderphone: {
+      type: String,
+      required: false,
+    },
+  }],
   avatar: {
     public_id: {
       type: String,
@@ -36,6 +62,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+
+  
+
+
   createAt: {
     type: Date,
     default: Date.now,

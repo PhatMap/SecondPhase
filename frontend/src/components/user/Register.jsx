@@ -1,34 +1,81 @@
 import React, { Fragment, useState, useEffect } from "react";
-
 import MetaData from "../layout/MetaData";
-
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { register, clearErrors } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
+import Address from "./Address";
 
 const Register = () => {
   const history = useNavigate();
+  const [formError, setFormError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [emailFormatError, setEmailFormatError] = useState("");
+  const [addressSelected, setAddressSelected] = useState(false);
 
+
+  const [selectedAddressInfo, setSelectedAddressInfo] = useState(null);
+
+  const isCompleteAddress = (address) => {
+    if (address && address.province && address.district && address.town && address.location) {
+      return address.province.trim() !== "" &&
+             address.district.trim() !== "" &&
+             address.town.trim() !== "" &&
+             address.location.trim() !== "";
+    }
+    return false;
+  };
+  const handleAddressChange = (key, value) => {
+    // Tạo một bản sao của địa chỉ hiện tại
+    const updatedAddress = [...user.address];
+    // Cập nhật giá trị của trường key trong địa chỉ hiện tại
+    updatedAddress[0][key] = value;
+  
+    // Cập nhật state của user với địa chỉ mới
+    setUser(prevState => ({
+      ...prevState,
+      address: updatedAddress
+    }));
+  
+    // Kiểm tra xem địa chỉ đã hoàn chỉnh hay chưa
+    const complete = isCompleteAddress(user.address[0]); // Truyền vào địa chỉ hiện tại
+    
+    // Cập nhật trạng thái của addressSelected
+    setAddressSelected(complete);
+  
+    // Nếu địa chỉ chưa hoàn chỉnh và có trường nào đó trống, hiển thị thông báo lỗi
+    if (!complete && value.trim() === "") {
+      setFormError("Vui lòng chọn địa chỉ");
+    } else {
+      setFormError(""); // Xóa thông báo lỗi nếu tất cả các trường đã được nhập
+    }
+  };
+  
+  
+  
   const [user, setUser] = useState({
     name: "",
     email: "",
+    phone: "",
     password: "",
+    confirmPassword: "",
+    address: [{ province: "", district: "", town: "", location: "" }]
   });
-
-  const { name, email, password } = user;
+  
+  const { name, email, phone, password, confirmPassword,address } = user;
 
   const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState(
-    "/images/default_avatar.jpg"
-  );
+  const [avatarPreview, setAvatarPreview] = useState("/images/default_avatar.jpg");  
 
   const dispatch = useDispatch();
 
-  const { isAuthenticated, error, loading } = useSelector(
-    (state) => state.auth
-  );
+  const { isAuthenticated, error, loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -41,20 +88,95 @@ const Register = () => {
     }
   }, [dispatch, isAuthenticated, error, history]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.set("name", name);
-    formData.set("email", email);
-    formData.set("password", password);
-    formData.set("avatar", avatar);
-
-    dispatch(register(formData));
+  const isValidPhoneNumber = (phone) => {
+    const phoneRegex = /^[0-9]{10}$/; // Adjust regex as needed
+    return phoneRegex.test(phone);
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setErrorMessage(""); 
+  
+    setFormError("");
+  
+    if (!name) {
+      setNameError("Họ Tên Không Được Để Trống");
+    } else {
+      setNameError("");
+    }
+  
+    if (!email) {
+      setEmailError("Email Không Được để trống");
+    } else if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
+      setEmailError("Email Chưa đúng định dạng");
+    } else {
+      setEmailError("");
+    }
+  
+    if (!phone) {
+      setPhoneError("Số Điện Thoại Không Được Để Trống");
+    } else if (!isValidPhoneNumber(phone)) {
+      setPhoneError("Số Điện Thoại Không Đúng Định Dạng");
+    } else {
+      setPhoneError("");
+    }
+  
+    if (!password) {
+      setPasswordError("Mật Khẩu Không Được Để Trống");
+    } else {
+      setPasswordError("");
+    }
+  
+    if (!confirmPassword) {
+      setConfirmPasswordError("Nhập Lại Mật Khẩu Không Được Để Trống");
+    } else if (password !== confirmPassword) {
+      setConfirmPasswordError("Nhập Lại Mật Khẩu Không Đúng");
+    } else {
+      setConfirmPasswordError("");
+    }
+  
+    if (!addressSelected) {
+      setFormError("Vui lòng chọn địa chỉ");
+      return;
+    }
+  
+    // If any error is set, prevent form submission
+    if (nameError || emailError || phoneError || passwordError || confirmPasswordError) {
+      return;
+    }
+  
+
+  
+    // Tạo đối tượng dữ liệu để gửi đến backend
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('password', password);
+    formData.append('avatar', avatar);
+    address.forEach((address, index) => {
+      formData.append(`address[${index}][province]`, address.province);
+      formData.append(`address[${index}][district]`, address.district);
+      formData.append(`address[${index}][town]`, address.town);
+      formData.append(`address[${index}][location]`, address.location);
+      formData.append(`address[${index}][orderphone]`, phone);
+    });
+    
+   
+    dispatch(register(formData))
+      .then(() => {
+        // Register success
+      })
+      .catch((error) => {
+        setErrorMessage(error.response.data.message);
+      });
+  };
+  
+
   const onChange = (e) => {
-    if (e.target.name === "avatar") {
+    const { name, value } = e.target;
+
+    if (name === "avatar") {
       const reader = new FileReader();
 
       reader.onload = () => {
@@ -65,24 +187,46 @@ const Register = () => {
       };
 
       reader.readAsDataURL(e.target.files[0]);
+    } else if (name === "phone") {
+      // Lưu giá trị vào trường phone của user state
+      setUser({ ...user, phone: value });
     } else {
-      setUser({ ...user, [e.target.name]: e.target.value });
+      setUser({ ...user, [name]: value });
     }
-  };
 
-  return (
+    // Clear any existing error messages when user starts typing in any field
+    switch (name) {
+      case "name":
+        setNameError("");
+        break;
+      case "email":
+        setEmailError("");
+        setEmailFormatError(""); // Clear email format error message
+        break;
+      case "phone":
+        setPhoneError("");
+        break;
+      case "password":
+        setPasswordError("");
+        break;
+      case "confirmPassword":
+        setConfirmPasswordError("");
+        break;
+      default:
+        break;
+    }
+  };return (
     <Fragment>
       <MetaData title={"Register User"} />
-
       <div className="register-wrapper">
         <form
           className="register-form-container"
           onSubmit={submitHandler}
           encType="multipart/form-data"
         >
-          <h1 className="register-heading">Register</h1>
+          <h1 className="register-heading">Đăng Kí</h1>
           <div className="register-form-group">
-            <label htmlFor="name_field">Name</label>
+            <label htmlFor="name_field">Họ Tên</label>
             <input
               type="text"
               id="name_field"
@@ -92,6 +236,7 @@ const Register = () => {
               value={name}
               onChange={onChange}
             />
+            {nameError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{nameError}</p>}
           </div>
           <div className="register-form-group">
             <label htmlFor="email_field">Email</label>
@@ -104,9 +249,26 @@ const Register = () => {
               value={email}
               onChange={onChange}
             />
+           {emailError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{emailError}</p>}
+           
+            {emailFormatError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{emailFormatError}</p>}
+            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           </div>
           <div className="register-form-group">
-            <label htmlFor="password_field">Password</label>
+            <label htmlFor="phone_field">Số Điện Thoại</label>
+            <input
+              type="text"
+              id="phone_field"
+              className="register-form-control"
+              placeholder="Phone"
+              name="phone"
+              value={phone}
+              onChange={onChange}
+            />
+            {phoneError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{phoneError}</p>}
+          </div>
+          <div className="register-form-group">
+            <label htmlFor="password_field">Mật Khẩu</label>
             <input
               type="password"
               id="password_field"
@@ -116,9 +278,28 @@ const Register = () => {
               value={password}
               onChange={onChange}
             />
+            {passwordError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{passwordError}</p>}
           </div>
           <div className="register-form-group">
-            <label htmlFor="avatar_upload">Avatar</label>
+            <label htmlFor="confirm_password_field">Nhập Lại Mật Khẩu</label>
+            <input
+              type="password"
+              id="confirm_password_field"
+              className="register-form-control"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={onChange}
+            />
+            {confirmPasswordError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{confirmPasswordError}</p>}
+          </div>
+
+          <div className="register-form-group">
+          <Address handleAddressChange={handleAddressChange} />
+          {formError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{formError}</p>}
+          </div>
+          <div className="register-form-group">
+            <label htmlFor="avatar_upload">Ảnh Đại Diện</label>
             <div className="d-flex align-items-center">
               <div>
                 <figure className="register-avatar">
@@ -134,11 +315,8 @@ const Register = () => {
                   accept="image/*"
                   onChange={onChange}
                 />
-                <label
-                  className="register-custom-file-label"
-                  htmlFor="customFile"
-                >
-                  Choose Avatar
+                <label className="register-custom-file-label" htmlFor="customFile">
+                  Chọn Ảnh
                 </label>
               </div>
             </div>
@@ -149,12 +327,39 @@ const Register = () => {
             className="register-btn"
             disabled={loading ? true : false}
           >
-            REGISTER
+
+            
+            Đăng Kí
           </button>
+          {user.address.map((address, index) => (
+  <div className="address-info-table" key={index}>
+    <h2>Thông Tin Địa Chỉ {index + 1}</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td>Tỉnh/Thành phố:</td>
+          <td>{address.province}</td>
+        </tr>
+        <tr>
+          <td>Quận/Huyện:</td>
+          <td>{address.district}</td>
+        </tr>
+        <tr>
+          <td>Phường/Xã:</td>
+          <td>{address.town}</td>
+        </tr>
+        <tr>
+          <td>Địa chỉ chi tiết:</td>
+          <td>{address.location}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+))}
+          
         </form>
       </div>
     </Fragment>
   );
-};
-
+}  
 export default Register;

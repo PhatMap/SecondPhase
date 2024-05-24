@@ -13,7 +13,14 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     crop: "scale",
   });
 
-  const { name, email, password } = req.body;
+  const { name, email, phone, password } = req.body;
+  const address = [{
+    province: req.body['address[0][province]'],
+    district: req.body['address[0][district]'],
+    town: req.body['address[0][town]'],
+    location: req.body['address[0][location]'],
+    orderphone: req.body['address[0][orderphone]']
+  }];
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     return res.status(400).json({
@@ -24,7 +31,9 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.create({
     name,
     email,
+    phone,
     password,
+    address,
     avatar: {
       public_id: result.public_id,
       url: result.secure_url,
@@ -81,10 +90,12 @@ exports.googleLoginUser = catchAsyncErrors(async (req, res, next) => {
       name,
       email,
       password,
+      phone: "", 
       avatar: {
         public_id: googleId,
         url: avatar,
       },
+      address: [],
     });
   }
 
