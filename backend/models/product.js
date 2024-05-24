@@ -7,22 +7,9 @@ const productSchema = new mongoose.Schema({
     trim: true,
     maxLength: [100, "Product name can not exceed 100 characters"],
   },
-  colors: {
-    colorName: {
-      type: String,
-      required: [true, "please enter color name"],
-    },
-    colorHex: {
-      type: String,
-      required: [true, "please enter color hex"],
-    },
-  },
-
   price: {
     type: Number,
     required: [true, "please enter product price"],
-    maxLength: [5, "Product price can not exceed 5 characters"],
-    default: 0.0,
     validate: {
       validator: function (value) {
         return value >= 0;
@@ -50,38 +37,67 @@ const productSchema = new mongoose.Schema({
       },
     },
   ],
-  sizes: [
+  variants: [
     {
-      type: String,
-      required: false,
-      enum: {
-        values: ["XS", "S", "M", "L", "XL", "XXL"],
-        message: "Please select correct size for product",
+      name: {
+        type: String,
+        required: true,
+      },
+      size: {
+        type: String,
+        required: true,
+      },
+      image: {
+        public_id: {
+          type: String,
+          required: true,
+        },
+        url: {
+          type: String,
+          required: true,
+        },
+      },
+      price: {
+        type: Number,
+        required: [true, "please enter product price"],
+        validate: {
+          validator: function (value) {
+            return value >= 0;
+          },
+          message: "Product price cannot be negative",
+        },
+      },
+      stock: {
+        type: Number,
+        required: true,
+        maxLength: [5, "Product stock can not exceed 5 characters"],
+        default: 0,
+        validate: {
+          validator: function (value) {
+            return value >= 0;
+          },
+          message: "Product stock cannot be negative",
+        },
       },
     },
   ],
+  totalStock: {
+    type: Number,
+    required: true,
+    default: 0,
+    validate: {
+      validator: function (value) {
+        return value >= 0;
+      },
+      message: "Product total stock cannot be negative",
+    },
+  },
   category: {
     type: String,
     required: [true, "please select category for this product"],
     enum: {
       values: ["Trousers", "Shirt", "Dress", "Shoe", "Belt"],
       message: "Please select correct category for product",
-    },
-  },
-  seller: {
-    type: String,
-    requiredd: [true, "Please enter product seller"],
-  },
-  stock: {
-    type: Number,
-    required: [true, "please enter product stock"],
-    maxLength: [5, "Product stock can not exceed 5 characters"],
-    default: 0,
-    validate: {
-      validator: function (value) {
-        return value >= 0;
-      },
-      message: "Product price cannot be negative",
     },
   },
   numOfReviews: {

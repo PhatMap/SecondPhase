@@ -31,7 +31,9 @@ exports.uploadImages = catchAsyncErrors(async (req, res, next) => {
 
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
   const valueArray = JSON.parse(req.body.images);
+  const variants = JSON.parse(req.body.variants);
 
+  req.body.variants = variants;
   req.body.images = valueArray;
   req.body.user = req.user.id;
 

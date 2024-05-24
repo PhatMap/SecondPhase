@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
 
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
@@ -11,62 +11,44 @@ import {
   uploadImages,
 } from "../../actions/productActions";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
-import { Link, useNavigate } from "react-router-dom";
-import { set } from "mongoose";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Back from "../layout/Back";
+import Variant from "./Variant";
+import AddVariant from "./AddVariant";
 
 const NewProduct = () => {
   const history = useNavigate();
   const dispatch = useDispatch();
 
   const [name, setName] = useState("Test Product");
-  const [colorName, setColorName] = useState("red");
-  const [colorHex, setColorHex] = useState("#E60000");
   const [price, setPrice] = useState(19);
   const [description, setDescription] = useState("AAA");
-  const [sizes, setSizes] = useState(["XS"]);
+  const [sizes, setSizes] = useState([]);
   const [size, setSize] = useState("");
   const [category, setCategory] = useState("Trousers");
-  const [stock, setStock] = useState(10);
-  const [seller, setSeller] = useState("Phat");
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
+  const [variants, setVariants] = useState([]);
+  const [show, setShow] = useState(false);
 
   // const [name, setName] = useState("");
-  // const [colorName, setColorName] = useState("");
-  // const [colorHex, setColorHex] = useState("");
   // const [price, setPrice] = useState(0);
   // const [description, setDescription] = useState("");
   // const [sizes, setSizes] = useState([]);
   // const [size, setSize] = useState("");
   // const [category, setCategory] = useState("");
   // const [stock, setStock] = useState(0);
-  // const [seller, setSeller] = useState("");
   // const [images, setImages] = useState([]);
   // const [imagesPreview, setImagesPreview] = useState([]);
 
   const [emptyPrice, setEmptyPrice] = useState(false);
-  const [emptyStock, setEmptyStock] = useState(false);
   const [emptyName, setEmptyName] = useState(false);
   const [emptyDescription, setEmptyDescription] = useState(false);
   const [emptyCategory, setEmptyCategory] = useState(false);
+  const [emptyTotalStock, setEmptyTotalStock] = useState(false);
 
   const categories = ["Trousers", "Shirt", "Dress", "Shoe", "Belt"];
-  const sizeType = ["XS", "S", "M", "L", "XL", "XXL"];
   const { loading, error, success } = useSelector((state) => state.newProduct);
-  const colors = [
-    { colorName: "black", colorHex: ["#222222", "#111111", "#000000"] },
-    { colorName: "white", colorHex: ["#FFFFFF", "#F8F8F8", "#F0F0F0"] },
-    { colorName: "red", colorHex: ["#FF0000", "#E60000", "#CC0000"] },
-    { colorName: "blue", colorHex: ["#0000FF", "#0000CC", "#000099"] },
-    { colorName: "green", colorHex: ["#00FF00", "#00E600", "#00CC00"] },
-    { colorName: "yellow", colorHex: ["#FFFF00", "#FFFF33", "#FFFF66"] },
-    { colorName: "orange", colorHex: ["#FFA500", "#FF8C00", "#FF7F50"] },
-    { colorName: "purple", colorHex: ["#800080", "#9932CC", "#9400D3"] },
-    { colorName: "pink", colorHex: ["#FFC0CB", "#FFB6C1", "#FF69B4"] },
-    { colorName: "gray", colorHex: ["#808080", "#A9A9A9", "#C0C0C0"] },
-  ];
 
   useEffect(() => {
     if (error) {
@@ -97,13 +79,7 @@ const NewProduct = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if (
-      name === "" ||
-      price === 0 ||
-      description === "" ||
-      category === "" ||
-      stock === 0
-    ) {
+    if (name === "" || price === 0 || description === "" || category === "") {
       if (name === "") {
         setEmptyName(true);
       }
@@ -116,25 +92,45 @@ const NewProduct = () => {
       if (category === "") {
         setEmptyCategory(true);
       }
-      if (stock === 0) {
-        setEmptyStock(true);
-      }
       return toast.error("Chưa điền đủ thông tin sản phẩm");
     }
 
     const formData = new FormData();
     formData.set("name", name);
-    formData.set("colors[colorName]", colorName);
-    formData.set("colors[colorHex]", colorHex);
     formData.set("price", price);
     formData.set("description", description);
     formData.set("category", category);
-    formData.set("stock", stock);
-    formData.set("seller", seller);
 
-    sizes.forEach((size, index) => {
-      formData.append(`sizes[${index}]`, size);
+    let variantsImages = [];
+
+    variants.forEach((variant) => {
+      const upload = new FormData();
+      upload.append("images", variant.image);
+      variantsImages.push(dispatch(uploadImages(upload)));
     });
+
+    const variantsResult = await Promise.all(variantsImages);
+
+    const updatedVariants = [...variants];
+
+    variantsResult.forEach((result, index) => {
+      const updatedVariant = {
+        ...updatedVariants[index],
+        image: {
+          public_id: result.image.public_id,
+          url: result.image.url,
+        },
+      };
+      updatedVariants[index] = updatedVariant;
+    });
+
+    let totalStock = 0;
+    updatedVariants.forEach((variant) => {
+      totalStock += variant.stock;
+    });
+
+    formData.set("totalStock", totalStock);
+    formData.set("variants", JSON.stringify(updatedVariants));
 
     let cloudinaryImages = [];
 
@@ -145,8 +141,8 @@ const NewProduct = () => {
     });
 
     const cloudinaryResult = await Promise.all(cloudinaryImages);
-    let imagesLinks = [];
 
+    let imagesLinks = [];
     cloudinaryResult.forEach((result) => {
       imagesLinks.push(result.image);
     });
@@ -176,22 +172,27 @@ const NewProduct = () => {
     });
   };
 
-  const handleColorNameChange = (e) => {
-    setColorName(e.target.value);
-    // Reset hex value when color name changes
-    setColorHex("");
-  };
+  const updateVariant = useCallback(
+    (updatedVariant, index) => {
+      setVariants((prevVariants) => {
+        const currentVariants = [...prevVariants];
+        currentVariants[index] = updatedVariant;
+        return currentVariants;
+      });
+    },
+    [setVariants]
+  );
 
-  const handleDeleteSize = (index) => {
-    sizes.splice(index, 1);
-  };
-
-  const ChooseSize = (size) => {
-    if (size === "") {
-      return;
-    }
-    setSize(size);
-  };
+  const removeVariant = useCallback(
+    (index) => {
+      setVariants((prevVariants) => {
+        const updatedVariants = [...prevVariants];
+        updatedVariants.splice(index, 1);
+        return updatedVariants;
+      });
+    },
+    [setVariants]
+  );
 
   const handlePriceChange = (e) => {
     const inputValue = e.target.value;
@@ -206,22 +207,6 @@ const NewProduct = () => {
       }
     } else {
       setPrice(0);
-    }
-  };
-
-  const handleStockChange = (e) => {
-    const inputValue = e.target.value;
-    setEmptyStock(false);
-
-    if (!isNaN(inputValue) && inputValue !== "") {
-      const numericValue = parseFloat(inputValue);
-      if (numericValue >= 0) {
-        setStock(numericValue);
-      } else {
-        setStock(-numericValue);
-      }
-    } else {
-      setStock(0);
     }
   };
 
@@ -243,6 +228,10 @@ const NewProduct = () => {
     e.stopPropagation();
     e.currentTarget.classList.remove("hover");
   };
+
+  useEffect(() => {
+    console.log(variants);
+  }, [variants]);
 
   return (
     <Fragment>
@@ -270,7 +259,40 @@ const NewProduct = () => {
                 >
                   Thêm sản phẩm
                 </h1>
-
+                <div className="form-group">
+                  <label htmlFor="category_field">Danh mục</label>
+                  <select
+                    className={`form-control ${emptyCategory ? "invalid" : ""}`}
+                    id="category_field"
+                    value={category}
+                    onChange={(e) => {
+                      setEmptyCategory(false);
+                      if (e.target.value !== "") {
+                        setCategory(e.target.value);
+                      }
+                    }}
+                  >
+                    <option value="">Chọn một danh mục</option>
+                    {categories.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                  {emptyCategory ? (
+                    <p
+                      style={{
+                        fontWeight: "normal",
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Sản phẩm chưa chọn danh mục
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
                 <div className="form-group">
                   <label htmlFor="name_field">Tên sản phẩm</label>
                   <input
@@ -292,99 +314,6 @@ const NewProduct = () => {
                       }}
                     >
                       Sản phẩm chưa có tên
-                    </p>
-                  ) : (
-                    ""
-                  )}
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="color_name_field">Color Name</label>
-                  <select
-                    id="color_name_field"
-                    className="form-control"
-                    value={colorName}
-                    onChange={handleColorNameChange}
-                  >
-                    <option value="">Select Color</option>
-                    {colors.map((color) => (
-                      <option key={color.colorName} value={color.colorName}>
-                        {color.colorName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {colorName && (
-                  <div id="color_hex_field" className="d-flex flex-wrap">
-                    {colors
-                      .find((color) => color.colorName === colorName)
-                      ?.colorHex.map((hex, index) => (
-                        <div
-                          key={index}
-                          style={{
-                            backgroundColor: hex,
-                            width: hex === colorHex ? "32px" : "36px",
-                            height: hex === colorHex ? "32px" : "36px",
-                            margin: "4px",
-                            cursor: "pointer",
-                            border:
-                              hex === colorHex ? "2px solid black" : "none",
-                            transition: "all 0.2s ease",
-                          }}
-                          onClick={() => setColorHex(hex)}
-                        ></div>
-                      ))}
-                  </div>
-                )}
-
-                {colorName && colorHex && (
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: "5px",
-                      }}
-                    >
-                      <div style={{ minWidth: "100px", marginRight: "10px" }}>
-                        {colorName}
-                      </div>
-                      <div
-                        style={{
-                          width: "20px",
-                          height: "20px",
-                          backgroundColor: colorHex,
-                          border: "1px solid #ddd",
-                          marginRight: "10px",
-                        }}
-                      />
-                    </div>
-                  </div>
-                )}
-                <div className="form-group">
-                  <label htmlFor="price_field">Giá</label>
-                  <input
-                    type="text"
-                    className={`form-control ${emptyPrice ? "invalid" : ""}`}
-                    value={price < 0 ? 0 : price}
-                    onChange={(e) => handlePriceChange(e)}
-                  />
-                  {emptyPrice ? (
-                    <p
-                      style={{
-                        fontWeight: "normal",
-                        color: "red",
-                        fontSize: "13px",
-                      }}
-                    >
-                      Sản phẩm chưa có giá
                     </p>
                   ) : (
                     ""
@@ -421,108 +350,65 @@ const NewProduct = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="sizes_field">Sizes</label>
-                  <div className="delete-size-container">
-                    {sizes.map((size, index) => (
-                      <div key={size} className="name-deleteBtn-container">
-                        <span>{size}</span>
-                        <button
-                          className="delete-size-btn"
-                          onClick={() => handleDeleteSize(index)}
-                        >
-                          -
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-
-                  <select
-                    className="form-control"
-                    id="sizes_field"
-                    value={size}
-                    onChange={(e) => ChooseSize(e.target.value)}
-                  >
-                    <option value="">Select and add sizes</option>
-                    {sizeType.map((size, index) => (
-                      <option key={index} value={size}>
-                        {size}
-                      </option>
-                    ))}
-                  </select>
+                  <label htmlFor="price_field">Giá cơ bản</label>
+                  <input
+                    type="text"
+                    className={`form-control ${emptyPrice ? "invalid" : ""}`}
+                    value={price < 0 ? 0 : price}
+                    onChange={(e) => handlePriceChange(e)}
+                  />
+                  {emptyPrice ? (
+                    <p
+                      style={{
+                        fontWeight: "normal",
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Sản phẩm chưa có giá
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="category_field">Danh mục</label>
-                  <select
-                    className={`form-control ${emptyCategory ? "invalid" : ""}`}
-                    id="category_field"
-                    value={category}
-                    onChange={(e) => {
-                      setEmptyCategory(false);
-                      if (e.target.value !== "") {
-                        setCategory(e.target.value);
-                      }
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "20px",
+                      alignItems: "center",
+                      marginBottom: "20px",
                     }}
                   >
-                    <option value="">Chọn một danh mục</option>
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                  {emptyCategory ? (
-                    <p
-                      style={{
-                        fontWeight: "normal",
-                        color: "red",
-                        fontSize: "13px",
+                    <label htmlFor="sizes_field">Mẫu mã</label>
+                    <button
+                      type="button"
+                      className="varient-btn"
+                      onClick={() => {
+                        setShow(true);
                       }}
                     >
-                      Sản phẩm chưa chọn danh mục
-                    </p>
-                  ) : (
-                    ""
-                  )}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="stock_field">Số lượng</label>
-                  <input
-                    type="text"
-                    id="stock_field"
-                    className={`form-control ${emptyStock ? "invalid" : ""}`}
-                    value={stock}
-                    onChange={(e) => handleStockChange(e)}
-                  />
-                  {emptyStock ? (
-                    <p
-                      style={{
-                        fontWeight: "normal",
-                        color: "red",
-                        fontSize: "13px",
-                      }}
-                    >
-                      Sản phẩm chưa có số lượng
-                    </p>
-                  ) : (
-                    ""
-                  )}
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="seller_field">Seller Name</label>
-                  <input
-                    type="text"
-                    id="seller_field"
-                    className="form-control"
-                    value={seller}
-                    onChange={(e) => setSeller(e.target.value)}
-                  />
+                      <i className="fa fa-plus"></i>Thêm
+                    </button>
+                  </div>
+                  {show && <AddVariant show={setShow} variants={setVariants} />}
+                  <div className="varient-list">
+                    {variants &&
+                      variants.map((variant, index) => (
+                        <Variant
+                          key={index}
+                          variant={variant}
+                          index={index}
+                          updateVariant={updateVariant}
+                          removeVariant={removeVariant}
+                        />
+                      ))}
+                  </div>
                 </div>
 
                 <div className="form-group">
                   <label>Ảnh </label>
-
                   <div className="">
                     <label
                       className="upload-form"
@@ -566,7 +452,7 @@ const NewProduct = () => {
                   className="new-product-btn"
                   disabled={loading ? true : false}
                 >
-                  CREATE
+                  THÊM SẢN PHẨM
                 </button>
               </form>
             </div>
