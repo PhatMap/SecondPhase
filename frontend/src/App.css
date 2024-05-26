@@ -2347,4 +2347,29 @@ ul.CTAs a {
   color: #003874;
 }
 
-/* ProductList.jsx */
+/* ProductVariant.jsx */
+.product-variant-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px;
+  border: #a1a1a1 1px solid;
+  width: auto;
+  height: 60px;
+}
+
+.product-variant-form.active {
+  border: green 2px solid;
+}
+
+.separator {
+  width: 1px;
+  height: 120%;
+  background-color: #a1a1a1;
+  margin: 10px 0;
+}
+
+.separator.active {
+  width: 2px;
+  background-color: green;
+}

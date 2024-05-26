@@ -204,7 +204,6 @@ const Color = () => {
                   style={{
                     fontSize: "24px",
                     fontWeight: "bold",
-                    color: "#333",
                     textAlign: "center",
                     textTransform: "uppercase",
                     marginLeft: "200px",

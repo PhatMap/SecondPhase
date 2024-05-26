@@ -4,7 +4,7 @@ import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
 import ListReviews from "../review/ListReviews";
 
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,15 +15,15 @@ import {
 import { addItemToCart } from "../../actions/cartActions";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 import { useParams } from "react-router-dom";
-import ProductImageZoom from "./ProductImageZoom"; // Đường dẫn phải chính xác
+import ProductImageZoom from "./ProductImageZoom";
+import ProductVariant from "./ProductVariant";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const [size, setSize] = useState("");
+  const [variant, setVariant] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const [selectedSize, setSelectedSize] = useState(null);
   const dispatch = useDispatch();
 
   const { loading, error, product } = useSelector(
@@ -61,16 +61,6 @@ const ProductDetails = () => {
     }
   }, [dispatch, error, id, reviewError, success]);
 
-  const setTheSize = (size) => {
-    if (size === selectedSize) {
-      setSelectedSize(null);
-      setSize(null);
-      return;
-    }
-    setSelectedSize(size);
-    setSize(size);
-  };
-
   const addToCart = () => {
     let newQty = quantity;
     for (let i = 0; i < cartItems.length; i++) {
@@ -82,15 +72,7 @@ const ProductDetails = () => {
         break;
       }
     }
-    dispatch(
-      addItemToCart(
-        id,
-        newQty,
-        size,
-        product.colors.colorName,
-        product.colors.colorHex
-      )
-    );
+    dispatch(addItemToCart(id, newQty));
     toast.success("Item Added to Cart");
   };
 
@@ -214,7 +196,7 @@ const ProductDetails = () => {
               <hr />
 
               <div className="detail-color">
-                <h1>Ratings:</h1>
+                <h1>Đánh giá:</h1>
                 {product?.ratings?.toFixed(1).replace(".", ",") ?? "No Ratings"}
                 <div className="rating-outer">
                   <div
@@ -223,52 +205,62 @@ const ProductDetails = () => {
                   ></div>
                 </div>
               </div>
-              <hr />
-              <div className="detail-color">
-                <h1>Color:</h1>
-                <div
-                  style={{
-                    backgroundColor: product?.colors?.colorHex ?? "transparent",
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "50%",
-                    marginRight: "10px",
-                  }}
-                ></div>
-              </div>
 
-              <hr />
-
-              <div className="detail-size">
-                <h1>Available Sizes:</h1>
-                {product &&
-                  product.sizes &&
-                  product.sizes.map((size, index) => (
-                    <button
-                      key={index}
-                      className={`size-button ${
-                        size === selectedSize ? "selected" : ""
-                      }`}
-                      onClick={() => setTheSize(size)}
-                    >
-                      {size}
-                    </button>
-                  ))}
-              </div>
               <hr />
 
               <div className="detail-description">
-                <h1 className="">Description:</h1>
+                <h1 className="">Mô tả:</h1>
                 <p>{product.description}</p>
+              </div>
+
+              <hr />
+
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "20px" }}
+              >
+                <h1>Mẫu:</h1>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "40px",
+                    flexWrap: "wrap",
+                    maxWidth: "calc(4 * (75px + 40px))",
+                  }}
+                >
+                  {product.variants && product.variants.length > 0 ? (
+                    product.variants.map((variant, index) => (
+                      <ProductVariant key={index} variant={variant} />
+                    ))
+                  ) : (
+                    <h1>Không có mẫu</h1>
+                  )}
+                </div>
               </div>
               <hr />
 
               <div className="d-flex justify-content-between align-items-center">
                 <div className="detail-color">
-                  <h1>Price:</h1>
-                  <p style={{fontSize:"30px", color:"green"}}>${product.price}</p>
+                  <h1>Giá:</h1>
+                  <p style={{ fontSize: "30px", color: "green" }}>
+                    ${product.price}
+                  </p>
                 </div>
+              </div>
 
+              <hr />
+
+              <div className="d-flex justify-content-between align-items-center">
+                <div className="detail-color">
+                  <h1>Số lượng:</h1>
+                  <p style={{ fontSize: "30px", color: "green" }}>
+                    {product.totalStock}
+                  </p>
+                </div>
+              </div>
+
+              <hr />
+
+              <div className="d-flex justify-content-between align-items-center">
                 <div className="stockCounter d-inline">
                   <span className="btn btn-danger minus" onClick={decreaseQty}>
                     -
@@ -289,18 +281,13 @@ const ProductDetails = () => {
                   type="button"
                   id="cart_btn"
                   className="btn btn-primary d-inline ml-4"
-                  disabled={product.stock === 0 || !size}
+                  disabled={product.stock === 0}
                   onClick={addToCart}
                 >
                   Add to Cart
                 </button>
               </div>
 
-              <hr />
-
-              <p id="product_seller mb-3">
-                Sold by: <strong>{product.seller}</strong>
-              </p>
               {product.reviews && product.reviews.length > 0 && (
                 <ListReviews reviews={product.reviews} />
               )}
@@ -389,10 +376,6 @@ const ProductDetails = () => {
               </div>
             </div>
           </div>
-
-          {product.reviews && product.reviews.length > 0 && (
-            <ListReviews reviews={product.reviews} />
-          )}
         </Fragment>
       )}
     </Fragment>
