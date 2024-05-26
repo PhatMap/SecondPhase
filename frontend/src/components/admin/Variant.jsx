@@ -15,11 +15,12 @@ const variant = ({
   const [size, setSize] = useState(variant.size);
   const [price, setPrice] = useState(variant.price);
   const [stock, setStock] = useState(variant.stock);
-  const [image, setImage] = useState(variant.image);
+  const [images, setImages] = useState(variant.images);
 
   const [emptyName, setEmptyName] = useState(false);
   const [emptyPrice, setEmptyPrice] = useState(false);
   const [emptyStock, setEmptyStock] = useState(false);
+  const [emptyImages, setEmptyImages] = useState(false);
 
   const handlePriceChange = (e) => {
     const inputValue = e.target.value;
@@ -56,14 +57,12 @@ const variant = ({
   const onChange = (e) => {
     const files = Array.from(e.target.files);
 
-    setImage("");
-
     files.forEach((file) => {
       const reader = new FileReader();
 
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setImage(reader.result);
+          setImages((oldArray) => [...oldArray, reader.result]);
         }
       };
 
@@ -82,7 +81,7 @@ const variant = ({
     const updatedVariant = {
       name,
       size,
-      image,
+      images,
       price,
       stock,
     };
@@ -97,17 +96,37 @@ const variant = ({
       if (stock === "") {
         setEmptyStock(true);
       }
+      if (images.length === 0) {
+        setEmptyImages(true);
+      }
       variantError(true);
     } else {
       updateVariant(updatedVariant, index);
     }
-  }, [name, image, price, stock, updateVariant, index]);
+  }, [name, images, price, stock, updateVariant, index]);
 
-  const handleRetweetClick = () => {
-    const fileInput = document.getElementById("change");
-    if (fileInput) {
-      fileInput.click();
-    }
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
+    const files = e.dataTransfer.files;
+    onChange({ target: { files } });
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.add("hover");
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
+  };
+
+  const handlerImageRemove = (index) => {
+    const newImagesFiles = images.filter((img, i) => i !== index);
+    setImages(newImagesFiles);
   };
 
   return (
@@ -153,29 +172,73 @@ const variant = ({
           </select>
         </div>
 
-        {image && (
-          <img
-            src={image.url ? image.url : image}
-            alt="Image Preview"
-            style={{ width: "50px", height: "50px" }}
-          />
-        )}
-        {image && (
-          <i
-            className="fa fa-retweet variant-retweet-btn"
-            onClick={handleRetweetClick}
+        <div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 5,
+            }}
           >
-            <label className="variant-upload-btn" hidden>
-              <input
-                id="change"
-                type="file"
-                name="image"
-                hidden
-                onChange={onChange}
-              />
-            </label>
-          </i>
-        )}
+            <div>
+              <label
+                className={`upload-form ${emptyImages ? "invalid" : ""}`}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+              >
+                <input
+                  type="file"
+                  name="images"
+                  onChange={onChange}
+                  multiple
+                  hidden
+                />
+                <i
+                  class="fa fa-cloud-upload"
+                  aria-hidden="true"
+                  style={{ fontSize: "30px" }}
+                ></i>
+                <p>
+                  <strong>Kéo Thả </strong>hoặc <strong>Nhấn </strong>
+                  để đưa ảnh lên
+                </p>
+              </label>
+            </div>
+
+            <div style={{ display: "flex", gap: "5px" }}>
+              {images &&
+                images.length > 0 &&
+                images.map((image, index) => (
+                  <div key={index}>
+                    <img
+                      src={image.url ? image.url : image}
+                      alt="Image Preview"
+                      style={{ width: "50px", height: "50px" }}
+                    />
+                    <i
+                      className="fa fa-remove variant-remove-btn"
+                      onClick={() => handlerImageRemove(index)}
+                    ></i>
+                  </div>
+                ))}
+            </div>
+          </div>
+          {emptyImages ? (
+            <p
+              style={{
+                fontWeight: "normal",
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              Mẫu chưa có ảnh
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
         <div>
           <input
             placeholder="Giá"

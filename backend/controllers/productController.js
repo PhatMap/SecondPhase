@@ -30,11 +30,9 @@ exports.uploadImages = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
-  const valueArray = JSON.parse(req.body.images);
   const variants = JSON.parse(req.body.variants);
 
   req.body.variants = variants;
-  req.body.images = valueArray;
   req.body.user = req.user.id;
 
   const product = await Product.create(req.body);
@@ -99,11 +97,9 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
-  const valueArray = JSON.parse(req.body.images);
   const variants = JSON.parse(req.body.variants);
 
   req.body.variants = variants;
-  req.body.images = valueArray;
 
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
