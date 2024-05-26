@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const variant = ({ variant, index, updateVariant, removeVariant }) => {
-  const sizeType = ["XS", "S", "M", "L", "XL", "XXL"];
+const variant = ({
+  variant,
+  index,
+  updateVariant,
+  removeVariant,
+  variantError,
+}) => {
+  const sizeType = ["XS", "S", "M", "L", "XL", "XXL", "Khác"];
 
   const [name, setName] = useState(variant.name);
   const [size, setSize] = useState(variant.size);
@@ -45,10 +53,6 @@ const variant = ({ variant, index, updateVariant, removeVariant }) => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(variant);
-  // }, [variant]);
-
   const onChange = (e) => {
     const files = Array.from(e.target.files);
 
@@ -82,8 +86,22 @@ const variant = ({ variant, index, updateVariant, removeVariant }) => {
       price,
       stock,
     };
-    updateVariant(updatedVariant, index);
-  }, [name, size, image, price, stock, updateVariant, index]);
+
+    if (name === "" || price === "" || stock === "") {
+      if (name === "") {
+        setEmptyName(true);
+      }
+      if (price === "") {
+        setEmptyPrice(true);
+      }
+      if (stock === "") {
+        setEmptyStock(true);
+      }
+      variantError(true);
+    } else {
+      updateVariant(updatedVariant, index);
+    }
+  }, [name, image, price, stock, updateVariant, index]);
 
   const handleRetweetClick = () => {
     const fileInput = document.getElementById("change");
@@ -95,33 +113,49 @@ const variant = ({ variant, index, updateVariant, removeVariant }) => {
   return (
     <div>
       <div className="variant-form">
-        <input
-          type="text"
-          id="name_field"
-          className={`form-control ${emptyName ? "invalid" : ""}`}
-          placeholder="Tên mẫu"
-          value={name}
-          onChange={(e) => {
-            setEmptyName(false);
-            setName(e.target.value);
-          }}
-        />
-        <select
-          className="variant-select"
-          value={size}
-          onChange={(e) => ChooseSize(e.target.value)}
-        >
-          <option value="">Chọn size</option>
-          {sizeType.map((size, index) => (
-            <option value={size} key={index}>
-              {size}
-            </option>
-          ))}
-        </select>
+        <div>
+          <input
+            type="text"
+            className={`form-control ${emptyName ? "invalid" : ""}`}
+            placeholder="Tên mẫu"
+            value={name}
+            onChange={(e) => {
+              setEmptyName(false);
+              setName(e.target.value);
+            }}
+          />
+          {emptyName ? (
+            <p
+              style={{
+                fontWeight: "normal",
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              Mẫu chưa có tên
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
+        <div>
+          <select
+            className="form-control"
+            value={size}
+            onChange={(e) => ChooseSize(e.target.value)}
+          >
+            <option value="">Chọn size</option>
+            {sizeType.map((size, index) => (
+              <option value={size} key={index}>
+                {size}
+              </option>
+            ))}
+          </select>
+        </div>
 
         {image && (
           <img
-            src={image}
+            src={image.url ? image.url : image}
             alt="Image Preview"
             style={{ width: "50px", height: "50px" }}
           />
@@ -142,20 +176,50 @@ const variant = ({ variant, index, updateVariant, removeVariant }) => {
             </label>
           </i>
         )}
-        <input
-          placeholder="Giá"
-          type="text"
-          className={`form-control ${emptyPrice ? "invalid" : ""}`}
-          value={price < 0 ? 0 : price}
-          onChange={(e) => handlePriceChange(e)}
-        ></input>
-        <input
-          placeholder="Số lượng"
-          type="text"
-          className={`form-control ${emptyStock ? "invalid" : ""}`}
-          value={stock < 0 ? 0 : stock}
-          onChange={(e) => handleStockChange(e)}
-        ></input>
+        <div>
+          <input
+            placeholder="Giá"
+            type="text"
+            className={`form-control ${emptyPrice ? "invalid" : ""}`}
+            value={price < 0 ? 0 : price}
+            onChange={(e) => handlePriceChange(e)}
+          ></input>
+          {emptyPrice ? (
+            <p
+              style={{
+                fontWeight: "normal",
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              Mẫu chưa có giá
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
+        <div>
+          <input
+            placeholder="Số lượng"
+            type="text"
+            className={`form-control ${emptyStock ? "invalid" : ""}`}
+            value={stock < 0 ? 0 : stock}
+            onChange={(e) => handleStockChange(e)}
+          ></input>
+          {emptyStock ? (
+            <p
+              style={{
+                fontWeight: "normal",
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              Mẫu chưa có số lượng
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
 
         <i
           className="fa fa-remove variant-remove-btn"

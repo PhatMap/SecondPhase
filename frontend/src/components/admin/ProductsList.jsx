@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 
@@ -16,10 +16,14 @@ import {
   clearErrors,
 } from "../../actions/productActions";
 import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
+import DeleteNotify from "../layout/DeleteNotify";
 
 const ProductsList = () => {
   const history = useNavigate();
   const dispatch = useDispatch();
+
+  const [show, setShow] = useState(false);
+  const [id, setId] = useState("");
 
   const { loading, error, products } = useSelector((state) => state.products);
   const {
@@ -52,8 +56,13 @@ const ProductsList = () => {
     const data = {
       columns: [
         {
-          label: "ID",
-          field: "id",
+          label: "Category",
+          field: "category",
+          sort: "asc",
+        },
+        {
+          label: "Image",
+          field: "image",
           sort: "asc",
         },
         {
@@ -67,8 +76,8 @@ const ProductsList = () => {
           sort: "asc",
         },
         {
-          label: "Stock",
-          field: "stock",
+          label: "Total Stock",
+          field: "totalStock",
           sort: "asc",
         },
         {
@@ -81,10 +90,17 @@ const ProductsList = () => {
 
     products.forEach((product) => {
       data.rows.push({
-        id: product._id,
+        category: product.category,
+        image: (
+          <img
+            src={product.images[0].url}
+            alt={product.name}
+            style={{ width: "50px", height: "50px" }}
+          />
+        ),
         name: product.name,
         price: `$${product.price}`,
-        stock: product.stock,
+        totalStock: product.totalStock,
         actions: (
           <Fragment>
             <Link
@@ -95,7 +111,10 @@ const ProductsList = () => {
             </Link>
             <button
               className="btn btn-danger py-1 px-2 ml-2"
-              onClick={() => deleteProductHandler(product._id)}
+              onClick={() => {
+                setShow(true);
+                setId(product._id);
+              }}
             >
               <i className="fa fa-trash"></i>
             </button>
@@ -131,7 +150,7 @@ const ProductsList = () => {
             ) : (
               <MDBDataTable
                 data={setProducts()}
-                className="px-3"
+                className="product-list-table"
                 bordered
                 striped
                 hover
@@ -140,6 +159,13 @@ const ProductsList = () => {
             )}
           </Fragment>
         </div>
+        {show && (
+          <DeleteNotify
+            func={deleteProductHandler}
+            paras={[id]}
+            show={setShow}
+          />
+        )}
       </div>
     </Fragment>
   );

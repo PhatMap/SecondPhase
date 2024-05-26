@@ -7,9 +7,10 @@ import { Provider } from "react-redux";
 import "./index.css";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <GoogleOAuthProvider clientId="629274107705-pppj24d559dgmpqcrkubgfqnl0hr9j4p.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
     <React.StrictMode>
       <Provider store={store}>
         <ToastContainer

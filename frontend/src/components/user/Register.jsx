@@ -19,15 +19,22 @@ const Register = () => {
   const [emailFormatError, setEmailFormatError] = useState("");
   const [addressSelected, setAddressSelected] = useState(false);
 
-
   const [selectedAddressInfo, setSelectedAddressInfo] = useState(null);
 
   const isCompleteAddress = (address) => {
-    if (address && address.province && address.district && address.town && address.location) {
-      return address.province.trim() !== "" &&
-             address.district.trim() !== "" &&
-             address.town.trim() !== "" &&
-             address.location.trim() !== "";
+    if (
+      address &&
+      address.province &&
+      address.district &&
+      address.town &&
+      address.location
+    ) {
+      return (
+        address.province.trim() !== "" &&
+        address.district.trim() !== "" &&
+        address.town.trim() !== "" &&
+        address.location.trim() !== ""
+      );
     }
     return false;
   };
@@ -36,19 +43,19 @@ const Register = () => {
     const updatedAddress = [...user.address];
     // Cập nhật giá trị của trường key trong địa chỉ hiện tại
     updatedAddress[0][key] = value;
-  
+
     // Cập nhật state của user với địa chỉ mới
-    setUser(prevState => ({
+    setUser((prevState) => ({
       ...prevState,
-      address: updatedAddress
+      address: updatedAddress,
     }));
-  
+
     // Kiểm tra xem địa chỉ đã hoàn chỉnh hay chưa
     const complete = isCompleteAddress(user.address[0]); // Truyền vào địa chỉ hiện tại
-    
+
     // Cập nhật trạng thái của addressSelected
     setAddressSelected(complete);
-  
+
     // Nếu địa chỉ chưa hoàn chỉnh và có trường nào đó trống, hiển thị thông báo lỗi
     if (!complete && value.trim() === "") {
       setFormError("Vui lòng chọn địa chỉ");
@@ -56,26 +63,28 @@ const Register = () => {
       setFormError(""); // Xóa thông báo lỗi nếu tất cả các trường đã được nhập
     }
   };
-  
-  
-  
+
   const [user, setUser] = useState({
     name: "",
     email: "",
     phone: "",
     password: "",
     confirmPassword: "",
-    address: [{ province: "", district: "", town: "", location: "" }]
+    address: [{ province: "", district: "", town: "", location: "" }],
   });
-  
-  const { name, email, phone, password, confirmPassword,address } = user;
+
+  const { name, email, phone, password, confirmPassword, address } = user;
 
   const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState("/images/default_avatar.jpg");  
+  const [avatarPreview, setAvatarPreview] = useState(
+    "/images/default_avatar.jpg"
+  );
 
   const dispatch = useDispatch();
 
-  const { isAuthenticated, error, loading } = useSelector((state) => state.auth);
+  const { isAuthenticated, error, loading } = useSelector(
+    (state) => state.auth
+  );
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -95,16 +104,16 @@ const Register = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setErrorMessage(""); 
-  
+    setErrorMessage("");
+
     setFormError("");
-  
+
     if (!name) {
       setNameError("Họ Tên Không Được Để Trống");
     } else {
       setNameError("");
     }
-  
+
     if (!email) {
       setEmailError("Email Không Được để trống");
     } else if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
@@ -112,7 +121,7 @@ const Register = () => {
     } else {
       setEmailError("");
     }
-  
+
     if (!phone) {
       setPhoneError("Số Điện Thoại Không Được Để Trống");
     } else if (!isValidPhoneNumber(phone)) {
@@ -120,13 +129,13 @@ const Register = () => {
     } else {
       setPhoneError("");
     }
-  
+
     if (!password) {
       setPasswordError("Mật Khẩu Không Được Để Trống");
     } else {
       setPasswordError("");
     }
-  
+
     if (!confirmPassword) {
       setConfirmPasswordError("Nhập Lại Mật Khẩu Không Được Để Trống");
     } else if (password !== confirmPassword) {
@@ -134,26 +143,30 @@ const Register = () => {
     } else {
       setConfirmPasswordError("");
     }
-  
+
     if (!addressSelected) {
       setFormError("Vui lòng chọn địa chỉ");
       return;
     }
-  
+
     // If any error is set, prevent form submission
-    if (nameError || emailError || phoneError || passwordError || confirmPasswordError) {
+    if (
+      nameError ||
+      emailError ||
+      phoneError ||
+      passwordError ||
+      confirmPasswordError
+    ) {
       return;
     }
-  
 
-  
     // Tạo đối tượng dữ liệu để gửi đến backend
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('password', password);
-    formData.append('avatar', avatar);
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("password", password);
+    formData.append("avatar", avatar);
     address.forEach((address, index) => {
       formData.append(`address[${index}][province]`, address.province);
       formData.append(`address[${index}][district]`, address.district);
@@ -161,8 +174,7 @@ const Register = () => {
       formData.append(`address[${index}][location]`, address.location);
       formData.append(`address[${index}][orderphone]`, phone);
     });
-    
-   
+
     dispatch(register(formData))
       .then(() => {
         // Register success
@@ -171,7 +183,6 @@ const Register = () => {
         setErrorMessage(error.response.data.message);
       });
   };
-  
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -215,7 +226,8 @@ const Register = () => {
       default:
         break;
     }
-  };return (
+  };
+  return (
     <Fragment>
       <MetaData title={"Register User"} />
       <div className="register-wrapper">
@@ -236,7 +248,11 @@ const Register = () => {
               value={name}
               onChange={onChange}
             />
-            {nameError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{nameError}</p>}
+            {nameError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {nameError}
+              </p>
+            )}
           </div>
           <div className="register-form-group">
             <label htmlFor="email_field">Email</label>
@@ -249,9 +265,17 @@ const Register = () => {
               value={email}
               onChange={onChange}
             />
-           {emailError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{emailError}</p>}
-           
-            {emailFormatError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{emailFormatError}</p>}
+            {emailError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {emailError}
+              </p>
+            )}
+
+            {emailFormatError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {emailFormatError}
+              </p>
+            )}
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           </div>
           <div className="register-form-group">
@@ -265,7 +289,11 @@ const Register = () => {
               value={phone}
               onChange={onChange}
             />
-            {phoneError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{phoneError}</p>}
+            {phoneError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {phoneError}
+              </p>
+            )}
           </div>
           <div className="register-form-group">
             <label htmlFor="password_field">Mật Khẩu</label>
@@ -278,7 +306,11 @@ const Register = () => {
               value={password}
               onChange={onChange}
             />
-            {passwordError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{passwordError}</p>}
+            {passwordError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {passwordError}
+              </p>
+            )}
           </div>
           <div className="register-form-group">
             <label htmlFor="confirm_password_field">Nhập Lại Mật Khẩu</label>
@@ -291,12 +323,20 @@ const Register = () => {
               value={confirmPassword}
               onChange={onChange}
             />
-            {confirmPasswordError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{confirmPasswordError}</p>}
+            {confirmPasswordError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {confirmPasswordError}
+              </p>
+            )}
           </div>
 
           <div className="register-form-group">
-          <Address handleAddressChange={handleAddressChange} />
-          {formError && <p className="error" style={{ color: 'red', fontSize: '0.8em' }}>{formError}</p>}
+            <Address handleAddressChange={handleAddressChange} />
+            {formError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {formError}
+              </p>
+            )}
           </div>
           <div className="register-form-group">
             <label htmlFor="avatar_upload">Ảnh Đại Diện</label>
@@ -315,7 +355,10 @@ const Register = () => {
                   accept="image/*"
                   onChange={onChange}
                 />
-                <label className="register-custom-file-label" htmlFor="customFile">
+                <label
+                  className="register-custom-file-label"
+                  htmlFor="customFile"
+                >
                   Chọn Ảnh
                 </label>
               </div>
@@ -327,39 +370,36 @@ const Register = () => {
             className="register-btn"
             disabled={loading ? true : false}
           >
-
-            
             Đăng Kí
           </button>
           {user.address.map((address, index) => (
-  <div className="address-info-table" key={index}>
-    <h2>Thông Tin Địa Chỉ {index + 1}</h2>
-    <table>
-      <tbody>
-        <tr>
-          <td>Tỉnh/Thành phố:</td>
-          <td>{address.province}</td>
-        </tr>
-        <tr>
-          <td>Quận/Huyện:</td>
-          <td>{address.district}</td>
-        </tr>
-        <tr>
-          <td>Phường/Xã:</td>
-          <td>{address.town}</td>
-        </tr>
-        <tr>
-          <td>Địa chỉ chi tiết:</td>
-          <td>{address.location}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-))}
-          
+            <div className="address-info-table" key={index}>
+              <h2>Thông Tin Địa Chỉ {index + 1}</h2>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Tỉnh/Thành phố:</td>
+                    <td>{address.province}</td>
+                  </tr>
+                  <tr>
+                    <td>Quận/Huyện:</td>
+                    <td>{address.district}</td>
+                  </tr>
+                  <tr>
+                    <td>Phường/Xã:</td>
+                    <td>{address.town}</td>
+                  </tr>
+                  <tr>
+                    <td>Địa chỉ chi tiết:</td>
+                    <td>{address.location}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          ))}
         </form>
       </div>
     </Fragment>
   );
-}  
+};
 export default Register;

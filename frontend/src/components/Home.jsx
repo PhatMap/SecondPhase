@@ -138,16 +138,6 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const getStyle = () => ({
-    fontSize: "24px",
-    fontWeight: "bold",
-    color: "#333",
-    textAlign: "center",
-    textTransform: "uppercase",
-    margin: "40px 0",
-    textShadow: "1px 1px 2px rgba(0, 0, 0, 0.2)",
-  });
-
   return (
     <Fragment>
       {loading ? (

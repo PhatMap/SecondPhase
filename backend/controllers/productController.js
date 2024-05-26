@@ -99,27 +99,11 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
-  let images = [];
-  if (typeof req.body.images === "string") {
-    images.push(req.body.images);
-  } else {
-    images = req.body.images;
-  }
+  const valueArray = JSON.parse(req.body.images);
+  const variants = JSON.parse(req.body.variants);
 
-  let imagesLinks = [];
-
-  for (let i = 0; i < images.length; i++) {
-    const result = await cloudinary.v2.uploader.upload(images[i], {
-      folder: "products",
-    });
-
-    imagesLinks.push({
-      public_id: result.public_id,
-      url: result.secure_url,
-    });
-  }
-
-  req.body.images = imagesLinks;
+  req.body.variants = variants;
+  req.body.images = valueArray;
 
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));

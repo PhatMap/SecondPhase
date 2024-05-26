@@ -20,32 +20,22 @@ const NewProduct = () => {
   const history = useNavigate();
   const dispatch = useDispatch();
 
-  const [name, setName] = useState("Test Product");
-  const [price, setPrice] = useState(19);
-  const [description, setDescription] = useState("AAA");
-  const [sizes, setSizes] = useState([]);
-  const [size, setSize] = useState("");
-  const [category, setCategory] = useState("Trousers");
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
   const [variants, setVariants] = useState([]);
   const [show, setShow] = useState(false);
 
-  // const [name, setName] = useState("");
-  // const [price, setPrice] = useState(0);
-  // const [description, setDescription] = useState("");
-  // const [sizes, setSizes] = useState([]);
-  // const [size, setSize] = useState("");
-  // const [category, setCategory] = useState("");
-  // const [stock, setStock] = useState(0);
-  // const [images, setImages] = useState([]);
-  // const [imagesPreview, setImagesPreview] = useState([]);
-
   const [emptyPrice, setEmptyPrice] = useState(false);
   const [emptyName, setEmptyName] = useState(false);
   const [emptyDescription, setEmptyDescription] = useState(false);
   const [emptyCategory, setEmptyCategory] = useState(false);
-  const [emptyTotalStock, setEmptyTotalStock] = useState(false);
+  const [emptyImages, setEmptyImages] = useState(false);
+  const [emptyVariants, setEmptyVariants] = useState(false);
+  const [variantError, setVariantError] = useState(false);
 
   const categories = ["Trousers", "Shirt", "Dress", "Shoe", "Belt"];
   const { loading, error, success } = useSelector((state) => state.newProduct);
@@ -61,29 +51,23 @@ const NewProduct = () => {
       toast.success("Product created successfully");
       dispatch({ type: NEW_PRODUCT_RESET });
     }
-    if (size) {
-      AddSize();
-      setSize("");
-    }
-  }, [dispatch, error, success, history, size]);
-
-  const AddSize = () => {
-    for (let i = 0; i < sizes.length; i++) {
-      if (sizes[i] === size) {
-        return;
-      }
-    }
-    setSizes((oldArray) => [...oldArray, size]);
-  };
+  }, [dispatch, error, success, history]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if (name === "" || price === 0 || description === "" || category === "") {
+    if (
+      name === "" ||
+      price === 0 ||
+      description === "" ||
+      category === "" ||
+      images.length === 0 ||
+      variants.length === 0
+    ) {
       if (name === "") {
         setEmptyName(true);
       }
-      if (price === 0) {
+      if (price === "") {
         setEmptyPrice(true);
       }
       if (description === "") {
@@ -92,7 +76,17 @@ const NewProduct = () => {
       if (category === "") {
         setEmptyCategory(true);
       }
+      if (images.length === 0) {
+        setEmptyImages(true);
+      }
+      if (variants.length === 0) {
+        setEmptyVariants(true);
+      }
       return toast.error("Chưa điền đủ thông tin sản phẩm");
+    }
+
+    if (variantError) {
+      return toast.error("Sản phẩm có mẫu chưa đủ thông tin");
     }
 
     const formData = new FormData();
@@ -155,9 +149,6 @@ const NewProduct = () => {
   const onChange = (e) => {
     const files = Array.from(e.target.files);
 
-    setImagesPreview([]);
-    setImages([]);
-
     files.forEach((file) => {
       const reader = new FileReader();
 
@@ -206,7 +197,7 @@ const NewProduct = () => {
         setPrice(-numericValue);
       }
     } else {
-      setPrice(0);
+      setPrice("");
     }
   };
 
@@ -227,6 +218,13 @@ const NewProduct = () => {
     e.preventDefault();
     e.stopPropagation();
     e.currentTarget.classList.remove("hover");
+  };
+
+  const handlerImageRemove = (index) => {
+    const newImages = imagesPreview.filter((img, i) => i !== index);
+    const newImagesFiles = images.filter((img, i) => i !== index);
+    setImagesPreview(newImages);
+    setImages(newImagesFiles);
   };
 
   useEffect(() => {
@@ -298,6 +296,7 @@ const NewProduct = () => {
                   <input
                     type="text"
                     id="name_field"
+                    placeholder="Nhập tên sản phẩm"
                     className={`form-control ${emptyName ? "invalid" : ""}`}
                     value={name}
                     onChange={(e) => {
@@ -323,6 +322,7 @@ const NewProduct = () => {
                 <div className="form-group">
                   <label htmlFor="description_field">Mô tả</label>
                   <textarea
+                    placeholder="Nhập mô tả sản phẩm"
                     className={`form-control ${
                       emptyDescription ? "invalid" : ""
                     }`}
@@ -353,6 +353,7 @@ const NewProduct = () => {
                   <label htmlFor="price_field">Giá cơ bản</label>
                   <input
                     type="text"
+                    placeholder="Nhập giá sản phẩm"
                     className={`form-control ${emptyPrice ? "invalid" : ""}`}
                     value={price < 0 ? 0 : price}
                     onChange={(e) => handlePriceChange(e)}
@@ -392,6 +393,19 @@ const NewProduct = () => {
                       <i className="fa fa-plus"></i>Thêm
                     </button>
                   </div>
+                  {emptyVariants ? (
+                    <p
+                      style={{
+                        fontWeight: "normal",
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Sản phẩm chưa có mẫu
+                    </p>
+                  ) : (
+                    ""
+                  )}
                   {show && <AddVariant show={setShow} variants={setVariants} />}
                   <div className="varient-list">
                     {variants &&
@@ -402,6 +416,7 @@ const NewProduct = () => {
                           index={index}
                           updateVariant={updateVariant}
                           removeVariant={removeVariant}
+                          variantError={setVariantError}
                         />
                       ))}
                   </div>
@@ -411,7 +426,7 @@ const NewProduct = () => {
                   <label>Ảnh </label>
                   <div className="">
                     <label
-                      className="upload-form"
+                      className={`upload-form ${emptyImages ? "invalid" : ""}`}
                       onDrop={handleDrop}
                       onDragOver={handleDragOver}
                       onDragLeave={handleDragLeave}
@@ -433,18 +448,51 @@ const NewProduct = () => {
                         để đưa ảnh lên
                       </p>
                     </label>
+                    {emptyImages ? (
+                      <p
+                        style={{
+                          fontWeight: "normal",
+                          color: "red",
+                          fontSize: "13px",
+                        }}
+                      >
+                        Sản phẩm chưa có ảnh
+                      </p>
+                    ) : (
+                      ""
+                    )}
                   </div>
 
-                  {imagesPreview.map((img, index) => (
-                    <img
-                      src={img}
-                      key={index}
-                      alt="Images Preview"
-                      className="mt-3 mr-2"
-                      width="55"
-                      height="52"
-                    />
-                  ))}
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "40px",
+                      flexWrap: "wrap",
+                      maxWidth: "calc(8 * (75px + 40px))",
+                    }}
+                  >
+                    {imagesPreview.map((img, index) => (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          height: "50px",
+                          gap:"5px"
+                        }}
+                      >
+                        <img
+                          src={img}
+                          key={index}
+                          alt="Images Preview"
+                          style={{ height: "100%" }}
+                        />
+                        <i
+                          className="fa fa-remove variant-remove-btn"
+                          onClick={() => handlerImageRemove(index)}
+                        ></i>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 <button

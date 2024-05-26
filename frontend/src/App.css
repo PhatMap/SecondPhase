@@ -2039,7 +2039,7 @@ ul.CTAs a {
 }
 
 /* NewProduct */
-.varient-list{
+.varient-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -2089,7 +2089,8 @@ ul.CTAs a {
   flex-direction: column;
   gap: 20px;
   border-radius: 5px;
-  box-shadow: #080808 0px 4px 8px;width: 1000px;
+  box-shadow: #080808 0px 4px 8px;
+  width: 1000px;
 }
 .new-product-btn {
   background-color: rgb(35, 100, 219);
@@ -2271,23 +2272,6 @@ ul.CTAs a {
   background-color: white;
 }
 
-.variant-form input{
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
-  font-weight: normal;
-}
-
-.variant-select{
-  width: fit-content;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
-  font-weight: normal;
-
-}
-
 .variant-upload-btn {
   margin: 0;
   padding: 0;
@@ -2335,13 +2319,13 @@ ul.CTAs a {
   background-color: gray;
 }
 
-.variant-remove-btn{
+.variant-remove-btn {
   font-size: 20px;
   color: red;
   cursor: pointer;
 }
 
-.variant-remove-btn:hover{
+.variant-remove-btn:hover {
   color: rgb(148, 1, 1);
 }
 
@@ -2353,12 +2337,14 @@ ul.CTAs a {
   justify-content: flex-end;
 }
 
-.variant-retweet-btn{
+.variant-retweet-btn {
   font-size: 20px;
   color: rgb(67, 67, 255);
   cursor: pointer;
 }
 
-.variant-retweet-btn:hover{
+.variant-retweet-btn:hover {
   color: #003874;
 }
+
+/* ProductList.jsx */
