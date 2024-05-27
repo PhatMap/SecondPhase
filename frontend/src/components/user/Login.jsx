@@ -43,11 +43,26 @@ const Login = () => {
       dispatch(clearErrors());
     }
   }, [dispatch, isAuthenticated, error, history, redirect]);
-
-  const submitHandler = (e) => {
+  
+  const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    try {
+      await dispatch(login(email, password));
+    } catch (error) {
+      // Hiển thị thông báo lỗi
+      toast.error(error.response.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   };
+  
 
   
 
