@@ -477,7 +477,7 @@ const NewProduct = () => {
                           display: "flex",
                           alignItems: "center",
                           height: "50px",
-                          gap:"5px"
+                          gap: "5px",
                         }}
                       >
                         <img

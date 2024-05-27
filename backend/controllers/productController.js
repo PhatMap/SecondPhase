@@ -50,8 +50,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   const productsCount = await Product.countDocuments();
   const apiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
-    .filter()
-    .sort();
+    .filter();
 
   let products = await apiFeatures.query;
   let filteredProductsCount = products.length;
