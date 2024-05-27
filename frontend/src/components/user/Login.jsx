@@ -29,20 +29,25 @@ const Login = () => {
     if (isAuthenticated) {
       history(redirect);
     }
-    
-  }, [dispatch, isAuthenticated, error, history, redirect]);
-  
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    try {
-      await dispatch(login(email, password));
-    } catch (error) {
-      
-      toast.error(error.response.data.message, {
+    if (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
+      dispatch(clearErrors());
     }
+  }, [dispatch, isAuthenticated, error, history, redirect]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(email, password));
   };
-  
 
   
 
