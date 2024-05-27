@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../actions/userActions";
 
-import LoginButton from "./GoogleLogin";
+import GoogleButton from "./GoogleLogin";
 
 const Login = () => {
   const history = useNavigate();
@@ -60,10 +60,10 @@ const Login = () => {
         <Fragment>
           <MetaData title={"Login"} />
 
-          <div className="row wrapper" style={{ marginBottom: "100px" }}>
-            <div className="col-10 col-lg-5">
-              <form className="login-form" onSubmit={submitHandler}>
-                <h1 className="login-heading">Login</h1>
+          <div className="login-container">
+      <form className="login-form" onSubmit={submitHandler}>
+          
+                <h1 className="login-heading">Đăng Nhập </h1>
                 <div className="login-input-container">
                   <label className="login-label">Email</label>
                   <input
@@ -77,7 +77,7 @@ const Login = () => {
                 </div>
 
                 <div className="login-input-container">
-                  <label className="login-label">Password</label>
+                  <label className="login-label">Mật Khẩu </label>
                   <input
                     type="password"
                     id="password_field"
@@ -89,24 +89,30 @@ const Login = () => {
                 </div>
 
                 <Link to="/password/forgot" className="login-link">
-                  Forgot Password?
+                  Quên Mật Khẩu
                 </Link>
 
-                <button
-                  id="login_button"
-                  type="submit"
-                  className="login-button"
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
-                  LOGIN
-                </button>
-                <LoginButton />
+                  <button id="login_button" type="submit" className="login-button">
+                      Đăng Nhập
+                    </button>
+                  <GoogleButton />
+                </div>
                 <div className="login-footer">
-                  <p className="login-footer-text">Not a member?</p>
-                  <Link to="/register">Register</Link>
+                <p className="login-footer-text">Chưa Có Tài Khoản?</p>
+                <Link to="/register">Đăng Kí </Link>
                 </div>
               </form>
             </div>
-          </div>
+          
         </Fragment>
       )}
     </Fragment>

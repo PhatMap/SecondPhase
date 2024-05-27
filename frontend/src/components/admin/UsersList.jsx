@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 
@@ -9,10 +9,11 @@ import Sidebar from "./Sidebar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { allUsers, deleteUser, clearErrors } from "../../actions/userActions";
+import { allUsers,updateUser, deleteUser, clearErrors } from "../../actions/userActions";
 import { DELETE_USER_RESET } from "../../constants/userConstants";
 
 const UsersList = () => {
+  const [deleteMessage, setDeleteMessage] = useState("");
   const history = useNavigate();
 
   const dispatch = useDispatch();
@@ -22,22 +23,46 @@ const UsersList = () => {
 
   useEffect(() => {
     dispatch(allUsers());
-
+  
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-
+  
     if (isDeleted) {
       toast.success("User deleted successfully");
-      history("/admin/users");
       dispatch({ type: DELETE_USER_RESET });
+      setDeleteMessage(""); // Reset delete message
     }
-  }, [dispatch, error, isDeleted, history]);
-
-  const deleteUserHandler = (id) => {
-    dispatch(deleteUser(id));
+  }, [dispatch, error, isDeleted]);
+  
+  const deleteUserHandler = (id, role) => {
+    if (role === "admin") {
+      toast.error("Tài Khoản Admin Không Thể Xóa.");
+    } else if (role === "user") {
+      const formData = new FormData();
+      formData.set("role", "banned");
+  
+      dispatch(updateUser(id, formData)).then(() => {
+        dispatch(allUsers()); 
+      });
+    } else {
+      dispatch(deleteUser(id)).then(() => {
+        dispatch(allUsers()); 
+      });
+    }
   };
+  const confirmDeleteUser = (id, role) => {
+    if (role === "banned") {
+      if (window.confirm("Bạn chắc chắn muốn xóa người dùng này?")) {
+        deleteUserHandler(id, role);
+      }
+    } else {
+      deleteUserHandler(id, role);
+    }
+  };
+  
+  
 
   const setUsers = () => {
     const data = {
@@ -87,7 +112,7 @@ const UsersList = () => {
             </Link>
             <button
               className="btn btn-danger py-1 px-2 ml-2"
-              onClick={() => deleteUserHandler(user._id)}
+              onClick={() => confirmDeleteUser(user._id, user.role)}
             >
               <i className="fa fa-trash"></i>
             </button>
@@ -110,6 +135,10 @@ const UsersList = () => {
         <div className="col-12 col-md-10">
           <Fragment>
             <h1 className="my-5">All Users</h1>
+
+            {deleteMessage && (
+              <div className="alert alert-danger">{deleteMessage}</div>
+            )}
 
             {loading ? (
               <Loader />
