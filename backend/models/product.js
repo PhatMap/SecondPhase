@@ -43,10 +43,6 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      size: {
-        type: String,
-        required: true,
-      },
       image: {
         public_id: {
           type: String,
@@ -67,18 +63,26 @@ const productSchema = new mongoose.Schema({
           message: "Product price cannot be negative",
         },
       },
-      stock: {
-        type: Number,
-        required: true,
-        maxLength: [5, "Product stock can not exceed 5 characters"],
-        default: 0,
-        validate: {
-          validator: function (value) {
-            return value >= 0;
+      inventory: [
+        {
+          size: {
+            type: String,
+            required: true,
           },
-          message: "Product stock cannot be negative",
+          stock: {
+            type: Number,
+            required: true,
+            maxLength: [5, "Product stock cannot exceed 5 characters"],
+            default: 0,
+            validate: {
+              validator: function (value) {
+                return value >= 0;
+              },
+              message: "Product stock cannot be negative",
+            },
+          },
         },
-      },
+      ],
     },
   ],
   totalStock: {

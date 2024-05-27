@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddInventory from "./AddInventory";
 
 const AddVariant = ({ show, variants }) => {
-  const sizeType = ["XS", "S", "M", "L", "XL", "XXL"];
-
   const [name, setName] = useState("");
-  const [size, setSize] = useState("");
   const [price, setPrice] = useState("");
-  const [stock, setStock] = useState("");
   const [image, setImage] = useState("");
+  const [inventory, setInventory] = useState([]);
 
   const [emptyName, setEmptyName] = useState(false);
   const [emptyPrice, setEmptyPrice] = useState(false);
-  const [emptySize, setEmptySize] = useState(false);
   const [emptyImage, setEmptyImage] = useState(false);
-  const [emptyStock, setEmptyStock] = useState(false);
 
   const handlePriceChange = (e) => {
     const inputValue = e.target.value;
@@ -33,45 +29,17 @@ const AddVariant = ({ show, variants }) => {
     }
   };
 
-  const handleStockChange = (e) => {
-    const inputValue = e.target.value;
-    setEmptyStock(false);
-
-    if (!isNaN(inputValue) && inputValue !== "") {
-      const numericValue = parseFloat(inputValue);
-      if (numericValue >= 0) {
-        setStock(numericValue);
-      } else {
-        setStock(-numericValue);
-      }
-    } else {
-      setStock("");
-    }
-  };
-
   const CloseHandler = () => {
     show(false);
   };
 
   const ConfirmHandler = () => {
-    if (
-      name === "" ||
-      price === 0 ||
-      size === "" ||
-      image.length === 0 ||
-      stock === ""
-    ) {
+    if (name === "" || price === 0 || image.length === 0) {
       if (name === "") {
         setEmptyName(true);
       }
       if (price === "") {
         setEmptyPrice(true);
-      }
-      if (size === "") {
-        setEmptySize(true);
-      }
-      if (stock === "") {
-        setEmptyStock(true);
       }
       if (image.length === 0) {
         setEmptyImage(true);
@@ -81,10 +49,9 @@ const AddVariant = ({ show, variants }) => {
 
     const newVariant = {
       name,
-      size,
       image,
       price,
-      stock,
+      inventory,
     };
 
     variants((prev) => [...prev, newVariant]);
@@ -114,12 +81,6 @@ const AddVariant = ({ show, variants }) => {
     });
   };
 
-  const ChooseSize = (size) => {
-    if (size === "") {
-      return;
-    }
-    setSize(size);
-  };
   return (
     <div>
       <div className="variant-form">
@@ -143,33 +104,6 @@ const AddVariant = ({ show, variants }) => {
               }}
             >
               Mẫu chưa có tên
-            </p>
-          ) : (
-            ""
-          )}
-        </div>
-        <div>
-          <select
-            className={`form-control ${emptySize ? "invalid" : ""}`}
-            value={size}
-            onChange={(e) => ChooseSize(e.target.value)}
-          >
-            <option value="">Chọn size</option>
-            {sizeType.map((size, index) => (
-              <option value={size} key={index}>
-                {size}
-              </option>
-            ))}
-          </select>
-          {emptyName ? (
-            <p
-              style={{
-                fontWeight: "normal",
-                color: "red",
-                fontSize: "13px",
-              }}
-            >
-              Mẫu chưa có kích thước
             </p>
           ) : (
             ""
@@ -234,28 +168,8 @@ const AddVariant = ({ show, variants }) => {
             ""
           )}
         </div>
-        <div>
-          <input
-            placeholder="Số lượng"
-            type="text"
-            className={`form-control ${emptyStock ? "invalid" : ""}`}
-            value={stock < 0 ? 0 : stock}
-            onChange={(e) => handleStockChange(e)}
-          ></input>
-          {emptyStock ? (
-            <p
-              style={{
-                fontWeight: "normal",
-                color: "red",
-                fontSize: "13px",
-              }}
-            >
-              Mẫu chưa có số lượng
-            </p>
-          ) : (
-            ""
-          )}
-        </div>
+
+        <AddInventory setInventory={setInventory} inventory={inventory}/>
       </div>
       <div className="btn-container">
         <button

@@ -154,7 +154,9 @@ const UpdateProduct = () => {
 
     let totalStock = 0;
     updatedVariants.forEach((variant) => {
-      totalStock += variant.stock;
+      variant.inventory.forEach((inventory) => {
+        totalStock += inventory.stock;
+      });
     });
 
     formData.set("totalStock", totalStock);
