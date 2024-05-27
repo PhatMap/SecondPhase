@@ -82,7 +82,7 @@ const Category = () => {
   const applyFilters = () => {
     const minPrice = Number(tempPrice[0]);
     const maxPrice = Number(tempPrice[1]);
-  
+    
     if (
       minPrice < 0 ||
       maxPrice > 1000 ||
@@ -90,14 +90,19 @@ const Category = () => {
       isNaN(minPrice) ||
       isNaN(maxPrice)
     ) {
+      // Thông báo khi điều kiện không thỏa mãn
       toast.error("Vui lòng nhập số, Giá thấp nhất thấp hơn giá cao nhất và trong khoảng 0$ đến 1000$");
     } else {
+      // Áp dụng bộ lọc thành công
       setPrice([minPrice, maxPrice]);
-      setFiltersApplied(true); // Cập nhật state khi áp dụng bộ lọc
+      setFiltersApplied(true); // Cập nhật trạng thái bộ lọc đã áp dụng
     }
   };
+  
   useEffect(() => {
-    setTempPrice(["0", "1000"]);
+    if (!tempPrice[0] && !tempPrice[1]) {
+      setTempPrice(["0", "1000"]);
+    }
     if (filtersApplied) {
       dispatch(
         getProductsByCategory(keyword, currentPage, price, category, rating)
