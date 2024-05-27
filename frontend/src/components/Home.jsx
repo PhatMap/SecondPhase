@@ -97,7 +97,7 @@ const Home = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [categories] = useState([
     {
-      name: "Trousers",
+      name: "Quần Nam Nữ",
       images: [
         "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141529/products/rv1yiha0ctpikh34eqvp.jpg",
         "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141530/products/zumqc0bc28kwucl4rcm9.webp",
@@ -105,7 +105,7 @@ const Home = () => {
       path: "/category/Trousers",
     },
     {
-      name: "Shirt",
+      name: "Áo Nam Nữ",
       images: [
         "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141368/products/zkyxqkd9er5o1nwsx28h.webp",
         "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141367/products/ywacs7qaojn2t5muetsy.webp",
@@ -113,7 +113,7 @@ const Home = () => {
       path: "/category/Shirt",
     },
     {
-      name: "Dress",
+      name: "Váy Nữ",
       images: [
         "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141640/products/trsaaq2dprd1aytthm2s.jpg",
         "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141642/products/w1qgno9uachw2tmcuwdd.webp",
@@ -121,7 +121,7 @@ const Home = () => {
       path: "/category/Dress",
     },
     {
-      name: "Shoe",
+      name: "Giày Nam Nữ",
       images: [
         "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141254/products/hvmdzgltwdn5jtavki0u.jpg",
         "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141256/products/qvuvnbigjr0fxvag6abd.jpg",
@@ -156,7 +156,7 @@ const Home = () => {
               onClick={() => navigate("/shop")}
               className="text-2xl font-bold hover:text-blue-500"
             >
-              Show More
+              Xem Thêm
             </button>
 
             <h1 className="mt-12 mb-4 text-4xl font-bold ">
@@ -192,7 +192,7 @@ const Home = () => {
               onClick={handleShowMorestar}
               className="text-2xl font-bold hover:text-blue-500"
             >
-              Show More
+              Xem Thêm
             </button>
           </div>
           <div className="home-page-container"></div>

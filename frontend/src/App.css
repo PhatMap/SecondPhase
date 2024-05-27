@@ -1364,8 +1364,8 @@ ul.CTAs a {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 400px;
-  height: 600px;
+  width: 300px;
+  height: 800px;
   border: 2px solid black;
   border-radius: 5px;
   backdrop-filter: blur(10px) opacity(0.7);
@@ -1385,6 +1385,27 @@ ul.CTAs a {
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
+.shop-filter-prices {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.shop-filter-prices h4 {
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.shop-filter-price {
+  cursor: pointer;
+  padding-left: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .shop-filter-categories {
@@ -1428,14 +1449,23 @@ ul.CTAs a {
   flex-direction: column;
   gap: 10px;
 }
+.selected-category {
+  color: red; /* Đổi màu chữ của danh mục được chọn thành đỏ */
+}
+
+.selected-star .rating-inner {
+  background-color: red; /* Đổi màu nền của số sao được chọn thành đỏ */
+}
+
 
 .shop-filter-btn {
   color: white;
   background-color: #080808;
   width: 90%;
   height: 50px;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin-top: 5px;
+  width: 250px;
+  margin-bottom: 30px;
   border: #080808 solid 2px;
 }
 

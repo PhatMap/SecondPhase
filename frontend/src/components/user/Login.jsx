@@ -1,58 +1,124 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import GoogleButton from "../user/GoogleLogin"
+import React, { Fragment, useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
+import Loader from "../layout/Loader";
+import MetaData from "../layout/MetaData";
 
-const LoginForm = ({
-  submitHandler,
-  email,
-  setEmail,
-  password,
-  setPassword,
-}) => {
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { login, clearErrors } from "../../actions/userActions";
+
+import LoginButton from "./GoogleLogin";
+
+const Login = () => {
+  const history = useNavigate();
+  const location = useLocation();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+
+  const { isAuthenticated, error, loading } = useSelector(
+    (state) => state.auth
+  );
+
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+  useEffect(() => {
+    if (isAuthenticated) {
+      history(redirect);
+    }
+    if (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      dispatch(clearErrors());
+    }
+  }, [dispatch, isAuthenticated, error, history, redirect]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(email, password));
+  };
+
+  
+
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={submitHandler}>
-        <h1 className="login-heading">Login</h1>
-        <div className="login-input-container">
-          <label className="login-label">Email</label>
-          <input
-            type="email"
-            id="email_field"
-            className="login-input"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+    <Fragment>
+      <ToastContainer />
+      {loading ? (
+        <Loader />
+      ) : (
+        <Fragment>
+          <MetaData title={"Login"} />
 
-        <div className="login-input-container">
-          <label className="login-label">Password</label>
-          <input
-            type="password"
-            id="password_field"
-            className="login-input"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+          <div className="row wrapper" style={{ marginBottom: "100px" }}>
+            <div className="col-10 col-lg-5">
+              <form className="shadow-lg" onSubmit={submitHandler}>
+                <h1 className="mb-3">Đăng Nhập</h1>
+                <div className="form-group">
+                  <label htmlFor="email_field">Email</label>
+                  <input
+                    type="email"
+                    id="email_field"
+                    className="form-control"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
 
-        <Link to="/password/forgot" className="login-link">
-          Forgot Password?
-        </Link>
+                <div className="form-group">
+                  <label htmlFor="password_field">Password</label>
+                  <input
+                    type="password"
+                    id="password_field"
+                    className="form-control"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
 
-        <button id="login_button" type="submit" className="login-button">
-          LOGIN
-        </button>
-        <GoogleButton />
-        <div className="login-footer">
-          <p className="login-footer-text">Not a member?</p>
-          <Link to="/register">Register</Link>
-        </div>
-      </form>
-    </div>
+                <Link to="/password/forgot" className="float-right mb-4">
+                  Forgot Password?
+                </Link>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <button
+                    id="login_button"
+                    type="submit"
+                    className="btn btn-block py-3"
+                    style={{ marginBottom: "10px" }}
+                  >
+                    LOGIN
+                  </button>
+                  <LoginButton />
+                </div>
+                <Link to="/register" className="float-right mt-3">
+                  New User?
+                </Link>
+              </form>
+            </div>
+          </div>
+        </Fragment>
+      )}
+    </Fragment>
   );
 };
 
-export default LoginForm;
+export default Login;

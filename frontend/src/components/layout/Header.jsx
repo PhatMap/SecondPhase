@@ -50,7 +50,7 @@ const Header = () => {
     (state) => state.auth
   );
   const { cartItems } = useSelector((state) => state.cart);
-  const categories = ["Trousers", "Shirt", "Dress", "Shoe", "Belt"];
+  const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
 
   const logoutHandler = () => {
     toast.error("Logged out successfully");
