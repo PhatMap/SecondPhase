@@ -55,28 +55,43 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-
-exports.loginUser = catchAsyncErrors(async (req, res, next) => {
+exports.loginUser = catchAsyncErrors(async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return next(new ErrorHandler("Please enter email and passsword", 400));
+    return res.status(400).json({
+      success: false,
+      message: "Vui Lòng Nhập Tài Khoản Mật Khẩu",
+    });
   }
 
   const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
-    return res.status(401).json({ message: "Email hoặc mật khẩu không hợp lệ" });
+    return res.status(401).json({
+      success: false,
+      message: "Tài Khoản Hoặc Mật Khẩu Không Chính Xác",
+    });
+  }
+  if (user.role === "banned") {
+    return res.status(403).json({
+      success: false,
+      message: "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên để biết thêm thông tin.",
+    });
   }
 
   const isPasswordMatched = await user.comparePassword(password);
 
   if (!isPasswordMatched) {
-    return next(new ErrorHandler("Invalid email or password", 401));
+    return res.status(401).json({
+      success: false,
+      message: "Tài Khoản Hoặc Mật Khẩu Không Chính Xác",
+    });
   }
 
   sendToken(user, 200, res);
 });
+
 
 const generateRandomPassword = () => {
   const characters =
