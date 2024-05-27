@@ -17,7 +17,6 @@ import {
 } from "../../actions/productActions";
 import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
 import DeleteNotify from "../layout/DeleteNotify";
-import variant from "./Variant";
 
 const ProductsList = () => {
   const history = useNavigate();
@@ -90,15 +89,11 @@ const ProductsList = () => {
     };
 
     products.forEach((product) => {
-      const imageURL =
-        product.variants.length > 0 && product.variants[0].images.length > 0
-          ? product.variants[0].images[0].url
-          : "";
       data.rows.push({
         category: product.category,
         image: (
           <img
-            src={imageURL}
+            src={product.images[0].url}
             alt={product.name}
             style={{ width: "50px", height: "50px" }}
           />

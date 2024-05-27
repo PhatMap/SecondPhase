@@ -27,6 +27,8 @@ const UpdateProduct = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [images, setImages] = useState([]);
+  const [imagesPreview, setImagesPreview] = useState([]);
   const [variants, setVariants] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -34,6 +36,7 @@ const UpdateProduct = () => {
   const [emptyName, setEmptyName] = useState(false);
   const [emptyDescription, setEmptyDescription] = useState(false);
   const [emptyCategory, setEmptyCategory] = useState(false);
+  const [emptyImages, setEmptyImages] = useState(false);
   const [emptyVariants, setEmptyVariants] = useState(false);
   const [variantError, setVariantError] = useState(false);
 
@@ -58,6 +61,8 @@ const UpdateProduct = () => {
       setPrice(product.price);
       setDescription(product.description);
       setCategory(product.category);
+      setImages(product.images);
+      setImagesPreview(product.images);
       setVariants(product.variants);
     }
 
@@ -88,6 +93,7 @@ const UpdateProduct = () => {
       price === 0 ||
       description === "" ||
       category === "" ||
+      images.length === 0 ||
       variants.length === 0
     ) {
       if (name === "") {
@@ -101,6 +107,9 @@ const UpdateProduct = () => {
       }
       if (category === "") {
         setEmptyCategory(true);
+      }
+      if (images.length === 0) {
+        setEmptyImages(true);
       }
       if (variants.length === 0) {
         setEmptyVariants(true);
@@ -120,46 +129,27 @@ const UpdateProduct = () => {
 
     let variantsImages = [];
 
-    await Promise.all(
-      variants.map(async (variant, vari) => {
-        await Promise.all(
-          variant.images.map(async (image, img) => {
-            if (typeof image !== "object") {
-              const upload = new FormData();
-              upload.append("images", image);
-              try {
-                const result = await dispatch(uploadImages(upload));
-                variantsImages.push({
-                  variip: vari,
-                  imgip: img,
-                  image: result,
-                });
-              } catch (error) {
-                console.error("Error uploading image:", error);
-              }
-            }
-          })
-        );
-      })
-    );
+    variants.forEach((variant) => {
+      if (!variant.image.url) {
+        const upload = new FormData();
+        upload.append("images", variant.image);
+        variantsImages.push(dispatch(uploadImages(upload)));
+      }
+    });
 
     const variantsResult = await Promise.all(variantsImages);
 
     const updatedVariants = [...variants];
 
-    updatedVariants.forEach((variant, i) => {
-      variant.images.forEach((image, j) => {
-        if (typeof image !== "object") {
-          variantsResult.forEach((result) => {
-            if (result.variip === i && result.imgip === j) {
-              variant.images[j] = {
-                public_id: result.image.image.public_id,
-                url: result.image.image.url,
-              };
-            }
-          });
-        }
-      });
+    variantsResult.forEach((result, index) => {
+      const updatedVariant = {
+        ...updatedVariants[index],
+        image: {
+          public_id: result.image.public_id,
+          url: result.image.url,
+        },
+      };
+      updatedVariants[index] = updatedVariant;
     });
 
     let totalStock = 0;
@@ -170,7 +160,49 @@ const UpdateProduct = () => {
     formData.set("totalStock", totalStock);
     formData.set("variants", JSON.stringify(updatedVariants));
 
+    let cloudinaryImages = [];
+
+    images.forEach((image) => {
+      if (!image.url) {
+        const upload = new FormData();
+        upload.append("images", image);
+        cloudinaryImages.push(dispatch(uploadImages(upload)));
+      }
+    });
+
+    const cloudinaryResult = await Promise.all(cloudinaryImages);
+
+    let imagesLinks = [];
+    cloudinaryResult.forEach((result) => {
+      imagesLinks.push(result.image);
+    });
+
+    images.forEach((image) => {
+      if (image.url) {
+        imagesLinks.push(image);
+      }
+    });
+
+    formData.set("images", JSON.stringify(imagesLinks));
+
     dispatch(updateProduct(product._id, formData));
+  };
+
+  const onChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImagesPreview((oldArray) => [...oldArray, reader.result]);
+          setImages((oldArray) => [...oldArray, reader.result]);
+        }
+      };
+
+      reader.readAsDataURL(file);
+    });
   };
 
   const updateVariant = useCallback(
@@ -211,6 +243,32 @@ const UpdateProduct = () => {
     }
   };
 
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
+    const files = e.dataTransfer.files;
+    onChange({ target: { files } });
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.add("hover");
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
+  };
+
+  const handlerImageRemove = (index) => {
+    const newImages = imagesPreview.filter((img, i) => i !== index);
+    const newImagesFiles = images.filter((img, i) => i !== index);
+    setImagesPreview(newImages);
+    setImages(newImagesFiles);
+  };
+
   return (
     <Fragment>
       <MetaData title={"Update Product"} />
@@ -235,7 +293,7 @@ const UpdateProduct = () => {
                     fontSize: "25px",
                   }}
                 >
-                  Cập nhật sản phẩm
+                  Thêm sản phẩm
                 </h1>
                 <div className="form-group">
                   <label htmlFor="category_field">Danh mục</label>
@@ -399,6 +457,79 @@ const UpdateProduct = () => {
                           variantError={setVariantError}
                         />
                       ))}
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Ảnh </label>
+                  <div className="">
+                    <label
+                      className={`upload-form ${emptyImages ? "invalid" : ""}`}
+                      onDrop={handleDrop}
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                    >
+                      <input
+                        type="file"
+                        name="images"
+                        onChange={onChange}
+                        multiple
+                        hidden
+                      />
+                      <i
+                        class="fa fa-cloud-upload"
+                        aria-hidden="true"
+                        style={{ fontSize: "30px" }}
+                      ></i>
+                      <p>
+                        <strong>Kéo Thả </strong>hoặc <strong>Nhấn </strong>
+                        để đưa ảnh lên
+                      </p>
+                    </label>
+                    {emptyImages ? (
+                      <p
+                        style={{
+                          fontWeight: "normal",
+                          color: "red",
+                          fontSize: "13px",
+                        }}
+                      >
+                        Sản phẩm chưa có ảnh
+                      </p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "40px",
+                      flexWrap: "wrap",
+                      maxWidth: "calc(8 * (75px + 40px))",
+                    }}
+                  >
+                    {imagesPreview.map((img, index) => (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          height: "50px",
+                          gap: "5px",
+                        }}
+                      >
+                        <img
+                          src={img.url ? img.url : img}
+                          key={index}
+                          alt="Images Preview"
+                          style={{ height: "100%" }}
+                        />
+                        <i
+                          className="fa fa-remove variant-remove-btn"
+                          onClick={() => handlerImageRemove(index)}
+                        ></i>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
