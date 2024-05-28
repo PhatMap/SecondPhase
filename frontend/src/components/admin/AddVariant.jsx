@@ -5,53 +5,37 @@ import AddInventory from "./AddInventory";
 
 const AddVariant = ({ show, variants }) => {
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState([]);
   const [inventory, setInventory] = useState([]);
 
   const [emptyName, setEmptyName] = useState(false);
-  const [emptyPrice, setEmptyPrice] = useState(false);
-  const [emptyImage, setEmptyImage] = useState(false);
-
-  const handlePriceChange = (e) => {
-    const inputValue = e.target.value;
-    setEmptyPrice(false);
-
-    if (!isNaN(inputValue) && inputValue !== "") {
-      const numericValue = parseFloat(inputValue);
-      if (numericValue >= 0) {
-        setPrice(numericValue);
-      } else {
-        setPrice(-numericValue);
-      }
-    } else {
-      setPrice("");
-    }
-  };
+  const [emptyImages, setEmptyImages] = useState(false);
 
   const CloseHandler = () => {
     show(false);
   };
 
   const ConfirmHandler = () => {
-    if (name === "" || price === 0 || image.length === 0) {
+    if (name === "" || images.length === 0) {
       if (name === "") {
         setEmptyName(true);
       }
-      if (price === "") {
-        setEmptyPrice(true);
-      }
-      if (image.length === 0) {
-        setEmptyImage(true);
+      if (images.length === 0) {
+        setEmptyImages(true);
       }
       return toast.error("Chưa điền đủ thông tin mẫu");
     }
 
+    let totalStock = 0;
+    inventory.forEach((item) => {
+      totalStock += item.stock;
+    });
+
     const newVariant = {
       name,
-      image,
-      price,
+      images,
       inventory,
+      totalStock,
     };
 
     variants((prev) => [...prev, newVariant]);
@@ -59,26 +43,44 @@ const AddVariant = ({ show, variants }) => {
     show(false);
   };
 
-  // useEffect(() => {
-  //   console.log(variant);
-  // }, [variant]);
-
   const onChange = (e) => {
     const files = Array.from(e.target.files);
-
-    setImage("");
 
     files.forEach((file) => {
       const reader = new FileReader();
 
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setImage(reader.result);
+          setImages((oldArray) => [...oldArray, reader.result]);
         }
       };
 
       reader.readAsDataURL(file);
     });
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
+    const files = e.dataTransfer.files;
+    onChange({ target: { files } });
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.add("hover");
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
+  };
+
+  const handlerImageRemove = (index) => {
+    const newImagesFiles = images.filter((img, i) => i !== index);
+    setImages(newImagesFiles);
   };
 
   return (
@@ -111,28 +113,59 @@ const AddVariant = ({ show, variants }) => {
         </div>
 
         <div>
-          <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-            {image && (
-              <img
-                src={image}
-                alt="Image Preview"
-                style={{ width: "50px", height: "50px" }}
-              />
-            )}
-            {image && (
-              <i
-                className="fa fa-remove variant-remove-btn"
-                onClick={() => setImage("")}
-              ></i>
-            )}
-            {!image && (
-              <label className="variant-upload-btn">
-                <input type="file" name="image" hidden onChange={onChange} />
-                Chọn ảnh
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 5,
+            }}
+          >
+            <div>
+              <label
+                className={`upload-form ${emptyImages ? "invalid" : ""}`}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+              >
+                <input
+                  type="file"
+                  name="images"
+                  onChange={onChange}
+                  multiple
+                  hidden
+                />
+                <i
+                  class="fa fa-cloud-upload"
+                  aria-hidden="true"
+                  style={{ fontSize: "30px" }}
+                ></i>
+                <p>
+                  <strong>Kéo Thả </strong>hoặc <strong>Nhấn </strong>
+                  để đưa ảnh lên
+                </p>
               </label>
-            )}{" "}
+            </div>
+
+            <div style={{ display: "flex", gap: "5px" }}>
+              {images &&
+                images.length > 0 &&
+                images.map((image, index) => (
+                  <div key={index}>
+                    <img
+                      src={image}
+                      alt="Image Preview"
+                      style={{ width: "50px", height: "50px" }}
+                    />
+                    <i
+                      className="fa fa-remove variant-remove-btn"
+                      onClick={() => handlerImageRemove(index)}
+                    ></i>
+                  </div>
+                ))}
+            </div>
           </div>
-          {emptyImage ? (
+          {emptyImages ? (
             <p
               style={{
                 fontWeight: "normal",
@@ -146,30 +179,8 @@ const AddVariant = ({ show, variants }) => {
             ""
           )}
         </div>
-        <div>
-          <input
-            placeholder="Giá"
-            type="text"
-            className={`form-control ${emptyPrice ? "invalid" : ""}`}
-            value={price < 0 ? 0 : price}
-            onChange={(e) => handlePriceChange(e)}
-          ></input>
-          {emptyPrice ? (
-            <p
-              style={{
-                fontWeight: "normal",
-                color: "red",
-                fontSize: "13px",
-              }}
-            >
-              Mẫu chưa có giá
-            </p>
-          ) : (
-            ""
-          )}
-        </div>
 
-        <AddInventory setInventory={setInventory} inventory={inventory}/>
+        <AddInventory setInventory={setInventory} inventory={inventory} />
       </div>
       <div className="btn-container">
         <button

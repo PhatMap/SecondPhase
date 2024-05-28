@@ -129,27 +129,46 @@ const UpdateProduct = () => {
 
     let variantsImages = [];
 
-    variants.forEach((variant) => {
-      if (!variant.image.url) {
-        const upload = new FormData();
-        upload.append("images", variant.image);
-        variantsImages.push(dispatch(uploadImages(upload)));
-      }
-    });
+    await Promise.all(
+      variants.map(async (variant, vari) => {
+        await Promise.all(
+          variant.images.map(async (image, img) => {
+            if (typeof image !== "object") {
+              const upload = new FormData();
+              upload.append("images", image);
+              try {
+                const result = await dispatch(uploadImages(upload));
+                variantsImages.push({
+                  variip: vari,
+                  imgip: img,
+                  image: result,
+                });
+              } catch (error) {
+                console.error("Error uploading image:", error);
+              }
+            }
+          })
+        );
+      })
+    );
 
     const variantsResult = await Promise.all(variantsImages);
 
     const updatedVariants = [...variants];
 
-    variantsResult.forEach((result, index) => {
-      const updatedVariant = {
-        ...updatedVariants[index],
-        image: {
-          public_id: result.image.public_id,
-          url: result.image.url,
-        },
-      };
-      updatedVariants[index] = updatedVariant;
+    updatedVariants.forEach((variant, i) => {
+      variant.images.forEach((image, j) => {
+        if (typeof image !== "object") {
+          variantsResult.forEach((result) => {
+            if (result.variip === i && result.imgip === j) {
+              variant.images[j] = {
+                public_id: result.image.image.public_id,
+                url: result.image.image.url,
+              };
+            }
+          });
+        }
+      });
     });
 
     let totalStock = 0;

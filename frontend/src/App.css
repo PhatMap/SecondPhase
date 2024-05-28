@@ -1085,6 +1085,11 @@ ul.CTAs a {
   width: 70px;
 }
 
+.size-button:focus {
+  outline: none;
+}
+
+
 .color-button {
   margin-right: 5mm;
 }
@@ -1678,8 +1683,6 @@ ul.CTAs a {
   height: 120px;
 }
 
-.detail-current-image {
-}
 
 .mark {
   border: #080808 2px solid;
@@ -2403,3 +2406,5 @@ ul.CTAs a {
   width: 2px;
   background-color: green;
 }
+
+

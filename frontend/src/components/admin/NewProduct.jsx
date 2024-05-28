@@ -97,24 +97,48 @@ const NewProduct = () => {
 
     let variantsImages = [];
 
-    variants.forEach((variant) => {
-      const upload = new FormData();
-      upload.append("images", variant.image);
-      variantsImages.push(dispatch(uploadImages(upload)));
-    });
+    await Promise.all(
+      variants.map(async (variant, index) => {
+        await Promise.all(
+          variant.images.map(async (image) => {
+            const upload = new FormData();
+            upload.append("images", image);
+            try {
+              const result = await dispatch(uploadImages(upload));
+              variantsImages.push({
+                id: index,
+                image: result,
+              });
+            } catch (error) {
+              console.error("Error uploading image:", error);
+            }
+          })
+        );
+      })
+    );
 
     const variantsResult = await Promise.all(variantsImages);
 
     const updatedVariants = [...variants];
 
-    variantsResult.forEach((result, index) => {
+    updatedVariants.forEach((variant, index) => {
+      let variantImages = [];
+      console.log(variantsResult);
+
+      variantsResult.forEach((result) => {
+        if (result.id === index) {
+          variantImages.push({
+            public_id: result.image.image.public_id,
+            url: result.image.image.url,
+          });
+        }
+      });
+
       const updatedVariant = {
         ...updatedVariants[index],
-        image: {
-          public_id: result.image.public_id,
-          url: result.image.url,
-        },
+        images: variantImages,
       };
+
       updatedVariants[index] = updatedVariant;
     });
 

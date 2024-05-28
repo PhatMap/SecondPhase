@@ -1,3 +1,4 @@
+import { set } from "mongoose";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,9 +7,27 @@ const AddInventory = ({ setInventory, inventory }) => {
   const sizeType = ["XS", "S", "M", "L", "XL", "XXL"];
   const [stock, setStock] = useState("");
   const [size, setSize] = useState("");
+  const [price, setPrice] = useState("");
 
   const [emptyStock, setEmptyStock] = useState(false);
   const [emptySize, setEmptySize] = useState(false);
+  const [emptyPrice, setEmptyPrice] = useState(false);
+
+  const handlePriceChange = (e) => {
+    const inputValue = e.target.value;
+    setEmptyPrice(false);
+
+    if (!isNaN(inputValue) && inputValue !== "") {
+      const numericValue = parseFloat(inputValue);
+      if (numericValue >= 0) {
+        setPrice(numericValue);
+      } else {
+        setPrice(-numericValue);
+      }
+    } else {
+      setPrice("");
+    }
+  };
 
   const handleStockChange = (e) => {
     const inputValue = e.target.value;
@@ -44,9 +63,13 @@ const AddInventory = ({ setInventory, inventory }) => {
       return toast.error("Chưa điền đủ thông tin kho");
     }
 
-    setInventory((prev) => [...prev, { size: size, stock: stock }]);
+    setInventory((prev) => [
+      ...prev,
+      { size: size, price: price, stock: stock },
+    ]);
     setStock("");
     setSize("");
+    setPrice("");
   };
 
   return (
@@ -73,6 +96,28 @@ const AddInventory = ({ setInventory, inventory }) => {
             }}
           >
             Chưa có kích thước
+          </p>
+        ) : (
+          ""
+        )}
+      </div>
+      <div>
+        <input
+          placeholder="Giá"
+          type="text"
+          className={`form-control ${emptyPrice ? "invalid" : ""}`}
+          value={price < 0 ? 0 : price}
+          onChange={(e) => handlePriceChange(e)}
+        ></input>
+        {emptyPrice ? (
+          <p
+            style={{
+              fontWeight: "normal",
+              color: "red",
+              fontSize: "13px",
+            }}
+          >
+            Mẫu chưa có giá
           </p>
         ) : (
           ""
@@ -121,6 +166,7 @@ const AddInventory = ({ setInventory, inventory }) => {
           ? inventory.map((item, index) => (
               <div key={index}>
                 <p>{item.size}</p>
+                <p>{item.price}</p>
                 <p>{item.stock}</p>
               </div>
             ))

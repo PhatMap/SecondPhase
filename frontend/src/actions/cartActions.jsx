@@ -27,47 +27,22 @@ export const getUserCart = () => async (dispatch, getState) => {
   }
 };
 
-export const addItemToCart =
-  (id, quantity, size, colorName, colorHex) => async (dispatch) => {
-    try {
-      const { data } = await axios.get(`/api/v1/product/${id}`);
-
-      // if (quantity > data.product.stock || data.product.stock <= 0) {
-      //   return dispatch({
-      //     type: ADD_TO_CART_FAIL,
-      //     payload: "Product is out of stock",
-      //   });
-      // }
-
-      if (data && data.product) {
-        const item = {
-          product: data.product._id,
-          name: data.product.name,
-          price: data.product.price,
-          image: data.product.images[0] ? data.product.images[0].url : "",
-          quantity,
-          size: size,
-          color: {
-            colorName,
-            colorHex,
-          },
-        };
-
-        const newData = await axios.post("/api/v1/cart", {
-          cartItems: [item],
-        });
-        dispatch({
-          type: ADD_TO_CART_SUCCESS,
-          payload: newData,
-        });
-      }
-    } catch (error) {
-      dispatch({
-        type: ADD_TO_CART_FAIL,
-        payload: error.message,
-      });
-    }
-  };
+export const addItemToCart = (item) => async (dispatch) => {
+  try {
+    const newData = await axios.post("/api/v1/cart", {
+      cartItems: [item],
+    });
+    dispatch({
+      type: ADD_TO_CART_SUCCESS,
+      payload: newData,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_TO_CART_FAIL,
+      payload: error.message,
+    });
+  }
+};
 
 export const removeItemFromCart = (id, size) => async (dispatch, getState) => {
   try {

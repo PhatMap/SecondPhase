@@ -13,7 +13,21 @@ const cartSchema = new mongoose.Schema({
         required: true,
         ref: "Product",
       },
+      variant: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Product",
+      },
+      inventory: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Product",
+      },
       name: {
+        type: String,
+        required: true,
+      },
+      variantName: {
         type: String,
         required: true,
       },
@@ -29,28 +43,9 @@ const cartSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "Product",
-      },
       size: {
         type: String,
         required: true,
-        enum: {
-          values: ["XS", "S", "M", "L", "XL", "XXL"],
-          message: "Please select correct size for product",
-        },
-      },
-      color: {
-        colorName: {
-          type: String,
-          required: [true, "please enter color name"],
-        },
-        colorHex: {
-          type: String,
-          required: [true, "please enter color hex"],
-        },
       },
     },
   ],

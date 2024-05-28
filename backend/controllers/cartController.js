@@ -16,8 +16,8 @@ exports.addToCart = catchAsyncErrors(async (req, res, next) => {
     const existingItemIndex = cart.cartItems.findIndex(
       (item) =>
         item.product.toString() === cartItems[0].product &&
-        item.size === cartItems[0].size &&
-        item.color.colorHex === cartItems[0].color.colorHex
+        item.variant.toString() === cartItems[0].variant &&
+        item.size === cartItems[0].size
     );
     if (existingItemIndex !== -1) {
       cart.cartItems[existingItemIndex].quantity = cartItems[0].quantity;

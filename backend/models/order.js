@@ -30,7 +30,26 @@ const orderSchema = new mongoose.Schema({
   },
   orderItems: [
     {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Product",
+      },
+      variant: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Product",
+      },
+      inventory: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Product",
+      },
       name: {
+        type: String,
+        required: true,
+      },
+      variantName: {
         type: String,
         required: true,
       },
@@ -46,10 +65,9 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
+      size: {
+        type: String,
         required: true,
-        ref: "Product",
       },
     },
   ],

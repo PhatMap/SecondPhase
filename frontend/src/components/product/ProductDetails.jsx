@@ -17,18 +17,28 @@ import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 import { useParams } from "react-router-dom";
 import ProductImageZoom from "./ProductImageZoom";
 import ProductVariant from "./ProductVariant";
+import { set } from "mongoose";
 
 const ProductDetails = () => {
-  const { id } = useParams();
-  const [variant, setVariant] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
-  const dispatch = useDispatch();
-
   const { loading, error, product } = useSelector(
     (state) => state.productDetails
   );
+
+  const { id } = useParams();
+  const [quantity, setQuantity] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [selectedVariant, setSelectedVariant] = useState("");
+  const [stock, setStock] = useState("");
+  const [price, setPrice] = useState("");
+  const [activeImage, setActiveImage] = useState("");
+  const [inventory, setInventory] = useState([]);
+  const [variant, setVariant] = useState([]);
+  const [size, setSize] = useState("");
+  const [variantIndex, setVariantIndex] = useState("");
+
+  const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
   const { error: reviewError, success } = useSelector(
@@ -72,7 +82,20 @@ const ProductDetails = () => {
         break;
       }
     }
-    dispatch(addItemToCart(id, newQty));
+
+    const item = {
+      product: product._id,
+      variant: variant._id,
+      inventory: variant.inventory[variantIndex]._id,
+      name: product.name,
+      variantName: variant.name,
+      price: price,
+      image: variant.images[0].url,
+      quantity: newQty,
+      size: size,
+    };
+
+    dispatch(addItemToCart(item));
     toast.success("Item Added to Cart");
   };
 
@@ -94,10 +117,11 @@ const ProductDetails = () => {
     setQuantity(qty);
   };
 
-  const [activeImage, setActiveImage] = useState(product?.images?.[0]?.url);
   useEffect(() => {
     if (product && product.images && product.images.length > 0) {
       setActiveImage(product.images[0].url);
+      setPrice(product.price);
+      setStock(product.totalStock);
     }
   }, [product]);
 
@@ -149,6 +173,18 @@ const ProductDetails = () => {
     dispatch(newReview(formData));
   };
 
+  const ChooseSize = (newSize, newPrice, newStock) => {
+    if (size === newSize) {
+      setSize("");
+      setPrice(product.price);
+      setStock(variant.totalStock);
+    } else {
+      setSize(newSize);
+      setPrice(newPrice);
+      setStock(newStock);
+    }
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -180,9 +216,7 @@ const ProductDetails = () => {
             <div className="detail-content">
               <h1>{product.name}</h1>
               <p id="product_id">Product # {product._id}</p>
-
               <hr />
-
               <p>
                 Status:{" "}
                 <span
@@ -192,9 +226,7 @@ const ProductDetails = () => {
                   {product.stock > 0 ? "In Stock" : "Out of Stock"}
                 </span>
               </p>
-
               <hr />
-
               <div className="detail-color">
                 <h1>Đánh giá:</h1>
                 {product?.ratings?.toFixed(1).replace(".", ",") ?? "No Ratings"}
@@ -205,16 +237,12 @@ const ProductDetails = () => {
                   ></div>
                 </div>
               </div>
-
               <hr />
-
               <div className="detail-description">
                 <h1 className="">Mô tả:</h1>
                 <p>{product.description}</p>
               </div>
-
               <hr />
-
               <div
                 style={{ display: "flex", alignItems: "center", gap: "20px" }}
               >
@@ -229,37 +257,65 @@ const ProductDetails = () => {
                 >
                   {product.variants && product.variants.length > 0 ? (
                     product.variants.map((variant, index) => (
-                      <ProductVariant key={index} variant={variant} />
+                      <ProductVariant
+                        key={index}
+                        variant={variant}
+                        index={index}
+                        setSelectedVariant={setSelectedVariant}
+                        selectedVariant={selectedVariant}
+                        product={product}
+                        setStock={setStock}
+                        setActiveImage={setActiveImage}
+                        setInventory={setInventory}
+                        setVariant={setVariant}
+                        setVariantIndex={setVariantIndex}
+                      />
                     ))
                   ) : (
                     <h1>Không có mẫu</h1>
                   )}
                 </div>
               </div>
+              {inventory && <hr />}
+              {inventory && inventory.length > 0 && (
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="detail-color">
+                    <h1>Kích cỡ:</h1>
+                    {inventory.map((item, index) => (
+                      <button
+                        className="size-button"
+                        key={index}
+                        onClick={() => {
+                          ChooseSize(item.size, item.price, item.stock);
+                        }}
+                        style={{
+                          border: size === item.size ? "solid 2px black" : "",
+                        }}
+                      >
+                        <div>{item.size}</div>
+                        <div>{item.stock}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
               <hr />
-
               <div className="d-flex justify-content-between align-items-center">
                 <div className="detail-color">
                   <h1>Giá:</h1>
-                  <p style={{ fontSize: "30px", color: "green" }}>
-                    ${product.price}
-                  </p>
+                  <p style={{ fontSize: "30px", color: "green" }}>${price}</p>
                 </div>
               </div>
-
               <hr />
-
               <div className="d-flex justify-content-between align-items-center">
                 <div className="detail-color">
                   <h1>Số lượng:</h1>
                   <p style={{ fontSize: "30px", color: "green" }}>
-                    {product.totalStock}
+                    {stock > 0 ? stock : "Hết hàng"}
                   </p>
                 </div>
               </div>
-
               <hr />
-
               <div className="d-flex justify-content-between align-items-center">
                 <div className="stockCounter d-inline">
                   <span className="btn btn-danger minus" onClick={decreaseQty}>
@@ -287,7 +343,6 @@ const ProductDetails = () => {
                   Add to Cart
                 </button>
               </div>
-
               {product.reviews && product.reviews.length > 0 && (
                 <ListReviews reviews={product.reviews} />
               )}
@@ -307,7 +362,6 @@ const ProductDetails = () => {
                   Login to post your review.
                 </div>
               )}
-
               <div className="row mt-2 mb-5">
                 <div className="rating w-50">
                   <div

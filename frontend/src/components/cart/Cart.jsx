@@ -85,33 +85,6 @@ const Cart = () => {
                           </p>
                         </div>
 
-                        <div>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 10,
-                            }}
-                          >
-                            <p
-                              style={{
-                                fontSize: "20px",
-                                textTransform: "uppercase",
-                              }}
-                            >
-                              {item.color.colorName}{" "}
-                            </p>
-                            <div
-                              style={{
-                                backgroundColor: item.color.colorHex,
-                                width: "20px",
-                                height: "20px",
-                                borderRadius: "50%",
-                              }}
-                            ></div>
-                          </div>
-                        </div>
-
                         <div className="col-4 col-lg-3 mt-4 mt-lg-0">
                           <div className="stockCounter d-inline">
                             <span
@@ -123,8 +96,6 @@ const Cart = () => {
                                   index,
                                   item.product,
                                   item.size,
-                                  item.color.colorName,
-                                  item.color.colorHex
                                 )
                               }
                               disabled={item.quantity <= 1} // Vô hiệu hóa nút khi số lượng là 1 hoặc nhỏ hơn
@@ -146,8 +117,6 @@ const Cart = () => {
                                   index,
                                   item.product,
                                   item.size,
-                                  item.color.colorName,
-                                  item.color.colorHex
                                 )
                               }
                             >

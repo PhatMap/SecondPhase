@@ -159,17 +159,8 @@ const Header = () => {
                       <p>Tên sản phẩm: {item.name.substring(0, 20)}...</p>
                       <p>Số lượng mua: {item.quantity}</p>
                       <div className="cart-summary-color">
-                        <p>Màu:</p>
-                        <p>{item.color.colorName}</p>
-                        <div
-                          style={{
-                            backgroundColor:
-                              item.color.colorHex ?? "transparent",
-                            width: "10px",
-                            height: "10px",
-                            borderRadius: "50%",
-                          }}
-                        ></div>
+                        <p>kích cỡ:</p>
+                        <p>{item.size}</p>
                       </div>
                     </div>
                   </div>

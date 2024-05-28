@@ -1,24 +1,50 @@
+import { set } from "mongoose";
 import React, { useState } from "react";
 
-const ProductVariant = ({ variant }) => {
-  const [mark, setMark] = useState(false);
+const ProductVariant = ({
+  variant,
+  index,
+  setSelectedVariant,
+  selectedVariant,
+  product,
+  setStock,
+  setActiveImage,
+  setInventory,
+  setVariant,
+  setVariantIndex,
+}) => {
+  const isSelected = index === selectedVariant;
+
   const handlerMark = () => {
-    setMark(!mark);
+    if (index !== selectedVariant) {
+      setSelectedVariant(index);
+      setInventory(variant.inventory);
+      setStock(variant.totalStock);
+      setVariant(variant);
+      setVariantIndex(index);
+    } else {
+      setSelectedVariant("");
+      setStock(product.totalStock);
+      setActiveImage(product.images[0].url);
+      setInventory("");
+      setVariant("");
+      setVariantIndex("");
+    }
   };
   return (
     <label onClick={() => handlerMark()}>
-      <div className={`product-variant-form ${mark ? "active" : ""}`}>
+      <div className={`product-variant-form ${isSelected ? "active" : ""}`}>
         <img
           style={{ width: "50px" }}
-          src={variant.image.url}
+          src={variant?.images[0]?.url}
           alt={variant.name}
         />
-        <div className={`separator ${mark ? "active" : ""}`} />
+        <div className={`separator ${isSelected ? "active" : ""}`} />
 
         <h3>{variant.name}</h3>
-        <div className={`separator ${mark ? "active" : ""}`} />
+        <div className={`separator ${isSelected ? "active" : ""}`} />
 
-        <p>{variant.stock}</p>
+        <p>{variant.totalStock}</p>
       </div>
     </label>
   );

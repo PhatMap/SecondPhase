@@ -11,40 +11,22 @@ const variant = ({
   variantError,
 }) => {
   const [name, setName] = useState(variant.name);
-  const [price, setPrice] = useState(variant.price);
-  const [image, setImage] = useState(variant.image);
+  const [images, setImages] = useState(variant.images);
   const [inventory, setInventory] = useState(variant.inventory);
+  const [totalStock, setTotalStock] = useState(variant.totalStock);
 
   const [emptyName, setEmptyName] = useState(false);
-  const [emptyPrice, setEmptyPrice] = useState(false);
-
-  const handlePriceChange = (e) => {
-    const inputValue = e.target.value;
-    setEmptyPrice(false);
-
-    if (!isNaN(inputValue) && inputValue !== "") {
-      const numericValue = parseFloat(inputValue);
-      if (numericValue >= 0) {
-        setPrice(numericValue);
-      } else {
-        setPrice(-numericValue);
-      }
-    } else {
-      setPrice("");
-    }
-  };
+  const [emptyImages, setEmptyImages] = useState(false);
 
   const onChange = (e) => {
     const files = Array.from(e.target.files);
-
-    setImage("");
 
     files.forEach((file) => {
       const reader = new FileReader();
 
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setImage(reader.result);
+          setImages((oldArray) => [...oldArray, reader.result]);
         }
       };
 
@@ -53,31 +35,52 @@ const variant = ({
   };
 
   useEffect(() => {
+    let newTotalStock = 0;
+    inventory.forEach((item) => {
+      newTotalStock += item.stock;
+    });
+
+    setTotalStock(newTotalStock);
+
     const updatedVariant = {
       name,
-      image,
-      price,
+      images,
       inventory,
+      totalStock: newTotalStock,
     };
 
-    if (name === "" || price === "") {
+    if (name === "") {
       if (name === "") {
         setEmptyName(true);
-      }
-      if (price === "") {
-        setEmptyPrice(true);
       }
       variantError(true);
     } else {
       updateVariant(updatedVariant, index);
     }
-  }, [name, image, price, inventory, updateVariant, index]);
+  }, [name, images, inventory, updateVariant, index]);
 
-  const handleRetweetClick = () => {
-    const fileInput = document.getElementById("change");
-    if (fileInput) {
-      fileInput.click();
-    }
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
+    const files = e.dataTransfer.files;
+    onChange({ target: { files } });
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.add("hover");
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
+  };
+
+  const handlerImageRemove = (index) => {
+    const newImagesFiles = images.filter((img, i) => i !== index);
+    setImages(newImagesFiles);
   };
 
   return (
@@ -109,38 +112,60 @@ const variant = ({
           )}
         </div>
 
-        {image && (
-          <img
-            src={image.url ? image.url : image}
-            alt="Image Preview"
-            style={{ width: "50px", height: "50px" }}
-          />
-        )}
-        {image && (
-          <i
-            className="fa fa-retweet variant-retweet-btn"
-            onClick={handleRetweetClick}
-          >
-            <label className="variant-upload-btn" hidden>
-              <input
-                id="change"
-                type="file"
-                name="image"
-                hidden
-                onChange={onChange}
-              />
-            </label>
-          </i>
-        )}
         <div>
-          <input
-            placeholder="Giá"
-            type="text"
-            className={`form-control ${emptyPrice ? "invalid" : ""}`}
-            value={price < 0 ? 0 : price}
-            onChange={(e) => handlePriceChange(e)}
-          ></input>
-          {emptyPrice ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 5,
+            }}
+          >
+            <div>
+              <label
+                className={`upload-form ${emptyImages ? "invalid" : ""}`}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+              >
+                <input
+                  type="file"
+                  name="images"
+                  onChange={onChange}
+                  multiple
+                  hidden
+                />
+                <i
+                  class="fa fa-cloud-upload"
+                  aria-hidden="true"
+                  style={{ fontSize: "30px" }}
+                ></i>
+                <p>
+                  <strong>Kéo Thả </strong>hoặc <strong>Nhấn </strong>
+                  để đưa ảnh lên
+                </p>
+              </label>
+            </div>
+
+            <div style={{ display: "flex", gap: "5px" }}>
+              {images &&
+                images.length > 0 &&
+                images.map((image, index) => (
+                  <div key={index}>
+                    <img
+                      src={image.url ? image.url : image}
+                      alt="Image Preview"
+                      style={{ width: "50px", height: "50px" }}
+                    />
+                    <i
+                      className="fa fa-remove variant-remove-btn"
+                      onClick={() => handlerImageRemove(index)}
+                    ></i>
+                  </div>
+                ))}
+            </div>
+          </div>
+          {emptyImages ? (
             <p
               style={{
                 fontWeight: "normal",
@@ -148,7 +173,7 @@ const variant = ({
                 fontSize: "13px",
               }}
             >
-              Mẫu chưa có giá
+              Mẫu chưa có ảnh
             </p>
           ) : (
             ""
@@ -156,6 +181,7 @@ const variant = ({
         </div>
 
         <AddInventory setInventory={setInventory} inventory={inventory} />
+        <p>Total Variant Stock: {totalStock}</p>
 
         <i
           className="fa fa-remove variant-remove-btn"
