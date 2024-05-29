@@ -691,6 +691,24 @@ footer {
   width: 2.2rem;
 }
 
+
+.useraddress-heading {
+  font-size: 3.3rem;
+  padding-bottom: 1rem;
+  margin: 15px auto 0; /* margin-top: 15px, căn giữa trang */
+  text-align: center; /* Căn giữa tiêu đề */
+}
+.address-add-btn-container {
+  display: flex;
+  gap: 20px;
+  width: 200px;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  background-color: rgb(47, 192, 197);
+  margin-left:150px;
+}
+
 /* Checkout Steps */
 
 .checkout-progress div {
@@ -1981,15 +1999,17 @@ ul.CTAs a {
 }
 /* Shipping.jsx */
 .shipping-wrapper {
+  background-color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 1rem;
+  height: auto;
+  padding: 2rem;
 }
 
-.shipping-form-container {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); /* Equivalent to shadow-lg */
+
+
+.shipping-form-container{
+  box-shadow: #080808 0px 4px 8px;
   padding: 2rem;
   background-color: white;
   border-radius: 0.5rem;
@@ -1998,8 +2018,10 @@ ul.CTAs a {
 }
 
 .shipping-heading {
-  margin-bottom: 1.5rem; /* Equivalent to mb-4 */
+  font-size: 3.3rem;
+  padding-bottom: 1rem;
 }
+
 
 .shipping-form-group {
   margin-bottom: 1rem;
@@ -2022,6 +2044,28 @@ ul.CTAs a {
 
 .shipping-btn:hover {
   background-color: rgb(0, 48, 137);
+}
+.shipping-link {
+  align-self: flex-end;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+.custom-table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.custom-table th {
+  background-color: #f2f2f2;
+  color: #333;
 }
 
 /* ConfirmOrder.jsx */

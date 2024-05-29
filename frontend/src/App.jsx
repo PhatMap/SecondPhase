@@ -13,6 +13,7 @@ import ProductDetails from "./components/product/ProductDetails";
 // Cart Imports
 import Cart from "./components/cart/Cart";
 import Shipping from "./components/cart/Shipping";
+import AddressShip from "./components/cart/AddressShip";
 import ConfirmOrder from "./components/cart/ConfirmOrder";
 import Payment from "./components/cart/Payment";
 import OrderSuccess from "./components/cart/OrderSuccess";
@@ -98,7 +99,10 @@ function App() {
             <Route
               path="/shipping"
               element={<ProtectedRoute component={Shipping} />}
-            />
+            /><Route
+            path="/shipping/address"
+            element={<ProtectedRoute component={AddressShip} />}
+          />
             <Route
               path="/confirm"
               element={<ProtectedRoute component={ConfirmOrder} />}

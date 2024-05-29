@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import { Link } from "react-router-dom"; // Import Link from React Router Dom
 import { countries } from "countries-list";
 
 import MetaData from "../layout/MetaData";
@@ -7,7 +8,7 @@ import CheckoutSteps from "./CheckoutSteps";
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartActions";
 import { useNavigate } from "react-router-dom";
-import ShippingAddress from './ShippingAddress';
+import Address from '../user/Address';
 import { getUserAddress } from "../../actions/userActions";
 
 const Shipping = () => {
@@ -43,7 +44,7 @@ const Shipping = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log({ province, district, town,location, phone: phoneNo });
+    console.log({ province, district, town, location, phone: phoneNo });
     dispatch(saveShippingInfo({ province, district, town, location, phone: phoneNo }));
     history("/confirm");
   };
@@ -56,12 +57,12 @@ const Shipping = () => {
 
       <div className="shipping-wrapper">
         <form className="shipping-form-container" onSubmit={submitHandler}>
-          <h1 className="shipping-heading">Shipping Info</h1>
+          <h1 className="shipping-heading">Địa Chỉ Giao Hàng </h1>
 
-          <ShippingAddress handleAddressChange={handleAddressChange} />
+          <Address handleAddressChange={handleAddressChange} />
 
           <div className="shipping-form-group">
-            <label htmlFor="phone_field">Phone No</label>
+            <label htmlFor="phone_field">Số Điện Thoại</label>
             <input
               type="tel"
               id="phone_field"
@@ -73,8 +74,11 @@ const Shipping = () => {
           </div>
 
           <button id="shipping_btn" type="submit" className="shipping-btn">
-            CONTINUE
+            Tiếp Tục
           </button>
+
+          {/* Create a Link to redirect to /shipping/address */}
+          <Link to="/shipping/address"className="shipping-link ">Đã Có Địa Chỉ? Tới Xem </Link>
         </form>
       </div>
     </Fragment>
