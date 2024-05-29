@@ -1943,6 +1943,42 @@ ul.CTAs a {
   cursor: not-allowed;
 }
 
+/*Add Address*/
+.addaddress-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.addaddress-form-container {
+  box-shadow: #080808 0px 4px 8px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.addaddress-heading {
+  display: flex;
+  justify-content: center;
+  font-size: 3.75rem;
+  padding-bottom: 1rem;
+}
+
+.addaddress-form-group {
+  margin-bottom: 1rem;
+}
+
+.addaddress-form-control {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
 /* Shipping.jsx */
 .shipping-wrapper {
   display: flex;

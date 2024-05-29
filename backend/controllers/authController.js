@@ -27,9 +27,9 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const address = [{
     province: req.body['address[0][province]'],
     district: req.body['address[0][district]'],
-    phone: req.body['address[0][phone]'],
     town: req.body['address[0][town]'],
     location: req.body['address[0][location]'],
+    phone: req.body['address[0][phone]'],
     
   }];
 
@@ -331,4 +331,116 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     success: true,
     user,
   });
+});
+
+
+exports.addUserAddress = catchAsyncErrors(async (req, res, next) => {
+  const userId = req.user.id;  // Assuming the user is authenticated and req.user contains the user data
+  const { province, district, town, location, phone} = req.body;
+
+  const newAddress = {
+    province,
+    district,
+    town,
+    location,
+    phone,
+  };
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return next(new ErrorHandler("User not found", 404));
+  }
+
+  user.address.push(newAddress);
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Address added successfully",
+    address: user.address,
+  });
+});
+
+exports.getUserAddress = catchAsyncErrors(async (req, res, next) => {
+  const userId = req.user.id; // Giả sử người dùng đã được xác thực và req.user chứa dữ liệu của người dùng
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return next(new ErrorHandler("User not found", 404));
+  }
+
+  const userAddress = user.address;
+
+  res.status(200).json({
+    success: true,
+    address: userAddress,
+  });
+});
+exports.updateUserAddress = catchAsyncErrors(async (req, res, next) => {
+  const userId = req.user.id;
+  const addresses = req.body.addresses; // Lấy mảng địa chỉ từ phần thân của yêu cầu
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+
+    for (const addressData of addresses) {
+      const addressId = addressData._id; // Lấy ID của địa chỉ từ dữ liệu gửi từ Postman
+      const address = user.address.id(addressId);
+      if (!address) {
+        return next(new ErrorHandler("Address not found", 404));
+      }
+      
+      // Cập nhật thông tin địa chỉ với dữ liệu mới từ Postman
+      address.province = addressData.province;
+      address.district = addressData.district;
+      address.phone = addressData.phone;
+      address.town = addressData.town;
+      address.location = addressData.location;
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Addresses updated successfully",
+      addresses: user.addresses, // Trả về tất cả các địa chỉ của người dùng sau khi cập nhật
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+exports.deleteUserAddress = catchAsyncErrors(async (req, res, next) => {
+  const userId = req.user.id;
+  const addressId = req.params.addressId; // Lấy ID của địa chỉ từ tham số đường dẫn
+  try {
+    // Tìm người dùng
+    const user = await User.findById(userId);
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+
+    // Tìm và xóa địa chỉ trong mảng địa chỉ của người dùng
+    const address = user.address.id(addressId);
+    if (!address) {
+      return next(new ErrorHandler("Address not found", 404));
+    }
+    address.remove();
+
+    // Lưu trữ thay đổi và trả về kết quả
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Address deleted successfully",
+      addresses: user.addresses, // Trả về tất cả các địa chỉ của người dùng sau khi xóa
+    });
+  } catch (error) {
+    next(error);
+  }
 });

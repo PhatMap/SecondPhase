@@ -43,6 +43,18 @@ import {
   GOOGLE_LOGOUT_REQUEST,
   GOOGLE_LOGOUT_FAIL,
   GOOGLE_LOGOUT_SUCCESS,
+  UPDATE_ADDRESS_REQUEST,
+  UPDATE_ADDRESS_SUCCESS,
+  UPDATE_ADDRESS_FAIL,
+  ADD_ADDRESS_REQUEST,
+  ADD_ADDRESS_SUCCESS,
+  ADD_ADDRESS_FAIL,
+  GET_USER_ADDRESS_REQUEST,
+  GET_USER_ADDRESS_SUCCESS,
+  GET_USER_ADDRESS_FAIL,
+  UPDATE_USER_ADDRESS_REQUEST,
+  UPDATE_USER_ADDRESS_SUCCESS,
+  UPDATE_USER_ADDRESS_FAIL,
 } from "../constants/userConstants";
 
 // Login
@@ -388,4 +400,86 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
+};
+export const updateAddress = (addresses) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: UPDATE_ADDRESS_REQUEST });
+
+    const { data } = await axios.put('/api/v1/me/update-address', { addresses });
+
+    dispatch({
+      type: UPDATE_ADDRESS_SUCCESS,
+      payload: data.success,
+    });
+
+  } catch (error) {
+    dispatch({
+      type: UPDATE_ADDRESS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+export const getUserAddress = () => async (dispatch) => {
+  try { 
+    dispatch({ type: GET_USER_ADDRESS_REQUEST });
+    
+    const { data } = await axios.get("/api/v1/me/address");
+
+    dispatch({
+      type: GET_USER_ADDRESS_SUCCESS,
+      payload: data.address, // Payload là địa chỉ của người dùng
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_ADDRESS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const addAddress = (addressData) => async (dispatch) => {
+  try {
+    dispatch({ type: ADD_ADDRESS_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const { data } = await axios.post("/api/v1/me/add-address", addressData, config);
+
+    dispatch({
+      type: ADD_ADDRESS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_ADDRESS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateUserAddress = (id, updatedAddress) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_ADDRESS_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(`/api/user/address/${id}`, updatedAddress, config);
+
+    dispatch({
+      type: UPDATE_USER_ADDRESS_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_ADDRESS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };

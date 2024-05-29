@@ -29,6 +29,9 @@ import UpdateProfile from "./components/user/UpdateProfile";
 import UpdatePassword from "./components/user/UpdatePassword";
 import ForgotPassword from "./components/user/ForgotPassword";
 import NewPassword from "./components/user/NewPassword";
+import UserAddress from "./components/user/UserAddress";
+import AddAddress from "./components/user/AddAddress";
+import UpdateAddress from "./components/user/UpdateAddress";
 
 // Admin Imports
 import Dashboard from "./components/admin/Dashboard";
@@ -43,6 +46,7 @@ import ProductReviews from "./components/admin/ProductReviews";
 import Category from "./components/product/Category";
 import Color from "./components/product/Color";
 import ProtectedRoute from "./components/route/ProtectedRoute";
+
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
 import store from "./store";
@@ -51,6 +55,7 @@ import axios from "axios";
 // Payment
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -89,6 +94,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/category/:category" element={<Category />} />
             <Route path="/cart" element={<Cart />} />
+            
             <Route
               path="/shipping"
               element={<ProtectedRoute component={Shipping} />}
@@ -123,6 +129,10 @@ function App() {
               path="/me/update"
               element={<ProtectedRoute component={UpdateProfile} />}
             />
+            <Route path="/me/user-address" element={<ProtectedRoute component={UserAddress} />} />
+            <Route exact path="/me/user-address/add" element={<AddAddress />} />
+            <Route exact path="/me/user-address/update/:id" element={<UpdateAddress />} />
+
             <Route
               path="/password/update"
               element={<ProtectedRoute component={UpdatePassword} />}
@@ -134,6 +144,7 @@ function App() {
             <Route
               path="/order/:id"
               element={<ProtectedRoute component={OrderDetails} />}
+              
             />
           </Routes>
         </div>

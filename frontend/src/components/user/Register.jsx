@@ -317,31 +317,6 @@ const Register = () => {
           >
             Đăng Kí
           </button>
-          {user.address.map((address, index) => (
-            <div className="address-info-table" key={index}>
-              <h2>Thông Tin Địa Chỉ {index + 1}</h2>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Tỉnh/Thành phố:</td>
-                    <td>{address.province}</td>
-                  </tr>
-                  <tr>
-                    <td>Quận/Huyện:</td>
-                    <td>{address.district}</td>
-                  </tr>
-                  <tr>
-                    <td>Phường/Xã:</td>
-                    <td>{address.town}</td>
-                  </tr>
-                  <tr>
-                    <td>Địa chỉ chi tiết:</td>
-                    <td>{address.location}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          ))}
         </form>
       </div>
     </Fragment>

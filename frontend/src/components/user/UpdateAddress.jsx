@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserAddress, getUserAddress } from "../../actions/userActions";
 import MetaData from "../layout/MetaData";
-import Address from "./Address"; // Import component Address
+import Address from "./Address";
+import { useParams } from "react-router-dom"; // Import useParams
 
-const UpdateAddress = ({ match, history }) => {
+const UpdateAddress = ({ history }) => {
+  const { id } = useParams(); // Lấy id từ URL
   const [addressData, setAddressData] = useState({
     province: "",
     district: "",
@@ -14,13 +16,14 @@ const UpdateAddress = ({ match, history }) => {
   });
 
   const dispatch = useDispatch();
-
   const { address } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (address && address._id !== match.params.id) {
-      dispatch(getUserAddress(match.params.id));
-    } else {
+    dispatch(getUserAddress(id)); // Sử dụng id từ URL để lấy địa chỉ
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (address) {
       setAddressData({
         province: address.province,
         district: address.district,
@@ -29,7 +32,7 @@ const UpdateAddress = ({ match, history }) => {
         phone: address.phone
       });
     }
-  }, [dispatch, address, match.params.id]);
+  }, [address]);
 
   const handleAddressChange = (field, value) => {
     setAddressData({
@@ -40,8 +43,7 @@ const UpdateAddress = ({ match, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    dispatch(updateUserAddress(address._id, addressData));
+    dispatch(updateUserAddress(id, addressData)); // Sử dụng id từ URL khi gửi yêu cầu cập nhật
     history.push("/me/user-address");
   };
 
@@ -52,7 +54,6 @@ const UpdateAddress = ({ match, history }) => {
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>
             <h1 className="mb-3">Update Address</h1>
-            {/* Pass handleAddressChange as prop to Address component */}
             <Address handleAddressChange={handleAddressChange} />
             <button
               id="update_button"

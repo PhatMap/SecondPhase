@@ -53,6 +53,11 @@ const Profile = () => {
 
               <h4>Joined On</h4>
               <p>{String(user.createAt).substring(0, 10)}</p>
+              <div className="profile-btn">
+                <Link to="/me/user-address" className="btn btn-primary btn-block mt-3">
+                  Manage Addresses
+                </Link>
+              </div>
 
               {user.role !== "admin" && (
                 <Link to="/orders/me" className="btn btn-danger btn-block mt-5">
