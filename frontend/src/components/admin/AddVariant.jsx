@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddInventory from "./AddInventory";
+import { set } from "mongoose";
 
 const AddVariant = ({ show, variants }) => {
   const [name, setName] = useState("");
@@ -10,18 +11,22 @@ const AddVariant = ({ show, variants }) => {
 
   const [emptyName, setEmptyName] = useState(false);
   const [emptyImages, setEmptyImages] = useState(false);
+  const [emptyInventory, setEmptyInventory] = useState(false);
 
   const CloseHandler = () => {
     show(false);
   };
 
   const ConfirmHandler = () => {
-    if (name === "" || images.length === 0) {
+    if (name === "" || images.length === 0 || inventory.length === 0) {
       if (name === "") {
         setEmptyName(true);
       }
       if (images.length === 0) {
         setEmptyImages(true);
+      }
+      if (inventory.length === 0) {
+        setEmptyInventory(true);
       }
       return toast.error("Chưa điền đủ thông tin mẫu");
     }
@@ -180,7 +185,22 @@ const AddVariant = ({ show, variants }) => {
           )}
         </div>
 
-        <AddInventory setInventory={setInventory} inventory={inventory} />
+        <div>
+          <AddInventory setInventory={setInventory} inventory={inventory} />
+          {emptyInventory ? (
+            <p
+              style={{
+                fontWeight: "normal",
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              Mẫu chưa có kích cỡ
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
       <div className="btn-container">
         <button

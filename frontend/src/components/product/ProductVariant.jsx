@@ -9,26 +9,40 @@ const ProductVariant = ({
   product,
   setStock,
   setActiveImage,
+  setImages,
   setInventory,
   setVariant,
   setVariantIndex,
+  setPrice,
+  setSize,
 }) => {
   const isSelected = index === selectedVariant;
 
   const handlerMark = () => {
+    setSize("");
     if (index !== selectedVariant) {
       setSelectedVariant(index);
       setInventory(variant.inventory);
       setStock(variant.totalStock);
+      setPrice(product.price);
       setVariant(variant);
       setVariantIndex(index);
+      setActiveImage(variant.images[0].url);
+      setImages(variant.images);
     } else {
       setSelectedVariant("");
       setStock(product.totalStock);
+      setPrice(product.price);
       setActiveImage(product.images[0].url);
       setInventory("");
       setVariant("");
       setVariantIndex("");
+      setImages(product.images);
+      product.variants.map((variant, index) => {
+        variant.images.map((image) => {
+          setImages((prev) => [...prev, image]);
+        });
+      });
     }
   };
   return (

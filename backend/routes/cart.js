@@ -7,6 +7,7 @@ const {
   removeProductFromCart,
   emptyTheCart,
   updateCartQuantity,
+  getUserCartProduct,
 } = require("../controllers/cartController");
 
 const { isAuthenticatedUser } = require("../middlewares/auth");
@@ -15,7 +16,11 @@ router.route("/cart").post(isAuthenticatedUser, addToCart);
 
 router.route("/cart/me").get(isAuthenticatedUser, getUserCart);
 
-router.route("/cart/:id/:size").delete(isAuthenticatedUser, removeProductFromCart);
+router.route("/cart/product").post(isAuthenticatedUser, getUserCartProduct);
+
+router
+  .route("/cart/:id/:size")
+  .delete(isAuthenticatedUser, removeProductFromCart);
 
 router.route("/cart/empty").put(isAuthenticatedUser, emptyTheCart);
 

@@ -46,6 +46,7 @@ const AddInventory = ({ setInventory, inventory }) => {
   };
 
   const ChooseSize = (size) => {
+    setEmptySize(false);
     if (size === "") {
       return;
     }
@@ -53,14 +54,24 @@ const AddInventory = ({ setInventory, inventory }) => {
   };
 
   const AddInventory = () => {
-    if (size === "" || stock === "") {
+    if (size === "" || stock === "" || price === "") {
       if (size === "") {
         setEmptySize(true);
       }
       if (stock === "") {
         setEmptyStock(true);
       }
+      if (price === "") {
+        setEmptyPrice(true);
+      }
       return toast.error("Chưa điền đủ thông tin kho");
+    }
+
+    if (inventory.length > 0) {
+      const checkSize = inventory.find((item) => item.size === size);
+      if (checkSize) {
+        return toast.error("Kích thước đã tồn tại");
+      }
     }
 
     setInventory((prev) => [
@@ -72,8 +83,13 @@ const AddInventory = ({ setInventory, inventory }) => {
     setPrice("");
   };
 
+  const handlerInventoryRemove = (index) => {
+    const newInventory = inventory.filter((inv, i) => i !== index);
+    setInventory(newInventory);
+  };
+
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <div>
         <select
           className={`form-control ${emptySize ? "invalid" : ""}`}
@@ -157,6 +173,7 @@ const AddInventory = ({ setInventory, inventory }) => {
       <div
         style={{
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           height: "50px",
           gap: "5px",
@@ -164,10 +181,14 @@ const AddInventory = ({ setInventory, inventory }) => {
       >
         {inventory.length > 0
           ? inventory.map((item, index) => (
-              <div key={index}>
+              <div key={index} style={{display:"flex", gap:"5px"}}>
                 <p>{item.size}</p>
-                <p>{item.price}</p>
-                <p>{item.stock}</p>
+                <p>Giá: {item.price}</p>
+                <p>SL: {item.stock}</p>
+                <i
+                  className="fa fa-remove variant-remove-btn"
+                  onClick={() => handlerInventoryRemove(index)}
+                ></i>
               </div>
             ))
           : ""}

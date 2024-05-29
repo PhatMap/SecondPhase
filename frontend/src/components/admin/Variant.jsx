@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddInventory from "./AddInventory";
+import { set } from "mongoose";
 
 const variant = ({
   variant,
@@ -17,6 +18,7 @@ const variant = ({
 
   const [emptyName, setEmptyName] = useState(false);
   const [emptyImages, setEmptyImages] = useState(false);
+  const [emptyInventory, setEmptyInventory] = useState(false);
 
   const onChange = (e) => {
     const files = Array.from(e.target.files);
@@ -35,6 +37,10 @@ const variant = ({
   };
 
   useEffect(() => {
+    setEmptyName(false);
+    setEmptyImages(false);
+    setEmptyInventory(false);
+
     let newTotalStock = 0;
     inventory.forEach((item) => {
       newTotalStock += item.stock;
@@ -49,9 +55,15 @@ const variant = ({
       totalStock: newTotalStock,
     };
 
-    if (name === "") {
+    if (name === "" || images.length === 0 || inventory.length === 0) {
       if (name === "") {
         setEmptyName(true);
+      }
+      if (images.length === 0) {
+        setEmptyImages(true);
+      }
+      if (inventory.length === 0) {
+        setEmptyInventory(true);
       }
       variantError(true);
     } else {
@@ -180,7 +192,22 @@ const variant = ({
           )}
         </div>
 
-        <AddInventory setInventory={setInventory} inventory={inventory} />
+        <div>
+          <AddInventory setInventory={setInventory} inventory={inventory} />
+          {emptyInventory ? (
+            <p
+              style={{
+                fontWeight: "normal",
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              Mẫu chưa có kích cỡ
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
         <p>Total Variant Stock: {totalStock}</p>
 
         <i

@@ -1,9 +1,11 @@
 const Cart = require("../models/cart");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+const Product = require("../models/product");
 
 exports.addToCart = catchAsyncErrors(async (req, res, next) => {
   const { cartItems } = req.body;
+  const { product, variant, inventory, size, quantity } = cartItems[0];
 
   let cart = await Cart.findOne({ user: req.user.id });
 
@@ -15,12 +17,13 @@ exports.addToCart = catchAsyncErrors(async (req, res, next) => {
   } else {
     const existingItemIndex = cart.cartItems.findIndex(
       (item) =>
-        item.product.toString() === cartItems[0].product &&
-        item.variant.toString() === cartItems[0].variant &&
-        item.size === cartItems[0].size
+        item.product.toString() === product &&
+        item.variant.toString() === variant &&
+        item.size.toString() === size
     );
     if (existingItemIndex !== -1) {
-      cart.cartItems[existingItemIndex].quantity = cartItems[0].quantity;
+      cart.cartItems[existingItemIndex].quantity =
+        quantity + cart.cartItems[existingItemIndex].quantity;
     } else {
       cart.cartItems.push(...cartItems);
     }
@@ -57,6 +60,54 @@ exports.getUserCart = catchAsyncErrors(async (req, res, next) => {
     success: true,
     cartItems,
   });
+});
+
+exports.getUserCartProduct = catchAsyncErrors(async (req, res, next) => {
+  const { item } = req.body;
+  const { product, variant, inventory, size, quantity } = item[0];
+
+  const cart = await Cart.findOne({
+    user: req.user.id,
+  });
+
+  const currentItem = cart.cartItems.find(
+    (cartItem) =>
+      cartItem.product.toString() === product.toString() &&
+      cartItem.variant.toString() === variant.toString() &&
+      cartItem.size.toString() === size.toString()
+  );
+
+  if (!currentItem) {
+    return res.status(200).json({
+      success: true,
+      message: "Item not found in the cart",
+    });
+  }
+
+  const theProduct = await Product.findById(product);
+
+  let productQuantity = 0;
+
+  theProduct.variants.map((variant, index) => {
+    variant.inventory.map((item, index) => {
+      if (item.size === size) {
+        productQuantity = item.stock;
+      }
+    });
+  });
+
+  const total = currentItem.quantity + quantity;
+
+  if (total > productQuantity) {
+    return res.status(400).json({
+      success: false,
+      message: "Quantity exceeds the available stock",
+    });
+  } else {
+    res.status(200).json({
+      success: true,
+    });
+  }
 });
 
 exports.removeProductFromCart = catchAsyncErrors(async (req, res, next) => {

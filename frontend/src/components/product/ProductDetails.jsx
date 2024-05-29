@@ -1,9 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
-
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
 import ListReviews from "../review/ListReviews";
-
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +10,7 @@ import {
   newReview,
   clearErrors,
 } from "../../actions/productActions";
-import { addItemToCart } from "../../actions/cartActions";
+import { addItemToCart, getUserCartProduct } from "../../actions/cartActions";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 import { useParams } from "react-router-dom";
 import ProductImageZoom from "./ProductImageZoom";
@@ -32,24 +30,20 @@ const ProductDetails = () => {
   const [stock, setStock] = useState("");
   const [price, setPrice] = useState("");
   const [activeImage, setActiveImage] = useState("");
+  const [images, setImages] = useState("");
   const [inventory, setInventory] = useState([]);
   const [variant, setVariant] = useState([]);
   const [size, setSize] = useState("");
   const [variantIndex, setVariantIndex] = useState("");
+  const [cartItem, setCartItem] = useState("");
 
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
+
   const { error: reviewError, success } = useSelector(
     (state) => state.newReview
-  );
-  const [localProduct, setLocalProduct] = useState(
-    product || {
-      // ... cung cấp một đối tượng cơ bản với các thuộc tính cần thiết, ví dụ:
-      ratingsBreakdown: {},
-      // các thuộc tính khác...
-    }
   );
 
   useEffect(() => {
@@ -71,16 +65,28 @@ const ProductDetails = () => {
     }
   }, [dispatch, error, id, reviewError, success]);
 
-  const addToCart = () => {
-    let newQty = quantity;
-    for (let i = 0; i < cartItems.length; i++) {
-      if (id === cartItems[i].product) {
-        newQty = cartItems[i].quantity + newQty;
-        if (newQty > product.stock) {
-          return;
-        }
-        break;
-      }
+  useEffect(() => {
+    if (product && product.images && product.images.length > 0) {
+      setActiveImage(product.images[0].url);
+      setPrice(product.price);
+      setStock(product.totalStock);
+      setImages(product.images);
+      product.variants.map((variant, index) => {
+        variant.images.map((image) => {
+          setImages((prev) => [...prev, image]);
+        });
+      });
+
+      const item = cartItems.find((item) => item.product === product._id);
+
+      setCartItem(item);
+    }
+  }, [product]);
+
+  const addToCart = async () => {
+    if (size === "") {
+      toast.error("Hãy chọn sản phẩm và kích cỡ");
+      return;
     }
 
     const item = {
@@ -91,18 +97,24 @@ const ProductDetails = () => {
       variantName: variant.name,
       price: price,
       image: variant.images[0].url,
-      quantity: newQty,
+      quantity: quantity,
       size: size,
     };
 
-    dispatch(addItemToCart(item));
-    toast.success("Item Added to Cart");
+    const check = await dispatch(getUserCartProduct(item));
+
+    if (check) {
+      dispatch(addItemToCart(item));
+      toast.success("Item Added to Cart");
+    } else {
+      return toast.error("Giỏ hàng đã đạt số lượng hiện hữu của sản phẩm");
+    }
   };
 
   const increaseQty = () => {
     const count = document.querySelector(".count");
 
-    if (count.valueAsNumber >= product.stock) return;
+    if (count.valueAsNumber >= stock) return;
 
     const qty = count.valueAsNumber + 1;
     setQuantity(qty);
@@ -116,14 +128,6 @@ const ProductDetails = () => {
     const qty = count.valueAsNumber - 1;
     setQuantity(qty);
   };
-
-  useEffect(() => {
-    if (product && product.images && product.images.length > 0) {
-      setActiveImage(product.images[0].url);
-      setPrice(product.price);
-      setStock(product.totalStock);
-    }
-  }, [product]);
 
   function setUserRatings() {
     const stars = document.querySelectorAll(".star");
@@ -174,6 +178,12 @@ const ProductDetails = () => {
   };
 
   const ChooseSize = (newSize, newPrice, newStock) => {
+    if (cartItem && newStock === cartItem.quantity) {
+      toast.error("Giỏ hàng đã đạt số lượng hiện hữu của sản phẩm");
+      return;
+    }
+
+    setQuantity(1);
     if (size === newSize) {
       setSize("");
       setPrice(product.price);
@@ -182,6 +192,24 @@ const ProductDetails = () => {
       setSize(newSize);
       setPrice(newPrice);
       setStock(newStock);
+    }
+  };
+
+  const handlerQuantity = (e) => {
+    const inputValue = e.target.value;
+
+    if (inputValue > stock) {
+      setQuantity(1);
+      return;
+    } else {
+      setQuantity(inputValue);
+    }
+  };
+
+  const handleBlur = (e) => {
+    const inputValue = e.target.value;
+    if (inputValue === "") {
+      setQuantity(1);
     }
   };
 
@@ -195,9 +223,8 @@ const ProductDetails = () => {
           <div className="detail-container">
             <div className="detail-image-container">
               <div className="detail-images">
-                {product &&
-                  product.images &&
-                  product.images.map((image, index) => (
+                {images &&
+                  images.map((image, index) => (
                     <img
                       key={image.public_id}
                       src={image.url}
@@ -221,9 +248,9 @@ const ProductDetails = () => {
                 Status:{" "}
                 <span
                   id="stock_status"
-                  className={product.stock > 0 ? "greenColor" : "redColor"}
+                  className={product.totalStock > 0 ? "greenColor" : "redColor"}
                 >
-                  {product.stock > 0 ? "In Stock" : "Out of Stock"}
+                  {product.totalStock > 0 ? "In Stock" : "Out of Stock"}
                 </span>
               </p>
               <hr />
@@ -265,10 +292,13 @@ const ProductDetails = () => {
                         selectedVariant={selectedVariant}
                         product={product}
                         setStock={setStock}
+                        setPrice={setPrice}
                         setActiveImage={setActiveImage}
+                        setImages={setImages}
                         setInventory={setInventory}
                         setVariant={setVariant}
                         setVariantIndex={setVariantIndex}
+                        setSize={setSize}
                       />
                     ))
                   ) : (
@@ -317,22 +347,31 @@ const ProductDetails = () => {
               </div>
               <hr />
               <div className="d-flex justify-content-between align-items-center">
-                <div className="stockCounter d-inline">
-                  <span className="btn btn-danger minus" onClick={decreaseQty}>
-                    -
-                  </span>
+                {size && (
+                  <div className="stockCounter d-inline">
+                    <span
+                      className="btn btn-danger minus"
+                      onClick={decreaseQty}
+                    >
+                      -
+                    </span>
 
-                  <input
-                    type="number"
-                    className="form-control count d-inline"
-                    value={quantity}
-                    readOnly
-                  />
+                    <input
+                      type="number"
+                      className="form-control count d-inline"
+                      value={quantity}
+                      onChange={(e) => handlerQuantity(e)}
+                      onBlur={(e) => handleBlur(e)}
+                    />
 
-                  <span className="btn btn-primary plus" onClick={increaseQty}>
-                    +
-                  </span>
-                </div>
+                    <span
+                      className="btn btn-primary plus"
+                      onClick={increaseQty}
+                    >
+                      +
+                    </span>
+                  </div>
+                )}
                 <button
                   type="button"
                   id="cart_btn"

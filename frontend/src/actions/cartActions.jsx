@@ -68,3 +68,17 @@ export const saveShippingInfo = (data) => async (dispatch) => {
 
   localStorage.setItem("shippingInfo", JSON.stringify(data));
 };
+
+export const getUserCartProduct = (infor) => async (dispatch, getState) => {
+  try {
+    const response = await axios.post(`/api/v1/cart/product`, {
+      item: [infor],
+    });
+
+    const { success } = response.data;
+
+    return success;
+  } catch (error) {
+    return false;
+  }
+};
