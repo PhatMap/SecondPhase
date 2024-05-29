@@ -7,25 +7,44 @@ import CheckoutSteps from "./CheckoutSteps";
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartActions";
 import { useNavigate } from "react-router-dom";
+import ShippingAddress from './ShippingAddress';
+import { getUserAddress } from "../../actions/userActions";
 
 const Shipping = () => {
   const history = useNavigate();
   const countriesList = Object.values(countries);
-
+  const dispatch = useDispatch();
   const { shippingInfo } = useSelector((state) => state.cart);
 
-  const [address, setAddress] = useState(shippingInfo.address);
-  const [city, setCity] = useState(shippingInfo.city);
-  const [postalCode, setPostalCode] = useState(shippingInfo.postalCode);
-  const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
-  const [country, setCountry] = useState(shippingInfo.country);
+  const [province, setProvince] = useState(shippingInfo.province || "");
+  const [district, setDistrict] = useState(shippingInfo.district || "");
+  const [town, setTown] = useState(shippingInfo.town || "");
+  const [location, setLocation] = useState(shippingInfo.location || "");
+  const [phoneNo, setPhoneNo] = useState(shippingInfo.phone || "");
 
-  const dispatch = useDispatch();
+  const handleAddressChange = (field, value) => {
+    switch (field) {
+      case 'province':
+        setProvince(value);
+        break;
+      case 'district':
+        setDistrict(value);
+        break;
+      case 'town':
+        setTown(value);
+        break;
+      case 'location':
+        setLocation(value);
+        break;
+      default:
+        break;
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    dispatch(saveShippingInfo({ address, city, phoneNo, postalCode, country }));
+    console.log({ province, district, town,location, phone: phoneNo });
+    dispatch(saveShippingInfo({ province, district, town, location, phone: phoneNo }));
     history("/confirm");
   };
 
@@ -39,69 +58,18 @@ const Shipping = () => {
         <form className="shipping-form-container" onSubmit={submitHandler}>
           <h1 className="shipping-heading">Shipping Info</h1>
 
-          <div className="shipping-form-group">
-            <label htmlFor="address_field">Address</label>
-            <input
-              type="text"
-              id="address_field"
-              className="shipping-form-control"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="shipping-form-group">
-            <label htmlFor="city_field">City</label>
-            <input
-              type="text"
-              id="city_field"
-              className="shipping-form-control"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              required
-            />
-          </div>
+          <ShippingAddress handleAddressChange={handleAddressChange} />
 
           <div className="shipping-form-group">
             <label htmlFor="phone_field">Phone No</label>
             <input
-              type="tel" /* Changed to "tel" for better semantics */
+              type="tel"
               id="phone_field"
               className="shipping-form-control"
               value={phoneNo}
               onChange={(e) => setPhoneNo(e.target.value)}
               required
             />
-          </div>
-
-          <div className="shipping-form-group">
-            <label htmlFor="postal_code_field">Postal Code</label>
-            <input
-              type="number"
-              id="postal_code_field"
-              className="shipping-form-control"
-              value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="shipping-form-group">
-            <label htmlFor="country_field">Country</label>
-            <select
-              id="country_field"
-              className="shipping-form-control"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              required
-            >
-              {countriesList.map((country) => (
-                <option key={country.name} value={country.name}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
           </div>
 
           <button id="shipping_btn" type="submit" className="shipping-btn">

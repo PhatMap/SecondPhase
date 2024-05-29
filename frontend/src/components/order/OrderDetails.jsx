@@ -38,7 +38,7 @@ const OrderDetails = () => {
 
   const shippingDetails =
     shippingInfo &&
-    `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`;
+    `${shippingInfo.province}, ${shippingInfo.district}, ${shippingInfo.town}, ${shippingInfo.location}`;
 
   const isPaid =
     paymentInfo && paymentInfo.status === "succeeded" ? true : false;
@@ -91,7 +91,7 @@ const OrderDetails = () => {
                 <b>Name:</b> {user && user.name}
               </p>
               <p>
-                <b>Phone:</b> {shippingInfo && shippingInfo.phoneNo}
+                <b>Phone:</b> {shippingInfo && shippingInfo.phone}
               </p>
               <p className="mb-4">
                 <b>Address:</b>
