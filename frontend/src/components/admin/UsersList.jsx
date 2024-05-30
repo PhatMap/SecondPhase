@@ -42,7 +42,6 @@ const UsersList = () => {
     } else if (role === "user") {
       const formData = new FormData();
       formData.set("role", "banned");
-  
       dispatch(updateUser(id, formData)).then(() => {
         dispatch(allUsers()); 
       });

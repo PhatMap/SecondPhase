@@ -8,47 +8,48 @@ import { getUserAddress, deleteUserAddress } from "../../actions/userActions";
 import { USER_ADDRESS_DELETE_RESET } from "../../constants/userConstants";
 
 const UserAddress = () => {
-  const { user, error, isDeleted } = useSelector((state) => state.auth);
+  const { user, error, } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const {isDeleted } = useSelector((state) => state.auth);
 
+
+  const [add,setadd]= useState("");
+  
   useEffect(() => {
-    dispatch(getUserAddress());
+    const fetchUserAddress = async () => {
+      try {
+          const address = await dispatch(getUserAddress());
+          console.log("Fetched address:", address.user);
+          setadd(address.user)
+      } catch (error) {
+          console.error("Failed to fetch address:", error);
+      }
+  };
 
+  fetchUserAddress();
+  
+   
     if (error) {
       setErrorMessage("Số lượng địa chỉ đã đầy hoặc không thể truy cập danh sách địa chỉ.");
     } else {
       setErrorMessage(""); // Xóa thông báo lỗi nếu không có lỗi
     }
-
-    
-    
-  }, [dispatch, error]);
-
-
-
-  useEffect(() => {
     if (isDeleted) {
+      fetchUserAddress();
+     
       dispatch(getUserAddress()).then(() => {
-        // Thêm các xử lý khác ở đây nếu cần
+        console.log("hello",user);
       });
+    
       toast.success("Xóa Địa Chỉ Thành Công");
       dispatch({ type: USER_ADDRESS_DELETE_RESET });
     }
-  }, [dispatch, isDeleted]);
-  
+  }, [dispatch,error, isDeleted]);
 
+    
 
-
-
-
-
-  // if (isDeleted) {
-  //   toast.success("Xóa Địa Chỉ Thành Công");
-  //   dispatch({ type: USER_ADDRESS_DELETE_RESET });
-  //   dispatch(getUserAddress());
-  // }
 
   const handleAddAddress = () => {
     if (!user || !user.address || user.address.length >= 5) {
@@ -58,19 +59,16 @@ const UserAddress = () => {
     }
   };
 
-  const handleDeleteAddress = (addressId) => {
+  const handleDeleteAddress =  async (addressId) => {
     const confirmDelete = window.confirm("Bạn có chắc muốn xóa địa chỉ này?");
     if (confirmDelete) {
-      dispatch(deleteUserAddress(addressId)).then(() => {
+      await dispatch(deleteUserAddress(addressId));
         dispatch(getUserAddress());
-      });
+      
     }
   };
 
-  useEffect(() => {
-    console.log("User state after deletion:", user);
-  }, [user]);
-
+ 
   return (
     <Fragment>
       <MetaData title={"User Address"} />
@@ -78,7 +76,7 @@ const UserAddress = () => {
         <h1 className="useraddress-heading">Địa Chỉ Người Dùng</h1>
         <button className="address-add-btn-container" onClick={handleAddAddress}>Thêm Địa Chỉ Mới</button>
         {errorMessage && <p className="error-message" style={{ color: "red", marginLeft: "150px" }}>{errorMessage}</p>}
-        {user && user.address && user.address.length > 0 ? (
+        {add && add.address && add.address.length > 0 ? (
           <table className="custom-table">
             <thead>
               <tr>
@@ -91,7 +89,7 @@ const UserAddress = () => {
               </tr>
             </thead>
             <tbody>
-              {user.address.map((address) => (
+              {add.address.map((address) => (
                 <tr key={address._id}>
                   <td>{address.province}</td>
                   <td>{address.district}</td>

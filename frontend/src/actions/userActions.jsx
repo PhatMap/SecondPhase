@@ -56,6 +56,7 @@ import {
   UPDATE_USER_ADDRESS_SUCCESS,
   UPDATE_USER_ADDRESS_FAIL,
   USER_ADDRESS_DELETE_SUCCESS,
+  USER_ADDRESS_DELETE_REQUEST,
 } from "../constants/userConstants";
 
 // Login
@@ -424,12 +425,9 @@ export const getUserAddress = () => async (dispatch) => {
   try { 
     dispatch({ type: GET_USER_ADDRESS_REQUEST });
     
-    const { data } = await axios.get("/api/v1/me/address");
+    const { data } = await axios.get("/api/v1/me");
 
-    dispatch({
-      type: GET_USER_ADDRESS_SUCCESS,
-      payload: data.address, // Payload là địa chỉ của người dùng
-    });
+   return data;
   } catch (error) {
     dispatch({
       type: GET_USER_ADDRESS_FAIL,
@@ -491,6 +489,7 @@ export const updateUserAddress = (id, updatedAddress) => async (dispatch) => {
 
 export const deleteUserAddress = (addressId) => async (dispatch) => {
   try {
+    dispatch({type: USER_ADDRESS_DELETE_REQUEST })
     const { data } = await axios.delete(`/api/v1/me/address/${addressId}`);
 
     dispatch({

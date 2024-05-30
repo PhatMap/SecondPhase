@@ -65,7 +65,7 @@ const AddAddress = () => {
       setErrorMessage("Số điện thoại không hợp lệ. Vui lòng kiểm tra lại.");
       return;
     }
-  
+  try{
     const formData = new FormData();
     formData.append('province', address.province);
     formData.append('district', address.district);
@@ -74,15 +74,15 @@ const AddAddress = () => {
     formData.append('phone', address.phone);
   
     dispatch(addAddress(formData))
-      .then(() => {
+     
         setSuccessMessage('Địa chỉ đã được thêm thành công.');
-        dispatch(getUserAddress());
         navigate("/me/user-address");
-      })
-      .catch((error) => {
+      }
+      catch(error){
         setErrorMessage(error.response.data.message);
-      });
-  };
+      }
+    };
+  
   
   return (
     <div className="addaddress-wrapper">
