@@ -8,75 +8,67 @@ import { getUserAddress, deleteUserAddress } from "../../actions/userActions";
 import { USER_ADDRESS_DELETE_RESET } from "../../constants/userConstants";
 
 const UserAddress = () => {
-  const { user, error, } = useSelector((state) => state.auth);
+  const { user, error, isDeleted } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
-  const {isDeleted } = useSelector((state) => state.auth);
 
-
-  const [add,setadd]= useState("");
-  
   useEffect(() => {
-    const fetchUserAddress = async () => {
-      try {
-          const address = await dispatch(getUserAddress());
-          console.log("Fetched address:", address.user);
-          setadd(address.user)
-      } catch (error) {
-          console.error("Failed to fetch address:", error);
-      }
-  };
+    dispatch(getUserAddress());
 
-  fetchUserAddress();
-  
-   
     if (error) {
-      setErrorMessage("Số lượng địa chỉ đã đầy hoặc không thể truy cập danh sách địa chỉ.");
+      setErrorMessage(
+        "Số lượng địa chỉ đã đầy hoặc không thể truy cập danh sách địa chỉ."
+      );
     } else {
-      setErrorMessage(""); // Xóa thông báo lỗi nếu không có lỗi
+      setErrorMessage("");
     }
+
     if (isDeleted) {
-      fetchUserAddress();
-     
-      dispatch(getUserAddress()).then(() => {
-        console.log("hello",user);
+      toast.success("Xóa Địa Chỉ Thành Công", {
+        toastId: "success1",
       });
-    
-      toast.success("Xóa Địa Chỉ Thành Công");
       dispatch({ type: USER_ADDRESS_DELETE_RESET });
     }
-  }, [dispatch,error, isDeleted]);
-
-    
-
+  }, [dispatch, error, isDeleted]);
 
   const handleAddAddress = () => {
     if (!user || !user.address || user.address.length >= 5) {
-      setErrorMessage("Số lượng địa chỉ đã đầy. Vui lòng cập nhật hoặc xóa địa chỉ không dùng tới.");
+      setErrorMessage(
+        "Số lượng địa chỉ đã đầy. Vui lòng cập nhật hoặc xóa địa chỉ không dùng tới."
+      );
     } else {
       history("/me/user-address/add");
     }
   };
 
-  const handleDeleteAddress =  async (addressId) => {
+  const handleDeleteAddress = (addressId) => {
     const confirmDelete = window.confirm("Bạn có chắc muốn xóa địa chỉ này?");
     if (confirmDelete) {
-      await dispatch(deleteUserAddress(addressId));
-        dispatch(getUserAddress());
-      
+      dispatch(deleteUserAddress(addressId));
     }
   };
 
- 
   return (
     <Fragment>
       <MetaData title={"User Address"} />
       <div className="container container-fluid">
         <h1 className="useraddress-heading">Địa Chỉ Người Dùng</h1>
-        <button className="address-add-btn-container" onClick={handleAddAddress}>Thêm Địa Chỉ Mới</button>
-        {errorMessage && <p className="error-message" style={{ color: "red", marginLeft: "150px" }}>{errorMessage}</p>}
-        {add && add.address && add.address.length > 0 ? (
+        <button
+          className="address-add-btn-container"
+          onClick={handleAddAddress}
+        >
+          Thêm Địa Chỉ Mới
+        </button>
+        {errorMessage && (
+          <p
+            className="error-message"
+            style={{ color: "red", marginLeft: "150px" }}
+          >
+            {errorMessage}
+          </p>
+        )}
+        {user && user.address && user.address.length > 0 ? (
           <table className="custom-table">
             <thead>
               <tr>
@@ -89,7 +81,7 @@ const UserAddress = () => {
               </tr>
             </thead>
             <tbody>
-              {add.address.map((address) => (
+              {user.address.map((address) => (
                 <tr key={address._id}>
                   <td>{address.province}</td>
                   <td>{address.district}</td>
@@ -97,8 +89,12 @@ const UserAddress = () => {
                   <td>{address.location}</td>
                   <td>{address.phone}</td>
                   <td>
-                    <Link to={`/me/user-address/update/${address._id}`}>Edit   </Link>
-                    <button onClick={() => handleDeleteAddress(address._id)}>Delete</button>
+                    <Link to={`/me/user-address/update/${address._id}`}>
+                      Edit{" "}
+                    </Link>
+                    <button onClick={() => handleDeleteAddress(address._id)}>
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}

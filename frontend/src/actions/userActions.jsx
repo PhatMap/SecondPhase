@@ -407,13 +407,14 @@ export const updateAddress = (addresses) => async (dispatch, getState) => {
   try {
     dispatch({ type: UPDATE_ADDRESS_REQUEST });
 
-    const { data } = await axios.put('/api/v1/me/update-address', { addresses });
+    const { data } = await axios.put("/api/v1/me/update-address", {
+      addresses,
+    });
 
     dispatch({
       type: UPDATE_ADDRESS_SUCCESS,
       payload: data.success,
     });
-
   } catch (error) {
     dispatch({
       type: UPDATE_ADDRESS_FAIL,
@@ -422,15 +423,35 @@ export const updateAddress = (addresses) => async (dispatch, getState) => {
   }
 };
 export const getUserAddress = () => async (dispatch) => {
-  try { 
+  try {
     dispatch({ type: GET_USER_ADDRESS_REQUEST });
-    
+
     const { data } = await axios.get("/api/v1/me");
 
-   return data;
+    dispatch({
+      type: LOAD_USER_SUCCESS,
+      payload: data.user,
+    });
   } catch (error) {
     dispatch({
       type: GET_USER_ADDRESS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const deleteUserAddress = (addressId) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_ADDRESS_DELETE_REQUEST });
+    const { data } = await axios.delete(`/api/v1/me/address/${addressId}`);
+
+    dispatch({
+      type: USER_ADDRESS_DELETE_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_ADDRESS_DELETE_FAIL,
       payload: error.response.data.message,
     });
   }
@@ -445,7 +466,11 @@ export const addAddress = (addressData) => async (dispatch) => {
         "Content-Type": "multipart/form-data",
       },
     };
-    const { data } = await axios.post("/api/v1/me/add-address", addressData, config);
+    const { data } = await axios.post(
+      "/api/v1/me/add-address",
+      addressData,
+      config
+    );
 
     dispatch({
       type: ADD_ADDRESS_SUCCESS,
@@ -469,9 +494,11 @@ export const updateUserAddress = (id, updatedAddress) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.put("/api/v1/me/update-address", updatedAddress, config);
-
-
+    const { data } = await axios.put(
+      "/api/v1/me/update-address",
+      updatedAddress,
+      config
+    );
 
     dispatch({
       type: UPDATE_USER_ADDRESS_SUCCESS,
@@ -480,25 +507,6 @@ export const updateUserAddress = (id, updatedAddress) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_USER_ADDRESS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
-// userActions.js
-
-
-export const deleteUserAddress = (addressId) => async (dispatch) => {
-  try {
-    dispatch({type: USER_ADDRESS_DELETE_REQUEST })
-    const { data } = await axios.delete(`/api/v1/me/address/${addressId}`);
-
-    dispatch({
-      type: USER_ADDRESS_DELETE_SUCCESS,
-      payload: data.success,
-    });
-  } catch (error) {
-    dispatch({
-      type: USER_ADDRESS_DELETE_FAIL,
       payload: error.response.data.message,
     });
   }

@@ -2,6 +2,7 @@ const Order = require("../models/order");
 const Product = require("../models/product");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+const APIFeatures = require("../utils/apiFeatures");
 
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const {
@@ -10,11 +11,13 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     itemsPrice,
     taxPrice,
     shippingPrice,
+    userName,
     totalPrice,
     paymentInfo,
   } = req.body;
 
   const order = await Order.create({
+    userName,
     orderItems,
     shippingInfo,
     itemsPrice,
@@ -58,7 +61,9 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.allOrders = catchAsyncErrors(async (req, res, next) => {
-  const orders = await Order.find();
+  const apiFeatures = new APIFeatures(Order.find(), req.query).sort();
+
+  const orders = await apiFeatures.query;
 
   let totalAmount = 0;
 
@@ -78,14 +83,6 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 
   if (!order) {
     return next(new ErrorHandler("Order not found", 404));
-  }
-
-  if (order.orderStatus === "Delivered") {
-    return next(new ErrorHandler("You have already delivered this order", 400));
-  }
-
-  for (const item of order.orderItems) {
-    await updateStock(item.product, item.quantity);
   }
 
   order.orderStatus = req.body.status;

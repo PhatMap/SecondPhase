@@ -1,11 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import Sidebar from "./Sidebar";
-
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -36,7 +34,7 @@ const ProcessOrder = () => {
 
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
-
+    
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -48,10 +46,10 @@ const ProcessOrder = () => {
     }
   }, [dispatch, error, isUpdated, orderId]);
 
-  const updateOrderHandler = (id) => {
+  const updateOrderHandler = () => {
     const formData = new FormData();
     formData.set("status", status);
-    dispatch(updateOrder(id, formData));
+    dispatch(updateOrder(order._id, formData));
   };
 
   const shippingDetails =
@@ -61,25 +59,36 @@ const ProcessOrder = () => {
     paymentInfo && paymentInfo.status === "succeeded" ? true : false;
 
   const OrderProgressBar = ({ currentStatus }) => {
-    const steps = ['Placed', 'Order Confirmed', 'Shipped', 'Out For Delivery', 'Delivered'];
+    const steps = [
+      "Processing",
+      "Order Confirmed",
+      "Out For Delivery",
+      "Shipping",
+      "Delivered",
+    ];
     const currentStepIndex = steps.indexOf(currentStatus);
-    
+
     return (
       <div className="order-progress-container">
-        <div className="progress-track"></div> 
-          {steps.map((step, index) => (
-            <div key={step} className={`progress-step ${index <= currentStepIndex ? 'active' : ''}`}>
-              {index <= currentStepIndex ? (
-                <span className="checkmark">&#10003;</span>
-              ) : (
-                <span className="step-number">{index + 1}</span>
-              )}
-              <div className="step-label">{step}</div>
-            </div>
-          ))}
-        </div>
-      );
-    };
+        <div className="progress-track"></div>
+        {steps.map((step, index) => (
+          <div
+            key={step}
+            className={`progress-step ${
+              index <= currentStepIndex ? "active" : ""
+            }`}
+          >
+            {index <= currentStepIndex ? (
+              <span className="checkmark">&#10003;</span>
+            ) : (
+              <span className="step-number">{index + 1}</span>
+            )}
+            <div className="step-label">{step}</div>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <Fragment>
@@ -94,14 +103,17 @@ const ProcessOrder = () => {
             {loading ? (
               <Loader />
             ) : (
-              <div className="row d-flex justify-content-around">
+              <div className="order-details-container">
                 <div className="col-12 col-lg-7 order-details">
-                  <h2 className="my-5">Order # {order._id}</h2>
+                  <strong>
+                    <h2 className="my-5">Order id: {order._id}</h2>
+                  </strong>
+
                   <OrderProgressBar currentStatus={orderStatus} />
-                
+
                   <h4 className="mb-4">Shipping Info</h4>
                   <p>
-                    <b>Name:</b> {user && user.name}
+                    <b>Name:</b> {order && order.userName}
                   </p>
                   <p>
                     <b>Phone:</b> {shippingInfo && shippingInfo.phoneNo}
@@ -184,14 +196,16 @@ const ProcessOrder = () => {
                       onChange={(e) => setStatus(e.target.value)}
                     >
                       <option value="Processing">Processing</option>
-                      <option value="Shipped">Shipped</option>
+                      <option value="Order Confirmed">Order Confirmed</option>
+                      <option value="Out For Delivery">Out For Delivery</option>
+                      <option value="Shipping">Shipping</option>
                       <option value="Delivered">Delivered</option>
                     </select>
                   </div>
 
                   <button
                     className="btn btn-primary btn-block"
-                    onClick={() => updateOrderHandler(order._id)}
+                    onClick={() => updateOrderHandler()}
                   >
                     Update Status
                   </button>

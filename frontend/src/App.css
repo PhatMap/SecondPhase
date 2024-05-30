@@ -866,6 +866,12 @@ footer {
   margin-top: 8px;
 }
 
+.order-details-container{
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
 .order-progress-container {
   position: relative;
   display: flex;

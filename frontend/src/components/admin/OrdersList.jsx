@@ -46,8 +46,8 @@ const OrdersList = () => {
     const data = {
       columns: [
         {
-          label: "Order ID",
-          field: "id",
+          label: "Customer name",
+          field: "name",
           sort: "asc",
         },
         {
@@ -56,7 +56,7 @@ const OrdersList = () => {
           sort: "asc",
         },
         {
-          label: "Amount",
+          label: "Total Amount",
           field: "amount",
           sort: "asc",
         },
@@ -75,7 +75,7 @@ const OrdersList = () => {
 
     orders.forEach((order) => {
       data.rows.push({
-        id: order._id,
+        name: order.userName,
         numofItems: order.orderItems.length,
         amount: `$${order.totalPrice}`,
         status:
@@ -115,9 +115,9 @@ const OrdersList = () => {
           <Sidebar />
         </div>
 
-        <div className="col-12 col-md-10">
+        <div className="manage-product-container">
           <Fragment>
-            <h1 className="my-5">All Orders</h1>
+            <h1 >All Orders</h1>
 
             {loading ? (
               <Loader />

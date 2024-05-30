@@ -8,11 +8,11 @@ const cloudinary = require("cloudinary");
 
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   console.log(req.body); // Kiểm tra tất cả dữ liệu đầu vào
-  
+
   if (!req.body.avatar) {
     return res.status(400).json({
       success: false,
-      message: 'Avatar is required'
+      message: "Avatar is required",
     });
   }
 
@@ -23,21 +23,22 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   });
 
   const { name, email, password } = req.body;
-  
-  const address = [{
-    province: req.body['address[0][province]'],
-    district: req.body['address[0][district]'],
-    town: req.body['address[0][town]'],
-    location: req.body['address[0][location]'],
-    phone: req.body['address[0][phone]'],
-    
-  }];
+
+  const address = [
+    {
+      province: req.body["address[0][province]"],
+      district: req.body["address[0][district]"],
+      town: req.body["address[0][town]"],
+      location: req.body["address[0][location]"],
+      phone: req.body["address[0][phone]"],
+    },
+  ];
 
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     return res.status(400).json({
       success: false,
-      message: 'Email already exists.'
+      message: "Email already exists.",
     });
   }
 
@@ -76,7 +77,8 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
   if (user.role === "banned") {
     return res.status(403).json({
       success: false,
-      message: "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên để biết thêm thông tin.",
+      message:
+        "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên để biết thêm thông tin.",
     });
   }
 
@@ -91,7 +93,6 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
 
   sendToken(user, 200, res);
 });
-
 
 const generateRandomPassword = () => {
   const characters =
@@ -333,10 +334,9 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 exports.addUserAddress = catchAsyncErrors(async (req, res, next) => {
-  const userId = req.user.id;  // Assuming the user is authenticated and req.user contains the user data
-  const { province, district, town, location, phone} = req.body;
+  const userId = req.user.id; // Assuming the user is authenticated and req.user contains the user data
+  const { province, district, town, location, phone } = req.body;
 
   const newAddress = {
     province,
@@ -379,7 +379,6 @@ exports.getUserAddress = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 exports.updateUserAddress = catchAsyncErrors(async (req, res, next) => {
   const userId = req.user.id;
   const addressData = req.body; // Lấy địa chỉ từ phần thân của yêu cầu
@@ -392,11 +391,13 @@ exports.updateUserAddress = catchAsyncErrors(async (req, res, next) => {
     // Nếu dữ liệu gửi từ client là một đối tượng địa chỉ duy nhất
     // Thì không cần sử dụng vòng lặp
     const addressId = addressData._id; // Lấy ID của địa chỉ từ dữ liệu gửi từ client
-    const addressToUpdate = user.addresses.find(addr => addr._id.toString() === addressId);
+    const addressToUpdate = user.addresses.find(
+      (addr) => addr._id.toString() === addressId
+    );
     if (!addressToUpdate) {
       return next(new ErrorHandler("Address not found", 404));
     }
-    
+
     // Cập nhật thông tin địa chỉ với dữ liệu mới từ client
     addressToUpdate.province = addressData.province;
     addressToUpdate.district = addressData.district;
@@ -416,26 +417,27 @@ exports.updateUserAddress = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-
 // userController.js
-exports.deleteUserAddress = async (req, res, next) => {
+exports.deleteUserAddress = catchAsyncErrors(async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
 
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'User not found',
+        message: "User not found",
       });
     }
 
-    user.address = user.address.filter((address) => address._id.toString() !== req.params.addressId);
+    user.address = user.address.filter(
+      (address) => address._id.toString() !== req.params.addressId
+    );
 
     await user.save();
 
     res.status(200).json({
       success: true,
-      message: 'Address deleted successfully',
+      message: "Address deleted successfully",
     });
   } catch (error) {
     return res.status(500).json({
@@ -443,5 +445,4 @@ exports.deleteUserAddress = async (req, res, next) => {
       message: error.message,
     });
   }
-};
-
+});

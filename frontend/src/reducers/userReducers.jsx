@@ -58,7 +58,7 @@ import {
 export const authReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case USER_ADDRESS_DELETE_REQUEST:
-      return{
+      return {
         ...state,
         loading: true,
       };

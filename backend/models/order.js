@@ -1,33 +1,35 @@
 const mongoose = require("mongoose");
+const user = require("./user");
 
 const orderSchema = new mongoose.Schema({
   shippingInfo: {
-      province: {
-        type: String,
-        required: false,
-      },
-      district: {
-        type: String,
-        required: false,
-      },
-      town: {
-        type: String,
-        required: false,
-      },
-      location: {
-        type: String,
-        required: false,
-      },
-      phone: {
-        type: String,
-        required: false,
-      },
+    province: {
+      type: String,
+      required: false,
     },
+    district: {
+      type: String,
+      required: false,
+    },
+    town: {
+      type: String,
+      required: false,
+    },
+    location: {
+      type: String,
+      required: false,
+    },
+    phone: {
+      type: String,
+      required: false,
+    },
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "User",
   },
+  userName: { type: String, required: true, ref: "User" },
   orderItems: [
     {
       product: {

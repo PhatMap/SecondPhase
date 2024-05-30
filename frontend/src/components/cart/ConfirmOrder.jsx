@@ -7,16 +7,14 @@ import CheckoutSteps from "./CheckoutSteps";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder, clearErrors } from "../../actions/orderActions";
 
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-
 
 const ConfirmOrder = () => {
   const history = useNavigate();
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
-  const { error } = useSelector(state => state.newOrder);
+  const { error } = useSelector((state) => state.newOrder);
 
   // Calculate Order Prices
   const itemsPrice = cartItems.reduce(
@@ -48,12 +46,12 @@ const ConfirmOrder = () => {
   }
 
   const processToCashPayment = () => {
-
     const order = {
       itemsPrice: itemsPrice.toFixed(2),
       shippingPrice,
       taxPrice,
       totalPrice,
+      userName: user.name,
       orderItems: cartItems,
       shippingInfo: shippingInfo,
     };
@@ -73,7 +71,6 @@ const ConfirmOrder = () => {
       dispatch(clearErrors());
     }
   });
-  
 
   return (
     <Fragment>
@@ -91,7 +88,8 @@ const ConfirmOrder = () => {
           </p>
           <p className="mb-4">
             <b>Address:</b>{" "}
-            {`${shippingInfo.province}, ${shippingInfo.district}, ${shippingInfo.town}, ${shippingInfo.location}`};
+            {`${shippingInfo.province}, ${shippingInfo.district}, ${shippingInfo.town}, ${shippingInfo.location}`}
+            ;
           </p>
 
           <hr />
@@ -145,10 +143,7 @@ const ConfirmOrder = () => {
           </p>
 
           <hr />
-          <button
-            className="confirm-order-card-btn"
-            onClick={processToPayment}
-          >
+          <button className="confirm-order-card-btn" onClick={processToPayment}>
             Prepayment (Bank card)
           </button>
           <button
