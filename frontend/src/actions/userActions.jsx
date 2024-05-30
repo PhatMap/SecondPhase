@@ -55,6 +55,7 @@ import {
   UPDATE_USER_ADDRESS_REQUEST,
   UPDATE_USER_ADDRESS_SUCCESS,
   UPDATE_USER_ADDRESS_FAIL,
+  USER_ADDRESS_DELETE_SUCCESS,
 } from "../constants/userConstants";
 
 // Login
@@ -470,7 +471,9 @@ export const updateUserAddress = (id, updatedAddress) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.put(`/api/user/address/${id}`, updatedAddress, config);
+    const { data } = await axios.put("/api/v1/me/update-address", updatedAddress, config);
+
+
 
     dispatch({
       type: UPDATE_USER_ADDRESS_SUCCESS,
@@ -479,6 +482,24 @@ export const updateUserAddress = (id, updatedAddress) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_USER_ADDRESS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+// userActions.js
+
+
+export const deleteUserAddress = (addressId) => async (dispatch) => {
+  try {
+    const { data } = await axios.delete(`/api/v1/me/address/${addressId}`);
+
+    dispatch({
+      type: USER_ADDRESS_DELETE_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_ADDRESS_DELETE_FAIL,
       payload: error.response.data.message,
     });
   }

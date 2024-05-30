@@ -1,116 +1,117 @@
-import React, { Fragment, useState } from "react";
-import { countries } from "countries-list";
-
-import MetaData from "../layout/MetaData";
-import CheckoutSteps from "./CheckoutSteps";
-
+import React, { Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { saveShippingInfo } from "../../actions/cartActions";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import MetaData from "../layout/MetaData";
+import { Link, useNavigate } from "react-router-dom";
+import { getUserAddress, deleteUserAddress } from "../../actions/userActions";
+import { USER_ADDRESS_DELETE_RESET } from "../../constants/userConstants";
 
-const Shipping = () => {
-  const history = useNavigate();
-  const countriesList = Object.values(countries);
-
-  const { shippingInfo } = useSelector((state) => state.cart);
-
-  const [address, setAddress] = useState(shippingInfo.address);
-  const [city, setCity] = useState(shippingInfo.city);
-  const [postalCode, setPostalCode] = useState(shippingInfo.postalCode);
-  const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
-  const [country, setCountry] = useState(shippingInfo.country);
-
+const UserAddress = () => {
+  const { user, error, isDeleted } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const history = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    dispatch(getUserAddress());
 
-    dispatch(saveShippingInfo({ address, city, phoneNo, postalCode, country }));
-    history("/confirm");
+    if (error) {
+      setErrorMessage("Số lượng địa chỉ đã đầy hoặc không thể truy cập danh sách địa chỉ.");
+    } else {
+      setErrorMessage(""); // Xóa thông báo lỗi nếu không có lỗi
+    }
+
+    
+    
+  }, [dispatch, error]);
+
+
+
+  useEffect(() => {
+    if (isDeleted) {
+      dispatch(getUserAddress()).then(() => {
+        // Thêm các xử lý khác ở đây nếu cần
+      });
+      toast.success("Xóa Địa Chỉ Thành Công");
+      dispatch({ type: USER_ADDRESS_DELETE_RESET });
+    }
+  }, [dispatch, isDeleted]);
+  
+
+
+
+
+
+
+  // if (isDeleted) {
+  //   toast.success("Xóa Địa Chỉ Thành Công");
+  //   dispatch({ type: USER_ADDRESS_DELETE_RESET });
+  //   dispatch(getUserAddress());
+  // }
+
+  const handleAddAddress = () => {
+    if (!user || !user.address || user.address.length >= 5) {
+      setErrorMessage("Số lượng địa chỉ đã đầy. Vui lòng cập nhật hoặc xóa địa chỉ không dùng tới.");
+    } else {
+      history("/me/user-address/add");
+    }
   };
+
+  const handleDeleteAddress = (addressId) => {
+    const confirmDelete = window.confirm("Bạn có chắc muốn xóa địa chỉ này?");
+    if (confirmDelete) {
+      dispatch(deleteUserAddress(addressId)).then(() => {
+        dispatch(getUserAddress());
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log("User state after deletion:", user);
+  }, [user]);
 
   return (
     <Fragment>
-      <MetaData title={"Shipping Info"} />
-
-      <CheckoutSteps shipping />
-
-      <div className="shipping-wrapper">
-        <form className="shipping-form-container" onSubmit={submitHandler}>
-          <h1 className="shipping-heading">Shipping Info</h1>
-
-          <div className="shipping-form-group">
-            <label htmlFor="address_field">Address</label>
-            <input
-              type="text"
-              id="address_field"
-              className="shipping-form-control"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="shipping-form-group">
-            <label htmlFor="city_field">City</label>
-            <input
-              type="text"
-              id="city_field"
-              className="shipping-form-control"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="shipping-form-group">
-            <label htmlFor="phone_field">Phone No</label>
-            <input
-              type="tel" /* Changed to "tel" for better semantics */
-              id="phone_field"
-              className="shipping-form-control"
-              value={phoneNo}
-              onChange={(e) => setPhoneNo(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="shipping-form-group">
-            <label htmlFor="postal_code_field">Postal Code</label>
-            <input
-              type="number"
-              id="postal_code_field"
-              className="shipping-form-control"
-              value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="shipping-form-group">
-            <label htmlFor="country_field">Country</label>
-            <select
-              id="country_field"
-              className="shipping-form-control"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              required
-            >
-              {countriesList.map((country) => (
-                <option key={country.name} value={country.name}>
-                  {country.name}
-                </option>
+      <MetaData title={"User Address"} />
+      <div className="container container-fluid">
+        <h1 className="useraddress-heading">Địa Chỉ Người Dùng</h1>
+        <button className="address-add-btn-container" onClick={handleAddAddress}>Thêm Địa Chỉ Mới</button>
+        {errorMessage && <p className="error-message" style={{ color: "red", marginLeft: "150px" }}>{errorMessage}</p>}
+        {user && user.address && user.address.length > 0 ? (
+          <table className="custom-table">
+            <thead>
+              <tr>
+                <th>Province</th>
+                <th>District</th>
+                <th>Town</th>
+                <th>Location</th>
+                <th>Phone</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {user.address.map((address) => (
+                <tr key={address._id}>
+                  <td>{address.province}</td>
+                  <td>{address.district}</td>
+                  <td>{address.town}</td>
+                  <td>{address.location}</td>
+                  <td>{address.phone}</td>
+                  <td>
+                    <Link to={`/me/user-address/update/${address._id}`}>Edit   </Link>
+                    <button onClick={() => handleDeleteAddress(address._id)}>Delete</button>
+                  </td>
+                </tr>
               ))}
-            </select>
-          </div>
-
-          <button id="shipping_btn" type="submit" className="shipping-btn">
-            CONTINUE
-          </button>
-        </form>
+            </tbody>
+          </table>
+        ) : (
+          <p>No addresses found</p>
+        )}
       </div>
     </Fragment>
   );
 };
 
-export default Shipping;
+export default UserAddress;

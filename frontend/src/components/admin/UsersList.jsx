@@ -30,7 +30,7 @@ const UsersList = () => {
     }
   
     if (isDeleted) {
-      toast.success("User deleted successfully");
+      toast.success("Xóa Người Dùng Thành Công");
       dispatch({ type: DELETE_USER_RESET });
       setDeleteMessage(""); // Reset delete message
     }

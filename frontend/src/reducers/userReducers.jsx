@@ -45,10 +45,39 @@ import {
   GOOGLE_LOGOUT_REQUEST,
   GOOGLE_LOGOUT_SUCCESS,
   GOOGLE_LOGOUT_FAIL,
+  USER_ADDRESS_DELETE_SUCCESS,
+  USER_ADDRESS_DELETE_RESET,
+  USER_ADDRESS_DELETE_FAIL,
+  GET_USER_ADDRESS_SUCCESS,
+  GET_USER_ADDRESS_RESET,
+  GET_USER_ADDRESS_REQUEST,
+  GET_USER_ADDRESS_FAIL,
 } from "../constants/userConstants";
 
 export const authReducer = (state = { user: {} }, action) => {
   switch (action.type) {
+    case USER_ADDRESS_DELETE_SUCCESS:
+      return {
+        ...state,
+        isDeleted: true,
+      };
+    case USER_ADDRESS_DELETE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case USER_ADDRESS_DELETE_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+    case GET_USER_ADDRESS_RESET:
+      return {
+        ...state,
+
+        error: null,
+        isDeleted: false,
+      };
     case LOGIN_REQUEST:
     case REGISTER_USER_REQUEST:
     case LOAD_USER_REQUEST:

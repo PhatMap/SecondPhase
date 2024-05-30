@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUserAddress, getUserAddress } from "../../actions/userActions";
 import MetaData from "../layout/MetaData";
 import Address from "./Address";
-import { useParams } from "react-router-dom"; // Import useParams
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const UpdateAddress = ({ history }) => {
-  const { id } = useParams(); // Lấy id từ URL
+const UpdateAddress = ( ) => {
+  const history = useNavigate();
+  const { id } = useParams();
   const [addressData, setAddressData] = useState({
     province: "",
     district: "",
@@ -19,7 +21,7 @@ const UpdateAddress = ({ history }) => {
   const { address } = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(getUserAddress(id)); // Sử dụng id từ URL để lấy địa chỉ
+    dispatch(getUserAddress(id));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -43,8 +45,9 @@ const UpdateAddress = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updateUserAddress(id, addressData)); // Sử dụng id từ URL khi gửi yêu cầu cập nhật
-    history.push("/me/user-address");
+    console.log("Address Data:",id, addressData);
+    dispatch(updateUserAddress(id, addressData));
+    history("/me/user-address");
   };
 
   return (
@@ -54,7 +57,17 @@ const UpdateAddress = ({ history }) => {
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>
             <h1 className="mb-3">Update Address</h1>
-            <Address handleAddressChange={handleAddressChange} />
+            <Address handleAddressChange={handleAddressChange} addressData={addressData} />
+            <div className="form-group">
+              <label htmlFor="phone_field">Phone</label>
+              <input
+                type="text"
+                id="phone_field"
+                className="form-control"
+                value={addressData.phone} // Access phone from addressData
+                onChange={(e) => handleAddressChange("phone", e.target.value)}
+              />
+            </div>
             <button
               id="update_button"
               type="submit"
