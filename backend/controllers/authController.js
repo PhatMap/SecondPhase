@@ -442,3 +442,57 @@ exports.deleteUserAddress = catchAsyncErrors(async (req, res, next) => {
     });
   }
 });
+
+
+exports.NewUser = catchAsyncErrors(async (req, res, next) => {
+  console.log(req.body); // Kiểm tra tất cả dữ liệu đầu vào
+
+  if (!req.body.avatar) {
+    return res.status(400).json({
+      success: false,
+      message: "Avatar is required",
+    });
+  }
+
+  const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    folder: "avatars",
+    width: 150,
+    crop: "scale",
+  });
+
+  const { name, email, password } = req.body;
+
+  const address = [
+    {
+      province: req.body["address[0][province]"],
+      district: req.body["address[0][district]"],
+      town: req.body["address[0][town]"],
+      location: req.body["address[0][location]"],
+      phone: req.body["address[0][phone]"],
+    },
+  ];
+
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return res.status(400).json({
+      success: false,
+      message: "Email already exists.",
+    });
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+    address,
+    avatar: {
+      public_id: result.public_id,
+      url: result.secure_url,
+    },
+  });
+
+ return res.status(200).json({
+  success:true,
+  massage:" them thanh cong",
+ })
+});

@@ -47,7 +47,7 @@ import ProductReviews from "./components/admin/ProductReviews";
 import Category from "./components/product/Category";
 import Color from "./components/product/Color";
 import ProtectedRoute from "./components/route/ProtectedRoute";
-
+import NewUser from "./components/admin/NewUser";
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
 import store from "./store";
@@ -184,10 +184,15 @@ function App() {
             path="/admin/users"
             element={<ProtectedRoute isAdmin={true} component={UsersList} />}
           />
+
           <Route
             path="/admin/user/:id"
             element={<ProtectedRoute isAdmin={true} component={UpdateUser} />}
           />
+          <Route
+            path="/admin/users/new"
+            element={<ProtectedRoute isAdmin={true} component={NewUser}/>}
+            />
           <Route
             path="/admin/reviews"
             element={

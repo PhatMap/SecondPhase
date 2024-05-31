@@ -12,6 +12,9 @@ const UserAddress = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
+const [deleteAddressId, setDeleteAddressId] = useState(null);
+
 
   useEffect(() => {
     dispatch(getUserAddress());
@@ -41,18 +44,20 @@ const UserAddress = () => {
       history("/me/user-address/add");
     }
   };
-
   const handleDeleteAddress = (addressId) => {
-    if (user.address.length  === 1) {
-      
+    if (user.address.length === 1) {
       setErrorMessage("Bạn không thể xóa địa chỉ này vì chỉ còn một địa chỉ.");
-      return; 
+      return;
     }
-    const confirmDelete = window.confirm("Bạn có chắc muốn xóa địa chỉ này?");
-    if (confirmDelete) {
-      dispatch(deleteUserAddress(addressId));
-    }
+    setDeleteAddressId(addressId);
+    setShowModal(true); // Hiển thị modal
   };
+  const handleDeleteConfirmed = async (addressId) => {
+    await dispatch(deleteUserAddress(addressId));
+    dispatch(getUserAddress());
+    setShowModal(false); // Ẩn modal sau khi xác nhận xóa
+  };
+    
 
   return (
     <Fragment>
@@ -119,6 +124,17 @@ const UserAddress = () => {
         )}
          <Link to="/me" className="btn btn-outline-danger btn-sm"  style={{ float: 'right' ,marginRight:'150px',marginTop: '1rem'}}>Quay lại</Link>
       </div>
+
+      {showModal && (
+      <div className="delete-notify-container">
+      <div className="delete-notify-form">
+        <h1> Xóa địa chỉ này?</h1>
+        <div className="delete-notify-btn-container"></div>
+          <button className="delete-notify-btn-container-yes" onClick={() => handleDeleteConfirmed(deleteAddressId)}>Yes</button>
+          <button className="delete-notify-btn-container-no" onClick={() => setShowModal(false)}>No</button>
+        </div>
+      </div>
+    )}
     </Fragment>
   );
 };

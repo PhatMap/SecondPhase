@@ -220,7 +220,7 @@ const Header = () => {
             ) : (
               !loading && (
                 <Link to="/login" className="Header-login">
-                  Đăng Nhập
+                  Login
                 </Link>
               )
             )}
