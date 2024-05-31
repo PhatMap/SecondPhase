@@ -25,7 +25,7 @@ const Profile = () => {
               fontWeight: "bold",
             }}
           >
-            My Profile
+            Thông Tin Cá Nhân
           </h2>
           <div
             style={{ fontFamily: "sans-serif" }}
@@ -40,34 +40,34 @@ const Profile = () => {
                 />
               </figure>
               <Link to="/me/update" className="profile-btn">
-                Edit Profile
+                Chỉnh Sửa
               </Link>
             </div>
 
             <div className="">
-              <h4>Full Name</h4>
+              <h4>Họ Tên </h4>
               <p>{user.name}</p>
 
-              <h4>Email Address</h4>
+              <h4>Địa Chỉ Email </h4>
               <p>{user.email}</p>
 
-              <h4>Joined On</h4>
+              <h4>Ngày Tạo </h4>
               <p>{String(user.createAt).substring(0, 10)}</p>
               <div className="profile-btn">
-                <Link to="/me/user-address" className="btn btn-primary btn-block mt-3">
-                  Manage Addresses
+                <Link to="/me/user-address" className="btn btn-primary btn-block mt-3"style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+                  Địa Chỉ 
                 </Link>
               </div>
 
               {user.role !== "admin" && (
                 <Link to="/orders/me" className="btn btn-danger btn-block mt-5">
-                  My Orders
+                  Đơn Hàng
                 </Link>
               )}
 
               <div className="profile-btn">
                 <Link to="/password/update" className="profile-btn">
-                  Change Password
+                  Mật Khẩu 
                 </Link>
               </div>
             </div>

@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import Address from './Address';
 import { useDispatch ,useSelector} from 'react-redux';
 import { addAddress } from "../../actions/userActions"; // Đảm bảo import action từ module hoặc file tương ứng
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getUserAddress,clearErrors } from "../../actions/userActions";
 
 const AddAddress = () => {
@@ -104,7 +104,9 @@ const AddAddress = () => {
         </div>
         <button onClick={handleAddAddress} className="register-btn">Thêm Địa Chỉ </button>
         {successMessage && <p className="success-message">{successMessage}</p>}
+        <Link to="/me/user-address" className="btn btn-outline-danger btn-sm"  style={{  marginTop: '1rem',marginLeft:'180px'}}>Quay lại</Link>
       </form>
+       
     </div>
   );
 };

@@ -43,6 +43,11 @@ const UserAddress = () => {
   };
 
   const handleDeleteAddress = (addressId) => {
+    if (user.address.length  === 1) {
+      
+      setErrorMessage("Bạn không thể xóa địa chỉ này vì chỉ còn một địa chỉ.");
+      return; 
+    }
     const confirmDelete = window.confirm("Bạn có chắc muốn xóa địa chỉ này?");
     if (confirmDelete) {
       dispatch(deleteUserAddress(addressId));
@@ -55,7 +60,7 @@ const UserAddress = () => {
       <div className="container container-fluid">
         <h1 className="useraddress-heading">Địa Chỉ Người Dùng</h1>
         <button
-          className="address-add-btn-container"
+          className="address-add-btn-container" 
           onClick={handleAddAddress}
         >
           Thêm Địa Chỉ Mới
@@ -72,12 +77,12 @@ const UserAddress = () => {
           <table className="custom-table">
             <thead>
               <tr>
-                <th>Province</th>
-                <th>District</th>
-                <th>Town</th>
-                <th>Location</th>
-                <th>Phone</th>
-                <th>Action</th>
+                <th>Tỉnh/Thành Phố </th>
+                <th>Quận/Huyện </th>
+                <th>Xã/Phường </th>
+                <th>Địa Chỉ </th>
+                <th>Số Điện Thoại </th>
+                <th>Chức Năng </th>
               </tr>
             </thead>
             <tbody>
@@ -106,9 +111,13 @@ const UserAddress = () => {
               ))}
             </tbody>
           </table>
-        ) : (
-          <p>No addresses found</p>
+          
+        ) 
+        
+        : (
+          <p style={{ fontSize: '3rem', marginLeft: '550px' }}>Không Có Địa Chỉ</p>
         )}
+         <Link to="/me" className="btn btn-outline-danger btn-sm"  style={{ float: 'right' ,marginRight:'150px',marginTop: '1rem'}}>Quay lại</Link>
       </div>
     </Fragment>
   );
