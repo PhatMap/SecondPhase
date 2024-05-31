@@ -380,42 +380,38 @@ exports.getUserAddress = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.updateUserAddress = catchAsyncErrors(async (req, res, next) => {
-  const userId = req.user.id;
-  const addressData = req.body; // Lấy địa chỉ từ phần thân của yêu cầu
-  try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return next(new ErrorHandler("User not found", 404));
-    }
+  const userId = req.user.id; // Giả sử người dùng đã được xác thực và req.user chứa dữ liệu của người dùng
+  const addressId = req.params.addressId; // Lấy addressId từ tham số yêu cầu
+  const { province, district, town, location, phone } = req.body; // Lấy dữ liệu địa chỉ mới từ phần thân yêu cầu
 
-    // Nếu dữ liệu gửi từ client là một đối tượng địa chỉ duy nhất
-    // Thì không cần sử dụng vòng lặp
-    const addressId = addressData._id; // Lấy ID của địa chỉ từ dữ liệu gửi từ client
-    const addressToUpdate = user.addresses.find(
-      (addr) => addr._id.toString() === addressId
-    );
-    if (!addressToUpdate) {
-      return next(new ErrorHandler("Address not found", 404));
-    }
+  const user = await User.findById(userId);
 
-    // Cập nhật thông tin địa chỉ với dữ liệu mới từ client
-    addressToUpdate.province = addressData.province;
-    addressToUpdate.district = addressData.district;
-    addressToUpdate.phone = addressData.phone;
-    addressToUpdate.town = addressData.town;
-    addressToUpdate.location = addressData.location;
-
-    await user.save();
-
-    res.status(200).json({
-      success: true,
-      message: "Addresses updated successfully",
-      addresses: user.addresses, // Trả về tất cả các địa chỉ của người dùng sau khi cập nhật
-    });
-  } catch (error) {
-    next(error);
+  if (!user) {
+    return next(new ErrorHandler("User not found", 404));
   }
+
+  const address = user.address.id(addressId);
+  if (!address) {
+    return next(new ErrorHandler("Address not found", 404));
+  }
+
+  // Cập nhật các trường địa chỉ
+  if (province) address.province = province;
+  if (district) address.district = district;
+  if (town) address.town = town;
+  if (location) address.location = location;
+  if (phone) address.phone = phone;
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Address updated successfully",
+    address,
+  });
 });
+
+
 
 // userController.js
 exports.deleteUserAddress = catchAsyncErrors(async (req, res, next) => {

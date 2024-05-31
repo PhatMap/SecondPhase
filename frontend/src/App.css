@@ -1674,7 +1674,8 @@ ul.CTAs a {
   gap: 20px;
   border-radius: 5px;
   font-family: sans-serif;
-  width: 400px;
+  width: 500px;
+  height: 550px;
   background-color: white;
   box-shadow: gray 0px 4px 8px;
 }
@@ -2240,16 +2241,20 @@ ul.CTAs a {
 }
 
 /* ProductList.jsx */
+
 .manage-product-container {
+  margin-top: 20px;
   width: 1200px;
   display: flex;
   gap: 20px;
   flex-direction: column;
+
 }
 
 .manage-product-container h1 {
   font-size: xx-large;
 }
+
 .product-add-btn-container {
   display: flex;
   gap: 20px;
@@ -2275,6 +2280,82 @@ ul.CTAs a {
   border-radius: 5px;
   background-color: yellowgreen;
 }
+
+
+/* alluser */
+.manage-alluser-container {
+  margin-left: 20px;
+  margin-top: 20px;
+  width: 1200px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+
+}
+.manage-alluser-container h1 {
+  font-size: xx-large;
+  margin-left: 20px;
+}
+
+.alluser-add-btn-container {
+  display: flex;
+  gap: 20px;
+  width: 200px;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  background-color: green;
+}
+
+.alluser-add-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: green;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background-color: yellowgreen;
+}
+
+.userupdate-container {
+  box-shadow: #080808 0px 4px 8px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 500px;
+  
+}
+
+
+
+.userupdate-heading {
+  font-size: 3rem;
+  padding-bottom: 1rem;
+  justify-content: center;
+}
+
+.userupdate-input-container {
+  width: 20rem;
+  margin-bottom: 1rem;
+}
+
+
+
+.userupdate-button {
+  border: 2px solid;
+  width: 21.3rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  background-color: #0f172a;
+  color: white;
+  border-radius: 0.25rem;
+  transition: background-color 0.3s;
+}
+
+
+
 
 /* DeleteNotify.jsx */
 .delete-notify-container {

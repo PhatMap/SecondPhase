@@ -45,7 +45,7 @@ const UpdateUser = () => {
     }
 
     if (isUpdated) {
-      toast.error("User updated successfully");
+      toast.success("Thay Đổi Thành Công");
 
       history("/admin/users");
 
@@ -76,9 +76,9 @@ const UpdateUser = () => {
 
         <div className="col-12 col-md-10">
           <div className="row wrapper">
-            <div className="col-10 col-lg-5">
+            <div className="userupdate-container">
               <form className="shadow-lg" onSubmit={submitHandler}>
-                <h1 className="mt-2 mb-5">Update User</h1>
+                <h1 className="userupdate-heading">Khách Hàng</h1>
 
                 <div className="form-group">
                   <label htmlFor="name_field">Name</label>
@@ -89,6 +89,7 @@ const UpdateUser = () => {
                     name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    readOnly 
                   />
                 </div>
 
@@ -101,6 +102,7 @@ const UpdateUser = () => {
                     name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    readOnly
                   />
                 </div>
 
@@ -122,9 +124,9 @@ const UpdateUser = () => {
 
                 <button
                   type="submit"
-                  className="btn update-btn btn-block mt-4 mb-3"
+                  className="userupdate-button"
                 >
-                  Update
+                  Thay Đổi 
                 </button>
               </form>
             </div>

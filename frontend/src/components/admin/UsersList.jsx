@@ -66,28 +66,29 @@ const UsersList = () => {
   const setUsers = () => {
     const data = {
       columns: [
+        
         {
-          label: "User ID",
-          field: "id",
-          sort: "asc",
-        },
-        {
-          label: "Name",
+          label: "Họ Tên",
           field: "name",
           sort: "asc",
         },
+        {
+          label: "Ảnh Đại Diện",
+          field: "image",
+          sort: "asc"
+        ,},
         {
           label: "Email",
           field: "email",
           sort: "asc",
         },
         {
-          label: "Role",
+          label: "Vai trò",
           field: "role",
           sort: "asc",
         },
         {
-          label: "Actions",
+          label: "Hoạt Động",
           field: "actions",
         },
       ],
@@ -96,8 +97,14 @@ const UsersList = () => {
 
     users.forEach((user) => {
       data.rows.push({
-        id: user._id,
         name: user.name,
+        image: (
+          <img
+            src={user.avatar.url}
+            alt={user.name}
+            style={{ width: "50px", height: "50px" }}
+          />
+        ),
         email: user.email,
         role: user.role,
 
@@ -131,9 +138,13 @@ const UsersList = () => {
           <Sidebar />
         </div>
 
-        <div className="col-12 col-md-10">
+        <div className="manage-alluser-container">
           <Fragment>
-            <h1 className="my-5">All Users</h1>
+            <h1 >Danh Sách Khách Hàng </h1>
+            <Link to="/register" className="alluser-add-btn-container">
+              <i className="fa fa-plus alluser-add-btn"></i>
+              <p>Khách Hàng Mới</p>
+            </Link>
 
             {deleteMessage && (
               <div className="alert alert-danger">{deleteMessage}</div>

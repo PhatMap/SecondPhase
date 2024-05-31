@@ -483,8 +483,7 @@ export const addAddress = (addressData) => async (dispatch) => {
     });
   }
 };
-
-export const updateUserAddress = (id, updatedAddress) => async (dispatch) => {
+export const updateUserAddress = (addressId, updatedAddress) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_ADDRESS_REQUEST });
 
@@ -494,11 +493,9 @@ export const updateUserAddress = (id, updatedAddress) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.put(
-      "/api/v1/me/update-address",
-      updatedAddress,
-      config
-    );
+
+    const { data } = await axios.put(`/api/v1/me/update-address/${addressId}`, updatedAddress, config);
+
 
     dispatch({
       type: UPDATE_USER_ADDRESS_SUCCESS,
@@ -511,3 +508,7 @@ export const updateUserAddress = (id, updatedAddress) => async (dispatch) => {
     });
   }
 };
+
+
+
+

@@ -89,11 +89,17 @@ const UserAddress = () => {
                   <td>{address.location}</td>
                   <td>{address.phone}</td>
                   <td>
-                    <Link to={`/me/user-address/update/${address._id}`}>
-                      Edit{" "}
-                    </Link>
-                    <button onClick={() => handleDeleteAddress(address._id)}>
-                      Delete
+                    <Link to={`/me/user-address/update/${address._id}`}
+                    className="btn btn-primary py-1 px-2"
+                  >
+                    <i className="fa fa-pencil"></i>
+                  </Link>
+
+                  <button
+                      className="btn btn-danger py-1 px-2 ml-2"
+                      onClick={() => handleDeleteAddress(address._id)}
+                    >
+                      <i className="fa fa-trash"></i>
                     </button>
                   </td>
                 </tr>

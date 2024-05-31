@@ -38,7 +38,7 @@ router.route("/googleLogout").get(googleLogout);
 
 router.route("/me").get(isAuthenticatedUser, getUserProfile);
 router.post("/me/add-address", isAuthenticatedUser, addUserAddress);
-router.route("/me/update-address").put(isAuthenticatedUser, updateUserAddress);
+router.route("/me/update-address/:addressId").put(isAuthenticatedUser, updateUserAddress);
 router.delete('/me/address/:addressId', isAuthenticatedUser, deleteUserAddress);
 
 router.get('/me/address', isAuthenticatedUser, getUserAddress);
