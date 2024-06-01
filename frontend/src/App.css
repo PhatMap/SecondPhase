@@ -1409,7 +1409,7 @@ ul.CTAs a {
   justify-content: flex-start;
   align-items: center;
   width: 300px;
-  height: 800px;
+  height: 900px;
   border: 2px solid black;
   border-radius: 5px;
   backdrop-filter: blur(10px) opacity(0.7);

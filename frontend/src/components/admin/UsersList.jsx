@@ -93,7 +93,7 @@ const UsersList = () => {
           sort: "asc",
         },
         {
-          label: "Hoạt Động",
+          label: "Tác vụ",
           field: "actions",
         },
       ],
