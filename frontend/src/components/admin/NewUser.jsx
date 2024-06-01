@@ -73,13 +73,15 @@ const NewUser = () => {
   const successAddUser = useSelector((state) => state.user.success);
   useEffect(() => {
     console.log("asdsdad",message);
-    if (message) {
-      toast.success("Thêm thành công");
-      dispatch(clearMessage());
-      history("/admin/users");
-    } else if (error) {
+    if (error) {
       toast.error(error);
       dispatch(clearErrors());
+    }
+    toast.success("Thêm thành công");
+    if (message) {
+      toast.error("Thêm thành công");
+      dispatch(clearMessage());
+      history("/admin/users");
     }
 
   }, [dispatch,message, error, history]);

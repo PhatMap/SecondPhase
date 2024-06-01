@@ -56,32 +56,32 @@ const ProductsList = () => {
     const data = {
       columns: [
         {
-          label: "Category",
+          label: "Danh Mục",
           field: "category",
           sort: "asc",
         },
         {
-          label: "Image",
+          label: "Ảnh Sản Phẩm",
           field: "image",
           sort: "asc",
         },
         {
-          label: "Name",
+          label: "Tên Sản Phẩm",
           field: "name",
           sort: "asc",
         },
         {
-          label: "Price",
+          label: "Giá",
           field: "price",
           sort: "asc",
         },
         {
-          label: "Total Stock",
+          label: "Tổng Số Lượng",
           field: "totalStock",
           sort: "asc",
         },
         {
-          label: "Actions",
+          label: "Tác vụ",
           field: "actions",
         },
       ],
@@ -140,10 +140,10 @@ const ProductsList = () => {
 
         <div className="manage-product-container">
           <Fragment>
-            <h1>All Products</h1>
+          <h1 className="my-4" style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'center' }}>Tất Cả Sản Phẩm </h1>
             <Link to="/admin/product" className="product-add-btn-container">
               <i className="fa fa-plus product-add-btn"></i>
-              <p>Add New Product</p>
+              <p>Thêm Sản Phẩm </p>
             </Link>
             {loading ? (
               <Loader />

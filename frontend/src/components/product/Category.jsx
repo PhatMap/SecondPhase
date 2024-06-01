@@ -12,12 +12,16 @@ import { getProductsByCategory } from "../../actions/productActions";
 const Category = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [tempPrice, setTempPrice] = useState(["", ""]);
-  const [price, setPrice] = useState([1, 1000]);
+  const [price, setPrice] = useState([1, 10000]);
   const [rating, setRating] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedStar, setSelectedStar] = useState(0);
   const [filtersApplied, setFiltersApplied] = useState(false);
   
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [minPriceError, setMinPriceError] = useState("");
+  const [maxPriceError, setMaxPriceError] = useState("");
 
 
   const dispatch = useDispatch();
@@ -50,7 +54,7 @@ const Category = () => {
   
   const clearFilters = () => {
     setTempPrice(["", ""]); // Xóa giá trị tạm thời của giá sản phẩm
-    setPrice([1, 1000]); // Đặt lại giá sản phẩm mặc định
+    setPrice([1, 10000]); // Đặt lại giá sản phẩm mặc định
     setRating(0); // Đặt lại xếp hạng mặc định
     setSelectedCategory(null); // Bỏ chọn danh mục
     setSelectedStar(0); // Bỏ chọn số sao
@@ -83,25 +87,32 @@ const Category = () => {
     const minPrice = Number(tempPrice[0]);
     const maxPrice = Number(tempPrice[1]);
     
-    if (
-      minPrice < 0 ||
-      maxPrice > 1000 ||
-      minPrice > maxPrice ||
-      isNaN(minPrice) ||
-      isNaN(maxPrice)
-    ) {
-      // Thông báo khi điều kiện không thỏa mãn
-      toast.error("Vui lòng nhập số, Giá thấp nhất thấp hơn giá cao nhất và trong khoảng 0$ đến 1000$");
+    if (minPrice < 0 || isNaN(minPrice)) {
+      setMinPriceError("Lớn hơn hoặc bằng 0");
+      return;
     } else {
-      // Áp dụng bộ lọc thành công
+      setMinPriceError("");
+    }
+  
+    if (maxPrice > 10000 || isNaN(maxPrice)) {
+      setMaxPriceError("Nhỏ hơn hoặc bằng 10000");
+      return;
+    } else {
+      setMaxPriceError("");
+    }
+  
+    if (minPrice >= maxPrice) {
+      setMinPriceError("Giá thấp nhất < Giá cao nhất");
+      return;}
+     else {
       setPrice([minPrice, maxPrice]);
-      setFiltersApplied(true); // Cập nhật trạng thái bộ lọc đã áp dụng
+      setFiltersApplied(true); 
     }
   };
   
   useEffect(() => {
     if (!tempPrice[0] && !tempPrice[1]) {
-      setTempPrice(["0", "1000"]);
+      setTempPrice(["0", "10000"]);
     }
     if (filtersApplied) {
       dispatch(
@@ -137,7 +148,7 @@ const Category = () => {
                       placeholder="Giá Thấp Nhất"
                       value={tempPrice[0]}
                       onChange={handleMinPriceChange}
-                    />
+                    /> {minPriceError && <p style={{ color: "red",fontSize: '15px' }}>{minPriceError}</p>}
                     <label htmlFor="max_price">Giá Cao Nhất</label>
                     <input
                       type="number"
@@ -146,7 +157,7 @@ const Category = () => {
                       placeholder="Giá Cao Nhất"
                       value={tempPrice[1]}
                       onChange={handleMaxPriceChange}
-                    />
+                    /> {maxPriceError && <p style={{ color: "red", fontSize: '15px',  }}>{maxPriceError}</p>}
                   </div>
                 </div>
                 <div className="shop-filter-categories">

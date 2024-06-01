@@ -59,7 +59,7 @@ const ProductDetails = () => {
     }
 
     if (success) {
-      toast.success("Reivew posted successfully");
+      toast.success("Đánh Giá Thành Công");
       dispatch({ type: NEW_REVIEW_RESET });
     }
   }, [dispatch, error, id, reviewError, success]);

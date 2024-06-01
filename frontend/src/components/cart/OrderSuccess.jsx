@@ -16,10 +16,10 @@ const OrderSuccess = () => {
           height="200"
         />
 
-        <h1>Your Order has been placed successfully.</h1>
+        <h1>Mua Hàng Thành Công.</h1>
 
         <Link to="/orders/me" className="order-success-after">
-          Go to Orders
+          Xem hóa Đơn
         </Link>
       </div>
     </Fragment>

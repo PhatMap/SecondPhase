@@ -87,7 +87,7 @@ const [deleteAddressId, setDeleteAddressId] = useState(null);
                 <th>Xã/Phường </th>
                 <th>Địa Chỉ </th>
                 <th>Số Điện Thoại </th>
-                <th>Chức Năng </th>
+                <th>Tác vụ </th>
               </tr>
             </thead>
             <tbody>

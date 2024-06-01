@@ -15,7 +15,7 @@ import { useLocation } from "react-router-dom";
 
 const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([1, 1000]);
+  const [price, setPrice] = useState([1, 10000]);
   const [tempPrice, setTempPrice] = useState(["", ""]);
   const [rating, setRating] = useState(0);
   const [category, setCategory] = useState("");
@@ -23,6 +23,12 @@ const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedStar, setSelectedStar] = useState(0);
   const [filtersApplied, setFiltersApplied] = useState(false);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [minPriceError, setMinPriceError] = useState("");
+  const [maxPriceError, setMaxPriceError] = useState("");
+
+
 
   const categories = ["Trousers", "Shirt", "Dress", "Shoe", "Belt"];
   const categoriesVietnamese = {
@@ -48,7 +54,7 @@ const Shop = () => {
 
   useEffect(() => {
     if (tempPrice[0] === "" && tempPrice[1] === "") {
-      setTempPrice(["0", "1000"]);
+      setTempPrice(["0", "10000"]);
     }
     if (!filtersApplied) {
       dispatch(getProducts(keyword, currentPage, price, rating));
@@ -79,8 +85,24 @@ const Shop = () => {
     const minPrice = Number(tempPrice[0]);
     const maxPrice = Number(tempPrice[1]);
   
-    if (minPrice < 0 || maxPrice > 1000 || minPrice > maxPrice || isNaN(minPrice) || isNaN(maxPrice)) {
-      toast.error("Vui lòng nhập số, Giá thấp nhất thấp hơn giá cao nhất và trong khoảng 0$ đến 1000$");
+    if (minPrice < 0 || isNaN(minPrice)) {
+      setMinPriceError("Lớn hơn hoặc bằng 0");
+      return;
+    } else {
+      setMinPriceError("");
+    }
+  
+    if (maxPrice > 10000 || isNaN(maxPrice)) {
+      setMaxPriceError("Nhỏ hơn hoặc bằng 10000");
+      return;
+    } else {
+      setMaxPriceError("");
+    }
+  
+    if (minPrice >= maxPrice) {
+      setMinPriceError("Giá thấp nhất < Giá cao nhất");
+      return;
+    
     } else {
       setPrice([minPrice, maxPrice]);
       dispatch(getProducts(keyword, currentPage, [minPrice, maxPrice], rating));
@@ -90,7 +112,7 @@ const Shop = () => {
 
   const clearFilters = () => {
     setTempPrice(["", ""]); // Xóa giá trị tạm thời của giá sản phẩm
-    setPrice([1, 1000]); // Đặt lại giá sản phẩm mặc định
+    setPrice([1, 10000]); // Đặt lại giá sản phẩm mặc định
     setRating(0); // t lại xếp hạng mặc định
     setSelectedStar(0);
     dispatch(getProducts(keyword, currentPage, price, rating));
@@ -125,7 +147,9 @@ const Shop = () => {
                       placeholder="Giá Thấp Nhất"
                       value={tempPrice[0]}
                       onChange={handleMinPriceChange}
+                      
                     />
+                    {minPriceError && <p style={{ color: "red",fontSize: '15px' }}>{minPriceError}</p>}
                     <label htmlFor="max_price">Giá Cao Nhất</label>
                     <input
                       type="number"
@@ -135,6 +159,7 @@ const Shop = () => {
                       value={tempPrice[1]}
                       onChange={handleMaxPriceChange}
                     />
+                    {maxPriceError && <p style={{ color: "red", fontSize: '15px',  }}>{maxPriceError}</p>}
                   </div>
                 </div>
                 <div className="shop-filter-categories">
