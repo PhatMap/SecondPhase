@@ -6,13 +6,18 @@ import {
   addItemToCart,
   removeItemFromCart,
   getUserCart,
+  getUserCartProduct,
 } from "../../actions/cartActions";
 import DeleteNotify from "../layout/DeleteNotify";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Cart = () => {
   const history = useNavigate();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [selected, setSelected] = useState([]);
 
   const { cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
@@ -22,22 +27,94 @@ const Cart = () => {
     dispatch(getUserCart());
   };
 
-  const increaseQty = async (index, id, size, colorName, colorHex) => {
-    let newQty = cartItems[index].quantity + 1;
+  const increaseQty = async (index) => {
+    const choosed = cartItems[index];
 
-    await dispatch(addItemToCart(id, newQty, size, colorName, colorHex));
-    dispatch(getUserCart());
+    const item = {
+      product: choosed.product,
+      variant: choosed.variant,
+      inventory: choosed.inventory,
+      name: choosed.name,
+      variantName: choosed.variantName,
+      price: choosed.price,
+      image: choosed.image,
+      quantity: 1,
+      size: choosed.size,
+    };
+
+    const check = await dispatch(getUserCartProduct(item));
+
+    if (check) {
+      await dispatch(addItemToCart(item));
+      dispatch(getUserCart());
+      toast.success("Sản phẩm đã tăng số lượng trong giỏ hàng");
+    } else {
+      return toast.error("Giỏ hàng đã đạt số lượng hiện hữu của sản phẩm");
+    }
   };
 
-  const decreaseQty = async (index, id, size, colorName, colorHex) => {
-    let newQty = cartItems[index].quantity - 1;
+  const decreaseQty = async (index) => {
+    const choosed = cartItems[index];
 
-    await dispatch(addItemToCart(id, newQty, size, colorName, colorHex));
-    dispatch(getUserCart());
+    const item = {
+      product: choosed.product,
+      variant: choosed.variant,
+      inventory: choosed.inventory,
+      name: choosed.name,
+      variantName: choosed.variantName,
+      price: choosed.price,
+      image: choosed.image,
+      quantity: -1,
+      size: choosed.size,
+    };
+
+    if (choosed.quantity === 1) {
+      return;
+    }
+
+    const check = await dispatch(getUserCartProduct(item));
+
+    if (check) {
+      await dispatch(addItemToCart(item));
+      dispatch(getUserCart());
+      toast.success("Sản phẩm đã giảm số lượng trong giỏ hàng");
+    } else {
+      return toast.error("Giỏ hàng đã đạt số lượng hiện hữu của sản phẩm");
+    }
   };
 
   const checkoutHandler = () => {
+    const itemsToCheckout = cartItems.filter(
+      (item, index) => selectedItems[index]
+    );
+    localStorage.setItem("itemsToCheckout", JSON.stringify(itemsToCheckout));
     history("/login?redirect=/shipping");
+  };
+
+  const handlerQuantity = (e) => {
+    const inputValue = e.target.value;
+
+    if (inputValue > stock) {
+      return;
+    } else {
+    }
+  };
+
+  const handleBlur = (e) => {
+    const inputValue = e.target.value;
+    if (inputValue === "") {
+    }
+  };
+
+  const handleCheckboxChange = (index) => {
+    const newSelectedItems = [...selectedItems];
+    newSelectedItems[index] = !newSelectedItems[index];
+    setSelectedItems(newSelectedItems);
+    if (newSelectedItems[index] === true) {
+      setSelected((prev) => [...prev, cartItems[index]]);
+    } else {
+      setSelected((prev) => prev.filter((item) => item !== cartItems[index]));
+    }
   };
 
   return (
@@ -45,126 +122,118 @@ const Cart = () => {
       <MetaData title={"Your Cart"} />
       {user ? (
         cartItems.length === 0 ? (
-          <h2 className="cart-not-login">Giỏ Hàng Trống </h2>
+          <h1 className="cart-not-login">Giỏ Hàng Trống </h1>
         ) : (
           <Fragment>
-            <h2 className="cart-status">
-              Giỏ Hàng có: <b>{cartItems.length} Sản Phẩm</b>
-            </h2>
-
             <div className="cart-items-container">
               <div className="cart-items">
+                <h2 className="cart-status">
+                  Giỏ Hàng có: <b>{cartItems.length} Sản Phẩm</b>
+                </h2>
                 {cartItems.map((item, index) => (
-                  <Fragment key={item.product}>
+                  <div key={index}>
                     <div className="cart-item">
-                      <div className="row">
-                        <div className="col-4 col-lg-3">
-                          <img
-                            src={item.image}
-                            alt="Laptop"
-                            height="90"
-                            width="115"
-                          />
-                        </div>
+                      <div className="item-of-cart">
+                        <input
+                          type="checkbox"
+                          checked={selectedItems[index]}
+                          onChange={() => handleCheckboxChange(index)}
+                        />
+                        <img src={item.image} alt="Laptop" />
 
-                        <div className="col-5 col-lg-3">
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </div>
+                        <Link
+                          to={`/product/${item.product}`}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {item.name} - {item.variantName}
+                        </Link>
 
-                        <div className="col-4 col-lg-2 mt-4 mt-lg-0">
+                        <div className="">
                           <p className="cart-text cart-text-price ">
-                            ${item.price}
+                            {item.price} VNĐ
                           </p>
                         </div>
 
-                        <div className="col-4 col-lg-2 mt-4 mt-lg-0">
+                        <div className="">
                           <p className="cart-text cart-text-size">
                             {item.size}
                           </p>
                         </div>
 
-                        <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-                          <div className="stockCounter d-inline">
-                            <span
-                              className={`btn btn-danger minus ${
-                                item.quantity <= 1 ? "disabled" : ""
-                              }`} // Thêm class disabled nếu số lượng là 1 hoặc nhỏ hơn
-                              onClick={() =>
-                                decreaseQty(
-                                  index,
-                                  item.product,
-                                  item.size,
-                                )
-                              }
-                              disabled={item.quantity <= 1} // Vô hiệu hóa nút khi số lượng là 1 hoặc nhỏ hơn
-                            >
-                              -
-                            </span>
+                        <div className="stockCounter d-inline">
+                          <span
+                            className="btn btn-danger minus"
+                            onClick={() => decreaseQty(index)}
+                          >
+                            -
+                          </span>
 
-                            <input
-                              type="number"
-                              className="form-control count d-inline"
-                              value={item.quantity}
-                              readOnly
-                            />
+                          <input
+                            type="number"
+                            className="form-control count d-inline"
+                            value={item.quantity}
+                            onChange={(e) => handlerQuantity(e)}
+                            onBlur={(e) => handleBlur(e)}
+                          />
 
-                            <span
-                              className="btn btn-primary plus"
-                              onClick={() =>
-                                increaseQty(
-                                  index,
-                                  item.product,
-                                  item.size,
-                                )
-                              }
-                            >
-                              +
-                            </span>
-                          </div>
+                          <span
+                            className="btn btn-primary plus"
+                            onClick={() => increaseQty(index)}
+                          >
+                            +
+                          </span>
                         </div>
-                      </div> 
 
-                      <i
-                        className="fa fa-trash cart-delete-btn"
-                        onClick={() => setShow(true)}
-                      ></i>
-                      {show && (
-                        <DeleteNotify
-                          func={removeCartItemHandler}
-                          paras={[item.product, item.size]}
-                          show={setShow}
-                        />
-                      )}
+                        <div>
+                          <i
+                            style={{ display: "flex", alignItems: "center" }}
+                            className="fa fa-trash cart-delete-btn"
+                            onClick={() => setShow(true)}
+                          ></i>
+                        </div>
+                      </div>
                     </div>
-                  </Fragment>
+                    {show && (
+                      <DeleteNotify
+                        func={removeCartItemHandler}
+                        paras={[item.product, item.size]}
+                        show={setShow}
+                      />
+                    )}
+                  </div>
                 ))}
               </div>
 
               <div className="cart-checkout-container">
-                <h4>Hóa Đơn </h4>
+                <strong>
+                  <h4
+                    style={{ display: "flex", justifyContent: "center" }}
+                    className="cart-status"
+                  >
+                    Hóa Đơn
+                  </h4>
+                </strong>
                 <hr />
                 <p>
-                  Số Lượng:{" "}
+                  Số Lượng:
                   <span className="order-summary-values">
-                    {cartItems.reduce(
+                    {selected.reduce(
                       (acc, item) => acc + Number(item.quantity),
                       0
                     )}{" "}
-                    (Units)
+                    Món
                   </span>
                 </p>
                 <p>
-                  Tổng Thanh Toán:{" "}
+                  Tổng Thanh Toán:
                   <span className="order-summary-values">
-                    $
-                    {cartItems
+                    {selected
                       .reduce(
                         (acc, item) => acc + item.quantity * item.price,
                         0
                       )
-                      .toFixed(2)}
+                      .toFixed(2)}{" "}
+                    VNĐ
                   </span>
                 </p>
 

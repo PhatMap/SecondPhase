@@ -105,7 +105,7 @@ const ProductDetails = () => {
 
     if (check) {
       dispatch(addItemToCart(item));
-      toast.success("Item Added to Cart");
+      toast.success("Sản phẩm đã được thêm vào giỏ hàng");
     } else {
       return toast.error("Giỏ hàng đã đạt số lượng hiện hữu của sản phẩm");
     }

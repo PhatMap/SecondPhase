@@ -12,7 +12,7 @@ import {
 } from "../constants/cartConstants";
 
 export const cartReducer = (
-  state = { cartItems: [], shippingInfo: {} }, // Initialize error property
+  state = { cartItems: [], shippingInfo: {} },
   action
 ) => {
   switch (action.type) {
@@ -33,7 +33,7 @@ export const cartReducer = (
       return {
         ...state,
         isRemoved: action.payload,
-        error: null, 
+        error: null,
       };
 
     case REMOVE_ITEM_FROM_CART_FAIL:
@@ -46,14 +46,14 @@ export const cartReducer = (
       return {
         ...state,
         shippingInfo: action.payload,
-        error: null, // Clear error on successful action
+        error: null, 
       };
 
     case LOAD_CART_ITEMS_SUCCESS:
       return {
         ...state,
         cartItems: action.payload,
-        error: null, // Clear error on successful action
+        error: null, 
       };
 
     case LOAD_CART_ITEMS_FAIL:

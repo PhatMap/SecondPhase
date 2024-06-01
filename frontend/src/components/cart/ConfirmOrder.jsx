@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import MetaData from "../layout/MetaData";
@@ -16,7 +16,6 @@ const ConfirmOrder = () => {
   const { user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.newOrder);
 
-  // Calculate Order Prices
   const itemsPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -25,6 +24,9 @@ const ConfirmOrder = () => {
   const taxPrice = Number((0.05 * itemsPrice).toFixed(2));
   const totalPrice = (itemsPrice + shippingPrice + taxPrice).toFixed(2);
   const dispatch = useDispatch();
+
+  const [items, setItems] = useState([]);
+  const [infor, setInfor] = useState("");
 
   const processToPayment = () => {
     const data = {
@@ -52,8 +54,8 @@ const ConfirmOrder = () => {
       taxPrice,
       totalPrice,
       userName: user.name,
-      orderItems: cartItems,
-      shippingInfo: shippingInfo,
+      orderItems: items,
+      shippingInfo: infor,
     };
 
     order.paymentInfo = {
@@ -72,6 +74,22 @@ const ConfirmOrder = () => {
     }
   });
 
+  useEffect(() => {
+    const storedSelectedItems =
+      JSON.parse(localStorage.getItem("itemsToCheckout")) || [];
+
+    setItems(storedSelectedItems);
+
+    if (!shippingInfo.address) {
+      const storedShippingInfo =
+        JSON.parse(localStorage.getItem("shippingInfo")) || [];
+
+      setInfor(storedShippingInfo);
+    } else {
+      setInfor(shippingInfo);
+    }
+  }, [cartItems, shippingInfo]);
+
   return (
     <Fragment>
       <MetaData title={"Confirm Order"} />
@@ -79,23 +97,22 @@ const ConfirmOrder = () => {
 
       <div className="confirm-order-container">
         <div className="col-12 col-lg-8 mt-5 order-confirm">
-          <h4 className="mb-3">Shipping Info</h4>
+          <h4 className="mb-3">Thông tin giao hàng</h4>
           <p>
             <b>Họ Tên :</b> {user && user.name}
           </p>
           <p>
-            <b>Số Điện Thoại:</b> {shippingInfo.phone}
+            <b>Số Điện Thoại:</b> {infor.phone}
           </p>
           <p className="mb-4">
             <b>Địa Chỉ:</b>{" "}
-            {`${shippingInfo.province}, ${shippingInfo.district}, ${shippingInfo.town}, ${shippingInfo.location}`}
-            ;
+            {`${infor.province}, ${infor.district}, ${infor.town}, ${infor.location}`}
           </p>
 
           <hr />
           <h4 className="mt-4">Giỏ Hàng:</h4>
 
-          {cartItems.map((item) => (
+          {items.map((item) => (
             <Fragment key={item.product}>
               <hr />
               <div className="cart-item my-1">
@@ -120,7 +137,6 @@ const ConfirmOrder = () => {
             </Fragment>
           ))}
         </div>
-        
 
         <div className="confirm-order-form">
           <h4>Hóa Đơn </h4>
@@ -153,11 +169,18 @@ const ConfirmOrder = () => {
           >
             Trực Tiếp (COD)
           </button>
-          <div> <Link to="/shipping" className="btn btn-outline-danger btn-sm"  style={{  marginTop: '1rem',marginLeft:'175px'}}>Quay lại</Link></div>
+          <div>
+            {" "}
+            <Link
+              to="/shipping"
+              className="btn btn-outline-danger btn-sm"
+              style={{ marginTop: "1rem", marginLeft: "175px" }}
+            >
+              Quay lại
+            </Link>
+          </div>
         </div>
-        
       </div>
-      
     </Fragment>
   );
 };

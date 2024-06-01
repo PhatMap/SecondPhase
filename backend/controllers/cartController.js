@@ -161,7 +161,7 @@ exports.emptyTheCart = catchAsyncErrors(async (req, res, next) => {
 
 exports.updateCartQuantity = catchAsyncErrors(async (req, res, next) => {
   try {
-    const { product, quantity, size, color } = req.body;
+    const { product, quantity, size } = req.body;
 
     let cart = await Cart.findOne({ user: req.user.id });
 
