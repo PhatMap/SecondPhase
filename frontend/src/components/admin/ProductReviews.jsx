@@ -178,30 +178,6 @@ const setProducts = () => {
 
         <div className="col-12 col-md-10">
           <Fragment>
-            <div className="row justify-content-center mt-5">
-              <div className="col-5">
-                <form onSubmit={submitHandler}>
-                  <div className="form-group">
-                    <label htmlFor="productId_field">Enter Product ID</label>
-                    <input
-                      type="text"
-                      id="productId_field"
-                      className="form-control"
-                      value={productId}
-                      onChange={(e) => setProductId(e.target.value)}
-                    />
-                  </div>
-
-                  <button
-                    id="search_button"
-                    type="submit"
-                    className="btn btn-primary btn-block py-2"
-                  >
-                    SEARCH
-                  </button>
-                </form>
-              </div>
-            </div>
             <h1 className="centered-title">All Products</h1>
 
               {loading ? (

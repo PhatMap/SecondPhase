@@ -77,7 +77,7 @@ const OrdersList = () => {
       data.rows.push({
         name: order.userName,
         numofItems: order.orderItems.length,
-        amount: `$${order.totalPrice}`,
+        amount: `${order.totalPrice} VND`,
         status:
           order.orderStatus &&
           String(order.orderStatus).includes("Delivered") ? (
@@ -117,7 +117,7 @@ const OrdersList = () => {
 
         <div className="manage-product-container">
           <Fragment>
-            <h1 >All Orders</h1>
+          <h1 className="my-4" style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'center' }}> All Orders</h1>
 
             {loading ? (
               <Loader />

@@ -144,7 +144,7 @@ const UsersList = () => {
 
         <div className="manage-alluser-container">
           <Fragment>
-            <h1>Danh Sách Khách Hàng</h1>
+          <h1 className="my-4" style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'center' }}>Danh Sách Khách Hàng</h1>
             <Link to="/admin/users/new" className="alluser-add-btn-container">
               <i className="fa fa-plus alluser-add-btn"></i>
               <p>Khách Hàng Mới</p>

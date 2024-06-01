@@ -96,8 +96,9 @@ const ConfirmOrder = () => {
       <CheckoutSteps shipping confirmOrder />
 
       <div className="confirm-order-container">
-        <div className="col-12 col-lg-8 mt-5 order-confirm">
-          <h4 className="mb-3">Thông tin giao hàng</h4>
+        <div className="confirm-order-form-info">
+        <h4 className="mb-3" style={{ fontSize: '27px', fontWeight: 'bold' }}>Thông tin giao hàng</h4>
+
           <p>
             <b>Họ Tên :</b> {user && user.name}
           </p>
@@ -110,29 +111,30 @@ const ConfirmOrder = () => {
           </p>
 
           <hr />
-          <h4 className="mt-4">Giỏ Hàng:</h4>
+          <h4 className="mt-4"style={{ fontSize: '27px', fontWeight: 'bold' }}>Giỏ Hàng:</h4>
 
           {items.map((item) => (
             <Fragment key={item.product}>
               <hr />
-              <div className="cart-item my-1">
-                <div className="row">
-                  <div className="col-4 col-lg-2">
-                    <img src={item.image} alt="Laptop" height="45" width="65" />
-                  </div>
+              <div className="cart-item-confirm my-1">
+                  <div className="row">
+                    <div className="col-4 col-lg-2">
+                      <img src={item.image} alt="Laptop" height="45" width="65" />
+                    </div>
 
-                  <div className="col-5 col-lg-6">
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
-                  </div>
+                    <div className="col-5 col-lg-6">
+                      <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    </div>
 
-                  <div className="col-4 col-lg-4 mt-4 mt-lg-0">
-                    <p>
-                      {item.quantity} x ${item.price} ={" "}
-                      <b>${(item.quantity * item.price).toFixed(2)}</b>
-                    </p>
+                    <div className="col-4 col-lg-4 mt-4 mt-lg-0">
+                      <p>
+                        {item.quantity} x ${item.price} ={" "}
+                        <b>${(item.quantity * item.price).toFixed(2)}</b>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+
               <hr />
             </Fragment>
           ))}
@@ -143,20 +145,20 @@ const ConfirmOrder = () => {
           <hr />
           <p>
             Số Lượng:{" "}
-            <span className="order-summary-values">${itemsPrice}</span>
+            <span className="order-summary-values">{itemsPrice}VND </span>
           </p>
           <p>
             Vận Chuyển :{" "}
-            <span className="order-summary-values">${shippingPrice}</span>
+            <span className="order-summary-values">{shippingPrice}VND</span>
           </p>
           <p>
-            Phí: <span className="order-summary-values">${taxPrice}</span>
+            Phí: <span className="order-summary-values">{taxPrice}VND</span>
           </p>
 
           <hr />
 
           <p>
-            Tổng: <span className="order-summary-values">${totalPrice}</span>
+            Tổng: <span className="order-summary-values">{totalPrice}VND</span>
           </p>
 
           <hr />
