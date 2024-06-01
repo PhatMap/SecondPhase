@@ -12,6 +12,9 @@ const UserAddress = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
+const [deleteAddressId, setDeleteAddressId] = useState(null);
+
 
   useEffect(() => {
     dispatch(getUserAddress());
@@ -41,13 +44,20 @@ const UserAddress = () => {
       history("/me/user-address/add");
     }
   };
-
   const handleDeleteAddress = (addressId) => {
-    const confirmDelete = window.confirm("Bạn có chắc muốn xóa địa chỉ này?");
-    if (confirmDelete) {
-      dispatch(deleteUserAddress(addressId));
+    if (user.address.length === 1) {
+      setErrorMessage("Bạn không thể xóa địa chỉ này vì chỉ còn một địa chỉ.");
+      return;
     }
+    setDeleteAddressId(addressId);
+    setShowModal(true); // Hiển thị modal
   };
+  const handleDeleteConfirmed = async (addressId) => {
+    await dispatch(deleteUserAddress(addressId));
+    dispatch(getUserAddress());
+    setShowModal(false); // Ẩn modal sau khi xác nhận xóa
+  };
+    
 
   return (
     <Fragment>
@@ -55,7 +65,7 @@ const UserAddress = () => {
       <div className="container container-fluid">
         <h1 className="useraddress-heading">Địa Chỉ Người Dùng</h1>
         <button
-          className="address-add-btn-container"
+          className="address-add-btn-container" 
           onClick={handleAddAddress}
         >
           Thêm Địa Chỉ Mới
@@ -72,12 +82,12 @@ const UserAddress = () => {
           <table className="custom-table">
             <thead>
               <tr>
-                <th>Province</th>
-                <th>District</th>
-                <th>Town</th>
-                <th>Location</th>
-                <th>Phone</th>
-                <th>Action</th>
+                <th>Tỉnh/Thành Phố </th>
+                <th>Quận/Huyện </th>
+                <th>Xã/Phường </th>
+                <th>Địa Chỉ </th>
+                <th>Số Điện Thoại </th>
+                <th>Chức Năng </th>
               </tr>
             </thead>
             <tbody>
@@ -106,10 +116,25 @@ const UserAddress = () => {
               ))}
             </tbody>
           </table>
-        ) : (
-          <p>No addresses found</p>
+          
+        ) 
+        
+        : (
+          <p style={{ fontSize: '3rem', marginLeft: '550px' }}>Không Có Địa Chỉ</p>
         )}
+         <Link to="/me" className="btn btn-outline-danger btn-sm"  style={{ float: 'right' ,marginRight:'150px',marginTop: '1rem'}}>Quay lại</Link>
       </div>
+
+      {showModal && (
+      <div className="delete-notify-container">
+      <div className="delete-notify-form">
+        <h1> Xóa địa chỉ này?</h1>
+        <div className="delete-notify-btn-container"></div>
+          <button className="delete-notify-btn-container-yes" onClick={() => handleDeleteConfirmed(deleteAddressId)}>Yes</button>
+          <button className="delete-notify-btn-container-no" onClick={() => setShowModal(false)}>No</button>
+        </div>
+      </div>
+    )}
     </Fragment>
   );
 };

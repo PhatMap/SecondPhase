@@ -45,11 +45,11 @@ const Cart = () => {
       <MetaData title={"Your Cart"} />
       {user ? (
         cartItems.length === 0 ? (
-          <h2 className="cart-not-login">Your Cart is Empty</h2>
+          <h2 className="cart-not-login">Giỏ Hàng Trống </h2>
         ) : (
           <Fragment>
             <h2 className="cart-status">
-              Your Cart: <b>{cartItems.length} items</b>
+              Giỏ Hàng có: <b>{cartItems.length} Sản Phẩm</b>
             </h2>
 
             <div className="cart-items-container">
@@ -143,10 +143,10 @@ const Cart = () => {
               </div>
 
               <div className="cart-checkout-container">
-                <h4>Order Summary</h4>
+                <h4>Hóa Đơn </h4>
                 <hr />
                 <p>
-                  Subtotal:{" "}
+                  Số Lượng:{" "}
                   <span className="order-summary-values">
                     {cartItems.reduce(
                       (acc, item) => acc + Number(item.quantity),
@@ -156,7 +156,7 @@ const Cart = () => {
                   </span>
                 </p>
                 <p>
-                  Est. total:{" "}
+                  Tổng Thanh Toán:{" "}
                   <span className="order-summary-values">
                     $
                     {cartItems
@@ -170,7 +170,7 @@ const Cart = () => {
 
                 <hr />
                 <button className="cart-checkout-btn" onClick={checkoutHandler}>
-                  Check out
+                  Thanh Toán
                 </button>
               </div>
             </div>

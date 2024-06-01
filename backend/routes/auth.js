@@ -20,6 +20,7 @@ const {
   deleteUser,
   googleLoginUser,
   googleLogout,
+  NewUser,
 } = require("../controllers/authController");
 
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
@@ -43,6 +44,8 @@ router.delete('/me/address/:addressId', isAuthenticatedUser, deleteUserAddress);
 
 router.get('/me/address', isAuthenticatedUser, getUserAddress);
 
+
+router.route("/admin/users/new").post(NewUser);
 router
   .route("/admin/users")
   .get(isAuthenticatedUser, authorizeRoles("admin"), allUsers);

@@ -3,9 +3,9 @@ import MetaData from "../layout/MetaData";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { register, clearErrors } from "../../actions/userActions";
+import { NewUser, clearErrors } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
-import Address from "./Address";
+import Address from "../user/Address";
 
 const Register = () => {
   const history = useNavigate();
@@ -68,18 +68,15 @@ const Register = () => {
 
   const dispatch = useDispatch();
 
-  const { isAuthenticated, error, loading } = useSelector((state) => state.auth);
+  const { error, loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      history("/");
-    }
 
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, isAuthenticated, error, history]);
+  }, [dispatch, error, history]);
 
   const isValidPhoneNumber = (phone) => {
     const phoneRegex = /^[0-9]{10}$/;
@@ -134,9 +131,10 @@ const Register = () => {
       return;
     }
 
-    if (nameError || emailError || phoneError || passwordError || confirmPasswordError) {
+    if (nameError || emailError || phoneError || passwordError || confirmPasswordError || errorMessage) {
       return;
     }
+    
 
     const formData = new FormData();
     formData.append("name", name);
@@ -150,14 +148,14 @@ const Register = () => {
       formData.append(`address[${index}][location]`, address.location);
       formData.append(`address[${index}][phone]`, address.phone);
     });
-
-    dispatch(register(formData))
-      .then(() => {
-        // Register success
-      })
-      .catch((error) => {
+    try{
+    dispatch(NewUser(formData))
+      
+        history("/admin/users");
+    }
+      catch(error) {
         setErrorMessage(error.response.data.message);
-      });
+      };
   };
 
   const onChange = (e) => {

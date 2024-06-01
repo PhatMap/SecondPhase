@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 
 import MetaData from "../layout/MetaData";
-
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -154,8 +154,11 @@ const UpdateProfile = () => {
               >
                 Cập Nhật 
               </button>
+              
             </div>
+            
           </form>
+          <Link to="/me" className="btn btn-outline-danger btn-sm"  style={{ float: 'right' }}>Quay lại</Link>
         </div>
       </div>
     </Fragment>

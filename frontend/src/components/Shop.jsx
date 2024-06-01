@@ -119,7 +119,7 @@ const Shop = () => {
                   <div className="shop-filter-price">
                     <label htmlFor="min_price">Giá Thấp Nhất</label>
                     <input
-                      type="text"
+                      type="number"
                       id="min_price"
                       className="register-form-control"
                       placeholder="Giá Thấp Nhất"
@@ -128,7 +128,7 @@ const Shop = () => {
                     />
                     <label htmlFor="max_price">Giá Cao Nhất</label>
                     <input
-                      type="text"
+                      type="number"
                       id="max_price"
                       className="register-form-control"
                       placeholder="Giá Cao Nhất"

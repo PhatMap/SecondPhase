@@ -9,11 +9,15 @@ import Sidebar from "./Sidebar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { allUsers,updateUser, deleteUser, clearErrors } from "../../actions/userActions";
+import { allUsers, updateUser, deleteUser, clearErrors } from "../../actions/userActions";
 import { DELETE_USER_RESET } from "../../constants/userConstants";
+import DeleteNotify from "../layout/DeleteNotify";
 
 const UsersList = () => {
   const [deleteMessage, setDeleteMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [deleteUserId, setDeleteUserId] = useState(null);
+  const [deleteUserRole, setDeleteUserRole] = useState(null);
   const history = useNavigate();
 
   const dispatch = useDispatch();
@@ -23,50 +27,51 @@ const UsersList = () => {
 
   useEffect(() => {
     dispatch(allUsers());
-  
+
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-  
+
     if (isDeleted) {
       toast.success("Xóa Người Dùng Thành Công");
       dispatch({ type: DELETE_USER_RESET });
       setDeleteMessage(""); // Reset delete message
     }
   }, [dispatch, error, isDeleted]);
-  
-  const deleteUserHandler = (id, role) => {
+
+  const handleDeleteUser = (id, role) => {
     if (role === "admin") {
       toast.error("Tài Khoản Admin Không Thể Xóa.");
-    } else if (role === "user") {
+    } else {
+      setDeleteUserId(id);
+      setDeleteUserRole(role);
+      setShowModal(true); // Hiển thị modal
+    }
+  };
+
+  const handleDeleteConfirmed = () => {
+    if (deleteUserRole === "user") {
       const formData = new FormData();
       formData.set("role", "banned");
-      dispatch(updateUser(id, formData)).then(() => {
-        dispatch(allUsers()); 
-      });
+      dispatch(updateUser(deleteUserId, formData))
+      dispatch(allUsers());
+      toast.success("Người dùng đã được chuyển sang vai trò 'banned' thành công");
     } else {
-      dispatch(deleteUser(id)).then(() => {
-        dispatch(allUsers()); 
-      });
+      dispatch(deleteUser(deleteUserId))
+      dispatch(allUsers());
+
     }
+    setShowModal(false); // Ẩn modal sau khi xác nhận xóa
   };
-  const confirmDeleteUser = (id, role) => {
-    if (role === "banned") {
-      if (window.confirm("Bạn chắc chắn muốn xóa người dùng này?")) {
-        deleteUserHandler(id, role);
-      }
-    } else {
-      deleteUserHandler(id, role);
-    }
+
+  const handleDeleteCancel = () => {
+    setShowModal(false); // Ẩn modal khi hủy xóa
   };
-  
-  
 
   const setUsers = () => {
     const data = {
       columns: [
-        
         {
           label: "Họ Tên",
           field: "name",
@@ -75,8 +80,8 @@ const UsersList = () => {
         {
           label: "Ảnh Đại Diện",
           field: "image",
-          sort: "asc"
-        ,},
+          sort: "asc",
+        },
         {
           label: "Email",
           field: "email",
@@ -107,7 +112,6 @@ const UsersList = () => {
         ),
         email: user.email,
         role: user.role,
-
         actions: (
           <Fragment>
             <Link
@@ -118,7 +122,7 @@ const UsersList = () => {
             </Link>
             <button
               className="btn btn-danger py-1 px-2 ml-2"
-              onClick={() => confirmDeleteUser(user._id, user.role)}
+              onClick={() => handleDeleteUser(user._id, user.role)}
             >
               <i className="fa fa-trash"></i>
             </button>
@@ -140,8 +144,8 @@ const UsersList = () => {
 
         <div className="manage-alluser-container">
           <Fragment>
-            <h1 >Danh Sách Khách Hàng </h1>
-            <Link to="/register" className="alluser-add-btn-container">
+            <h1>Danh Sách Khách Hàng</h1>
+            <Link to="/admin/users/new" className="alluser-add-btn-container">
               <i className="fa fa-plus alluser-add-btn"></i>
               <p>Khách Hàng Mới</p>
             </Link>
@@ -165,6 +169,14 @@ const UsersList = () => {
           </Fragment>
         </div>
       </div>
+      {showModal && (
+        <DeleteNotify
+          show={setShowModal}
+          func={handleDeleteConfirmed}
+          paras={[]}
+        />
+      )}
+      <ToastContainer />
     </Fragment>
   );
 };

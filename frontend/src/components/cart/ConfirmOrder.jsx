@@ -81,19 +81,19 @@ const ConfirmOrder = () => {
         <div className="col-12 col-lg-8 mt-5 order-confirm">
           <h4 className="mb-3">Shipping Info</h4>
           <p>
-            <b>Name:</b> {user && user.name}
+            <b>Họ Tên :</b> {user && user.name}
           </p>
           <p>
-            <b>Phone:</b> {shippingInfo.phone}
+            <b>Số Điện Thoại:</b> {shippingInfo.phone}
           </p>
           <p className="mb-4">
-            <b>Address:</b>{" "}
+            <b>Địa Chỉ:</b>{" "}
             {`${shippingInfo.province}, ${shippingInfo.district}, ${shippingInfo.town}, ${shippingInfo.location}`}
             ;
           </p>
 
           <hr />
-          <h4 className="mt-4">Your Cart Items:</h4>
+          <h4 className="mt-4">Giỏ Hàng:</h4>
 
           {cartItems.map((item) => (
             <Fragment key={item.product}>
@@ -120,40 +120,44 @@ const ConfirmOrder = () => {
             </Fragment>
           ))}
         </div>
+        
 
         <div className="confirm-order-form">
-          <h4>Order Summary</h4>
+          <h4>Hóa Đơn </h4>
           <hr />
           <p>
-            Subtotal:{" "}
+            Số Lượng:{" "}
             <span className="order-summary-values">${itemsPrice}</span>
           </p>
           <p>
-            Shipping:{" "}
+            Vận Chuyển :{" "}
             <span className="order-summary-values">${shippingPrice}</span>
           </p>
           <p>
-            Tax: <span className="order-summary-values">${taxPrice}</span>
+            Phí: <span className="order-summary-values">${taxPrice}</span>
           </p>
 
           <hr />
 
           <p>
-            Total: <span className="order-summary-values">${totalPrice}</span>
+            Tổng: <span className="order-summary-values">${totalPrice}</span>
           </p>
 
           <hr />
           <button className="confirm-order-card-btn" onClick={processToPayment}>
-            Prepayment (Bank card)
+            Ngân Hàng (Bank card)
           </button>
           <button
             className="confirm-order-cash-btn"
             onClick={processToCashPayment}
           >
-            Cash on Delivery (COD)
+            Trực Tiếp (COD)
           </button>
+          <div> <Link to="/shipping" className="btn btn-outline-danger btn-sm"  style={{  marginTop: '1rem',marginLeft:'175px'}}>Quay lại</Link></div>
         </div>
+        
       </div>
+      
     </Fragment>
   );
 };

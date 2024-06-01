@@ -57,6 +57,10 @@ import {
   UPDATE_USER_ADDRESS_FAIL,
   USER_ADDRESS_DELETE_SUCCESS,
   USER_ADDRESS_DELETE_REQUEST,
+
+  New_USER_REQUEST,
+  New_USER_SUCCESS,
+  New_USER_FAIL,
 } from "../constants/userConstants";
 
 // Login
@@ -504,6 +508,29 @@ export const updateUserAddress = (addressId, updatedAddress) => async (dispatch)
   } catch (error) {
     dispatch({
       type: UPDATE_USER_ADDRESS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+export const NewUser = (userData) => async (dispatch) => {
+  try {
+    dispatch({ type: New_USER_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    const { data } = await axios.post("/api/v1/admin/users/new", userData, config);
+
+    dispatch({
+      type: New_USER_SUCCESS,
+      payload: data.user,
+    });
+  } catch (error) {
+    dispatch({
+      type: New_USER_FAIL,
       payload: error.response.data.message,
     });
   }

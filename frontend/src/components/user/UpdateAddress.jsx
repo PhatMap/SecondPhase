@@ -4,7 +4,7 @@ import { updateUserAddress, getUserAddress } from "../../actions/userActions";
 import MetaData from "../layout/MetaData";
 import Address from "./Address";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UpdateAddress = ( ) => {
   const history = useNavigate();
@@ -56,10 +56,10 @@ const UpdateAddress = ( ) => {
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>
-            <h1 className="mb-3">Update Address</h1>
+            <h1 className="addaddress-heading">Cập Nhật Địa Chỉ </h1>
             <Address handleAddressChange={handleAddressChange} addressData={addressData} />
             <div className="form-group">
-              <label htmlFor="phone_field">Phone</label>
+              <label htmlFor="phone_field">Số Điện Thoại </label>
               <input
                 type="text"
                 id="phone_field"
@@ -73,8 +73,9 @@ const UpdateAddress = ( ) => {
               type="submit"
               className="btn btn-block py-3"
             >
-              UPDATE
+              Cập Nhật
             </button>
+            <Link to="/me/user-address" className="btn btn-outline-danger btn-sm"  style={{  marginTop: '1rem',marginLeft:'-150px'}}>Quay lại</Link>
           </form>
         </div>
       </div>

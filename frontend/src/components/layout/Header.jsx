@@ -198,14 +198,14 @@ const Header = () => {
                 >
                   {user && user.role === "admin" && (
                     <Link className="dropdown-item" to="/dashboard">
-                      Dashboard
+                      Quản Lí
                     </Link>
                   )}
                   <Link className="dropdown-item" to="/orders/me">
-                    Orders
+                    Đơn Hàng
                   </Link>
                   <Link className="dropdown-item" to="/me">
-                    Profile
+                    Thông Tin Cá Nhân
                   </Link>
 
                   <Link
@@ -213,7 +213,7 @@ const Header = () => {
                     to="/"
                     onClick={logoutHandler}
                   >
-                    Logout
+                    Thoát
                   </Link>
                 </div>
               </div>
