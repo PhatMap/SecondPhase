@@ -25,49 +25,42 @@ const Profile = () => {
               fontWeight: "bold",
             }}
           >
-            My Profile
+            Thông tin tài khoản
           </h2>
-          <div
-            style={{ fontFamily: "sans-serif" }}
-            className="row justify-content-around mt-5 user-info"
-          >
-            <div className="col-12 col-md-3">
+          <div className="profile-container">
+            <div className="profile-avatar">
               <figure className="avatar avatar-profile">
                 <img
-                  className="rounded-circle img-fluid"
+                  className=""
                   src={user.avatar.url}
                   alt={user.name}
                 />
               </figure>
               <Link to="/me/update" className="profile-btn">
-                Edit Profile
+                Chỉnh sửa thông tin
               </Link>
             </div>
 
-            <div className="">
-              <h4>Full Name</h4>
+            <div className="profile-details">
+              <h4>Tên tài khoản</h4>
               <p>{user.name}</p>
 
-              <h4>Email Address</h4>
+              <h4>Email</h4>
               <p>{user.email}</p>
 
-              <h4>Joined On</h4>
+              <h4>Ngày đăng ký</h4>
               <p>{String(user.createAt).substring(0, 10)}</p>
-              <div className="profile-btn">
-                <Link to="/me/user-address" className="btn btn-primary btn-block mt-3">
-                  Manage Addresses
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <Link to="/me/user-address" className="profile-btn">
+                  Quản lý địa chỉ
                 </Link>
-              </div>
 
-              {user.role !== "admin" && (
-                <Link to="/orders/me" className="btn btn-danger btn-block mt-5">
-                  My Orders
+                <Link to="/orders/me" className="profile-btn">
+                  Đơn hàng đã đặt
                 </Link>
-              )}
 
-              <div className="profile-btn">
                 <Link to="/password/update" className="profile-btn">
-                  Change Password
+                  Đổi mật khẩu
                 </Link>
               </div>
             </div>

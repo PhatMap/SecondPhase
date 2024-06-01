@@ -691,7 +691,6 @@ footer {
   width: 2.2rem;
 }
 
-
 .useraddress-heading {
   font-size: 3.3rem;
   padding-bottom: 1rem;
@@ -706,7 +705,7 @@ footer {
   border-radius: 5px;
   color: white;
   background-color: rgb(47, 192, 197);
-  margin-left:150px;
+  margin-left: 150px;
 }
 
 /* Checkout Steps */
@@ -866,7 +865,7 @@ footer {
   margin-top: 8px;
 }
 
-.order-details-container{
+.order-details-container {
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 20px;
@@ -880,6 +879,23 @@ footer {
   width: 100%;
   left: -50px;
   margin-bottom: 50px;
+}
+
+.order-details-container {
+  width: 100vw;
+  height: 100%;
+  margin-top: 30px;
+  display: flex;
+}
+
+.order-details-container h1 {
+  font-size: xx-large;
+}
+
+.order-details-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .progress-dot {
@@ -1112,7 +1128,6 @@ ul.CTAs a {
 .size-button:focus {
   outline: none;
 }
-
 
 .color-button {
   margin-right: 5mm;
@@ -1486,7 +1501,6 @@ ul.CTAs a {
   background-color: red; /* Đổi màu nền của số sao được chọn thành đỏ */
 }
 
-
 .shop-filter-btn {
   color: white;
   background-color: #080808;
@@ -1636,6 +1650,38 @@ ul.CTAs a {
 }
 
 /* Profile.jsx*/
+.profile-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 40px;
+}
+
+.profile-avatar{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-container img{
+  border: #0056b3 solid 2px;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-details h4 {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.profile-details p {
+  font-size: x-large;
+}
+
 .profile-btn {
   display: flex;
   justify-content: center;
@@ -1707,7 +1753,6 @@ ul.CTAs a {
   width: 100px;
   height: 120px;
 }
-
 
 .mark {
   border: #080808 2px solid;
@@ -2013,9 +2058,7 @@ ul.CTAs a {
   padding: 2rem;
 }
 
-
-
-.shipping-form-container{
+.shipping-form-container {
   box-shadow: #080808 0px 4px 8px;
   padding: 2rem;
   background-color: white;
@@ -2028,7 +2071,6 @@ ul.CTAs a {
   font-size: 3.3rem;
   padding-bottom: 1rem;
 }
-
 
 .shipping-form-group {
   margin-bottom: 1rem;
@@ -2210,7 +2252,7 @@ ul.CTAs a {
   gap: 20px;
   border-radius: 5px;
   box-shadow: #080808 0px 4px 8px;
-  width: 1000px;
+  width: 1200px;
 }
 .new-product-btn {
   background-color: rgb(35, 100, 219);
@@ -2248,7 +2290,20 @@ ul.CTAs a {
   display: flex;
   gap: 20px;
   flex-direction: column;
+}
 
+.user-order-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.user-order-container h1 {
+  font-size: xx-large;
 }
 
 .manage-product-container h1 {
@@ -2281,7 +2336,6 @@ ul.CTAs a {
   background-color: yellowgreen;
 }
 
-
 /* alluser */
 .manage-alluser-container {
   margin-left: 20px;
@@ -2290,7 +2344,6 @@ ul.CTAs a {
   display: flex;
   gap: 20px;
   flex-direction: column;
-
 }
 .manage-alluser-container h1 {
   font-size: xx-large;
@@ -2325,10 +2378,7 @@ ul.CTAs a {
   border-radius: 0.5rem;
   width: 100%;
   max-width: 500px;
-  
 }
-
-
 
 .userupdate-heading {
   font-size: 3rem;
@@ -2341,8 +2391,6 @@ ul.CTAs a {
   margin-bottom: 1rem;
 }
 
-
-
 .userupdate-button {
   border: 2px solid;
   width: 21.3rem;
@@ -2353,9 +2401,6 @@ ul.CTAs a {
   border-radius: 0.25rem;
   transition: background-color 0.3s;
 }
-
-
-
 
 /* DeleteNotify.jsx */
 .delete-notify-container {
@@ -2573,5 +2618,3 @@ ul.CTAs a {
   width: 2px;
   background-color: green;
 }
-
-

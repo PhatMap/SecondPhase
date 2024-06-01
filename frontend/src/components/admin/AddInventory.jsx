@@ -89,109 +89,114 @@ const AddInventory = ({ setInventory, inventory }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-      <div>
-        <select
-          className={`form-control ${emptySize ? "invalid" : ""}`}
-          value={size}
-          onChange={(e) => ChooseSize(e.target.value)}
+    <div style={{ display: "flex", gap: "10px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <div>
+          <select
+            className={`form-control ${emptySize ? "invalid" : ""}`}
+            value={size}
+            onChange={(e) => ChooseSize(e.target.value)}
+          >
+            <option value="">Chọn size</option>
+            {sizeType.map((size, index) => (
+              <option value={size} key={index}>
+                {size}
+              </option>
+            ))}
+          </select>
+          {emptySize ? (
+            <p
+              style={{
+                fontWeight: "normal",
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              Chưa có kích thước
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
+        <div>
+          <input
+            placeholder="Giá"
+            type="text"
+            className={`form-control ${emptyPrice ? "invalid" : ""}`}
+            value={price < 0 ? 0 : price}
+            onChange={(e) => handlePriceChange(e)}
+          ></input>
+          {emptyPrice ? (
+            <p
+              style={{
+                fontWeight: "normal",
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              Mẫu chưa có giá
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
+        <div>
+          <input
+            placeholder="Số lượng"
+            type="text"
+            className={`form-control ${emptyStock ? "invalid" : ""}`}
+            value={stock < 0 ? 0 : stock}
+            onChange={(e) => handleStockChange(e)}
+          ></input>
+          {emptyStock ? (
+            <p
+              style={{
+                fontWeight: "normal",
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              Chưa có số lượng
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
+        <button
+          type="button"
+          className="varient-btn"
+          onClick={() => {
+            AddInventory();
+          }}
         >
-          <option value="">Chọn size</option>
-          {sizeType.map((size, index) => (
-            <option value={size} key={index}>
-              {size}
-            </option>
-          ))}
-        </select>
-        {emptySize ? (
-          <p
-            style={{
-              fontWeight: "normal",
-              color: "red",
-              fontSize: "13px",
-            }}
-          >
-            Chưa có kích thước
-          </p>
-        ) : (
-          ""
-        )}
+          <i className="fa fa-plus"></i>Thêm
+        </button>
       </div>
+
       <div>
-        <input
-          placeholder="Giá"
-          type="text"
-          className={`form-control ${emptyPrice ? "invalid" : ""}`}
-          value={price < 0 ? 0 : price}
-          onChange={(e) => handlePriceChange(e)}
-        ></input>
-        {emptyPrice ? (
-          <p
-            style={{
-              fontWeight: "normal",
-              color: "red",
-              fontSize: "13px",
-            }}
-          >
-            Mẫu chưa có giá
-          </p>
-        ) : (
-          ""
-        )}
-      </div>
-      <div>
-        <input
-          placeholder="Số lượng"
-          type="text"
-          className={`form-control ${emptyStock ? "invalid" : ""}`}
-          value={stock < 0 ? 0 : stock}
-          onChange={(e) => handleStockChange(e)}
-        ></input>
-        {emptyStock ? (
-          <p
-            style={{
-              fontWeight: "normal",
-              color: "red",
-              fontSize: "13px",
-            }}
-          >
-            Chưa có số lượng
-          </p>
-        ) : (
-          ""
-        )}
-      </div>
-      <button
-        type="button"
-        className="varient-btn"
-        onClick={() => {
-          AddInventory();
-        }}
-      >
-        <i className="fa fa-plus"></i>Thêm
-      </button>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          height: "50px",
-          gap: "5px",
-        }}
-      >
-        {inventory.length > 0
-          ? inventory.map((item, index) => (
-              <div key={index} style={{display:"flex", gap:"5px"}}>
-                <p>{item.size}</p>
-                <p>Giá: {item.price}</p>
-                <p>SL: {item.stock}</p>
-                <i
-                  className="fa fa-remove variant-remove-btn"
-                  onClick={() => handlerInventoryRemove(index)}
-                ></i>
-              </div>
-            ))
-          : ""}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            height: "50px",
+            gap: "5px",
+          }}
+        >
+          {inventory.length > 0
+            ? inventory.map((item, index) => (
+                <div key={index} style={{ display: "flex", gap: "5px" }}>
+                  <p>{item.size}</p>
+                  <p>- Giá: {item.price}</p>
+                  <p>- SL: {item.stock}</p>
+                  <i
+                    className="fa fa-remove variant-remove-btn"
+                    onClick={() => handlerInventoryRemove(index)}
+                  ></i>
+                </div>
+              ))
+            : ""}
+        </div>
       </div>
     </div>
   );

@@ -209,11 +209,11 @@ const variant = ({
           )}
         </div>
         <p>Total Variant Stock: {totalStock}</p>
-
+          
         <i
           className="fa fa-remove variant-remove-btn"
           onClick={() => removeVariant(index)}
-        ></i>
+        >Bỏ</i>
       </div>
     </div>
   );

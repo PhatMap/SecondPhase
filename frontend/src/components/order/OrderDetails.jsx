@@ -4,10 +4,11 @@ import { Link, useParams } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderDetails, clearErrors } from "../../actions/orderActions";
+import OrderProgressBar from "./OrderProgressBar";
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -43,32 +44,6 @@ const OrderDetails = () => {
   const isPaid =
     paymentInfo && paymentInfo.status === "succeeded" ? true : false;
 
-  const OrderProgressBar = ({ currentStatus }) => {
-    const steps = ['Placed', 'Order Confirmed', 'Shipped', 'Out For Delivery', 'Delivered'];
-    const currentStepIndex = steps.indexOf(currentStatus);
-    
-    return (
-      <div className="order-progress-container">
-        <div className="progress-track"></div> {/* Thêm phần tử này để tạo thanh ngang */}
-          {steps.map((step, index) => (
-            <div key={step} className={`progress-step ${index <= currentStepIndex ? 'active' : ''}`}>
-              {index <= currentStepIndex ? (
-                <span className="checkmark">&#10003;</span>
-              ) : (
-                <span className="step-number">{index + 1}</span>
-              )}
-              <div className="step-label">{step}</div>
-            </div>
-          ))}
-        </div>
-      );
-    };
-    
-    
-    
-    
-    
-    
   return (
     <Fragment>
       <MetaData title={"Order Details"} />
@@ -77,57 +52,78 @@ const OrderDetails = () => {
         <Loader />
       ) : (
         <Fragment>
-          <div className="row d-flex justify-content-between">
-            <div className="col-12 col-lg-8 mt-5 order-details">
-              <h1 className="my-5">Order # {order._id}</h1>
-
+          <div className="order-details-container">
+            <div className="order-details-form">
+              <h1>Order id: {order._id}</h1>
 
               <OrderProgressBar currentStatus={orderStatus} />
-
-            
-
-              <h4 className="mb-4">Shipping Info</h4>
+              <strong>
+                <h1>Thông tin đơn hàng</h1>
+              </strong>
               <p>
-                <b>Name:</b> {user && user.name}
+                <b>Tên người mua:</b> {user && user.name}
               </p>
               <p>
-                <b>Phone:</b> {shippingInfo && shippingInfo.phone}
+                <b>Số điện thoại:</b> {shippingInfo && shippingInfo.phone}
               </p>
-              <p className="mb-4">
-                <b>Address:</b>
+              <p>
+                <b>Địa chỉ:</b>
                 {shippingDetails}
               </p>
               <p>
-                <b>Amount:</b> ${totalPrice}
+                <b>Số tiền:</b> {totalPrice} VNĐ
               </p>
 
               <hr />
 
-              <h4 className="my-4">Payment</h4>
-              <p className={isPaid ? "greenColor" : "redColor"}>
-                <b>{isPaid ? "PAID" : "NOT PAID"}</b>
-              </p>
-
-              <h4 className="my-4">Order Status:</h4>
-              <p
-                className={
-                  order.orderStatus &&
-                  String(order.orderStatus).includes("Delivered")
-                    ? "greenColor"
-                    : "redColor"
-                }
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "20px" }}
               >
-                <b>{orderStatus}</b>
-              </p>
-
-              <h4 className="my-4">Order Items:</h4>
+                <h4>Thanh toán:</h4>
+                <p className={isPaid ? "greenColor" : "redColor"}>
+                  <b>{isPaid ? "ĐÃ THANH TOÁN" : "CHƯA THANH TOÁN"}</b>
+                </p>
+              </div>
+              <hr />
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "20px" }}
+              >
+                <h4 className="my-4">Trạng thái đơn hàng:</h4>
+                <p
+                  className={
+                    order.orderStatus &&
+                    String(order.orderStatus).includes("Delivered")
+                      ? "greenColor"
+                      : "redColor"
+                  }
+                >
+                  <b>{orderStatus}</b>
+                </p>
+              </div>
 
               <hr />
-              <div className="cart-item my-1">
+              <h4 className="my-4">Sản phẩm đã đặt:</h4>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                }}
+              >
                 {orderItems &&
-                  orderItems.map((item) => (
-                    <div key={item.product} className="row my-5">
-                      <div className="col-4 col-lg-2">
+                  orderItems.map((item, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        border: "black solid 1px",
+                        padding: "5px",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div>
                         <img
                           src={item.image}
                           alt={item.name}
@@ -136,18 +132,18 @@ const OrderDetails = () => {
                         />
                       </div>
 
-                      <div className="col-5 col-lg-5">
+                      <div>
                         <Link to={`/products/${item.product}`}>
-                          {item.name}
+                          <strong>{item.name}</strong> - {item.size}
                         </Link>
                       </div>
 
-                      <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                        <p>${item.price}</p>
+                      <div className="">
+                        <p>{item.price} VNĐ</p>
                       </div>
 
-                      <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-                        <p>{item.quantity} Piece(s)</p>
+                      <div className="">
+                        <p>{item.quantity} Món</p>
                       </div>
                     </div>
                   ))}

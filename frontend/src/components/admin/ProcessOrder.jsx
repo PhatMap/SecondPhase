@@ -34,7 +34,7 @@ const ProcessOrder = () => {
 
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
-    
+
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -153,11 +153,25 @@ const ProcessOrder = () => {
                   <h4 className="my-4">Order Items:</h4>
 
                   <hr />
-                  <div className="cart-item my-1">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "10px",
+                    }}
+                  >
                     {orderItems &&
-                      orderItems.map((item) => (
-                        <div key={item.product} className="row my-5">
-                          <div className="col-4 col-lg-2">
+                      orderItems.map((item, index) => (
+                        <div
+                          key={index}
+                          style={{
+                            display: "flex",
+                            border: "black solid 1px",
+                            padding: "5px",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div style={{ width: "100%", height: "100%" }}>
                             <img
                               src={item.image}
                               alt={item.name}
@@ -168,16 +182,18 @@ const ProcessOrder = () => {
 
                           <div className="col-5 col-lg-5">
                             <Link to={`/products/${item.product}`}>
-                              {item.name}
+                              <strong>{item.name}</strong> - {item.variantName}
                             </Link>
                           </div>
 
+                          <div>{item.size}</div>
+
                           <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                            <p>${item.price}</p>
+                            <p>{item.price} VNĐ</p>
                           </div>
 
                           <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-                            <p>{item.quantity} Piece(s)</p>
+                            <p>{item.quantity} món</p>
                           </div>
                         </div>
                       ))}

@@ -28,27 +28,27 @@ const ListOrders = () => {
     const data = {
       columns: [
         {
-          label: "Order ID",
+          label: "ID",
           field: "id",
           sort: "asc",
         },
         {
-          label: "Num of Items",
+          label: "Số lượng sản phẩm",
           field: "numOfItems",
           sort: "asc",
         },
         {
-          label: "Amount",
+          label: "Tổng tiền",
           field: "amount",
           sort: "asc",
         },
         {
-          label: "Status",
+          label: "Trạng thái",
           field: "status",
           sort: "asc",
         },
         {
-          label: "Actions",
+          label: "Tác vụ",
           field: "actions",
           sort: "asc",
         },
@@ -82,21 +82,21 @@ const ListOrders = () => {
   return (
     <Fragment>
       <MetaData title={"My Orders"} />
-
-      <h1 className="my-5">My Orders</h1>
-
-      {loading ? (
-        <Loader />
-      ) : (
-        <MDBDataTable
-          data={setOrders()}
-          className="px-3"
-          bordered
-          striped
-          hover
-          noBottomColumns
-        />
-      )}
+      <div className="user-order-container">
+        <h1>My Orders</h1>
+        {loading ? (
+          <Loader />
+        ) : (
+          <MDBDataTable
+            data={setOrders()}
+            className="px-3"
+            bordered
+            striped
+            hover
+            noBottomColumns
+          />
+        )}
+      </div>
     </Fragment>
   );
 };
