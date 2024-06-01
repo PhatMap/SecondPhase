@@ -27,6 +27,7 @@ const Category = () => {
   const dispatch = useDispatch();
 
   const { loading, products, error, productsCount, resPerPage, filteredProductsCount } = useSelector((state) => state.category);
+  let count = productsCount;
 
   const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
   const categoriesVietnamese = {
@@ -43,15 +44,7 @@ const Category = () => {
     setCurrentPage(pageNumber);
   }
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getProductsByCategory(keyword, currentPage, price, category, rating)
-  //   );
-  //   if (error) {
-  //     toast.error(error);
-  //   }
-  // }, [dispatch, keyword, currentPage, price, category, rating, error]);
-  
+
   const clearFilters = () => {
     setTempPrice(["", ""]); // Xóa giá trị tạm thời của giá sản phẩm
     setPrice([1, 10000]); // Đặt lại giá sản phẩm mặc định
@@ -212,22 +205,22 @@ const Category = () => {
                 ))}
               </div>
             </div>
-            {resPerPage <= productsCount && (
-              <div className="shop-pagination">
-                <Pagination
-                  activePage={currentPage}
-                  itemsCountPerPage={resPerPage}
-                  totalItemsCount={productsCount}
-                  onChange={setCurrentPageNo}
-                  nextPageText={"Tiếp"}
-                  prevPageText={"Trước"}
-                  firstPageText={"Đầu"}
-                  lastPageText={"Cuối"}
-                  itemClass="page-item"
-                  linkClass="page-link"
-                />
-              </div>
-            )}
+            {productsCount > resPerPage && (
+                  <div className="d-flex justify-content-center mt-5">
+                    <Pagination
+                      activePage={currentPage}
+                      itemsCountPerPage={resPerPage}
+                      totalItemsCount={productsCount}
+                      onChange={setCurrentPageNo}
+                      nextPageText={"Next"}
+                      prevPageText={"Prev"}
+                      firstPageText={"First"}
+                      lastPageText={"Last"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
           </div>
         </Fragment>
       )}

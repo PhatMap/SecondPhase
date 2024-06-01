@@ -1,770 +1,1696 @@
 [{
-
-  "name": "Quần Tây Sợi Tự Nhiên Co Giãn HG11",
-  "colors": {
-    "colorName": "black",
-    "colorHex": "#111111"
-  },
-  "price": 15,
-  "description": "Chất liệu: Vải Quần Tây\n\nThành phần: 70% poly 28% rayon 2% spandex\n\n- Mềm mại, bề mặt vải trơn mịn, cảm giác mát nhẹ khi mặc.\n\n- Thiết kế quần ống đứng mang đến sự lịch lãm, tự tin và nam tính cho người mặc.\n\n- Phù hợp với nhiều môi trường khác nhau như đi làm, đi tiệc, đi học, đi chơi.",
-  "ratings": 0,
-
-  "images": [
-    {
-      "public_id": "products/z0fajema0ioepbutlbnj",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711872905/products/z0fajema0ioepbutlbnj.jpg"
-    },
-    {
-      "public_id": "products/b2kevalnmpaiclwt6vfw",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711872908/products/b2kevalnmpaiclwt6vfw.jpg"
-      
-    }
-    
-  ],
-  "sizes": [
-    "M",
-    "L",
-    "XL",
-    "XXL"
-  ],
-  "category": "Trousers",
-  "seller": "La Quy Quan",
-  "stock": 50,
-  "numOfReviews": 0,
-  "user": "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt": "2024-03-31T08:15:08.907Z",
-  "__v": 0
-},
-{
-  "name": "Quần Tây Sợi Tự Nhiên Co Giãn  M3",
-  "colors": {
-    "colorName": "gray",
-    "colorHex": "#A9A9A9"
-  },
+ 
+  "name": "Giày sandal nữ MWC NUSD 2423",
   "price": 30,
-  "description": "Quần Tây Tối Giản M3\n\nChất liệu: Poly Plus\n\nThành phần: 69% Polyester 29% Rayon 2% Spandex",
+  "description": "Chiều cao : 4cm\n\nChất liệu : Da tổng hợp\n\nĐế : PVC xẻ rãnh chống trơn trượt\n\nKiểu dáng : Sandal đế bằng\n\nMàu sắc : ĐEN - KEM\n\nXuất sứ thương hiệu : Việt Nam",
   "ratings": 0,
-  
   "images": [
     {
-      "public_id": "products/vjhr4g8yjqajvqnfv1wj",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711873016/products/vjhr4g8yjqajvqnfv1wj.jpg"
+      "public_id": "products/ulqd5yquyeep0sobuz8f",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269130/products/ulqd5yquyeep0sobuz8f.jpg"
     },
     {
-      "public_id": "products/yrldavvbleswf2fozlex",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711873017/products/yrldavvbleswf2fozlex.jpg"
+      "public_id": "products/n83hgtyfl2dobavsoxpg",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269130/products/n83hgtyfl2dobavsoxpg.jpg"
+    
+    },
+    {
+      "public_id": "products/xdklsw3i0v5xqbxrhgps",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269130/products/xdklsw3i0v5xqbxrhgps.jpg"
+    
     }
   ],
-  "sizes": [
-    "M",
-    "L",
-    "XL",
-    "XXL"
+  "variants": [
+    {
+      "name": "Kem",
+      "images": [
+        {
+          "public_id": "products/nxzxykrjbsvpqcjwddpi",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269125/products/nxzxykrjbsvpqcjwddpi.jpg"
+    
+        },
+        {
+          "public_id": "products/n5h2jn071hmd3aku8we5",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269127/products/n5h2jn071hmd3aku8we5.jpg"
+       
+        }
+      ],
+      "inventory": [
+        {
+          "size": "XS",
+          "price": 25,
+          "stock": 5
+
+        },
+        {
+          "size": "S",
+          "price": 23,
+          "stock": 8
+          
+        },
+        {
+          "size": "XL",
+          "price": 27,
+          "stock": 10
+        }
+      ],
+      "totalStock": 23
+      
+    },
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/okx4zmberboy4hx5pzhs",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269125/products/okx4zmberboy4hx5pzhs.jpg"
+         
+        },
+        {
+          "public_id": "products/sbbkuaculfyrjvhdvjgt",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269125/products/sbbkuaculfyrjvhdvjgt.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "M",
+          "price": 30,
+          "stock": 10
+        
+        },
+        {
+          "size": "XL",
+          "price": 34,
+          "stock": 9
+         
+        }
+      ],
+      "totalStock": 19
+   
+    }
   ],
-  "category": "Trousers",
-  "seller": "La Quy Quan",
-  "stock": 100,
+  "totalStock": 42,
+  "category": "Shoe",
   "numOfReviews": 0,
-  "user": "66018bce395aedce15ba9de0",
+  "user": "6654b2f605a0d7b79eeb7753",
   "reviews": [],
-  "createAt": "2024-03-31T08:16:58.017Z",
+  "createAt": "2024-06-01T19:12:11.270Z",
+
+
   "__v": 0
 },
 {
-  
-  "name": "Quần Jean Lưng Gài Ống Đứng B35",
-  "colors": {
-    "colorName": "blue",
-    "colorHex": "#0000CC"
-  },
-  "price": 20,
-  "description": "Quần Jean Slimfit Đơn Giản B35\n\nChất liệu: Vải Jean\n\nThành phần: 100% Cotton\n\n+ Họa tiết thêu",
+  "name": "Giày cao gót MWC G063",
+  "price": 35,
+  "description": "Chiều cao: khoảng 7-8cm\nChất liệu: da tổng hợp\nĐế: êm mềm, độ đàn hồi tốt, chống trơn trượt\nKiểu dáng: Sandal cao gót\nMàu sắc: Đen - Trắng",
   "ratings": 0,
-
-
   "images": [
     {
-      "public_id": "products/luqyaikz39ukfbvdvxfu",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711873221/products/luqyaikz39ukfbvdvxfu.jpg"
-      
+      "public_id": "products/kyxnyuwgn55gfk0govyz",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269435/products/kyxnyuwgn55gfk0govyz.jpg"
+    
     },
     {
-      "public_id": "products/oypjoqkuhxvskpymuuwk",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711873223/products/oypjoqkuhxvskpymuuwk.jpg"
-      
-    }
-  ],
-  "sizes": [
-    "XXL",
-    "XL",
-    "L"
-  ],
-  "category": "Trousers",
-  "seller": "La Quy Quan",
-  "stock": 40,
-  "numOfReviews": 1,
-  "user":  "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt":  "2024-03-31T08:20:23.992Z",
-  "__v": 1
-},
-{
-  "name": " Áo Thun Nam 100% Cotton",
-  "colors": {
-    "colorName": "black",
-    "colorHex": "#111111"
-  },
-  "price": 42,
-  "description": "Form dáng :   Regular\n\nGiới tính :       Nam\n\nChất liệu:        Cotton\n\nThiết kế:          Trơn\n\nKiểu tay:          Tay ngắn\n\nKiểu cổ:            Cổ tròn",
-  "ratings": 0,
- 
-  "images": [
-    {
-      "public_id": "products/jcvbbqlevgo947wg5wpx",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711874630/products/jcvbbqlevgo947wg5wpx.webp"
-      
+      "public_id": "products/brtuvwbpatpu3ow9o6de",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269436/products/brtuvwbpatpu3ow9o6de.jpg"
+    
     },
     {
-      "public_id": "products/bwwtmgikwcfa0eanayzs",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711874634/products/bwwtmgikwcfa0eanayzs.webp"
+      "public_id": "products/jsdtbfcrqbtu1gwhdrnf",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269436/products/jsdtbfcrqbtu1gwhdrnf.jpg"
+    
+    },
+    {
+      "public_id": "products/yne8bdjetzcssoxohngu",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269435/products/yne8bdjetzcssoxohngu.jpg"
     }
   ],
-  "sizes": [
-    "M",
-    "L"
+  "variants": [
+    {
+      "name": "Trắng",
+      "images": [
+        {
+          "public_id": "products/fgzunragobphhseiyuw3",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269433/products/fgzunragobphhseiyuw3.jpg"
+        },
+        {
+          "public_id": "products/qic3lw6punbevkpecjgr",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269433/products/qic3lw6punbevkpecjgr.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 28,
+          "stock": 10
+        },
+        {
+          "size": "L",
+          "price": 29,
+          "stock": 7
+        },
+        {
+          "size": "XL",
+          "price": 33,
+          "stock": 21
+        }
+      ],
+      "totalStock": 38
+    },
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/jipuwwmq5u9hindfbqwe",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269433/products/jipuwwmq5u9hindfbqwe.jpg"
+        },
+        {
+          "public_id": "products/px2dradrmmbeipaqucua",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269433/products/px2dradrmmbeipaqucua.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "XL",
+          "price": 45,
+          "stock": 22
+        },
+        {
+          "size": "XXL",
+          "price": 46,
+          "stock": 30
+        },
+        {
+          "size": "M",
+          "price": 33,
+          "stock": 10
+        }
+      ],
+      "totalStock": 62
+    }
   ],
-  "category": "Shirt",
-  "seller": "La Quy Quan",
-  "stock": 88,
-  "numOfReviews": 5,
-  "user": "66018bce395aedce15ba9de0",
+  "totalStock": 100,
+  "category": "Shoe",
+  "numOfReviews": 0,
+  "user":  "6654b2f605a0d7b79eeb7753",
+
   "reviews": [],
-  "createAt":  "2024-03-31T08:43:54.560Z",
+  "createAt": "2024-06-01T19:17:16.897Z",
   "__v": 0
 },
 {
-  "name": "Áo Polo Nữ Lửng Tay Ngắn Cotton Trơn",
-  "colors": {
-    "colorName": "pink",
-    "colorHex": "#FFC0CB"
-  },
-  "price": 12,
-  "description": "Áo Polo Nữ Lửng Tay Ngắn Cotton Trơn Form Regular Cropped - 10F23POLW004 là một thiết kế mang phong cách tươi trẻ dành cho các cô nàng năng động:\n\nChất vải cotton thoáng mát, thấm hút mồ hôi và có khả năng chống mùi \n\nForm áo vừa vặn có độ rộng nhẹ giữ sự thoải mái khi mặc\n\nDáng áo lửng mang sự trẻ trung và năng động cho các nàng",
-  "ratings": 0,
- 
 
+  "name": "Dép cao gót MWC G053",
+  "price": 40,
+  "description": "Chiều cao: 4cm\nChất liệu: da tổng hợp\nĐế: êm mềm, độ đàn hồi tốt, chống trơn trượt\nKiểu dáng: Dép cao gót\nMàu sắc: Kem Nâu",
+  "ratings": 0,
   "images": [
     {
-      "public_id": "products/plfymvcula6ujq14ouph",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711874764/products/plfymvcula6ujq14ouph.webp"
+      "public_id": "products/qvzkksyjcj8bhn6kjdka",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269567/products/qvzkksyjcj8bhn6kjdka.jpg"
+    },
+    {
+      "public_id": "products/dggwnjgbs07nkfr0cbfr",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269567/products/dggwnjgbs07nkfr0cbfr.jpg"
+    },
+    {
+      "public_id": "products/x3zuw8og6dd2a34zegju",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269568/products/x3zuw8og6dd2a34zegju.jpg"
+    },
+    {
+      "public_id": "products/xiz9z37990xmhrrdxcka",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269567/products/xiz9z37990xmhrrdxcka.jpg"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Kem",
+      "images": [
+        {
+          "public_id": "products/q7943fyzgsnhycbisx7x",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269565/products/q7943fyzgsnhycbisx7x.jpg"
+        },
+        {
+          "public_id": "products/hcc6f6wfbylklaqg9vb9",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269565/products/hcc6f6wfbylklaqg9vb9.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "XS",
+          "price": 45,
+          "stock": 35
+        },
+        {
+          "size": "S",
+          "price": 36,
+          "stock": 21
+        }
+      ],
+      "totalStock": 56
+    }
+  ],
+  "totalStock": 56,
+  "category": "Shoe",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T19:19:28.806Z",
+  "__v": 0
+},
+{
+ 
+  "name": "Dép cao gót MWC 4428",
+  "price": 32,
+  "description": "Chiều cao: 5cm\nĐế: PVC êm mềm, độ đàn hồi tốt, chống trơn trượt\nChất liệu: vải Jean\nKiểu dáng: Dép cao gót\n",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/zfyadayx4wvfvq5gwrue",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269876/products/zfyadayx4wvfvq5gwrue.jpg"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/foiprdayswjygi8uc2pl",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269874/products/uoy8hynsr65xaee80izz.jpg"
+        },
+        {
+          "public_id": "products/uoy8hynsr65xaee80izz",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269874/products/uoy8hynsr65xaee80izz.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 32,
+          "stock": 21
+        },
+        {
+          "size": "M",
+          "price": 22,
+          "stock": 32
+        },
+        {
+          "size": "XL",
+          "price": 35,
+          "stock": 12
+        }
+      ],
+      "totalStock": 65
+    },
+    {
+      "name": "xanh",
+      "images": [
+        {
+          "public_id": "products/kxrwfjpcwgx1wlfejfph",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269874/products/kxrwfjpcwgx1wlfejfph.jpg"
+        },
+        {
+          "public_id": "products/lkynahvfyyp8pxoxsmsc",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269874/products/lkynahvfyyp8pxoxsmsc.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "XXL",
+          "price": 32,
+          "stock": 21
+        },
+        {
+          "size": "L",
+          "price": 22,
+          "stock": 34
+        }
+      ],
+      "totalStock": 55
+    },
+    {
+      "name": "Trắng",
+      "images": [
+        {
+          "public_id": "products/ravfpapl02m9trjwdzzl",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269874/products/ravfpapl02m9trjwdzzl.jpg"
+        },
+        {
+          "public_id": "products/iprtv1ycosvm14t6xbjz",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717269874/products/iprtv1ycosvm14t6xbjz.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "M",
+          "price": 42,
+          "stock": 24
+        },
+        {
+          "size": "XL",
+          "price": 44,
+          "stock": 12
+        }
+      ],
+      "totalStock": 36
+    }
+  ],
+  "totalStock": 156,
+  "category": "Shoe",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T19:24:36.911Z",
+  "__v": 0
+},
+{
+
+  "name": "Giày cao gót MWC 4468 - Cao Gót Bít Mũi",
+  "price": 25,
+  "description": "Thiết kế dáng Slingback bít mũi, mặt giày được sử dụng chất liệu da tổng hợp cao cấp phối quai hậu 2 trong 1 đính đá sang chảnh thời thời trang.\n\nGiày cao gót với gót vuông vững chắc dễ đi, dễ phối hợp với nhiều trang phục khác nhau tạo nên vẻ đẹp thon gọn, sang chảnh cho đôi chân.",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/iha5dskoxg4ozsnktfp6",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270164/products/iha5dskoxg4ozsnktfp6.jpg"
+    },
+    {
+      "public_id": "products/fdgiawmsnft1wpvhdwke",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270164/products/fdgiawmsnft1wpvhdwke.jpg"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/ema6rw5ntgttu44p4hyw",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270162/products/ema6rw5ntgttu44p4hyw.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "M",
+          "price": 22,
+          "stock": 24
+         
+        },
+        {
+          "size": "XL",
+          "price": 34,
+          "stock": 25
+         
+        }
+      ],
+      "totalStock": 49
+    },
+    {
+      "name": "Trắng",
+      "images": [
+        {
+          "public_id": "products/nhqafgixolrczz5wcp0t",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270161/products/nhqafgixolrczz5wcp0t.jpg"
+        },
+        {
+          "public_id": "products/a4ijer1qja8ieqtmmsaf",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270162/products/a4ijer1qja8ieqtmmsaf.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "L",
+          "price": 32,
+          "stock": 53
+        },
+        {
+          "size": "XXL",
+          "price": 34,
+          "stock": 43
+        }
+      ],
+      "totalStock": 96
+    }
+  ],
+  "totalStock": 145,
+  "category": "Shoe",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T19:29:24.850Z",
+  "__v": 0
+},
+{
+
+  "name": "Giày Thể Thao Nam MWC NATT- 5703",
+  "price": 67,
+  "description": "Giày được thiết kế dáng buộc dây năng động,mặt giày sử dụng da lộn phối vải dệt thời trang, phối màu trẻ trung phong cách.\n\nĐặc biệt sản phẩm sử dụng chất liệu cao cấp có độ bền tối ưu giúp bạn thoải mái trong mọi hoàn cảnh.",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/tvxsupcynbfgh4q8hqos",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270384/products/tvxsupcynbfgh4q8hqos.jpg"
    
     },
     {
-      "public_id": "products/eprhjwl2rixfaqdauyjm",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711874768/products/eprhjwl2rixfaqdauyjm.webp"
-    }
-  ],
-  "sizes": [
-    "M",
-    "L",
-    "S",
-    "XL"
-  ],
-  "category": "Shirt",
-  "seller": "La Quy Quan",
-  "stock": 54,
-  "numOfReviews": 0,
-  "user": "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt": "2024-03-31T08:46:08.779Z",
-  "__v": 0
-},
-{
- 
-  "name": "Áo Thun Nữ Tay Ngắn Cổ Tròn Sọc Gân Trơn",
-  "colors": {
-    "colorName": "blue",
-    "colorHex": "#0000CC"
-  },
-  "price": 20,
-  "description": "Áo Thun Nữ Tay Ngắn Cổ Tròn Sọc Gân Trơn Form Fitted - 10S23TSSW001 là chiếc áo thun được thiết kế theo phong cách đơn giản, hiện đại",
-  "ratings": 0,
- 
-  "images": [
-    {
-      "public_id": "products/nvtlrzdxw0qfosga7l1f",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875257/products/nvtlrzdxw0qfosga7l1f.webp"
+      "public_id": "products/jeryiux4thqesm1fglxi",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270384/products/jeryiux4thqesm1fglxi.jpg"
     },
     {
-      "public_id": "products/zt5rb2mvnyi5bo8limbm",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875259/products/zt5rb2mvnyi5bo8limbm.webp"
+      "public_id": "products/f4yespz4wgubll1t9ldx",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270384/products/f4yespz4wgubll1t9ldx.jpg"
     }
   ],
-  "sizes": [
-    "S",
-    "L"
-  ],
-  "category": "Shirt",
-  "seller": "Tran Trung Phat",
-  "stock": 113,
-  "numOfReviews": 0,
-  "user":  "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt": "2024-03-31T08:54:19.976Z",
-  "__v": 0
-},
-{
-  
-  "name": "Quần Kaki Nam Ống Rộng",
-  "colors": {
-    "colorName": "black",
-    "colorHex": "#111111"
-  },
-  "price": 18,
-  "description": "Quần Kaki\n\nForm dáng      Straight\n\nGiới tính           Nam\n\nChất liệu :         Cotton\n\nThiết kế :           Trơn",
-  "ratings": 0,
- 
-  "images": [
+  "variants": [
     {
-      "public_id": "products/low89v9ht1plsn93olrj",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875698/products/low89v9ht1plsn93olrj.webp"
+      "name": "Đen Kem",
+      "images": [
+        {
+          "public_id": "products/nnxvadccxywnbmvudoga",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270382/products/nnxvadccxywnbmvudoga.jpg"
+        },
+        {
+          "public_id": "products/pci1oziisidfehsk2j4d",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270382/products/pci1oziisidfehsk2j4d.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 43,
+          "stock": 56
+        },
+        {
+          "size": "L",
+          "price": 56,
+          "stock": 64
+        }
+      ],
+      "totalStock": 120
     },
     {
-      "public_id": "products/hhba5u8wvwbtvpfrq1uk",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875701/products/hhba5u8wvwbtvpfrq1uk.webp"
+      "name": "Trắng kem",
+      "images": [
+        {
+          "public_id": "products/qfjwitqbwqjksyc2gq1v",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270382/products/qfjwitqbwqjksyc2gq1v.jpg"
+        },
+        {
+          "public_id": "products/c9vy78fkxtnolizntsq4",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270382/products/c9vy78fkxtnolizntsq4.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "XL",
+          "price": 75,
+          "stock": 24
+        },
+        {
+          "size": "L",
+          "price": 73,
+          "stock": 42
+        }
+      ],
+      "totalStock": 66
     }
   ],
-  "sizes": [
-    "XXL",
-    "XL"
-  ],
-  "category": "Trousers",
-  "seller": "Tran",
-  "stock": 60,
-  "numOfReviews": 0,
-  "user": "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt":  "2024-03-31T09:01:42.055Z",
-  "__v": 0
-},
-{
-  
-  "name": "Áo Sơ Mi Cổ Bẻ Tay Ngắn PREMIUM 56",
-  "colors": {
-    "colorName": "orange",
-    "colorHex": "#FF7F50"
-  },
-  "price": 14,
-  "description": "Chất liệu: Cotton Poly\n\nThành phần: 45% Cotton 55% Polyester\n\n+ May trơn đơn giản, họa tiết vải sọc nhỏ\n\n+ Nẹp áo may dạng nẹp liền\n\n+ Túi nhỏ trước ngực",
-  "ratings": 0,
- 
-  "images": [
-    {
-      "public_id": "products/ubsyqzkn9lp4zxs9qzct",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875821/products/ubsyqzkn9lp4zxs9qzct.jpg"
-      
-    },
-    {
-      "public_id": "products/moyin5ew5klfrqjroudg",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875822/products/moyin5ew5klfrqjroudg.webp"
-    }
-  ],
-  "sizes": [
-    "L",
-    "XL",
-    "XXL"
-  ],
-  "category": "Shirt",
-  "seller": "tran trung phat",
-  "stock": 30,
-  "numOfReviews": 0,
-  "user":"66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt":  "2024-03-31T09:03:43.145Z",
-  "__v": 0
-},
-{
-  
-  "name": "Áo Sơ Mi Cổ Lãnh tụ Tay Dài",
-  "colors": {
-    "colorName": "white",
-    "colorHex": "#FFFFFF"
-  },
-  "price": 12,
-  "description": "Sơ Mi Cổ Lãnh Tụ Đơn Giản Y Nguyên Bản Ver15\n\nChất liệu: Sợi Cà Phê\n\nThành phần: 50% Coffee 50% Polyester\n\n+ Odor Control - Kiểm soát mùi\n\n+ Fast Drying - Nhanh khô",
-  "ratings": 0,
- 
-  "images": [
-    {
-      "public_id": "products/mgcc92myllsbt13amdnw",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876006/products/mgcc92myllsbt13amdnw.jpg"
-    },
-    {
-      "public_id": "products/k6gmgbyxiwn1rfigdpqh",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876008/products/k6gmgbyxiwn1rfigdpqh.jpg"
-    }
-  ],
-  "sizes": [
-    "M",
-    "L"
-  ],
-  "category": "Shirt",
-  "seller": "Tran Trung Phat",
-  "stock": 33,
-  "numOfReviews": 0,
-  "user":  "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt":  "2024-03-31T09:06:48.697Z",
-  "__v": 0
-},
-{
- 
-  "name": "Áo Sơ Mi Cổ Bẻ Tay Dài WRINKLE FREE 13",
-  "colors": {
-    "colorName": "black",
-    "colorHex": "#111111"
-  },
-  "price": 29,
-  "description": "Chất liệu: Sợi cà phê (CAFÉ FABRIC)\n\nThành phần : 50% Coffee 50% Polyester\n\n+ Odor Control - Kiểm soát mùi\n\n+ Fast Drying - Nhanh khô\n\n+ Ice Cool Touch - Làm mát cơ thể\n\n+ UV Protechtion - Chống nắng",
-  "ratings": 0,
-  
-  "images": [
-    {
-      "public_id": "products/wsw0hsim74rhdtzuwmlj",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876127/products/wsw0hsim74rhdtzuwmlj.jpg"
-    },
-    {
-      "public_id": "products/fv8g4d01i8ocahyrbot4",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876129/products/fv8g4d01i8ocahyrbot4.jpg"
-    }
-  ],
-  "sizes": [
-    "XL",
-    "L"
-  ],
-  "category": "Shirt",
-  "seller": "Tran Trung Phat",
-  "stock": 33,
-  "numOfReviews": 0,
-  "user":  "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt": "2024-03-31T09:08:49.811Z",
-  "__v": 0
-},
-{
-  
-  "name": "Quần Short Lưng Gài",
-  "colors": {
-    "colorName": "gray",
-    "colorHex": "#C0C0C0"
-  },
-  "price": 15,
-  "description": "Quần Short Đơn Giản Y Nguyên Bản Ver44\n\nChất liệu: Kaki Nhung Cotton\n\nThành phần: 55% Cotton 27% Nylon 15% Rayon 3% Spandex\n\n+ Họa tiết thêu túi sau + Kẹp logo Y ORIGINALS",
-  "ratings": 0,
-  
-  "images": [
-    {
-      "public_id": "products/pogmcwgycp6buzfhjdf5",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876251/products/pogmcwgycp6buzfhjdf5.jpg"
-    },
-    {
-      "public_id": "products/jz66co25srdhdkpxtka3",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876254/products/jz66co25srdhdkpxtka3.jpg"
-    }
-  ],
-  "sizes": [
-    "L",
-    "XL"
-  ],
-  "category": "Trousers",
-  "seller": "Tran Trung Phat",
-  "stock": 444,
-  "numOfReviews": 0,
-  "user": "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt":"2024-03-31T09:10:54.690Z",
-  "__v": 0
-},
-{
-  "name": "Giày Tây Lười Da",
-  "colors": {
-    "colorName": "black",
-    "colorHex": "#111111"
-  },
-  "price": 31,
-  "description": "Giày Tây Lười Nguyên Bản A4 2022.\n\n- Chất liệu: Da bò 100% + lót da heo\n\n- Mảnh thun co giãn kéo dài từ cổ giày xuống dưới mắt cá nhưng không dài đến đế giày\n\n- Đế cao su 100%\n\n- May đế",
-  "ratings": 0,
-  
-  "images": [
-    {
-      "public_id": "products/htgxalbbf8upqcaj4cm2",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876363/products/htgxalbbf8upqcaj4cm2.jpg"
-    },
-    {
-      "public_id": "products/obexf0dgwhu8hhoh5tis",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876365/products/obexf0dgwhu8hhoh5tis.jpg"
-     
-    }
-  ],
-  "sizes": [
-    "XL",
-    "M"
-  ],
+  "totalStock": 186,
   "category": "Shoe",
-  "seller": "Tran Trung Phat",
-  "stock": 33,
   "numOfReviews": 0,
-  "user":  "66018bce395aedce15ba9de0",
+  "user": "6654b2f605a0d7b79eeb7753",
   "reviews": [],
-  "createAt": "2024-03-31T09:12:45.595Z",
+  "createAt": "2024-06-01T19:33:05.377Z",
   "__v": 0
 },
 {
-  
-  "name": "4D09A-DV018",
-  "colors": {
-    "colorName": "white",
-    "colorHex": "#F8F8F8"
-  },
-  "price": 50,
-  "description": "Chất liệu mặt giày\n\nDa siêu mỏng\n\nCao gót sau\n\nGót vừa (3cm-5cm)\n\nChất liệu đế giày Cao su",
-  "ratings": 0,
- 
-  "images": [
-    {
-      "public_id": "products/r4hyhkyfmhquiit2btaj",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876501/products/r4hyhkyfmhquiit2btaj.webp"
-      
-    },
-    {
-      "public_id": "products/h3ovhbfhxg3qy3wazj8n",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876505/products/h3ovhbfhxg3qy3wazj8n.webp"
-    }
-  ],
-  "sizes": [
-    "XXL",
-    "XL",
-    "L"
-  ],
-  "category": "Shoe",
-  "seller": "Tran Trung Phat",
-  "stock": 44,
-  "numOfReviews": 0,
-  "user":  "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt": "2024-03-31T09:15:06.292Z",
-  "__v": 0
-},
-{
-  "name": "Giày Casual",
-  "colors": {
-    "colorName": "white",
-    "colorHex": "#F8F8F8"
-  },
-  "price": 42,
-  "description": "Chất liệu: Microfiber\n\n- Lót thân + Lưỡi gà mousse 3mm + Mesh êm chân\n\n- Talon mesh + mousse 3.5mm\n\n- Đế cao su\n\n- May đế\nn- Khắc lazer logo \"7.7\"",
-  "ratings": 0,
 
+  "name": "Giày Thể Thao Nam MWC NATT",
+  "price": 55,
+  "description": "Chiều cao : khoảng 4cm\n\nChất liệu : da tổng hợp\n\nĐế : PVC êm mềm, độ đàn hồi tốt, chống trơn trượt\n\nKiểu dáng : giày Sneaker cổ thấp",
+  "ratings": 0,
   "images": [
     {
-      "public_id": "products/naz4dukapjmdqurg2pw6",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876574/products/naz4dukapjmdqurg2pw6.jpg"
+      "public_id": "products/mqodd7yi0jgpvkhsr4jm",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270541/products/mqodd7yi0jgpvkhsr4jm.jpg"}
+  ],
+  "variants": [
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/uf2hyi8ltbieamxy4wcx",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270537/products/uf2hyi8ltbieamxy4wcx.jpg"
+        },
+        {
+          "public_id": "products/cwhy1zhmvpmzjhsmlkk7",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270537/products/cwhy1zhmvpmzjhsmlkk7.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "L",
+          "price": 63,
+          "stock": 53
+        },
+        {
+          "size": "XL",
+          "price": 66,
+          "stock": 74
+        }
+      ],
+      "totalStock": 127
     },
     {
-      "public_id": "products/frn6vo5gpaco9uoh5djl",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876576/products/frn6vo5gpaco9uoh5djl.jpg"
+      "name": "Kem Trắng",
+      "images": [
+        {
+          "public_id": "products/ha7qzmrxnycgcyby2nsr",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270537/products/ha7qzmrxnycgcyby2nsr.jpg"
+        },
+        {
+          "public_id": "products/d0txiwbtjda9l3vmvifx",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270537/products/d0txiwbtjda9l3vmvifx.jpg"
+        },
+        {
+          "public_id": "products/ikstjzkcwqp1quu0ajdi",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270537/products/ikstjzkcwqp1quu0ajdi.jpg"
+        },
+        {
+          "public_id": "products/n6vhgid3qu9k0td5g77r",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270538/products/n6vhgid3qu9k0td5g77r.jpg"
+        },
+        {
+          "public_id": "products/g2iyloy4c1j41hd6a6ix",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270539/products/g2iyloy4c1j41hd6a6ix.jpg"
+        },
+        {
+          "public_id": "products/paqyj214kzhaoijfavvr",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270539/products/paqyj214kzhaoijfavvr.jpg"
+        },
+        {
+          "public_id": "products/ssftyw6zyabd7vvpkote",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270539/products/ssftyw6zyabd7vvpkote.jpg"
+          
+        },
+        {
+          "public_id": "products/yfeh80jax4t3adrgpydv",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270539/products/yfeh80jax4t3adrgpydv.jpg"
+        },
+        {
+          "public_id": "products/csuveiwkr54zusom1szt",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270539/products/csuveiwkr54zusom1szt.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 43,
+          "stock": 53
+        },
+        {
+          "size": "M",
+          "price": 45,
+          "stock": 124
+        },
+        {
+          "size": "XL",
+          "price": 53,
+          "stock": 123
+        }
+      ],
+      "totalStock": 300
     }
   ],
-  "sizes": [
-    "M",
-    "XL"
-  ],
+  "totalStock": 427,
   "category": "Shoe",
-  "seller": "Tran Trung Phat",
-  "stock": 66,
   "numOfReviews": 0,
-  "user":  "66018bce395aedce15ba9de0",
+  "user": "6654b2f605a0d7b79eeb7753",
   "reviews": [],
-  "createAt": "2024-03-31T09:16:16.486Z",
+  "createAt": "2024-06-01T19:35:42.574Z",
   "__v": 0
 },
 {
-  "name": "Giày Chạy Bộ Nam Biti's Hunter Running DSMH10000",
-  "colors": {
-    "colorName": "yellow",
-    "colorHex": "#FFFF00"
-  },
-  "price": 25,
-  "description": "Giày Chạy Bộ Nam Biti's Hunter Running DSMH10000 là mẫu giày chạy với bộ đế thế hệ vượt trội và công nghệ độc quyền từ BITI’S Hunter không những đem đến sự thoải mái khi vận động mà còn mang đến cho người sử dụng phong cách thể thao năng động và sự ấn tượng cho mọi người.",
+
+  "name": "Giày Thể Thao Nam MWC NATT- 5480",
+  "price": 40,
+  "description": "Giày được thiết kế dáng buộc dây sneaker,mặt giày được phối màu và sử dụng chất liệu da si mờ phối lưới thời trang.\n\nĐặc biệt sản phẩm sử dụng chất liệu cao cấp có độ bền tối ưu giúp bạn thoải mái trong mọi hoàn cảnh.",
   "ratings": 0,
-  
   "images": [
     {
-      "public_id": "products/ohew2b3buojnwjjyvsqs",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876870/products/ohew2b3buojnwjjyvsqs.jpg"
+      "public_id": "products/mq4jdehcvmqki8qrufvq",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270793/products/mq4jdehcvmqki8qrufvq.jpg"
     },
     {
-      "public_id": "products/sojol4imzzv3bn7lbymr",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876871/products/sojol4imzzv3bn7lbymr.webp"
+      "public_id": "products/cpyz9gco1pwupowidcis",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270793/products/cpyz9gco1pwupowidcis.jpg"
     }
   ],
-  "sizes": [
-    "XL",
-    "XXL"
+  "variants": [
+    {
+      "name": "Kem",
+      "images": [
+        {
+          "public_id": "products/q233cfc1osdx4ehtcola",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270790/products/q233cfc1osdx4ehtcola.jpg"
+        },
+        {
+          "public_id": "products/xg6y5gzrjdxlacbyd0w5",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270790/products/xg6y5gzrjdxlacbyd0w5.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "L",
+          "price": 42,
+          "stock": 55
+        },
+        {
+          "size": "M",
+          "price": 36,
+          "stock": 124
+        }
+      ],
+      "totalStock": 179
+    },
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/bw79vht5hkf05nnxvvii",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270790/products/bw79vht5hkf05nnxvvii.jpg"
+        },
+        {
+          "public_id": "products/qd68z6hoxlccch33lyao",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270790/products/qd68z6hoxlccch33lyao.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 34,
+          "stock": 125
+        },
+        {
+          "size": "XL",
+          "price": 46,
+          "stock": 214
+        }
+      ],
+      "totalStock": 339
+    }
   ],
+  "totalStock": 518,
   "category": "Shoe",
-  "seller": "Tran Trung Phat",
-  "stock": 23,
   "numOfReviews": 0,
-  "user":"66018bce395aedce15ba9de0",
+  "user": "6654b2f605a0d7b79eeb7753",
   "reviews": [],
-  "createAt": "2024-03-31T09:21:12.283Z",
+  "createAt": "2024-06-01T19:39:53.699Z",
+  "__v": 0
+},
+{
+
+  "name": "Giày Thể Thao Nam MWC NATT- 5704",
+  "price": 43,
+  "description": "Giày được thiết kế dáng buộc dây năng động,mặt giày vải dệt dày dặn ,viền ép nhiệt phong cách hiện đại,màu sắc khỏe khoắn",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/rjd3u5h3u8fyidydwpiw",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270896/products/rjd3u5h3u8fyidydwpiw.jpg"
+    },
+    {
+      "public_id": "products/q7fybui3whnmb4fmfhnx",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270896/products/q7fybui3whnmb4fmfhnx.jpg"
+    },
+    {
+      "public_id": "products/ccnuxcvbrmqsudlvkooi",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270896/products/ccnuxcvbrmqsudlvkooi.jpg"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Đen trắng",
+      "images": [
+        {
+          "public_id": "products/s4jw9mdepsykiyodamb5",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270894/products/s4jw9mdepsykiyodamb5.jpg"
+        },
+        {
+          "public_id": "products/tdsdoyvfejjed2r2ju1w",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717270894/products/tdsdoyvfejjed2r2ju1w.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 39,
+          "stock": 23
+        },
+        {
+          "size": "L",
+          "price": 44,
+          "stock": 21
+        },
+        {
+          "size": "XL",
+          "price": 45,
+          "stock": 23
+        }
+      ],
+      "totalStock": 67
+    }
+  ],
+  "totalStock": 67,
+  "category": "Shoe",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt":  "2024-06-01T19:41:37.794Z",
   "__v": 0
 },
 {
   
-  "name": "Giày Thể Thao Nam Biti's BSM002300",
-  "colors": {
-    "colorName": "black",
-    "colorHex": "#111111"
-  },
-  "price": 23,
-  "description": "Nhẹ nhàng thoáng mát ",
+  "name": "Giày Thể Thao Nam Phối Sọc Thể Thao",
+  "price": 55,
+  "description": "Chiều cao : giày 4cm\n\nChất liệu : vải dệt lưới",
   "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/lqso9qzzppftxlsjohjv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271010/products/lqso9qzzppftxlsjohjv.jpg"
+    },
+    {
+      "public_id": "products/yh9swyxxdxia3uz2kjfs",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271010/products/yh9swyxxdxia3uz2kjfs.jpg"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Đen Đỏ",
+      "images": [
+        {
+          "public_id": "products/wlxzr45uw6qtu25xx5oa",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271007/products/wlxzr45uw6qtu25xx5oa.jpg"
+        },
+        {
+          "public_id": "products/wqoscfp3djpeim2gpwyf",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271007/products/wqoscfp3djpeim2gpwyf.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 49,
+          "stock": 45
+        },
+        {
+          "size": "M",
+          "price": 53,
+          "stock": 24
+        },
+        {
+          "size": "XXL",
+          "price": 76,
+          "stock": 12
+        }
+      ],
+      "totalStock": 81
+    }
+  ],
+  "totalStock": 81,
+  "category": "Shoe",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T19:43:30.952Z",
+  "__v": 0
+},
+{
  
-  "images": [
-    {
-      "public_id": "products/yzsxjscunkdxrtarjrlb",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876990/products/yzsxjscunkdxrtarjrlb.jpg"
-    },
-    {
-      "public_id": "products/nr2hfjdqj3maxhm7d2gu",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711876995/products/nr2hfjdqj3maxhm7d2gu.jpg"
-    }
-  ],
-  "sizes": [
-    "L",
-    "XL",
-    "M"
-  ],
-  "category": "Shoe",
-  "seller": "Tran Trung Phat",
-  "stock": 32,
-  "numOfReviews": 0,
-  "user": "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt":  "2024-03-31T09:23:15.804Z"
-  ,
-  "__v": 0
-},
-{
-  
-  "name": "Giày Đá Bóng Nam Biti's Hunter Football HSM003600",
-  "colors": {
-    "colorName": "orange",
-    "colorHex": "#FF8C00"
-  },
+  "name": "Giày Thể Thao Nam MWC NATT- 5455 Giày Thể Thao Nam Cao Cấp",
   "price": 32,
-  "description": "Nếu bạn muốn tìm một đôi giày đá banh chất lượng, thiết kế thể thao và êm ái khi sử dụng thì hãy chọn Giày Đá Banh Nam Biti's Football HSM003600. Cùng tìm hiểu chi tiết về sản phẩm trong bài viết dưới đây.",
+  "description": "Giày được thiết kế kiểu dáng buộc dây sneaker cực ngầu phối sọc thể thao năng động, phong cách hiện đại,màu sắc khỏe khoắn.",
   "ratings": 0,
-  
   "images": [
     {
-      "public_id": "products/rjmtszcom0fdikcprpzt",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877066/products/rjmtszcom0fdikcprpzt.webp"
-      
-    },
-    {
-      "public_id": "products/wtso7wlh4krovapn1dtu",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877067/products/wtso7wlh4krovapn1dtu.webp"
-      
+      "public_id": "products/fmsnnseg62gwaotcmbof",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271578/products/fmsnnseg62gwaotcmbof.jpg"
     }
   ],
-  "sizes": [
-    "XL",
-    "L"
+  "variants": [
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/l51b7hffwndljpodwnps",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271576/products/l51b7hffwndljpodwnps.jpg"
+        },
+        {
+          "public_id": "products/quahjwwfu6dvj424t8jz",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271576/products/quahjwwfu6dvj424t8jz.jpg"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "L",
+          "price": 30,
+          "stock": 55
+        },
+        {
+          "size": "XL",
+          "price": 41,
+          "stock": 421
+        },
+        {
+          "size": "S",
+          "price": 29,
+          "stock": 429
+        }
+      ],
+      "totalStock": 905
+    }
   ],
+  "totalStock": 905,
   "category": "Shoe",
-  "seller": "Tran Trung Phat",
-  "stock": 82,
   "numOfReviews": 0,
-  "user":  "66018bce395aedce15ba9de0",
+  "user": "6654b2f605a0d7b79eeb7753",
   "reviews": [],
-  "createAt":  "2024-03-31T09:24:27.964Z",
+  "createAt": "2024-06-01T19:52:58.573Z",
   "__v": 0
 },
 {
- 
-  "name": "Giày Bóng Đá Nam Biti's Hunter Football DSMH03800",
-  "colors": {
-    "colorName": "red",
-    "colorHex": "#FF0000"
-  },
-  "price": 34,
-  "description": " ",
-  "ratings": 0,
-  
-  "images": [
-    {
-      "public_id": "products/bdrht96u684p5vqwp6ya",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877171/products/bdrht96u684p5vqwp6ya.webp"
-    },
-    {
-      "public_id": "products/mfcyh078fzqvvvjleklx",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877172/products/mfcyh078fzqvvvjleklx.webp"
-    }
-  ],
-  "sizes": [
-    "XL",
-    "S"
-  ],
-  "category": "Shoe",
-  "seller": "Tran Trung Phat",
-  "stock": 44,
-  "numOfReviews": 0,
-  "user":  "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt": "2024-03-31T09:26:12.791Z",
-  "__v": 0
-},
-{
-  "name": "QUẦN TÂY SLIMFIT ĐỈA ĐÔI QT053 MÀU XÁM",
-  "colors": {
-    "colorName": "gray",
-    "colorHex": "#A9A9A9"
-  },
-  "price": 21,
-  "description": " ",
-  "ratings": 0,
- 
-  "images": [
-    {
-      "public_id": "products/a4e4uyspmicowq0ugydd",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877317/products/a4e4uyspmicowq0ugydd.jpg"
-    },
-    {
-      "public_id": "products/do5pdjwa1rm0mqchadda",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877319/products/do5pdjwa1rm0mqchadda.jpg"
-    }
-  ],
-  "sizes": [
-    "M",
-    "XL",
-    "XXL"
-  ],
-  "category": "Trousers",
-  "seller": "Tran Trung Phat",
-  "stock": 22,
-  "numOfReviews": 0,
-  "user": "66018bce395aedce15ba9de0"
-  ,
-  "reviews": [],
-  "createAt": "2024-03-31T09:28:40.239Z",
-  "__v": 0
-},
-{
-  
-  "name": "Quần tây nam slimfit viền túi QTA0041",
-  "colors": {
-    "colorName": "black",
-    "colorHex": "#222222"
-  },
-  "price": 45,
-  "description": "Quần Tây nam Kenta với form dáng vừa vặn, sang trọng đầy lịch lãm, điểm nhấn viền ở túi trước và túi sau.",
-  "ratings": 0,
-  
-  "images": [
-    {
-      "public_id": "products/zrycnm2fuuvpwkng324c",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877564/products/zrycnm2fuuvpwkng324c.webp"
-    },
-    {
-      "public_id": "products/auc3mvmb0fus8jwhqh28",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711877566/products/auc3mvmb0fus8jwhqh28.webp"
-    }
-  ],
-  "sizes": [
-    "XL",
-    "L"
-  ],
-  "category": "Trousers",
-  "seller": "Tran Trung Phat",
-  "stock": 34,
-  "numOfReviews": 0,
-  "user": "66018bce395aedce15ba9de0"
-  ,
-  "reviews": [],
-  "createAt":  "2024-03-31T09:32:46.951Z",
-  "__v": 0
-},
-{
-  
-  "name": "Chó Ngao",
-  "colors": {
-    "colorName": "black",
-    "colorHex": "#111111"
-  },
-  "price": 0,
-  "description": "ss",
-  "ratings": 0,
-  
-  "images": [
-    {
-      "public_id": "products/trsaaq2dprd1aytthm2s",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141640/products/trsaaq2dprd1aytthm2s.jpg"
-    },
-    {
-      "public_id": "products/w1qgno9uachw2tmcuwdd",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1712141642/products/w1qgno9uachw2tmcuwdd.webp"
-    }
-    
-  ],
-  "sizes": [
-    "XS",
-    "S"
-  ],
-  "category": "Shirt",
-  "seller": "212",
-  "stock": 212,
-  "numOfReviews": 0,
-  "user":  "66018bce395aedce15ba9de0",
-  "reviews": [],
-  "createAt":  "2024-04-02T20:05:13.029Z",
-  "__v": 0
-},
-{
-  
-  "name": "Quần Kaki Nam Ống Rộng",
-  "colors": {
-    "colorName": "black",
-    "colorHex": "#111111"
-  },
-  "price": 18,
-  "description": "Quần Kaki\n\nForm dáng      Straight\n\nGiới tính           Nam\n\nChất liệu :         Cotton\n\nThiết kế :           Trơn",
-  "ratings": 0,
 
+  "name": "ĐẦM XÒE CỔ V PHỐI ĐAI",
+  "price": 78,
+  "description": "\nDòng sản phẩm\tLadies\nNhóm sản phẩm\tĐầm\nCổ áo\tCổ chữ V",
+  "ratings": 0,
   "images": [
     {
-      "public_id": "products/low89v9ht1plsn93olrj",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875698/products/low89v9ht1plsn93olrj.webp"
-      
-    },
-    {
-      "public_id": "products/hhba5u8wvwbtvpfrq1uk",
-      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1711875701/products/hhba5u8wvwbtvpfrq1uk.webp"
+      "public_id": "products/iovxy4ulcib2ytg8gl89",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271772/products/iovxy4ulcib2ytg8gl89.webp"
     }
   ],
-  "sizes": [
-    "XXL",
-    "XL"
+  "variants": [
+    {
+      "name": "Kem",
+      "images": [
+        {
+          "public_id": "products/tdglwltm0fwnodlrsqwv",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271769/products/tdglwltm0fwnodlrsqwv.webp"
+        },
+        {
+          "public_id": "products/pefi8lkthgh9zn1shqzu",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271770/products/pefi8lkthgh9zn1shqzu.webp"
+        },
+        {
+          "public_id": "products/c4syhd8a2d9giuwcyqvi",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271770/products/c4syhd8a2d9giuwcyqvi.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "L",
+          "price": 98,
+          "stock": 422
+        },
+        {
+          "size": "XS",
+          "price": 63,
+          "stock": 666
+        }
+      ],
+      "totalStock": 1088
+    },
+    {
+      "name": "Trắng hồng",
+      "images": [
+        {
+          "public_id": "products/ejp33tuxy9jzlnhgazmy",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271770/products/ejp33tuxy9jzlnhgazmy.webp"
+        },
+        {
+          "public_id": "products/hfay5gbnjunefmnqu6fj",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271770/products/hfay5gbnjunefmnqu6fj.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 69,
+          "stock": 64
+        },
+        {
+          "size": "XL",
+          "price": 87,
+          "stock": 235
+        }
+      ],
+      "totalStock": 299
+    }
   ],
-  "category": "Trousers",
-  "seller": "Tran",
-  "stock": 60,
+  "totalStock": 1387,
+  "category": "Dress",
   "numOfReviews": 0,
-  "user": "66018bce395aedce15ba9de0",
+  "user": "6654b2f605a0d7b79eeb7753",
   "reviews": [],
-  "createAt": "2024-03-31T09:01:42.055Z",
+  "createAt": "2024-06-01T19:56:13.054Z",
+  "__v": 0
+},
+{
+
+  "name": "ĐẦM XÒE TAY CÁCH ĐIỆU",
+  "price": 76,
+  "description": "\nDòng sản phẩm\tYou\nNhóm sản phẩm\tĐầm\nCổ áo\tCổ khác",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/srta5dtznvfhvblbcvv3",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271867/products/srta5dtznvfhvblbcvv3.webp"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Trắng",
+      "images": [
+        {
+          "public_id": "products/s2wplq9xxqmiuulw8w9s",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271866/products/s2wplq9xxqmiuulw8w9s.webp"
+        },
+        {
+          "public_id": "products/ruip7wemr7wwpkx9kt2f",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271866/products/ruip7wemr7wwpkx9kt2f.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "M",
+          "price": 56,
+          "stock": 325
+        },
+        {
+          "size": "XL",
+          "price": 89,
+          "stock": 353
+        }
+      ],
+      "totalStock": 678
+    }
+  ],
+  "totalStock": 678,
+  "category": "Dress",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T19:57:48.144Z",
+  "__v": 0
+},
+{
+
+  "name": "ĐẦM LỤA THÊU HOA DÁNG XÒE",
+  "price": 67,
+  "description": "Thiết kế đầm cổ đức, tay hến, độ dài ngang bắp chân, eo đầm ôm xếp ly tạo kiểu xòe tôn dáng. Chi tiết thêu hoa ở vai cùng công nghệ cắt đục lỗ tạo điểm nhấn giúp thiết kế đầm thêm ấn tượng, thu hút hơn",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/lygthx4ypi58prcmc7gw",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271994/products/lygthx4ypi58prcmc7gw.webp"
+    },
+    {
+      "public_id": "products/tcrlqxwkrr4mh0feqsbx",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271994/products/tcrlqxwkrr4mh0feqsbx.webp"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Trắng",
+      "images": [
+        {
+          "public_id": "products/w0gflweabt4lwt2qw99n",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271984/products/w0gflweabt4lwt2qw99n.webp"
+        },
+        {
+          "public_id": "products/cfxgesmnk8tg0plkuzbw",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717271992/products/cfxgesmnk8tg0plkuzbw.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "M",
+          "price": 59,
+          "stock": 427
+        },
+        {
+          "size": "XL",
+          "price": 74,
+          "stock": 245
+        },
+        {
+          "size": "XXL",
+          "price": 78,
+          "stock": 636
+        }
+      ],
+      "totalStock": 1308
+    }
+  ],
+  "totalStock": 1308,
+  "category": "Dress",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt":  "2024-06-01T19:59:55.463Z",
+  "__v": 0
+},
+{
+
+  "name": "ĐẦM TRƠN NHẤN CHUN",
+  "price": 88,
+  "description": "Đầm trơn dáng xòe, độ dài qua gối. Cổ tàu trụ, tay ngắn. Dọc đường vai và eo được nhấn chun co dãn. Dọc thân đầm là khuy cài.",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/qogsq6vq5mcog1cgeogq",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272114/products/qogsq6vq5mcog1cgeogq.webp"
+      
+    }
+  ],
+  "variants": [
+    {
+      "name": "Trắng",
+      "images": [
+        {
+          "public_id": "products/widmmpdrzfz34sjcu1it",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272112/products/widmmpdrzfz34sjcu1it.webp"
+        },
+        {
+          "public_id": "products/hkrhtejnnyscftnwfzgw",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272112/products/hkrhtejnnyscftnwfzgw.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 76,
+          "stock": 353
+        },
+        {
+          "size": "L",
+          "price": 87,
+          "stock": 532
+        }
+      ],
+      "totalStock": 885
+    },
+    {
+      "name": "xanh",
+      "images": [
+        {
+          "public_id": "products/xirtyq7j8tso0yzredrc",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272112/products/xirtyq7j8tso0yzredrc.webp"
+        },
+        {
+          "public_id": "products/jmp92zrzzuqdxspyvvst",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272112/products/jmp92zrzzuqdxspyvvst.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "M",
+          "price": 76,
+          "stock": 467
+        },
+        {
+          "size": "XL",
+          "price": 93,
+          "stock": 563
+        },
+        {
+          "size": "XXL",
+          "price": 98,
+          "stock": 643
+        }
+      ],
+      "totalStock": 1673
+    }
+  ],
+  "totalStock": 2558,
+  "category": "Dress",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T20:01:55.390Z",
+  "__v": 0
+},
+{
+
+  "name": "AURORA DRESS - ĐẦM SUÔNG DỆT BURN OUT",
+  "price": 67,
+  "description": "Đơn giản nhưng vẫn đủ khiến quý cô siêu lòng với Aurora Dress, thiết kế đầm sang trọng được điểm họa tiết dệt burn out đầy sức hút",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/v8oktzmtxecsouqc8qzq",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272328/products/v8oktzmtxecsouqc8qzq.webp"
+    },
+    {
+      "public_id": "products/atm8tgk9zxbbxjw1315l",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272328/products/atm8tgk9zxbbxjw1315l.webp"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Hồng",
+      "images": [
+        {
+          "public_id": "products/aloriu8xbvdcpcjjnasa",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272326/products/aloriu8xbvdcpcjjnasa.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 66,
+          "stock": 65
+          
+        },
+        {
+          "size": "M",
+          "price": 67,
+          "stock": 646
+        },
+        {
+          "size": "L",
+          "price": 78,
+          "stock": 535
+        }
+      ],
+      "totalStock": 1246
+    },
+    {
+      "name": "Trắng",
+      "images": [
+        {
+          "public_id": "products/ldqnfcyjcodnpqefo5pi",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272325/products/ldqnfcyjcodnpqefo5pi.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "XL",
+          "price": 74,
+          "stock": 555
+        },
+        {
+          "size": "M",
+          "price": 64,
+          "stock": 435
+        }
+      ],
+      "totalStock": 990
+    }
+  ],
+  "totalStock": 2236,
+  "category": "Dress",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T20:05:29.172Z",
+  "__v": 0
+},
+{
+
+  "name": "ĐẦM THUN IN HOA",
+  "price": 75,
+  "description": "Note: Đầm thun đen có viền cổ màu ngẫu nhiên",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/k4plua2sh2zrrzfut2gr",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272465/products/k4plua2sh2zrrzfut2gr.webp"
+    },
+    {
+      "public_id": "products/vjbo5zkmkwsrlupjazvf",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272466/products/vjbo5zkmkwsrlupjazvf.webp"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Đỏ",
+      "images": [
+        {
+          "public_id": "products/trjy1iuvslnf2tvifkid",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272464/products/trjy1iuvslnf2tvifkid.webp"
+        },
+        {
+          "public_id": "products/dnfwvvzgtsvcu4pmr9tq",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272464/products/dnfwvvzgtsvcu4pmr9tq.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 53,
+          "stock": 63
+        },
+        {
+          "size": "L",
+          "price": 76,
+          "stock": 353
+        }
+      ],
+      "totalStock": 416
+    },
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/sgj9azb71ctjvi7ppjlg",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272464/products/sgj9azb71ctjvi7ppjlg.webp"
+        },
+        {
+          "public_id": "products/ws1ojprjhlvn09mt2i0e",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272464/products/ws1ojprjhlvn09mt2i0e.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "M",
+          "price": 64,
+          "stock": 563
+        },
+        {
+          "size": "XL",
+          "price": 87,
+          "stock": 865
+        }
+      ],
+      "totalStock": 1428
+    }
+  ],
+  "totalStock": 1844,
+  "category": "Dress",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T20:05:29.172Z",
+  "__v": 0
+},
+{
+
+  "name": "ĐẦM THUN IN HOA",
+  "price": 75,
+  "description": "Note: Đầm thun đen có viền cổ màu ngẫu nhiên",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/gegmoffj4eotclmb3rvn",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272467/products/gegmoffj4eotclmb3rvn.webp"
+    },
+    {
+      "public_id": "products/xd6fkagihbhqyvomtfdi",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272468/products/xd6fkagihbhqyvomtfdi.webp"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Đỏ",
+      "images": [
+        {
+          "public_id": "products/e6gcj5sr7c1mo7ezrbj2",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272464/products/e6gcj5sr7c1mo7ezrbj2.webp"
+          
+        },
+        {
+          "public_id": "products/rtmuzjl9zumfhxiofzzy",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272464/products/rtmuzjl9zumfhxiofzzy.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 53,
+          "stock": 63
+        },
+        {
+          "size": "L",
+          "price": 76,
+          "stock": 353
+        }
+      ],
+      "totalStock": 416
+    },
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/e0ng5md6ogx3fsc1vi82",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272465/products/e0ng5md6ogx3fsc1vi82.webp"
+        },
+        {
+          "public_id": "products/olkdqkoup4wd4wmedbmz",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272465/products/olkdqkoup4wd4wmedbmz.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "M",
+          "price": 64,
+          "stock": 563
+        },
+        {
+          "size": "XL",
+          "price": 87,
+          "stock": 865
+        }
+      ],
+      "totalStock": 1428
+    }
+  ],
+  "totalStock": 1844,
+  "category": "Dress",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T20:07:48.667Z",
+  "__v": 0
+},
+{
+
+  "name": "ĐẦM ÔM NHÚN TẠO KIỂU",
+  "price": 76,
+  "description": "Đầm ôm basic, một thiết kế mà bất cứ nàng hiện đại nào cũng nên sở hữu trong tủ đồ. Dáng ôm body quyến rũ, tôn lên đường cong cơ thể. ",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/qomp8r0wefm2wa7symxl",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272561/products/qomp8r0wefm2wa7symxl.webp"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/hpng6qdpe3lq7anc6npe",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272559/products/hpng6qdpe3lq7anc6npe.webp"
+        },
+        {
+          "public_id": "products/flf9dbqha8ovz1shjnt0",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717272559/products/flf9dbqha8ovz1shjnt0.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 64,
+          "stock": 72
+        },
+        {
+          "size": "XL",
+          "price": 79,
+          "stock": 635
+        }
+      ],
+      "totalStock": 707
+    }
+  ],
+  "totalStock": 707,
+  "category": "Dress",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T20:09:22.551Z",
+  "__v": 0
+},
+{
+
+  "name": "ĐẦM THUN DÁNG SUÔNG",
+  "price": 54,
+  "description": "Đầm thun cổ tròn, tay ngắn. Dáng đầm suông, phần eo có dây kéo rút tạo kiểu. Mặt trước in và thêu chữ khác màu tạo điểm nhấn",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/oj5vbkpip1jtramive15",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273180/products/oj5vbkpip1jtramive15.webp"
+    },
+    {
+      "public_id": "products/x83zdotx7fikt6aotkvn",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273180/products/x83zdotx7fikt6aotkvn.webp"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Cam",
+      "images": [
+        {
+          "public_id": "products/myvhdhqyzzvgoc8e7say",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273178/products/myvhdhqyzzvgoc8e7say.webp"
+        },
+        {
+          "public_id": "products/rbvvdvhj4i5tqa7jjaiy",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273178/products/rbvvdvhj4i5tqa7jjaiy.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 45,
+          "stock": 635
+        },
+        {
+          "size": "M",
+          "price": 56,
+          "stock": 352
+        },
+        {
+          "size": "XL",
+          "price": 67,
+          "stock": 235
+        }
+      ],
+      "totalStock": 1222
+    },
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/xv6jeb061zhcqxcvnxeb",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273178/products/xv6jeb061zhcqxcvnxeb.webp"
+        },
+        {
+          "public_id": "products/lzvvoo5kzerm4meliif8",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273179/products/lzvvoo5kzerm4meliif8.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "S",
+          "price": 49,
+          "stock": 535
+        },
+        {
+          "size": "L",
+          "price": 53,
+          "stock": 747
+        }
+      ],
+      "totalStock": 1282
+    }
+  ],
+  "totalStock": 2504,
+  "category": "Dress",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T20:19:41.515Z",
+  "__v": 0
+},
+{
+
+  "name": "ĐẦM XÒE DỆT KIM",
+  "price": 66,
+  "description": "Đầm len dệt kim cổ chữ V, vạt trước đắp chéo, tay lỡ. Chiết eo có đỉa. Vải kiểu dập ly nổi.\n\nMang phong cách tinh tế, bắt mắt, dễ dàng kết hợp với các phụ kiện thời trang khác. Chất liệu len dệt kim có độ co giãn nhất định, ít nhàu, dễ bảo quản. Bạn có thể diện đi chơi, dạo phố hay đi làm.\n\nMàu sắc: Vàng hoa cúc - Đen - Nude\n\n",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/vqehmlvpu0aitifhywon",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273321/products/vqehmlvpu0aitifhywon.webp"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Đen",
+      "images": [
+        {
+          "public_id": "products/qxtmpvzqcnikf1gj7pt0",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273318/products/qxtmpvzqcnikf1gj7pt0.webp"
+        },
+        {
+          "public_id": "products/lynehti9q55nxljzlwte",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273318/products/lynehti9q55nxljzlwte.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "XXL",
+          "price": 76,
+          "stock": 452
+        },
+        {
+          "size": "L",
+          "price": 49,
+          "stock": 632
+        },
+        {
+          "size": "XL",
+          "price": 53,
+          "stock": 563
+        }
+      ],
+      "totalStock": 1647
+    },
+    {
+      "name": "Nâu",
+      "images": [
+        {
+          "public_id": "products/rf4v4r7zeqmic0aqqezi",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273319/products/rf4v4r7zeqmic0aqqezi.webp"
+        },
+        {
+          "public_id": "products/n8snnfasyyzbq6bpuefu",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273318/products/n8snnfasyyzbq6bpuefu.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "L",
+          "price": 65,
+          "stock": 323
+        },
+        {
+          "size": "XL",
+          "price": 68,
+          "stock": 532
+        }
+      ],
+      "totalStock": 855
+    }
+  ],
+  "totalStock": 2502,
+  "category": "Dress",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T20:22:02.063Z",
+  "__v": 0
+},
+{
+
+  "name": "SET ÁO DÀI HOÀNG CÚC",
+  "price": 70,
+  "description": "Màu sắc: Họa tiết Be",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/bgszxbxu6cfzikzj3wso",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273420/products/bgszxbxu6cfzikzj3wso.webp"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Họa tiết Be",
+      "images": [
+        {
+          "public_id": "products/o1aq5wy8ss1e4sfopi1w",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273417/products/o1aq5wy8ss1e4sfopi1w.webp"
+        },
+        {
+          "public_id": "products/at4dpyfcymnjdcrkfhcv",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273417/products/at4dpyfcymnjdcrkfhcv.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "L",
+          "price": 67,
+          "stock": 532
+        },
+        {
+          "size": "XL",
+          "price": 69,
+          "stock": 635
+        },
+        {
+          "size": "XXL",
+          "price": 74,
+          "stock": 456
+        }
+      ],
+      "totalStock": 1623
+    }
+  ],
+  "totalStock": 1623,
+  "category": "Dress",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T20:23:40.740Z",
+  "__v": 0
+},
+{
+
+  "name": "SET BỘ ÁO DÀI Ý CHÂU",
+  "price": 70,
+  "description": "Đắm chìm trong vẻ đẹp mong manh, tựa sương mai của người phụ nữ trong tà áo dài",
+  "ratings": 0,
+  "images": [
+    {
+      "public_id": "products/osyjokh3hpvv6x8htuth",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273521/products/osyjokh3hpvv6x8htuth.webp"
+    },
+    {
+      "public_id": "products/m5jhaayxjky65mbnqxkb",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273521/products/m5jhaayxjky65mbnqxkb.webp"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Đỏ",
+      "images": [
+        {
+          "public_id": "products/b3fpn0zxrxec7vcom8vd",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273519/products/b3fpn0zxrxec7vcom8vd.webp"
+        },
+        {
+          "public_id": "products/xei42kqsahgy8odzv5ca",
+          "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717273519/products/xei42kqsahgy8odzv5ca.webp"
+        }
+      ],
+      "inventory": [
+        {
+          "size": "M",
+          "price": 64,
+          "stock": 523
+        },
+        {
+          "size": "L",
+          "price": 67,
+          "stock": 634
+        },
+        {
+          "size": "XL",
+          "price": 69,
+          "stock": 523
+        }
+      ],
+      "totalStock": 1680
+    }
+  ],
+  "totalStock": 1680,
+  "category": "Dress",
+  "numOfReviews": 0,
+  "user": "6654b2f605a0d7b79eeb7753",
+  "reviews": [],
+  "createAt": "2024-06-01T20:25:22.371Z",
+  
   "__v": 0
 }]
