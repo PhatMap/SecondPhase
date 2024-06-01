@@ -28,15 +28,12 @@ const Shop = () => {
   const [minPriceError, setMinPriceError] = useState("");
   const [maxPriceError, setMaxPriceError] = useState("");
 
-
-
-  const categories = ["Trousers", "Shirt", "Dress", "Shoe", "Belt"];
+  const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
   const categoriesVietnamese = {
     Trousers: "Quần Nam Nữ",
     Shirt: "Áo Nam Nữ",
     Dress: "Váy Nữ",
     Shoe: "Giày Nam Nữ",
-    
   };
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -63,8 +60,17 @@ const Shop = () => {
       }
       setFiltersApplied(false);
     }
-  }, [dispatch, keyword, currentPage, price, rating, error, selectedStar, filtersApplied]);
-  
+  }, [
+    dispatch,
+    keyword,
+    currentPage,
+    price,
+    rating,
+    error,
+    selectedStar,
+    filtersApplied,
+  ]);
+
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
   }
@@ -84,25 +90,24 @@ const Shop = () => {
   const applyFilters = () => {
     const minPrice = Number(tempPrice[0]);
     const maxPrice = Number(tempPrice[1]);
-  
+
     if (minPrice < 0 || isNaN(minPrice)) {
       setMinPriceError("Lớn hơn hoặc bằng 0");
       return;
     } else {
       setMinPriceError("");
     }
-  
+
     if (maxPrice > 10000 || isNaN(maxPrice)) {
       setMaxPriceError("Nhỏ hơn hoặc bằng 10000");
       return;
     } else {
       setMaxPriceError("");
     }
-  
+
     if (minPrice >= maxPrice) {
       setMinPriceError("Giá thấp nhất < Giá cao nhất");
       return;
-    
     } else {
       setPrice([minPrice, maxPrice]);
       dispatch(getProducts(keyword, currentPage, [minPrice, maxPrice], rating));
@@ -116,14 +121,12 @@ const Shop = () => {
     setRating(0); // t lại xếp hạng mặc định
     setSelectedStar(0);
     dispatch(getProducts(keyword, currentPage, price, rating));
-    navigate('/shop'); // Điều hướng về trang shop
+    navigate("/shop"); // Điều hướng về trang shop
   };
   const handleStarClick = (selectedRating) => {
     setRating(selectedRating);
     setSelectedStar(selectedRating); // Cập nhật số sao được chọn
   };
-  
-    
 
   return (
     <Fragment>
@@ -135,7 +138,7 @@ const Shop = () => {
           <div className="shop-container background-1">
             <h1>SHOP</h1>
             <div className="shop-products-filter-container">
-            <div className="shop-filter">
+              <div className="shop-filter">
                 <div className="shop-filter-prices">
                   <h4>Giá Sản Phẩm</h4>
                   <div className="shop-filter-price">
@@ -147,9 +150,12 @@ const Shop = () => {
                       placeholder="Giá Thấp Nhất"
                       value={tempPrice[0]}
                       onChange={handleMinPriceChange}
-                      
                     />
-                    {minPriceError && <p style={{ color: "red",fontSize: '15px' }}>{minPriceError}</p>}
+                    {minPriceError && (
+                      <p style={{ color: "red", fontSize: "15px" }}>
+                        {minPriceError}
+                      </p>
+                    )}
                     <label htmlFor="max_price">Giá Cao Nhất</label>
                     <input
                       type="number"
@@ -159,7 +165,11 @@ const Shop = () => {
                       value={tempPrice[1]}
                       onChange={handleMaxPriceChange}
                     />
-                    {maxPriceError && <p style={{ color: "red", fontSize: '15px',  }}>{maxPriceError}</p>}
+                    {maxPriceError && (
+                      <p style={{ color: "red", fontSize: "15px" }}>
+                        {maxPriceError}
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="shop-filter-categories">
@@ -169,7 +179,11 @@ const Shop = () => {
                       <li
                         key={category}
                         onClick={() => handleCategoryClick(category)}
-                        className={selectedCategory === category ? 'selected-category' : ''}
+                        className={
+                          selectedCategory === category
+                            ? "selected-category"
+                            : ""
+                        }
                       >
                         {categoriesVietnamese[category]}
                       </li>
@@ -179,34 +193,35 @@ const Shop = () => {
                 <div className="shop-filter-ratings">
                   <h4>Xếp Hạng</h4>
                   <ul className="shop-filter-rating">
-                  {[5, 4, 3, 2, 1].map((star) => (
-                    <li key={star} onClick={() => handleStarClick(star)}>
-                      <div className={`rating-outer ${star === selectedStar ? 'selected-star' : ''}`}>
+                    {[5, 4, 3, 2, 1].map((star) => (
+                      <li key={star} onClick={() => handleStarClick(star)}>
                         <div
-                          className="rating-inner"
-                          style={{
-                            width: `${star * 20}%`,
-                          }}
-                        ></div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-
+                          className={`rating-outer ${
+                            star === selectedStar ? "selected-star" : ""
+                          }`}
+                        >
+                          <div
+                            className="rating-inner"
+                            style={{
+                              width: `${star * 20}%`,
+                            }}
+                          ></div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
                 <div className="shop-filter-btns">
                   <button className="shop-filter-btn" onClick={applyFilters}>
                     Lọc
                   </button>
-                  
                 </div>
-                
+
                 <div className="shop-filter-btns">
-                <button className="shop-filter-btn" onClick={clearFilters}>
-                  Xóa bộ lọc
-                </button>
-              </div>
-              
+                  <button className="shop-filter-btn" onClick={clearFilters}>
+                    Xóa bộ lọc
+                  </button>
+                </div>
               </div>
               <div className="shop-products-container">
                 {products.map((product) => (

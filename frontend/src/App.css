@@ -1778,6 +1778,7 @@ ul.CTAs a {
 
 .detail-image-container {
   display: flex;
+  min-width: 500px;
   gap: 20px;
 }
 
