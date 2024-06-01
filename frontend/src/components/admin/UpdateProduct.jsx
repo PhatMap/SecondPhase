@@ -40,7 +40,7 @@ const UpdateProduct = () => {
   const [emptyVariants, setEmptyVariants] = useState(false);
   const [variantError, setVariantError] = useState(false);
 
-  const categories = ["", "Trousers", "Shirt", "Dress", "Shoe", "Belt"];
+  const categories = ["", "Trousers", "Shirt", "Dress", "Shoe", ];
 
   const dispatch = useDispatch();
 
