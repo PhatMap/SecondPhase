@@ -45,12 +45,6 @@ export const createOrder = (order) => async (dispatch, getState) => {
       payload: data,
     });
 
-    const result = await axios.put("/api/v1/cart/empty");
-    dispatch({
-      type: EMPTY_CART_SUCCESS,
-      payload: result,
-    });
-
     try {
       const response = await axios.get(`/api/v1/cart/me`);
       const { cartItems } = response.data;
@@ -66,14 +60,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
       });
     }
   } catch (error) {
-    dispatch({
-      type: EMPTY_CART_FAIL,
-      payload: error.response.data.message,
-    });
-    dispatch({
-      type: EMPTY_CART_FAIL,
-      payload: error.response.data.message,
-    });
+    console.log(error);
   }
 };
 

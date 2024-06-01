@@ -44,21 +44,24 @@ export const addItemToCart = (item) => async (dispatch) => {
   }
 };
 
-export const removeItemFromCart = (id, size) => async (dispatch, getState) => {
-  try {
-    const { data } = await axios.delete(`/api/v1/cart/${id}/${size}`);
+export const removeItemFromCart =
+  (id, variant, size) => async (dispatch, getState) => {
+    try {
+      const { data } = await axios.delete(
+        `/api/v1/cart/${id}/${variant}/${size}`
+      );
 
-    dispatch({
-      type: REMOVE_ITEM_FROM_CART_SUCCESS,
-      payload: data.success,
-    });
-  } catch (error) {
-    dispatch({
-      type: REMOVE_ITEM_FROM_CART_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: REMOVE_ITEM_FROM_CART_SUCCESS,
+        payload: data.success,
+      });
+    } catch (error) {
+      dispatch({
+        type: REMOVE_ITEM_FROM_CART_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const saveShippingInfo = (data) => async (dispatch) => {
   dispatch({

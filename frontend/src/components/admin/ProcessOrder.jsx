@@ -12,6 +12,8 @@ import {
   clearErrors,
 } from "../../actions/orderActions";
 import { UPDATE_ORDER_RESET } from "../../constants/orderConstants";
+import OrderProgressBar from "../order/OrderProgressBar";
+import Back from "../layout/Back";
 
 const ProcessOrder = () => {
   const { id } = useParams();
@@ -20,14 +22,7 @@ const ProcessOrder = () => {
   const dispatch = useDispatch();
 
   const { loading, order = {} } = useSelector((state) => state.orderDetails);
-  const {
-    shippingInfo,
-    orderItems,
-    paymentInfo,
-    user,
-    totalPrice,
-    orderStatus,
-  } = order;
+  const { orderItems, paymentInfo, user, totalPrice, orderStatus } = order;
   const { error, isUpdated } = useSelector((state) => state.order);
 
   const orderId = id;
@@ -52,184 +47,144 @@ const ProcessOrder = () => {
     dispatch(updateOrder(order._id, formData));
   };
 
-  const shippingDetails =
-    shippingInfo &&
-    `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`;
+  const [theOrder, setTheOrder] = useState("");
+
+  useEffect(() => {
+    setTheOrder(order.shippingInfo);
+    console.log(orderStatus);
+  }, [order]);
+
   const isPaid =
     paymentInfo && paymentInfo.status === "succeeded" ? true : false;
-
-  const OrderProgressBar = ({ currentStatus }) => {
-    const steps = [
-      "Processing",
-      "Order Confirmed",
-      "Out For Delivery",
-      "Shipping",
-      "Delivered",
-    ];
-    const currentStepIndex = steps.indexOf(currentStatus);
-
-    return (
-      <div className="order-progress-container">
-        <div className="progress-track"></div>
-        {steps.map((step, index) => (
-          <div
-            key={step}
-            className={`progress-step ${
-              index <= currentStepIndex ? "active" : ""
-            }`}
-          >
-            {index <= currentStepIndex ? (
-              <span className="checkmark">&#10003;</span>
-            ) : (
-              <span className="step-number">{index + 1}</span>
-            )}
-            <div className="step-label">{step}</div>
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   return (
     <Fragment>
       <MetaData title={`Process Order # ${order && order._id}`} />
-      <div className="row">
-        <div className="col-12 col-md-2">
+      <div className="order-and-sidebar">
+        <div className="sidebar">
           <Sidebar />
         </div>
 
-        <div className="col-12 col-md-10">
-          <Fragment>
-            {loading ? (
-              <Loader />
-            ) : (
-              <div className="order-details-container">
-                <div className="col-12 col-lg-7 order-details">
-                  <strong>
-                    <h2 className="my-5">Order id: {order._id}</h2>
-                  </strong>
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="order-details-container">
+            <Back/>
+            <div style={{ width: "250px" }}>
+              <h4 className="">Trạng thái đơn hàng</h4>
 
-                  <OrderProgressBar currentStatus={orderStatus} />
+              <div className="form-group">
+                <select
+                  className="form-control"
+                  name="status"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="Processing">Processing</option>
+                  <option value="Order Confirmed">Order Confirmed</option>
+                  <option value="Out For Delivery">Out For Delivery</option>
+                  <option value="Delivered">Delivered</option>
+                </select>
+              </div>
 
-                  <h4 className="mb-4">Shipping Info</h4>
-                  <p>
-                    <b>Name:</b> {order && order.userName}
-                  </p>
-                  <p>
-                    <b>Phone:</b> {shippingInfo && shippingInfo.phoneNo}
-                  </p>
-                  <p className="mb-4">
-                    <b>Address:</b>
-                    {shippingDetails}
-                  </p>
-                  <p>
-                    <b>Amount:</b> ${totalPrice}
-                  </p>
+              <button
+                className="btn btn-primary btn-block"
+                onClick={() => updateOrderHandler()}
+              >
+                Cập nhật trạng thái
+              </button>
+            </div>
+            <strong>
+              <h2 className="">Order id: {order._id}</h2>
+            </strong>
 
-                  <hr />
+            <OrderProgressBar currentStatus={orderStatus} />
 
-                  <h4 className="my-4">Payment</h4>
-                  <p className={isPaid ? "greenColor" : "redColor"}>
-                    <b>{isPaid ? "PAID" : "NOT PAID"}</b>
-                  </p>
+            <h4 className="">Thông tin giao hàng</h4>
+            <p>
+              <b>Tên người nhận:</b> {order && order.userName}
+            </p>
+            <p>
+              <b>Số điện thoại:</b> {theOrder && theOrder.phone}
+            </p>
+            <p className="">
+              <b>Địa chỉ giao:</b>{" "}
+              {theOrder &&
+                `${theOrder.province},${theOrder.district}, ${theOrder.town}, ${theOrder.location}`}
+            </p>
+            <p>
+              <b>Số tiền:</b> {totalPrice} VNĐ
+            </p>
 
-                  <h4 className="my-4">Stripe ID</h4>
-                  <p>
-                    <b>{paymentInfo && paymentInfo.id}</b>
-                  </p>
+            <hr />
 
-                  <h4 className="my-4">Order Status:</h4>
-                  <p
-                    className={
-                      order.orderStatus &&
-                      String(order.orderStatus).includes("Delivered")
-                        ? "greenColor"
-                        : "redColor"
-                    }
-                  >
-                    <b>{orderStatus}</b>
-                  </p>
+            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+              <h4>Thanh toán</h4>
+              <p className={isPaid ? "greenColor" : "redColor"}>
+                <b>{isPaid ? "ĐÃ THANH TOÁN" : "CHƯA THANH TOÁN"}</b>
+              </p>
+            </div>
+            <hr />
 
-                  <h4 className="my-4">Order Items:</h4>
+            <h4 className="">Stripe ID</h4>
+            <p>
+              <b>{paymentInfo && paymentInfo.id}</b>
+            </p>
+            <hr />
 
-                  <hr />
+            <h4 className="my-4">Sản phẩm:</h4>
+
+            <hr />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              {orderItems &&
+                orderItems.map((item, index) => (
                   <div
+                    key={index}
                     style={{
                       display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
+                      justifyContent: "space-between",
+                      border: "black solid 1px",
+                      padding: "5px",
+                      alignItems: "center",
+                      width: "70%",
                     }}
                   >
-                    {orderItems &&
-                      orderItems.map((item, index) => (
-                        <div
-                          key={index}
-                          style={{
-                            display: "flex",
-                            border: "black solid 1px",
-                            padding: "5px",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div style={{ width: "100%", height: "100%" }}>
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              height="45"
-                              width="65"
-                            />
-                          </div>
+                    <div>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        height="45"
+                        width="65"
+                      />
+                    </div>
 
-                          <div className="col-5 col-lg-5">
-                            <Link to={`/products/${item.product}`}>
-                              <strong>{item.name}</strong> - {item.variantName}
-                            </Link>
-                          </div>
+                    <div className="">
+                      <Link to={`/products/${item.product}`}>
+                        <strong>{item.name}</strong> - {item.variantName}
+                      </Link>
+                    </div>
 
-                          <div>{item.size}</div>
+                    <div>{item.size}</div>
 
-                          <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                            <p>{item.price} VNĐ</p>
-                          </div>
+                    <div className="">
+                      <p>{item.price} VNĐ</p>
+                    </div>
 
-                          <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-                            <p>{item.quantity} món</p>
-                          </div>
-                        </div>
-                      ))}
+                    <div className="">
+                      <p>{item.quantity} món</p>
+                    </div>
                   </div>
-                  <hr />
-                </div>
-
-                <div className="col-12 col-lg-3 mt-5">
-                  <h4 className="my-4">Status</h4>
-
-                  <div className="form-group">
-                    <select
-                      className="form-control"
-                      name="status"
-                      value={status}
-                      onChange={(e) => setStatus(e.target.value)}
-                    >
-                      <option value="Processing">Processing</option>
-                      <option value="Order Confirmed">Order Confirmed</option>
-                      <option value="Out For Delivery">Out For Delivery</option>
-                      <option value="Shipping">Shipping</option>
-                      <option value="Delivered">Delivered</option>
-                    </select>
-                  </div>
-
-                  <button
-                    className="btn btn-primary btn-block"
-                    onClick={() => updateOrderHandler()}
-                  >
-                    Update Status
-                  </button>
-                </div>
-              </div>
-            )}
-          </Fragment>
-        </div>
+                ))}
+            </div>
+            <hr />
+          </div>
+        )}
       </div>
     </Fragment>
   );

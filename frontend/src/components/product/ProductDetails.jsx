@@ -15,7 +15,6 @@ import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 import { useParams } from "react-router-dom";
 import ProductImageZoom from "./ProductImageZoom";
 import ProductVariant from "./ProductVariant";
-import { set } from "mongoose";
 
 const ProductDetails = () => {
   const { loading, error, product } = useSelector(
@@ -35,7 +34,7 @@ const ProductDetails = () => {
   const [variant, setVariant] = useState([]);
   const [size, setSize] = useState("");
   const [variantIndex, setVariantIndex] = useState("");
-  const [cartItem, setCartItem] = useState("");
+  const [cartItem, setCartItem] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -77,7 +76,7 @@ const ProductDetails = () => {
         });
       });
 
-      const item = cartItems.find((item) => item.product === product._id);
+      const item = cartItems.filter((item) => item.product === product._id);
 
       setCartItem(item);
     }
@@ -101,13 +100,17 @@ const ProductDetails = () => {
       size: size,
     };
 
-    const check = await dispatch(getUserCartProduct(item));
-
-    if (check) {
-      dispatch(addItemToCart(item));
-      toast.success("Sản phẩm đã được thêm vào giỏ hàng");
+    if (cartItems.length > 0) {
+      const check = await dispatch(getUserCartProduct(item));
+      if (check) {
+        await dispatch(addItemToCart(item));
+        toast.success("Sản phẩm đã được thêm vào giỏ hàng");
+      } else {
+        toast.error("Giỏ hàng đã đạt số lượng hiện hữu của sản phẩm");
+      }
     } else {
-      return toast.error("Giỏ hàng đã đạt số lượng hiện hữu của sản phẩm");
+      await dispatch(addItemToCart(item));
+      toast.success("Sản phẩm đã được thêm vào giỏ hàng");
     }
   };
 
@@ -177,13 +180,19 @@ const ProductDetails = () => {
     dispatch(newReview(formData));
   };
 
-  const ChooseSize = (newSize, newPrice, newStock) => {
-    if (cartItem && newStock === cartItem.quantity) {
+  const ChooseSize = (newVariant, newSize, newPrice, newStock) => {
+    console.log(newVariant, newSize, newPrice, newStock);
+    const item = cartItem.find(
+      (item) => item.variant === newVariant && item.size === newSize
+    );
+
+    if (item && item.quantity === newStock) {
       toast.error("Giỏ hàng đã đạt số lượng hiện hữu của sản phẩm");
       return;
     }
 
     setQuantity(1);
+
     if (size === newSize) {
       setSize("");
       setPrice(product.price);
@@ -316,7 +325,12 @@ const ProductDetails = () => {
                         className="size-button"
                         key={index}
                         onClick={() => {
-                          ChooseSize(item.size, item.price, item.stock);
+                          ChooseSize(
+                            variant._id,
+                            item.size,
+                            item.price,
+                            item.stock
+                          );
                         }}
                         style={{
                           border: size === item.size ? "solid 2px black" : "",

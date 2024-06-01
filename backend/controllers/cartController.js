@@ -89,11 +89,13 @@ exports.getUserCartProduct = catchAsyncErrors(async (req, res, next) => {
   let productQuantity = 0;
 
   theProduct.variants.map((variant, index) => {
-    variant.inventory.map((item, index) => {
-      if (item.size === size) {
-        productQuantity = item.stock;
-      }
-    });
+    if (variant._id.toString() === variant.toString()) {
+      variant.inventory.map((item, index) => {
+        if (item.size === size) {
+          productQuantity = item.stock;
+        }
+      });
+    }
   });
 
   const total = currentItem.quantity + quantity;
@@ -117,11 +119,18 @@ exports.removeProductFromCart = catchAsyncErrors(async (req, res, next) => {
     return res.status(404).json({ success: false, message: "Cart not found" });
   }
 
-  const { id, size } = req.params;
+  const { id, variant, size } = req.params;
 
   const updatedCartItems = cart.cartItems.filter(
-    (item) => !(item.product.toString() === id && item.size.toString() === size)
+    (item) =>
+      !(
+        item.product.toString() === id &&
+        item.variant.toString() === variant &&
+        item.size === size
+      )
   );
+
+  console.log(updatedCartItems);
 
   try {
     const updatedCart = await Cart.findOneAndUpdate(

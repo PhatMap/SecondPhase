@@ -22,8 +22,8 @@ const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
 
-  const removeCartItemHandler = async (id, size) => {
-    await dispatch(removeItemFromCart(id, size));
+  const removeCartItemHandler = async (id, variant, size) => {
+    await dispatch(removeItemFromCart(id, variant, size));
     dispatch(getUserCart());
   };
 
@@ -117,6 +117,19 @@ const Cart = () => {
     }
   };
 
+  const Choose = (value) => {
+    setSelectedItems(new Array(cartItems.length).fill(value));
+    if (value) {
+      setSelected(cartItems);
+    } else {
+      setSelected([]);
+    }
+  };
+
+  useEffect(() => {
+    setSelectedItems(new Array(cartItems.length).fill(false));
+  }, [cartItems]);
+
   return (
     <Fragment>
       <MetaData title={"Your Cart"} />
@@ -130,6 +143,20 @@ const Cart = () => {
                 <h2 className="cart-status">
                   Giỏ Hàng có: <b>{cartItems.length} Sản Phẩm</b>
                 </h2>
+                <div style={{ display: "flex", gap: "20px" }}>
+                  <button
+                    style={{ color: "darkblue" }}
+                    onClick={() => Choose(true)}
+                  >
+                    Chọn tất cả
+                  </button>
+                  <button
+                    style={{ color: "red" }}
+                    onClick={() => Choose(false)}
+                  >
+                    Bỏ chọn tất cả
+                  </button>
+                </div>
                 {cartItems.map((item, index) => (
                   <div key={index}>
                     <div className="cart-item">
@@ -196,7 +223,7 @@ const Cart = () => {
                     {show && (
                       <DeleteNotify
                         func={removeCartItemHandler}
-                        paras={[item.product, item.size]}
+                        paras={[item.product, item.variant, item.size]}
                         show={setShow}
                       />
                     )}

@@ -2,9 +2,8 @@ import React, { Fragment, useEffect } from "react";
 
 const OrderProgressBar = ({ currentStatus }) => {
   const steps = [
-    "Placed",
+    "Processing",
     "Order Confirmed",
-    "Shipped",
     "Out For Delivery",
     "Delivered",
   ];

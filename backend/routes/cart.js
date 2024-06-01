@@ -19,7 +19,7 @@ router.route("/cart/me").get(isAuthenticatedUser, getUserCart);
 router.route("/cart/product").post(isAuthenticatedUser, getUserCartProduct);
 
 router
-  .route("/cart/:id/:size")
+  .route("/cart/:id/:variant/:size")
   .delete(isAuthenticatedUser, removeProductFromCart);
 
 router.route("/cart/empty").put(isAuthenticatedUser, emptyTheCart);
