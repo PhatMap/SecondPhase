@@ -7,7 +7,7 @@ const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  console.log(req.body); // Kiểm tra tất cả dữ liệu đầu vào
+ 
 
   if (!req.body.avatar) {
     return res.status(400).json({
@@ -445,7 +445,7 @@ exports.deleteUserAddress = catchAsyncErrors(async (req, res, next) => {
 
 
 exports.NewUser = catchAsyncErrors(async (req, res, next) => {
-  console.log(req.body); // Kiểm tra tất cả dữ liệu đầu vào
+  
 
   if (!req.body.avatar) {
     return res.status(400).json({
@@ -476,7 +476,7 @@ exports.NewUser = catchAsyncErrors(async (req, res, next) => {
   if (existingUser) {
     return res.status(400).json({
       success: false,
-      message: "Email already exists.",
+      message: "Email Đã Tồn Tại.",
     });
   }
 
@@ -491,8 +491,8 @@ exports.NewUser = catchAsyncErrors(async (req, res, next) => {
     },
   });
 
- return res.status(200).json({
-  success:true,
-  massage:" them thanh cong",
- })
+  return res.status(200).json({
+    success: true,
+    message: "Thêm Thành Công",
+  });
 });

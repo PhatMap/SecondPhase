@@ -57,10 +57,10 @@ import {
   UPDATE_USER_ADDRESS_FAIL,
   USER_ADDRESS_DELETE_SUCCESS,
   USER_ADDRESS_DELETE_REQUEST,
-
-  New_USER_REQUEST,
-  New_USER_SUCCESS,
-  New_USER_FAIL,
+  CLEAR_MESSAGE,
+  NEW_USER_REQUEST,
+  NEW_USER_SUCCESS,
+  NEW_USER_FAIL,
 } from "../constants/userConstants";
 
 // Login
@@ -144,11 +144,13 @@ export const register = (userData) => async (dispatch) => {
       type: REGISTER_USER_SUCCESS,
       payload: data.user,
     });
+    console.log("thanh con");
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAIL,
       payload: error.response.data.message,
     });
+    console.log("asdasd",error.response.data.message);
   }
 };
 
@@ -401,12 +403,7 @@ export const deleteUser = (id) => async (dispatch) => {
   }
 };
 
-// Clear Errors
-export const clearErrors = () => async (dispatch) => {
-  dispatch({
-    type: CLEAR_ERRORS,
-  });
-};
+
 export const updateAddress = (addresses) => async (dispatch, getState) => {
   try {
     dispatch({ type: UPDATE_ADDRESS_REQUEST });
@@ -512,9 +509,9 @@ export const updateUserAddress = (addressId, updatedAddress) => async (dispatch)
     });
   }
 };
-export const NewUser = (userData) => async (dispatch) => {
+export const newUser = (userData) => async (dispatch) => {
   try {
-    dispatch({ type: New_USER_REQUEST });
+    dispatch({ type: NEW_USER_REQUEST });
 
     const config = {
       headers: {
@@ -525,17 +522,31 @@ export const NewUser = (userData) => async (dispatch) => {
     const { data } = await axios.post("/api/v1/admin/users/new", userData, config);
 
     dispatch({
-      type: New_USER_SUCCESS,
-      payload: data.user,
+      type: NEW_USER_SUCCESS,
+      payload: data.message, // Trả về thông báo từ server
     });
+    console.log("Yêu cầu đã được gửi thành công", data.message);
   } catch (error) {
     dispatch({
-      type: New_USER_FAIL,
-      payload: error.response.data.message,
+      type: NEW_USER_FAIL,
+      payload: error.response.data.message, // Trả về thông báo lỗi từ server
     });
+    console.log("Yêu cầu gửi không thành công. Lỗi:", error.response.data.message);
   }
 };
 
 
 
 
+
+// Clear Errors
+export const clearErrors = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_ERRORS,
+  });
+};
+export const clearMessage = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_MESSAGE,
+  });
+};

@@ -3,11 +3,12 @@ import MetaData from "../layout/MetaData";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { NewUser, clearErrors } from "../../actions/userActions";
+
 import { useNavigate } from "react-router-dom";
 import Address from "../user/Address";
+import { newUser,clearErrors,clearMessage } from "../../actions/userActions";
 
-const Register = () => {
+const NewUser = () => {
   const history = useNavigate();
   const [formError, setFormError] = useState("");
   const [nameError, setNameError] = useState("");
@@ -68,22 +69,28 @@ const Register = () => {
 
   const dispatch = useDispatch();
 
-  const { error, loading } = useSelector((state) => state.auth);
-
+  const { message,error, loading } = useSelector((state) => state.auth);
+  const successAddUser = useSelector((state) => state.user.success);
   useEffect(() => {
-
-    if (error) {
+    console.log("asdsdad",message);
+    if (message) {
+      toast.success("Thêm thành công");
+      dispatch(clearMessage());
+      history("/admin/users");
+    } else if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error, history]);
+
+  }, [dispatch,message, error, history]);
+
 
   const isValidPhoneNumber = (phone) => {
     const phoneRegex = /^[0-9]{10}$/;
     return phoneRegex.test(phone);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler =async (e) => {
     e.preventDefault();
     setErrorMessage("");
     setFormError("");
@@ -114,6 +121,8 @@ const Register = () => {
 
     if (!password) {
       setPasswordError("Mật Khẩu Không Được Để Trống");
+    } else if (password.length < 6) {
+      setPasswordError(`Mật khẩu phải chứa ít nhất 6 ký tự`);
     } else {
       setPasswordError("");
     }
@@ -148,14 +157,7 @@ const Register = () => {
       formData.append(`address[${index}][location]`, address.location);
       formData.append(`address[${index}][phone]`, address.phone);
     });
-    try{
-    dispatch(NewUser(formData))
-      
-        history("/admin/users");
-    }
-      catch(error) {
-        setErrorMessage(error.response.data.message);
-      };
+      await dispatch(newUser(formData))
   };
 
   const onChange = (e) => {
@@ -212,7 +214,7 @@ const Register = () => {
       <MetaData title={"Register User"} />
       <div className="register-wrapper">
         <form className="register-form-container" onSubmit={submitHandler} encType="multipart/form-data">
-          <h1 className="register-heading">Đăng Kí</h1>
+          <h1 className="register-heading">Khách Hàng </h1>
           <div className="register-form-group">
             <label htmlFor="name_field">Họ Tên</label>
             <input
@@ -312,7 +314,8 @@ const Register = () => {
             type="submit"
             className="register-btn"
             disabled={loading ? true : false}
-          >
+          >{errorMessage && <p style={{ color: "red", fontSize: "0.8em" }}>{errorMessage}</p>}
+
             Đăng Kí
           </button>
         </form>
@@ -321,4 +324,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default NewUser;

@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import MetaData from "../layout/MetaData";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { register, clearErrors } from "../../actions/userActions";
@@ -72,10 +72,15 @@ const Register = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      history("/");
+
+      setTimeout(() => {
+        history("/");
+      }, 2000);
+     
     }
 
     if (error) {
+      setErrorMessage(error);
       toast.error(error);
       dispatch(clearErrors());
     }
@@ -86,7 +91,7 @@ const Register = () => {
     return phoneRegex.test(phone);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler =   async (e) => {
     e.preventDefault();
     setErrorMessage("");
     setFormError("");
@@ -114,9 +119,10 @@ const Register = () => {
     } else {
       setPhoneError("");
     }
-
     if (!password) {
       setPasswordError("Mật Khẩu Không Được Để Trống");
+    } else if (password.length < 6) {
+      setPasswordError(`Mật khẩu phải chứa ít nhất 6 ký tự`);
     } else {
       setPasswordError("");
     }
@@ -151,13 +157,9 @@ const Register = () => {
       formData.append(`address[${index}][phone]`, address.phone);
     });
 
-    dispatch(register(formData))
-      .then(() => {
-        // Register success
-      })
-      .catch((error) => {
-        setErrorMessage(error.response.data.message);
-      });
+      await dispatch(register(formData));
+      toast.success("Đăng kí thành công!");
+    console.log("jhasdsd",error);
   };
 
   const onChange = (e) => {
@@ -215,6 +217,8 @@ const Register = () => {
       <div className="register-wrapper">
         <form className="register-form-container" onSubmit={submitHandler} encType="multipart/form-data">
           <h1 className="register-heading">Đăng Kí</h1>
+          {error && <p className="error">{error}</p>}
+
           <div className="register-form-group">
             <label htmlFor="name_field">Họ Tên</label>
             <input
