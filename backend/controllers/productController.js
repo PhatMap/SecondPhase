@@ -71,7 +71,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getProductsByCategory = catchAsyncErrors(async (req, res, next) => {
-  const resPerPage = 4;
+  const resPerPage = 6;
   const productsCount = await Product.countDocuments();
 
   products = await Product.find({ category: req.params.category });
