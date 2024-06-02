@@ -19,7 +19,7 @@ const Product = ({ product }) => {
           </div>
           <span style={{ color: "black" }}>{product.numOfReviews} Reviews</span>
         </div>
-        <p>${product.price}</p>
+        <p>{product.price} VNĐ</p>
         <Link className="product-view-details" to={`/product/${product._id}`}>
           View Details
         </Link>
