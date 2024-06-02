@@ -65,11 +65,11 @@ const Profile = () => {
                 </Link>
               )}
 
-              <div className="profile-btn">
+              {/* <div className="profile-btn">
                 <Link to="/password/update" className="profile-btn">
                   Mật Khẩu 
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </Fragment>
