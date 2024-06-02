@@ -15,7 +15,7 @@ import { useLocation } from "react-router-dom";
 
 const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([1, 10000]);
+  const [price, setPrice] = useState([1, 1000000]);
   const [tempPrice, setTempPrice] = useState(["", ""]);
   const [rating, setRating] = useState(0);
   const [category, setCategory] = useState("");
@@ -51,7 +51,7 @@ const Shop = () => {
 
   useEffect(() => {
     if (tempPrice[0] === "" && tempPrice[1] === "") {
-      setTempPrice(["0", "10000"]);
+      setTempPrice(["0", "1000000"]);
     }
     if (!filtersApplied) {
       dispatch(getProducts(keyword, currentPage, price, rating));
@@ -98,8 +98,8 @@ const Shop = () => {
       setMinPriceError("");
     }
 
-    if (maxPrice > 10000 || isNaN(maxPrice)) {
-      setMaxPriceError("Nhỏ hơn hoặc bằng 10000");
+    if (maxPrice > 1000000 || isNaN(maxPrice)) {
+      setMaxPriceError("Nhỏ hơn hoặc bằng 1000000");
       return;
     } else {
       setMaxPriceError("");
@@ -117,7 +117,7 @@ const Shop = () => {
 
   const clearFilters = () => {
     setTempPrice(["", ""]); // Xóa giá trị tạm thời của giá sản phẩm
-    setPrice([1, 10000]); // Đặt lại giá sản phẩm mặc định
+    setPrice([1, 1000000]); // Đặt lại giá sản phẩm mặc định
     setRating(0); // t lại xếp hạng mặc định
     setSelectedStar(0);
     dispatch(getProducts(keyword, currentPage, price, rating));

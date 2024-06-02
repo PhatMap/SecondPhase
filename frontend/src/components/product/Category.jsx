@@ -12,7 +12,7 @@ import { getProductsByCategory } from "../../actions/productActions";
 const Category = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [tempPrice, setTempPrice] = useState(["", ""]);
-  const [price, setPrice] = useState([1, 10000]);
+  const [price, setPrice] = useState([1, 1000000]);
   const [rating, setRating] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedStar, setSelectedStar] = useState(0);
@@ -47,7 +47,7 @@ const Category = () => {
 
   const clearFilters = () => {
     setTempPrice(["", ""]); // Xóa giá trị tạm thời của giá sản phẩm
-    setPrice([1, 10000]); // Đặt lại giá sản phẩm mặc định
+    setPrice([1, 1000000]); // Đặt lại giá sản phẩm mặc định
     setRating(0); // Đặt lại xếp hạng mặc định
     setSelectedCategory(null); // Bỏ chọn danh mục
     setSelectedStar(0); // Bỏ chọn số sao
@@ -87,8 +87,8 @@ const Category = () => {
       setMinPriceError("");
     }
   
-    if (maxPrice > 10000 || isNaN(maxPrice)) {
-      setMaxPriceError("Nhỏ hơn hoặc bằng 10000");
+    if (maxPrice > 1000000 || isNaN(maxPrice)) {
+      setMaxPriceError("Nhỏ hơn hoặc bằng 1000000");
       return;
     } else {
       setMaxPriceError("");
@@ -105,7 +105,7 @@ const Category = () => {
   
   useEffect(() => {
     if (!tempPrice[0] && !tempPrice[1]) {
-      setTempPrice(["0", "10000"]);
+      setTempPrice(["0", "1000000"]);
     }
     if (filtersApplied) {
       dispatch(
