@@ -19,6 +19,7 @@ const UsersList = () => {
   const [deleteUserId, setDeleteUserId] = useState(null);
   const [deleteUserRole, setDeleteUserRole] = useState(null);
   const history = useNavigate();
+  const [prevUsersCount, setPrevUsersCount] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -38,7 +39,13 @@ const UsersList = () => {
       dispatch({ type: DELETE_USER_RESET });
       setDeleteMessage(""); // Reset delete message
     }
-  }, [dispatch, error, isDeleted]);
+    if (users.length > prevUsersCount &&prevUsersCount>0) {
+      toast.success("Thêm Người Dùng Thành Công");
+    }
+
+    // Update the previous user count state
+    setPrevUsersCount(users.length);
+  }, [dispatch, error, isDeleted,users.length, prevUsersCount]);
 
   const handleDeleteUser = (id, role) => {
     if (role === "admin") {
