@@ -1,10 +1,10 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { MDBDataTable } from "mdbreact";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
 import Loader from "../layout/Loader";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -18,9 +18,9 @@ import { DELETE_REVIEW_RESET } from "../../constants/productConstants";
 const ProductReviews = () => {
   const [productId, setProductId] = useState("");
   const history = useNavigate();
-  const [currentProduct, setCurrentProduct] = useState(null); 
+  const [currentProduct, setCurrentProduct] = useState(null);
   const dispatch = useDispatch();
-  const { loading,  products } = useSelector((state) => state.products);
+  const { loading, products } = useSelector((state) => state.products);
   const { error, reviews } = useSelector((state) => state.productReviews);
   const { isDeleted, error: deleteError } = useSelector(
     (state) => state.review
@@ -34,14 +34,12 @@ const ProductReviews = () => {
       dispatch(clearErrors());
 
       history("/admin/products");
-    
     }
   }, [dispatch, error, deleteError, isDeleted, history]);
 
-const setProducts = () => {
+  const setProducts = () => {
     const data = {
       columns: [
-        
         {
           label: "Tên Sản Phẩm",
           field: "name",
@@ -57,10 +55,7 @@ const setProducts = () => {
           field: "ratings",
           sort: "asc",
         },
-        { label: "Tác vụ", 
-        field: "actions", 
-        sort: "asc" },
-       
+        { label: "Tác vụ", field: "actions", sort: "asc" },
       ],
       rows: [],
     };
@@ -80,7 +75,7 @@ const setProducts = () => {
           <button
             className="btn btn-primary py-1 px-2"
             onClick={() => {
-              setProductId(product._id);  // Cập nhật productId và tải review
+              setProductId(product._id); // Cập nhật productId và tải review
               setCurrentProduct(product);
               dispatch(getProductReviews(product._id));
             }}
@@ -121,7 +116,7 @@ const setProducts = () => {
       dispatch(deleteReview(id, productId));
     }
   };
-  
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(getProductReviews(productId));
@@ -135,7 +130,7 @@ const setProducts = () => {
           field: "name",
           sort: "asc",
         },
-       
+
         {
           label: "Đánh Giá",
           field: "rating",
@@ -169,7 +164,6 @@ const setProducts = () => {
         actions: (
           <button
             className="btn btn-danger py-1 px-2 ml-2"
-
             onClick={() => deleteReviewHandler(review._id)}
           >
             <i className="fa fa-trash"></i>
@@ -191,25 +185,16 @@ const setProducts = () => {
 
         <div className="col-12 col-md-10">
           <Fragment>
-          <h1 className="my-4" style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'center' }}>Sản Phẩm </h1>
-
-              {loading ? (
-                <Loader />
-              ) : (
-                <MDBDataTable
-                  data={setProducts()}
-                  className="px-3"
-                  bordered
-                  striped
-                  hover
-                  noBottomColumns
-                />
-              )}
-            {productId && (
-            <h2 className="centered-title">
-              Đánh giá sản phẩm  
-            </h2>
-          )}
+            <h1
+              className="my-4"
+              style={{
+                fontSize: "40px",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Sản Phẩm{" "}
+            </h1>
 
             {reviews && reviews.length > 0 ? (
               <MDBDataTable
@@ -218,10 +203,27 @@ const setProducts = () => {
                 bordered
                 striped
                 hover
+                noBottomColumns
               />
             ) : (
-              <p className="mt-5 text-center" style={{ fontSize: '24px' }}>No Reviews.</p>
+              <p className="mt-5 text-center" style={{ fontSize: "24px" }}>
+                No Reviews.
+              </p>
             )}
+
+            {loading ? (
+              <Loader />
+            ) : (
+              <MDBDataTable
+                data={setProducts()}
+                className="px-3"
+                bordered
+                striped
+                hover
+                noBottomColumns
+              />
+            )}
+            {productId && <h2 className="centered-title">Đánh giá sản phẩm</h2>}
           </Fragment>
         </div>
       </div>

@@ -66,7 +66,7 @@ const ProductsList = () => {
       data.rows.push({
         id: product._id,
         name: product.name,
-        price: `$${product.price}`,
+        price: `${product.price} VNĐ`,
         stock: product.stock,
         actions: (
           <Fragment>
@@ -104,7 +104,7 @@ const ProductsList = () => {
 
         <div className="col-12 col-md-10">
           <Fragment>
-            <h1 className="my-5">All Products</h1>
+            <h1 className="my-5">All Products Reviews</h1>
 
             {loading ? (
               <Loader />
