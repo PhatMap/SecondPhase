@@ -11,7 +11,7 @@ Add your config variables values in the config.env file in backend/config folder
 ```
 cd frontend
 npm i
-run Frontend : npm run 
+run Frontend : npm run dev
 ```
 
 ### Install Dependencies (Backend)
