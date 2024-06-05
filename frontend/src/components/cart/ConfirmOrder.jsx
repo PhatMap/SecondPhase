@@ -12,21 +12,22 @@ import "react-toastify/dist/ReactToastify.css";
 
 const ConfirmOrder = () => {
   const history = useNavigate();
+  const dispatch = useDispatch();
+
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.newOrder);
 
-  const itemsPrice = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+  const [items, setItems] = useState([]);
+  const [infor, setInfor] = useState("");
+
+  const itemsPrice = items.reduce(
+    (total, item) => total + item.price * item.quantity,
     0
   );
   const shippingPrice = itemsPrice > 200 ? 0 : 25;
   const taxPrice = Number((0.05 * itemsPrice).toFixed(2));
   const totalPrice = (itemsPrice + shippingPrice + taxPrice).toFixed(2);
-  const dispatch = useDispatch();
-
-  const [items, setItems] = useState([]);
-  const [infor, setInfor] = useState("");
 
   const processToPayment = () => {
     const data = {
@@ -72,7 +73,11 @@ const ConfirmOrder = () => {
       toast.error(error);
       dispatch(clearErrors());
     }
-  });
+  }, [dispatch, error]);
+
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
 
   useEffect(() => {
     const storedSelectedItems =
@@ -97,7 +102,9 @@ const ConfirmOrder = () => {
 
       <div className="confirm-order-container">
         <div className="confirm-order-form-info">
-        <h4 className="mb-3" style={{ fontSize: '27px', fontWeight: 'bold' }}>Thông tin giao hàng</h4>
+          <h4 className="mb-3" style={{ fontSize: "27px", fontWeight: "bold" }}>
+            Thông tin giao hàng
+          </h4>
 
           <p>
             <b>Họ Tên :</b> {user && user.name}
@@ -111,29 +118,31 @@ const ConfirmOrder = () => {
           </p>
 
           <hr />
-          <h4 className="mt-4"style={{ fontSize: '27px', fontWeight: 'bold' }}>Giỏ Hàng:</h4>
+          <h4 className="mt-4" style={{ fontSize: "27px", fontWeight: "bold" }}>
+            Giỏ Hàng:
+          </h4>
 
           {items.map((item) => (
             <Fragment key={item.product}>
               <hr />
               <div className="cart-item-confirm my-1">
-                  <div className="row">
-                    <div className="col-4 col-lg-2">
-                      <img src={item.image} alt="Laptop" height="45" width="65" />
-                    </div>
+                <div className="row">
+                  <div className="col-4 col-lg-2">
+                    <img src={item.image} alt="Laptop" height="45" width="65" />
+                  </div>
 
-                    <div className="col-5 col-lg-6">
-                      <Link to={`/product/${item.product}`}>{item.name}</Link>
-                    </div>
+                  <div className="col-5 col-lg-6">
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                  </div>
 
-                    <div className="col-4 col-lg-4 mt-4 mt-lg-0">
-                      <p>
-                        {item.quantity} x ${item.price} ={" "}
-                        <b>${(item.quantity * item.price).toFixed(2)}</b>
-                      </p>
-                    </div>
+                  <div className="col-4 col-lg-4 mt-4 mt-lg-0">
+                    <p>
+                      {item.quantity} x ${item.price} ={" "}
+                      <b>${(item.quantity * item.price).toFixed(2)}</b>
+                    </p>
                   </div>
                 </div>
+              </div>
 
               <hr />
             </Fragment>
@@ -144,21 +153,21 @@ const ConfirmOrder = () => {
           <h4>Hóa Đơn </h4>
           <hr />
           <p>
-            Số Lượng:{" "}
-            <span className="order-summary-values">{itemsPrice}VND </span>
+            Tổng giá trị sản phẩm:{" "}
+            <span className="order-summary-values">{itemsPrice} VNĐ </span>
           </p>
           <p>
             Vận Chuyển :{" "}
-            <span className="order-summary-values">{shippingPrice}VND</span>
+            <span className="order-summary-values">{shippingPrice} VNĐ</span>
           </p>
           <p>
-            Phí: <span className="order-summary-values">{taxPrice}VND</span>
+            Thuế: <span className="order-summary-values">{taxPrice} VNĐ</span>
           </p>
 
           <hr />
 
           <p>
-            Tổng: <span className="order-summary-values">{totalPrice}VND</span>
+            Tổng: <span className="order-summary-values">{totalPrice} VNĐ</span>
           </p>
 
           <hr />

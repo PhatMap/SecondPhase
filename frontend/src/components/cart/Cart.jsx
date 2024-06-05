@@ -254,18 +254,19 @@ const Cart = () => {
                 <p>
                   Tổng Thanh Toán:
                   <span className="order-summary-values">
-                    {selected
-                      .reduce(
-                        (acc, item) => acc + item.quantity * item.price,
-                        0
-                      )
-                      .toFixed(2)}{" "}
+                    {selected.reduce(
+                      (acc, item) => acc + item.quantity * item.price,
+                      0
+                    )}{" "}
                     VNĐ
                   </span>
                 </p>
 
                 <hr />
-                <button className="cart-checkout-btn" onClick={checkoutHandler}>
+                <button
+                  className={`cart-checkout-btn ${selected.length === 0 && "disabled"}`}
+                  onClick={checkoutHandler}
+                >
                   Thanh Toán
                 </button>
               </div>
