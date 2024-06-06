@@ -36,12 +36,14 @@ import {
 } from "../constants/productConstants";
 
 export const getProducts =
-  (keyword = "", currentPage = 1, price, rating = 0) =>
+  (keyword = "", currentPage = 1, price = [0, 1000000], rating = 0) =>
   async (dispatch) => {
     try {
       dispatch({ type: ALL_PRODUCTS_REQUEST });
 
       let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&ratings[gte]=${rating}`;
+
+      console.log(link);
 
       const config = {
         headers: {
@@ -49,8 +51,6 @@ export const getProducts =
         },
       };
       const { data } = await axios.get(link, config);
-
-      console.log(data);
 
       dispatch({
         type: ALL_PRODUCTS_SUCCESS,
@@ -138,7 +138,6 @@ export const newProduct = (productData) => async (dispatch) => {
   }
 };
 
-// Delete product (Admin)
 export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
@@ -157,7 +156,6 @@ export const deleteProduct = (id) => async (dispatch) => {
   }
 };
 
-// Update Product (ADMIN)
 export const updateProduct = (id, productData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PRODUCT_REQUEST });
@@ -249,7 +247,6 @@ export const getAdminProducts = () => async (dispatch) => {
   }
 };
 
-// Get product reviews
 export const getProductReviews = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_REVIEWS_REQUEST });
@@ -268,7 +265,6 @@ export const getProductReviews = (id) => async (dispatch) => {
   }
 };
 
-// Delete product review
 export const deleteReview = (id, productId) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_REVIEW_REQUEST });
@@ -291,7 +287,6 @@ export const deleteReview = (id, productId) => async (dispatch) => {
   }
 };
 
-// Clear Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,

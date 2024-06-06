@@ -23,7 +23,8 @@ exports.addToCart = catchAsyncErrors(async (req, res, next) => {
     );
     if (existingItemIndex !== -1) {
       cart.cartItems[existingItemIndex].quantity =
-        quantity + cart.cartItems[existingItemIndex].quantity;
+        parseFloat(quantity) +
+        parseFloat(cart.cartItems[existingItemIndex].quantity);
     } else {
       cart.cartItems.push(...cartItems);
     }
@@ -89,7 +90,7 @@ exports.getUserCartProduct = catchAsyncErrors(async (req, res, next) => {
   let productQuantity = 0;
 
   theProduct.variants.map((variant, index) => {
-    if (variant._id.toString() === variant.toString()) {
+    if (variant.id.toString() === variant.id.toString()) {
       variant.inventory.map((item, index) => {
         if (item.size === size) {
           productQuantity = item.stock;
@@ -98,7 +99,7 @@ exports.getUserCartProduct = catchAsyncErrors(async (req, res, next) => {
     }
   });
 
-  const total = currentItem.quantity + quantity;
+  const total = parseFloat(currentItem.quantity) + parseFloat(quantity);
 
   if (total > productQuantity) {
     return res.status(400).json({
@@ -129,8 +130,6 @@ exports.removeProductFromCart = catchAsyncErrors(async (req, res, next) => {
         item.size === size
       )
   );
-
-  console.log(updatedCartItems);
 
   try {
     const updatedCart = await Cart.findOneAndUpdate(

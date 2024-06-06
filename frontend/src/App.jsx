@@ -57,7 +57,6 @@ import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
-
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -95,14 +94,15 @@ function App() {
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/category/:category" element={<Category />} />
             <Route path="/cart" element={<Cart />} />
-            
+
             <Route
               path="/shipping"
               element={<ProtectedRoute component={Shipping} />}
-            /><Route
-            path="/shipping/address"
-            element={<ProtectedRoute component={AddressShip} />}
-          />
+            />
+            <Route
+              path="/shipping/address"
+              element={<ProtectedRoute component={AddressShip} />}
+            />
             <Route
               path="/confirm"
               element={<ProtectedRoute component={ConfirmOrder} />}
@@ -133,9 +133,16 @@ function App() {
               path="/me/update"
               element={<ProtectedRoute component={UpdateProfile} />}
             />
-            <Route path="/me/user-address" element={<ProtectedRoute component={UserAddress} />} />
+            <Route
+              path="/me/user-address"
+              element={<ProtectedRoute component={UserAddress} />}
+            />
             <Route exact path="/me/user-address/add" element={<AddAddress />} />
-            <Route exact path="/me/user-address/update/:id" element={<UpdateAddress />} />
+            <Route
+              exact
+              path="/me/user-address/update/:id"
+              element={<UpdateAddress />}
+            />
 
             <Route
               path="/password/update"
@@ -148,7 +155,6 @@ function App() {
             <Route
               path="/order/:id"
               element={<ProtectedRoute component={OrderDetails} />}
-              
             />
           </Routes>
         </div>
@@ -191,8 +197,8 @@ function App() {
           />
           <Route
             path="/admin/users/new"
-            element={<ProtectedRoute isAdmin={true} component={NewUser}/>}
-            />
+            element={<ProtectedRoute isAdmin={true} component={NewUser} />}
+          />
           <Route
             path="/admin/reviews"
             element={

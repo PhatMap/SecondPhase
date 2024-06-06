@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const Product = ({ product }) => {
   const [currentImage, setCurrentImage] = useState(product.images[0].url);
@@ -19,7 +20,7 @@ const Product = ({ product }) => {
           </div>
           <span style={{ color: "black" }}>{product.numOfReviews} Reviews</span>
         </div>
-        <p>{product.price} VNĐ</p>
+        <p>{formatToVNDWithVND(product.price)}</p>
         <Link className="product-view-details" to={`/product/${product._id}`}>
           View Details
         </Link>

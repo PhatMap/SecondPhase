@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
 import ListReviews from "../review/ListReviews";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,6 +15,7 @@ import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 import { useParams } from "react-router-dom";
 import ProductImageZoom from "./ProductImageZoom";
 import ProductVariant from "./ProductVariant";
+import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const ProductDetails = () => {
   const { loading, error, product } = useSelector(
@@ -33,8 +34,8 @@ const ProductDetails = () => {
   const [inventory, setInventory] = useState([]);
   const [variant, setVariant] = useState([]);
   const [size, setSize] = useState("");
-  const [variantIndex, setVariantIndex] = useState("");
   const [cartItem, setCartItem] = useState([]);
+  const [inventoryIndex, setInventoryIndex] = useState("");
 
   const dispatch = useDispatch();
 
@@ -83,6 +84,10 @@ const ProductDetails = () => {
   }, [product]);
 
   const addToCart = async () => {
+    if (!user) {
+      toast.error("Hãy đăng nhập để thêm sản phẩm vào giỏ hàng");
+      return;
+    }
     if (size === "") {
       toast.error("Hãy chọn sản phẩm và kích cỡ");
       return;
@@ -91,7 +96,7 @@ const ProductDetails = () => {
     const item = {
       product: product._id,
       variant: variant._id,
-      inventory: variant.inventory[variantIndex]._id,
+      inventory: variant.inventory[inventoryIndex]._id,
       name: product.name,
       variantName: variant.name,
       price: price,
@@ -180,24 +185,16 @@ const ProductDetails = () => {
     dispatch(newReview(formData));
   };
 
-  const ChooseSize = (newVariant, newSize, newPrice, newStock) => {
-    console.log(newVariant, newSize, newPrice, newStock);
-    const item = cartItem.find(
-      (item) => item.variant === newVariant && item.size === newSize
-    );
-
-    if (item && item.quantity === newStock) {
-      toast.error("Giỏ hàng đã đạt số lượng hiện hữu của sản phẩm");
-      return;
-    }
-
+  const ChooseSize = (index, newSize, newPrice, newStock) => {
     setQuantity(1);
 
     if (size === newSize) {
+      setInventoryIndex("");
       setSize("");
       setPrice(product.price);
       setStock(variant.totalStock);
     } else {
+      setInventoryIndex(index);
       setSize(newSize);
       setPrice(newPrice);
       setStock(newStock);
@@ -230,6 +227,7 @@ const ProductDetails = () => {
         <Fragment>
           <MetaData title={product.name} />
           <div className="detail-container">
+            <ToastContainer />
             <div className="detail-image-container">
               <div className="detail-images">
                 {images &&
@@ -306,7 +304,6 @@ const ProductDetails = () => {
                         setImages={setImages}
                         setInventory={setInventory}
                         setVariant={setVariant}
-                        setVariantIndex={setVariantIndex}
                         setSize={setSize}
                       />
                     ))
@@ -325,12 +322,7 @@ const ProductDetails = () => {
                         className="size-button"
                         key={index}
                         onClick={() => {
-                          ChooseSize(
-                            variant._id,
-                            item.size,
-                            item.price,
-                            item.stock
-                          );
+                          ChooseSize(index, item.size, item.price, item.stock);
                         }}
                         style={{
                           border: size === item.size ? "solid 2px black" : "",
@@ -347,7 +339,9 @@ const ProductDetails = () => {
               <div className="d-flex justify-content-between align-items-center">
                 <div className="detail-color">
                   <h1>Giá:</h1>
-                  <p style={{ fontSize: "30px", color: "green" }}>${price}</p>
+                  <p style={{ fontSize: "30px", color: "green" }}>
+                    {formatToVNDWithVND(price)}
+                  </p>
                 </div>
               </div>
               <hr />

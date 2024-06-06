@@ -12,7 +12,6 @@ const ProductVariant = ({
   setImages,
   setInventory,
   setVariant,
-  setVariantIndex,
   setPrice,
   setSize,
 }) => {
@@ -26,7 +25,6 @@ const ProductVariant = ({
       setStock(variant.totalStock);
       setPrice(product.price);
       setVariant(variant);
-      setVariantIndex(index);
       setActiveImage(variant.images[0].url);
       setImages(variant.images);
     } else {
@@ -36,7 +34,6 @@ const ProductVariant = ({
       setActiveImage(product.images[0].url);
       setInventory("");
       setVariant("");
-      setVariantIndex("");
       setImages(product.images);
       product.variants.map((variant, index) => {
         variant.images.map((image) => {
