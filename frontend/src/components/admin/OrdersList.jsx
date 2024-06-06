@@ -22,7 +22,15 @@ const OrdersList = () => {
 
   const { loading, error, orders } = useSelector((state) => state.allOrders);
   const { isDeleted } = useSelector((state) => state.order);
-
+  const statusTranslations = {
+    "Processing": "Xử Lý",
+    "canceled": " Đơn đã Hủy",
+    "Order Confirmed": "Xác Nhận",
+    "Shipping": "Giao Hàng",
+    "Received": "Đã Nhận",
+    "Delivered": "Hoàn Thành",
+    // Thêm các trạng thái khác nếu cần
+  };
   useEffect(() => {
     dispatch(allOrders());
 
@@ -78,13 +86,15 @@ const OrdersList = () => {
         name: order.userName,
         numofItems: order.orderItems.length,
         amount: `${order.totalPrice} VND`,
-        status:
-          order.orderStatus &&
-          String(order.orderStatus).includes("Delivered") ? (
-            <p style={{ color: "green" }}>{order.orderStatus}</p>
-          ) : (
-            <p style={{ color: "red" }}>{order.orderStatus}</p>
-          ),
+        status: (
+          <p style={{ 
+            color: order.orderStatus === "Delivered" ? "green" : 
+                   order.orderStatus === "Received" ? "orange" : "red"
+          }}>
+            {statusTranslations[order.orderStatus]}
+          </p>
+        ),
+        
         actions: (
           <Fragment>
             <Link

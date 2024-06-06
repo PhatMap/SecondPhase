@@ -17,7 +17,7 @@ const Dashboard = () => {
 
     const { products } = useSelector(state => state.products)
     const { users } = useSelector(state => state.allUsers)
-    const { orders, totalAmount, loading } = useSelector(state => state.allOrders)
+    const { orders, totalAmount, totalPaidAmount, totalPendingAmount, loading } = useSelector(state => state.allOrders);
 
     let outOfStock = 0;
     products.forEach(product => {
@@ -54,6 +54,12 @@ const Dashboard = () => {
                                         <div className="card-body">
                                             <div className="text-center card-font-size">Tổng Cộng <br /> <b>{totalAmount && totalAmount.toFixed(2)} VND </b>
                                             </div>
+                                        </div>
+                                        <div className="card-body">
+                                            <div className="text-center card-font-size">Tổng Tiền Đã Thanh Toán <br /> <b>{totalPaidAmount && totalPaidAmount.toFixed(2)} VND</b></div>
+                                        </div>
+                                        <div className="card-body">
+                                            <div className="text-center card-font-size">Tổng Tiền Chờ Thanh Toán <br /> <b>{totalPendingAmount && totalPendingAmount.toFixed(2)} VND</b></div>
                                         </div>
                                     </div>
                                 </div>

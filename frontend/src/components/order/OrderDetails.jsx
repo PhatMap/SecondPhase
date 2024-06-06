@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment,useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import MetaData from "../layout/MetaData";
@@ -7,13 +7,26 @@ import Loader from "../layout/Loader";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderDetails, clearErrors } from "../../actions/orderActions";
+import {
+  getOrderDetails,
+  updateOrder,
+  clearErrors,
+} from "../../actions/orderActions";
 import OrderProgressBar from "./OrderProgressBar";
 
 const OrderDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [isReceived, setIsReceived] = useState(false);
 
+  const statusTranslations = {
+    "Processing": "Đang Xử Lý",
+    "Order Confirmed": "Đã Xác Nhận",
+    "Shipping": "Đang Giao Hàng",
+    "Received": "Đã Nhận",
+    "Delivered": "Hoàn Thành",
+    // Thêm các trạng thái khác nếu cần
+  };
   const {
     loading,
     error,
@@ -44,6 +57,61 @@ const OrderDetails = () => {
   const isPaid =
     paymentInfo && paymentInfo.status === "succeeded" ? true : false;
 
+  const cancelOrderHandler = () => {
+    if (!canCancelOrder()) {
+      toast.error("Không thể hủy đơn hàng ở trạng thái này");
+      return;
+    }
+
+    const confirmCancel = window.confirm("Bạn có chắc chắn muốn hủy đơn hàng này không?");
+    if (!confirmCancel) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.set("status", "canceled"); // Cập nhật trạng thái thành "canceled"
+    dispatch(updateOrder(order._id, formData))
+      .then(() => {
+        toast.success("Đơn hàng đã được hủy thành công");
+        window.location.reload(); // Làm mới trang sau khi hủy đơn hàng thành công
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+
+  const canCancelOrder = () => {
+    return orderStatus === "Processing" || orderStatus === "Order Confirmed";
+  };
+
+  const canReceive = () => {
+    return orderStatus === "Shipping" ;
+  };
+ 
+    const receiveOrderHandler = () => {
+      if (!canReceive()) {
+        toast.error("Đơn Hàng Chưa Được Giao Không Thể Nhận");
+        return;
+      }
+  
+      const confirmCancel = window.confirm("Bạn có chắc đã nhận được đơn hàng?");
+      if (!confirmCancel) {
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.set("status", "Received"); // Cập nhật trạng thái thành "canceled"
+      dispatch(updateOrder(order._id, formData))
+        .then(() => {
+          toast.success("Đã cập nhật trạng thái đơn hàng thành công");
+          window.location.reload(); // Làm mới trang sau khi hủy đơn hàng thành công
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        });
+    };
+  
+
   return (
     <Fragment>
       <MetaData title={"Order Details"} />
@@ -57,6 +125,29 @@ const OrderDetails = () => {
               <h1>Order id: {order._id}</h1>
 
               <OrderProgressBar currentStatus={orderStatus} />
+
+  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px" }}>
+  <button
+    className="btn btn-success"
+    onClick={receiveOrderHandler}
+    disabled={loading || !canReceive()}
+    style={{width: "10rem" }}
+    
+  >
+    Đã Nhận
+  </button>
+
+  <button
+    className="btn btn-danger"
+    onClick={cancelOrderHandler}
+    disabled={loading || !canCancelOrder()}
+    style={{ marginRight: "65rem",width: "10rem" }}
+  >
+    Hủy Đơn 
+  </button>
+</div>
+
+
               <strong>
                 <h1>Thông tin đơn hàng</h1>
               </strong>
@@ -89,16 +180,8 @@ const OrderDetails = () => {
                 style={{ display: "flex", alignItems: "center", gap: "20px" }}
               >
                 <h4 className="my-4">Trạng thái đơn hàng:</h4>
-                <p
-                  className={
-                    order.orderStatus &&
-                    String(order.orderStatus).includes("Delivered")
-                      ? "greenColor"
-                      : "redColor"
-                  }
-                >
-                  <b>{orderStatus}</b>
-                </p>
+                <b>{statusTranslations[orderStatus]}</b>
+
               </div>
 
               <hr />
@@ -133,7 +216,7 @@ const OrderDetails = () => {
                       </div>
 
                       <div>
-                        <Link to={`/products/${item.product}`}>
+                        <Link to={`/product/${item.product}`}>
                           <strong>{item.name}</strong> - {item.size}
                         </Link>
                       </div>

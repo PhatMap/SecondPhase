@@ -110,7 +110,12 @@ export const allOrders = () => async (dispatch) => {
 
     dispatch({
       type: ALL_ORDERS_SUCCESS,
-      payload: data,
+      payload: {
+        orders: data.orders,
+        totalAmount: data.totalAmount,
+        totalPaidAmount: data.totalPaidAmount,
+        totalPendingAmount: data.totalPendingAmount,
+    }
     });
   } catch (error) {
     dispatch({

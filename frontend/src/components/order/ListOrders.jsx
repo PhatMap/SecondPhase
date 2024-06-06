@@ -14,6 +14,15 @@ const ListOrders = () => {
   const dispatch = useDispatch();
 
   const { loading, error, orders } = useSelector((state) => state.myOrders);
+  const statusTranslations = {
+    "Processing": "Xử Lý",
+    "canceled": " Đơn đã Hủy",
+    "Order Confirmed": "Xác Nhận",
+    "Received": "Đã Nhận",
+    "Shipping": "Giao Hàng",
+    "Delivered": "Hoàn Thành",
+    // Thêm các trạng thái khác nếu cần
+  };
 
   useEffect(() => {
     dispatch(myOrders());
@@ -61,13 +70,14 @@ const ListOrders = () => {
         id: order._id,
         numOfItems: order.orderItems.length,
         amount: `$${order.totalPrice}`,
-        status:
-          order.orderStatus &&
-          String(order.orderStatus).includes("Delivered") ? (
-            <p style={{ color: "green" }}>{order.orderStatus}</p>
-          ) : (
-            <p style={{ color: "red" }}>{order.orderStatus}</p>
-          ),
+        status: (
+          <p style={{ 
+            color: order.orderStatus === "Delivered" ? "green" : 
+                   order.orderStatus === "Received" ? "orange" : "red"
+          }}>
+            {statusTranslations[order.orderStatus]}
+          </p>
+        ),
         actions: (
           <Link to={`/order/${order._id}`} className="btn btn-primary">
             <i className="fa fa-eye"></i>

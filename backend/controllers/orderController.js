@@ -108,33 +108,54 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
     orders,
   });
 });
-
 exports.allOrders = catchAsyncErrors(async (req, res, next) => {
   const apiFeatures = new APIFeatures(Order.find(), req.query).sort();
 
   const orders = await apiFeatures.query;
 
   let totalAmount = 0;
+  let totalPaidAmount = 0;
+  let totalPendingAmount = 0;
 
   orders.forEach((order) => {
-    totalAmount += order.totalPrice;
+    if (order.orderStatus === 'canceled') {
+      return;
+    }
+      totalAmount += order.totalPrice;
+      
+      if (order.paymentInfo && order.paymentInfo.status === 'succeeded') {
+          totalPaidAmount += order.totalPrice;
+      } else {
+          totalPendingAmount += order.totalPrice;
+      }
   });
 
   res.status(200).json({
-    success: true,
-    totalAmount,
-    orders,
+      success: true,
+      totalAmount,
+      totalPaidAmount,
+      totalPendingAmount,
+      orders,
   });
 });
 
+
 exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
+  if (req.body.status === 'canceled') {
+    for (const item of order.orderItems) {
+      await cancelorder(item.product, item.variant, item.size, item.quantity);
+    }
+  }
 
   if (!order) {
     return next(new ErrorHandler("Order not found", 404));
   }
 
   order.orderStatus = req.body.status;
+  if (req.body.paymentInfo && req.body.paymentInfo.status) {
+    order.paymentInfo.status = req.body.paymentInfo.status;
+  }
   order.deliverAt = Date.now();
 
   await order.save();
@@ -151,9 +172,13 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("No order found with this ID", 404));
   }
 
-  for (const item of order.orderItems) {
-    await updateStock(item.product, item.variant, item.size, -item.quantity);
+  if (order.orderStatus !== "canceled" && order.orderStatus !== "Delivered") {
+    // Lặp qua từng mục đơn hàng và cập nhật lại số lượng sản phẩm
+    for (const item of order.orderItems) {
+      await cancelorder(item.product, item.variant, item.size, item.quantity);
+    }
   }
+
 
   await Order.findByIdAndRemove(req.params.id);
 
@@ -161,3 +186,57 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+
+// exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
+//   const order = await Order.findById(req.params.id);
+
+//   if (!order) {
+//     return next(new ErrorHandler("No order found with this ID", 404));
+//   }
+
+//   for (const item of order.orderItems) {
+//     await updateStock(item.product, item.variant, item.size, -item.quantity);
+//   }
+
+//   await Order.findByIdAndRemove(req.params.id);
+
+//   res.status(200).json({
+//     success: true,
+//   });
+// });
+
+async function cancelorder(id, variantId, size, quantity) {
+  const product = await Product.findById(id);
+
+  if (!product) {
+    console.error(`Product not found: ${id}`);
+    return;
+  }
+
+  let variantFound = false;
+  let sizeFound = false;
+ 
+  product.variants.forEach((variant) => {
+    if (variant.id.toString() === variantId.toString()) {
+      variantFound = true;
+      variant.inventory.forEach((value) => {
+        if (value.size === size) {
+          sizeFound = true;
+          value.stock += quantity;  // Tăng số lượng tồn kho
+          variant.totalStock += quantity;
+          product.totalStock += quantity;
+        }
+      });
+    }
+  });
+
+  if (!variantFound) {
+    console.error(`Variant not found: ${variantId} for product: ${id}`);
+  }
+
+  if (!sizeFound) {
+    console.error(`Size not found: ${size} for variant: ${variantId} in product: ${id}`);
+  }
+
+  await product.save(); // Save the updated product
+}

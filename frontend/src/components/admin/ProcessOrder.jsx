@@ -42,8 +42,16 @@ const ProcessOrder = () => {
   }, [dispatch, error, isUpdated, orderId]);
 
   const updateOrderHandler = () => {
+    console.log("status",orderStatus);
+    if (orderStatus === "canceled")  {
+      toast.error("Không thể chỉnh sửa đơn hàng đã hủy");
+      return;
+    }
     const formData = new FormData();
     formData.set("status", status);
+    if (status === "Delivered") {
+    formData.set("paymentInfo.status", "succeeded");
+  }
     dispatch(updateOrder(order._id, formData));
   };
 
@@ -80,10 +88,11 @@ const ProcessOrder = () => {
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
                 >
-                  <option value="Processing">Processing</option>
-                  <option value="Order Confirmed">Order Confirmed</option>
-                  <option value="Out For Delivery">Out For Delivery</option>
-                  <option value="Delivered">Delivered</option>
+                  <option value="Processing">Xử Lí </option>
+                  <option value="Order Confirmed">Xác Nhận </option>
+                  <option value="Shipping">Giao Hàng</option>
+                  <option value="Delivered">Hoàn Thành </option>
+                
                 </select>
               </div>
 

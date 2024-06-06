@@ -59,7 +59,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   apiFeatures.pagination(resPerPage);
   products = await apiFeatures.query.clone();
 
-  console.log(products);
+
 
   res.status(200).json({
     success: true,
@@ -71,7 +71,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getProductsByCategory = catchAsyncErrors(async (req, res, next) => {
-  const resPerPage = 6;
+  const resPerPage = 9;
   const productsCount = await Product.countDocuments();
 
   products = await Product.find({ category: req.params.category });

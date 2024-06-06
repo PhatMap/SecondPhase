@@ -1,12 +1,26 @@
-import React, { Fragment, useEffect } from "react";
+import React from "react";
 
 const OrderProgressBar = ({ currentStatus }) => {
-  const steps = [
-    "Processing",
-    "Order Confirmed",
-    "Out For Delivery",
-    "Delivered",
-  ];
+  // Object mapping English steps to Vietnamese
+  const stepTranslations = {
+    "Processing": "Xử Lý",
+    "Order Confirmed": "Xác Nhận",
+    "Shipping": "Giao Hàng",
+    "Received": "Đã Nhận",
+    "Delivered": "Hoàn Thành",
+    
+    // Thêm các trạng thái khác nếu cần
+  };
+
+  // Define the English steps array
+  let steps = Object.keys(stepTranslations);
+
+  // Thêm trạng thái "Received" vào mảng steps nếu chưa tồn tại
+  if (!steps.includes("Received")) {
+    steps.push("Received");
+  }
+
+  // Get the current step index
   const currentStepIndex = steps.indexOf(currentStatus);
 
   return (
@@ -24,7 +38,7 @@ const OrderProgressBar = ({ currentStatus }) => {
           ) : (
             <span className="step-number">{index + 1}</span>
           )}
-          <div className="step-label">{step}</div>
+          <div className="step-label">{stepTranslations[step]}</div>
         </div>
       ))}
     </div>
