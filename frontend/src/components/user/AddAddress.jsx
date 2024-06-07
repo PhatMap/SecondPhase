@@ -4,6 +4,7 @@ import { useDispatch ,useSelector} from 'react-redux';
 import { addAddress } from "../../actions/userActions"; // Đảm bảo import action từ module hoặc file tương ứng
 import { Link, useNavigate } from "react-router-dom";
 import { getUserAddress,clearErrors } from "../../actions/userActions";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddAddress = () => {
   const navigate = useNavigate();
@@ -18,6 +19,8 @@ const AddAddress = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const {  error } = useSelector((state) => state.auth);
   const [AddressError, setAddressError] = useState("");
+  const [isAddingAddress, setIsAddingAddress] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleAddressChange = (field, value) => {
@@ -54,7 +57,7 @@ const AddAddress = () => {
     return phoneRegex.test(phone);
   };
   
-  const handleAddAddress = (event) => {
+  const handleAddAddress = async (event) => {
     event.preventDefault(); // Ngăn chặn hành động mặc định của form submit
     if (!address.province || !address.district || !address.town || !address.location) {
         setAddressError("Vui lòng nhập đầy đủ thông tin địa chỉ.");
@@ -72,20 +75,26 @@ const AddAddress = () => {
     formData.append('town', address.town);
     formData.append('location', address.location);
     formData.append('phone', address.phone);
-  
-    dispatch(addAddress(formData))
-     
-        setSuccessMessage('Địa chỉ đã được thêm thành công.');
-        navigate("/me/user-address");
+    setIsAddingAddress(true);
+    await dispatch(addAddress(formData))
+   
+    toast.success(" Địa Chỉ Đã Được Thêm Thành Công");
+    setTimeout(() => {
+      navigate("/me/user-address");
+    }, 2000);
+   
       }
       catch(error){
+        setIsAddingAddress(false);
         setErrorMessage(error.response.data.message);
       }
     };
   
   
   return (
+
     <div className="addaddress-wrapper">
+      <ToastContainer />
       <form className="register-form-container" encType="multipart/form-data">
         <h1 className="addaddress-heading">Thêm Địa Chỉ</h1>
         <Address handleAddressChange={handleAddressChange} />
@@ -102,13 +111,13 @@ const AddAddress = () => {
           />
            {errorMessage && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{errorMessage}</p>}
         </div>
-        <button onClick={handleAddAddress} className="register-btn">Thêm Địa Chỉ </button>
+        <button onClick={handleAddAddress} disabled={isAddingAddress} className="register-btn">Thêm Địa Chỉ</button>
+
         {successMessage && <p className="success-message">{successMessage}</p>}
         <Link to="/me/user-address" className="btn btn-outline-danger btn-sm"  style={{  marginTop: '1rem',marginLeft:'180px'}}>Quay lại</Link>
       </form>
        
-    </div>
+    </div>  
   );
 };
-
 export default AddAddress;

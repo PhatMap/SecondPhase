@@ -19,6 +19,9 @@ import {
     ORDER_DETAILS_REQUEST,
     ORDER_DETAILS_SUCCESS,
     ORDER_DETAILS_FAIL,
+    CHECK_ORDER_REVIEW_REQUEST,
+    CHECK_ORDER_REVIEW_SUCCESS,
+    CHECK_ORDER_REVIEW_FAIL,
     CLEAR_ERRORS
 } from '../constants/orderConstants'
 
@@ -195,6 +198,21 @@ export const orderReducer = (state = {}, action) => {
                 ...state,
                 error: null
             }
+        case CHECK_ORDER_REVIEW_REQUEST:
+            return { 
+                loading: true 
+            }
+        case CHECK_ORDER_REVIEW_SUCCESS:
+            return { 
+                loading: false, 
+                success: true, 
+                hasPurchased: action.payload.hasPurchased 
+            }
+        case CHECK_ORDER_REVIEW_FAIL:
+            return {
+                loading: false,
+                 error: action.payload 
+             }
 
         default:
             return state

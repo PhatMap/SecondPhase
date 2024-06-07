@@ -108,6 +108,7 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
     orders,
   });
 });
+
 exports.allOrders = catchAsyncErrors(async (req, res, next) => {
   const apiFeatures = new APIFeatures(Order.find(), req.query).sort();
 
@@ -118,12 +119,12 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
   let totalPendingAmount = 0;
 
   orders.forEach((order) => {
-    if (order.orderStatus === 'canceled') {
+    if (order.orderStatus === "canceled") {
       return;
     }
       totalAmount += order.totalPrice;
       
-      if (order.paymentInfo && order.paymentInfo.status === 'succeeded') {
+      if (order.paymentInfo && order.paymentInfo.status === "succeeded") {
           totalPaidAmount += order.totalPrice;
       } else {
           totalPendingAmount += order.totalPrice;
@@ -142,7 +143,7 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
 
 exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
-  if (req.body.status === 'canceled') {
+  if (req.body.status === "canceled") {
     for (const item of order.orderItems) {
       await cancelorder(item.product, item.variant, item.size, item.quantity);
     }
@@ -240,3 +241,26 @@ async function cancelorder(id, variantId, size, quantity) {
 
   await product.save(); // Save the updated product
 }
+
+
+exports.checkOrderReview = catchAsyncErrors(async (req, res, next) => {
+  const { userId, productId } = req.body;
+  const orders = await Order.find({ user: userId });
+  let hasPurchased = false;
+  if (order.orderStatus === "canceled") {
+    return;
+  }
+  for (const order of orders) {
+    for (const item of order.orderItems) {
+      if (item.product.toString() === productId) {
+        hasPurchased = true;
+        break;
+      }
+    }
+    if (hasPurchased) break;
+  }
+  res.status(200).json({
+    success: true,
+    hasPurchased,
+  });
+});

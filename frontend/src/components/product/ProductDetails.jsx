@@ -11,6 +11,7 @@ import {
   clearErrors,
 } from "../../actions/productActions";
 import { addItemToCart, getUserCartProduct } from "../../actions/cartActions";
+import { checkOrderReview } from "../../actions/orderActions";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 import { useParams } from "react-router-dom";
 import ProductImageZoom from "./ProductImageZoom";
@@ -45,10 +46,15 @@ const ProductDetails = () => {
   const { error: reviewError, success } = useSelector(
     (state) => state.newReview
   );
+ 
+
 
   useEffect(() => {
     dispatch(getProductDetails(id));
-
+    if(user){
+    console.log("user_id",user._id);
+    dispatch(checkOrderReview(user._id, id))
+    }
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -63,7 +69,10 @@ const ProductDetails = () => {
       toast.success("Đánh Giá Thành Công");
       dispatch({ type: NEW_REVIEW_RESET });
     }
-  }, [dispatch, error, id, reviewError, success]);
+    
+  }, [dispatch, error, id, reviewError, success,user]);
+
+  const hasPurchased = useSelector(state => state.order.hasPurchased);
 
   useEffect(() => {
     if (product && product.images && product.images.length > 0) {
@@ -393,22 +402,29 @@ const ProductDetails = () => {
               {product.reviews && product.reviews.length > 0 && (
                 <ListReviews reviews={product.reviews} />
               )}
-              {user ? (
-                <button
-                  id="review_btn"
-                  type="button"
-                  className="btn btn-primary mt-4"
-                  data-toggle="modal"
-                  data-target="#ratingModal"
-                  onClick={setUserRatings}
-                >
-                  Submit Your Review
-                </button>
-              ) : (
-                <div className="alert alert-danger mt-5" type="alert">
-                  Login to post your review.
-                </div>
-              )}
+             {user ? (
+                  hasPurchased ? (
+                    <button
+                      id="review_btn"
+                      type="button"
+                      className="btn btn-primary mt-4"
+                      data-toggle="modal"
+                      data-target="#ratingModal"
+                      onClick={setUserRatings}
+                    >
+                      Đánh Giá Sản Phẩm 
+                    </button>
+                  ) : (
+                    <div className="alert alert-danger mt-5" type="alert">
+                      Vui lòng mua sản phẩm để đánh giá sản phẩm.
+                    </div>
+                  )
+                ) : (
+                  <div className="alert alert-danger mt-5" type="alert">
+                    Đăng nhập để gửi đánh giá của bạn.
+                  </div>
+                )}
+
               <div className="row mt-2 mb-5">
                 <div className="rating w-50">
                   <div

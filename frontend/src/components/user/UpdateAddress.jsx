@@ -5,6 +5,8 @@ import MetaData from "../layout/MetaData";
 import Address from "./Address";
 import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UpdateAddress = ( ) => {
   const { user, error, isDeleted } = useSelector((state) => state.auth);
@@ -20,6 +22,7 @@ const UpdateAddress = ( ) => {
 
   const dispatch = useDispatch();
   const { address } = useSelector((state) => state.user);
+  const [isupdateAddress, setIsupdateAddress] = useState(false);
 
   useEffect(() => {
     dispatch(getUserAddress(id));
@@ -44,49 +47,56 @@ const UpdateAddress = ( ) => {
     });
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("Address Data:",id, addressData);
-    dispatch(updateUserAddress(id, addressData));
-    history("/me/user-address");
+    setIsupdateAddress(true);
+    await dispatch(updateUserAddress(id, addressData));
+    toast.success("Cập Nhật Địa Chỉ Thành Công");
+    setTimeout(() => {
+      history("/me/user-address");
+    }, 2000);
   };
 
   return (
     <div className="container container-fluid">
       <MetaData title={"Update Address"} />
       <div className="row wrapper">
-        <div className="col-10 col-lg-5">
+      <ToastContainer />
+        <div className="col-15 col-lg-6">
           <form className="shadow-lg" onSubmit={submitHandler}>
             <h1 className="addaddress-heading">Cập Nhật Địa Chỉ </h1>
             <div className="current-address">
               <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '10px' }}>Địa chỉ hiện tại:</h2>
             </div>
-
-            {user.address.map((address) => (
-              <div key={address._id} className="address-info">
-                
-                <div>
-                  <div className="label">Tỉnh/Thành phố:</div>
-                  <div className="value">{address.province}</div>
-                </div>
-                <div>
-                  <div className="label">Quận/Huyện:</div>
-                  <div className="value">{address.district}</div>
-                </div>
-                <div>
-                  <div className="label">Phường/Xã:</div>
-                  <div className="value">{address.town}</div>
-                </div>
-                <div>
-                  <div className="label">Địa chỉ cụ thể:</div>
-                  <div className="value">{address.location}</div>
-                </div>
-                <div>
-                  <div className="label">Số Điện Thoại:</div>
-                  <div className="value">{address.phone}</div>
-                </div>
-              </div>
+            {user.address.map((addressItem) => (
+              <React.Fragment key={addressItem._id}>
+                {addressItem._id === id && (
+                  <div className="address-info">
+                    <div>
+                      <div className="label">Tỉnh/Thành phố:</div>
+                      <div className="value">{addressItem.province}</div>
+                    </div>
+                    <div>
+                      <div className="label">Quận/Huyện:</div>
+                      <div className="value">{addressItem.district}</div>
+                    </div>
+                    <div>
+                      <div className="label">Phường/Xã:</div>
+                      <div className="value">{addressItem.town}</div>
+                    </div>
+                    <div>
+                      <div className="label">Địa chỉ cụ thể:</div>
+                      <div className="value">{addressItem.location}</div>
+                    </div>
+                    <div>
+                      <div className="label">Số Điện Thoại:</div>
+                      <div className="value">{addressItem.phone}</div>
+                    </div>
+                  </div>
+                )}
+              </React.Fragment>
             ))}
+
            <div className="current-address">
             <h2 style={{ fontSize: '2rem', fontWeight: 'bold' , marginBottom: '20px'}}>Địa Chỉ Mới:</h2>
              </div>
@@ -106,12 +116,14 @@ const UpdateAddress = ( ) => {
             <button
               id="update_button"
               type="submit"
-              className="btn btn-block py-3"
+              disabled={isupdateAddress}
+              className="register-btn"
+              style={{ marginBottom:'2rem'}}
             >
               Cập Nhật
             </button>
-            <Link to="/me/user-address" className="btn btn-outline-danger btn-sm"  style={{  marginTop: '1rem',marginLeft:'225px'}}>Quay lại</Link>
           </form>
+          <Link to="/me/user-address" className="btn btn-outline-danger btn-sm"   style={{  marginTop: '-7rem',marginLeft:'270px'}}>Quay lại</Link>
         </div>
       </div>
     </div>

@@ -19,6 +19,9 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
+  CHECK_ORDER_REVIEW_REQUEST,
+  CHECK_ORDER_REVIEW_SUCCESS,
+  CHECK_ORDER_REVIEW_FAIL,
   CLEAR_ERRORS,
 } from "../constants/orderConstants";
 import {
@@ -136,8 +139,7 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.put(
-      `/api/v1/admin/order/${id}`,
+    const { data } = await axios.put(`/api/v1/admin/order/${id}`,
       orderData,
       config
     );
@@ -178,4 +180,28 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
+};
+
+
+export const checkOrderReview = (userId, productId) => async (dispatch) => {
+  try {
+    dispatch({ type: CHECK_ORDER_REVIEW_REQUEST });
+    console.log("userid",userId,"proid",productId);
+
+    const { data } = await axios.post('/api/v1/orders/me/checkOrderReview', {
+      userId,
+      productId,
+    });
+
+    dispatch({
+      type: CHECK_ORDER_REVIEW_SUCCESS,
+      payload: data,
+    });
+    console.log("data",data);
+  } catch (error) {
+    dispatch({
+      type: CHECK_ORDER_REVIEW_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };

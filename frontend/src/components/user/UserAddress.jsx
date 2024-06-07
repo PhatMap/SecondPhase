@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { toast ,ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MetaData from "../layout/MetaData";
 import { Link, useNavigate } from "react-router-dom";
@@ -62,6 +62,7 @@ const [deleteAddressId, setDeleteAddressId] = useState(null);
   return (
     <Fragment>
       <MetaData title={"User Address"} />
+      <ToastContainer />
       <div className="container container-fluid">
         <h1 className="useraddress-heading">Địa Chỉ Người Dùng</h1>
         <button

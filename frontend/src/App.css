@@ -714,7 +714,8 @@ footer {
   border-radius: 5px;
   color: white;
   background-color: rgb(47, 192, 197);
-  margin-left: 150px;
+  margin-left: 125px;
+  margin-bottom: 10px;
 }
 
 /* Checkout Steps */
@@ -2771,4 +2772,20 @@ ul.CTAs a {
   margin-right: 10px;
   color: blue;
   font-size: 16px;
+}
+.update_address-form-container {
+  box-shadow: #080808 0px 4px 8px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 500px;
+}
+.updateaddress-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
 }
