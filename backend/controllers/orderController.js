@@ -252,6 +252,9 @@ exports.checkOrderReview = catchAsyncErrors(async (req, res, next) => {
   //   return;
   // }
   for (const order of orders) {
+    if (order.orderStatus === "canceled") {
+      continue;
+    }
     for (const item of order.orderItems) {
       if (item.product.toString() === productId) {
         hasPurchased = true;
