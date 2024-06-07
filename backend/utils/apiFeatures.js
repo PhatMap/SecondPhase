@@ -14,14 +14,23 @@ class APIFeatures {
         }
       : {};
 
-    this.query = this.query.find({ ...keyword });
+    const category = this.queryStr.category
+      ? {
+          category: {
+            $regex: this.queryStr.category,
+            $options: "i",
+          },
+        }
+      : {};
+
+    this.query = this.query.find({ ...keyword }).find({ ...category });
     return this;
   }
 
   filter() {
     const queryCopy = { ...this.queryStr };
 
-    const removeFields = ["keyword", "limit", "page"];
+    const removeFields = ["keyword", "limit", "page", "category"];
     removeFields.forEach((el) => delete queryCopy[el]);
 
     let queryStr = JSON.stringify(queryCopy);

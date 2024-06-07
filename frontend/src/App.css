@@ -229,6 +229,15 @@ footer {
   margin-left: "30px";
 }
 
+.base-form:hover {
+  color: green;
+}
+
+.selected-rating {
+  color: #080808;
+  font-size: 25px;
+}
+
 .rating-outer::before {
   content: "\f006 \f006 \f006 \f006 \f006";
   margin-left: "30px";
@@ -1411,9 +1420,11 @@ ul.CTAs a {
 }
 
 .shop-products-filter-container {
+  width: 100%;
   display: flex;
-  gap: 20px;
+  gap: 50px;
   margin-bottom: 40px;
+  justify-content: center;
 }
 
 .shop-filter {
@@ -1506,13 +1517,6 @@ ul.CTAs a {
   flex-direction: column;
   gap: 10px;
 }
-.selected-category {
-  color: red; /* Đổi màu chữ của danh mục được chọn thành đỏ */
-}
-
-.selected-star .rating-inner {
-  background-color: red; /* Đổi màu nền của số sao được chọn thành đỏ */
-}
 
 .shop-filter-btn-container {
   display: flex;
@@ -1531,6 +1535,11 @@ ul.CTAs a {
   width: 250px;
   margin-bottom: 30px;
   border: #080808 solid 2px;
+}
+
+.shop-filter-btn:hover {
+  color: #080808;
+  background-color: transparent;
 }
 
 .shop-products-container {
@@ -2004,6 +2013,25 @@ ul.CTAs a {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
+}
+
+.filter-form-control {
+  width: 40%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 20px;
+}
+
+.filter-category {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.filter-star {
+  color: yellow;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .register-d-flex {

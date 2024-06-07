@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams, useNavigate } from "react-router-dom";
-import { getProductsByCategory } from "../../actions/productActions";
 
 const Category = () => {
   const dispatch = useDispatch();
@@ -22,8 +21,8 @@ const Category = () => {
     error,
     productsCount,
     resPerPage,
-    filteredProductsCount,
   } = useSelector((state) => state.category);
+
   let count = productsCount;
 
   const categories = ["Trousers", "Shirt", "Dress", "Shoe"];

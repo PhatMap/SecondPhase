@@ -54,34 +54,36 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     .sort();
 
   let products = await apiFeatures.query;
-  let filteredProductsCount = products.length;
 
   apiFeatures.pagination(resPerPage);
   products = await apiFeatures.query.clone();
 
-
-
   res.status(200).json({
     success: true,
     productsCount,
     resPerPage,
-    filteredProductsCount,
     products,
   });
 });
 
-exports.getProductsByCategory = catchAsyncErrors(async (req, res, next) => {
+exports.getProductsByFilter = catchAsyncErrors(async (req, res, next) => {
   const resPerPage = 9;
   const productsCount = await Product.countDocuments();
+  const apiFeatures = new APIFeatures(Product.find(), req.query)
+    .search()
+    .filter()
+    .sort();
 
-  products = await Product.find({ category: req.params.category });
-  let filteredProductsCount = products.length;
+
+  let products = await apiFeatures.query;
+
+  apiFeatures.pagination(resPerPage);
+  products = await apiFeatures.query.clone();
 
   res.status(200).json({
     success: true,
     productsCount,
     resPerPage,
-    filteredProductsCount,
     products,
   });
 });

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
 import Pagination from "react-js-pagination";
 import MetaData from "./layout/MetaData";
 import Product from "./product/Product";
@@ -12,32 +12,24 @@ import "rc-slider/assets/index.css";
 import { useParams, useNavigate, Link } from "react-router-dom"; // Import useNavigate and Link
 import ProductCarousel from "./layout/Carousel";
 import { useLocation } from "react-router-dom";
+import Filter from "./layout/Filter";
+import { set } from "mongoose";
 
 const Shop = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedStar, setSelectedStar] = useState(0);
-  const [prices, setPrices] = useState([0, 1000000]);
-
-  const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
-  const categoriesVietnamese = {
-    Trousers: "Quần Nam Nữ",
-    Shirt: "Áo Nam Nữ",
-    Dress: "Váy Nữ",
-    Shoe: "Giày Nam Nữ",
-  };
-
   const {
     loading,
     products,
     error,
     productsCount,
     resPerPage,
-    filteredProductsCount,
   } = useSelector((state) => state.products);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedStar, setSelectedStar] = useState(0);
+  const [shop, setShop] = useState(products);
 
   const { keyword } = useParams();
 
@@ -46,8 +38,12 @@ const Shop = () => {
   }
 
   useEffect(() => {
-    dispatch(getProducts(keyword, currentPage, prices, selectedStar));
-  }, [dispatch, keyword, prices, currentPage, selectedStar]);
+    dispatch(getProducts(keyword, currentPage));
+  }, [dispatch, keyword, currentPage]);
+
+  useEffect(() => {
+    setShop(products);
+  }, [products]);
 
   return (
     <Fragment>
@@ -57,72 +53,22 @@ const Shop = () => {
         <Fragment>
           <MetaData title={"Shop"} />
           <div className="shop-container background-1">
+            <ToastContainer
+              position="top-right"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
             <h1>SHOP</h1>
             <div className="shop-products-filter-container">
-              <div className="shop-filter">
-                <div className="shop-filter-prices">
-                  <h4>Giá Sản Phẩm</h4>
-                  <div className="shop-filter-price">
-                    <label htmlFor="min_price">Giá Thấp Nhất</label>
-                    <input
-                      type="number"
-                      id="min_price"
-                      className="register-form-control"
-                      placeholder="Giá Thấp Nhất"
-                    />
+              <Filter setShop={setShop} />
 
-                    <label htmlFor="max_price">Giá Cao Nhất</label>
-                    <input
-                      type="number"
-                      id="max_price"
-                      className="register-form-control"
-                      placeholder="Giá Cao Nhất"
-                    />
-                  </div>
-                </div>
-                <div className="shop-filter-categories">
-                  <h4>Danh Mục</h4>
-                  <ul className="shop-filter-category">
-                    {categories.map((category) => (
-                      <li
-                        key={category}
-                        className={
-                          selectedCategory === category
-                            ? "selected-category"
-                            : ""
-                        }
-                      >
-                        {categoriesVietnamese[category]}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="shop-filter-ratings">
-                  <h4>Xếp Hạng</h4>
-                  <ul className="shop-filter-rating">
-                    {[5, 4, 3, 2, 1].map((star) => (
-                      <li key={star} onClick={() => handleStarClick(star)}>
-                        <div
-                          className={`rating-outer ${
-                            star === selectedStar ? "selected-star" : ""
-                          }`}
-                        >
-                          <div
-                            className="rating-inner"
-                            style={{
-                              width: `${star * 20}%`,
-                            }}
-                          ></div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="shop-filter-btn-container">
-                  <button className="shop-filter-btn">Lọc</button>
-                  <button className="shop-filter-btn">Xóa bộ lọc</button>
-                </div>
-              </div>
               <div
                 style={{
                   display: "flex",
@@ -131,7 +77,7 @@ const Shop = () => {
                 }}
               >
                 <div className="shop-products-container">
-                  {products.map((product) => (
+                  {shop.map((product) => (
                     <Product key={product._id} product={product} />
                   ))}
                 </div>

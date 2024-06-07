@@ -11,10 +11,8 @@ import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([1, 1000]);
   const [rating, setRating] = useState(0);
   const [category, setCategory] = useState("");
-  const [cols, setCols] = useState(3);
   const navigate = useNavigate();
   const [fiveStarProducts, setFiveStarProducts] = useState([]);
 
@@ -24,19 +22,16 @@ const Home = () => {
     loading,
     products,
     error,
-    productsCount,
-    resPerPage,
-    filteredProductsCount,
   } = useSelector((state) => state.products);
 
   const { keyword } = useParams();
 
   useEffect(() => {
-    dispatch(getProducts(keyword, currentPage, price, rating));
+    dispatch(getProducts(keyword, currentPage));
     if (error) {
       toast.error(error);
     }
-  }, [dispatch, keyword, currentPage, price, rating, error]);
+  }, [dispatch, keyword, currentPage, rating, error]);
 
   useEffect(() => {
     if (products.length > 0) {
@@ -56,7 +51,6 @@ const Home = () => {
           <Product
             key={product._id}
             product={product}
-            col={cols}
             className="product-item"
             style={{ width: "70px", marginLeft: "-150px" }}
           />
@@ -87,12 +81,6 @@ const Home = () => {
     return () => clearInterval(intervalId);
   }, [backgroundImages.length]);
 
-  const isSearchKeyword = keyword && keyword.trim() !== "";
-
-  let count = productsCount;
-  if (isSearchKeyword) {
-    count = filteredProductsCount;
-  }
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [categories] = useState([

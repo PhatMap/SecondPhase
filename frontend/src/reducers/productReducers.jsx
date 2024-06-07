@@ -52,7 +52,6 @@ export const productsReducer = (state = { products: [] }, action) => {
         products: action.payload.products,
         productsCount: action.payload.productsCount,
         resPerPage: action.payload.resPerPage,
-        filteredProductsCount: action.payload.filteredProductsCount,
       };
 
     case ADMIN_PRODUCTS_SUCCESS:
@@ -93,7 +92,6 @@ export const categoryReducer = (state = { products: [] }, action) => {
         products: action.payload.products,
         productsCount: action.payload.productsCount,
         resPerPage: action.payload.resPerPage,
-        filteredProductsCount: action.payload.filteredProductsCount,
       };
 
     case PRODUCTS_BY_CATEGORY_FAIL:

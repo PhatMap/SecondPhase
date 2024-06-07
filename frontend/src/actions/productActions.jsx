@@ -36,12 +36,12 @@ import {
 } from "../constants/productConstants";
 
 export const getProducts =
-  (keyword = "", currentPage = 1, price = [0, 1000000], rating = 0) =>
+  (keyword = "", currentPage = 1) =>
   async (dispatch) => {
     try {
       dispatch({ type: ALL_PRODUCTS_REQUEST });
 
-      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&ratings[gte]=${rating}`;
+      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}`;
 
       console.log(link);
 
@@ -65,12 +65,12 @@ export const getProducts =
     }
   };
 
-export const getProductsByCategory =
-  (keyword = "", currentPage = 1, price, category, rating = 0) =>
+export const getProductsByFilter =
+  (currentPage = 1, price = [0, 1000000000], category = "", rating = 0) =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCTS_BY_CATEGORY_REQUEST });
-      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`;
+      let link = `/api/v1/products?page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`;
 
       const config = {
         headers: {

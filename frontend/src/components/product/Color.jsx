@@ -9,7 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useParams, useNavigate } from "react-router-dom";
-import { getProductsByCategory } from "../../actions/productActions";
 
 
 const Color = () => {
@@ -28,7 +27,6 @@ const Color = () => {
       products: allProducts,
       productsCount,
       resPerPage,
-      filteredProductsCount,
       error,
     } = useSelector(state => state.products);
 
