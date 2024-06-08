@@ -38,7 +38,8 @@ exports.momoPayment = catchAsyncErrors(async (req, res, next) => {
     var orderId = requestId;
     var orderInfo = "pay with MoMo";
     var redirectUrl = "localhost:4000/api/v1/success";
-    var ipnUrl = "https://callback.url/notify";
+    var ipnUrl =
+      "https://marmot-joint-nominally.ngrok-free.app/api/v1/momoCallback";
     // var ipnUrl = redirectUrl = "https://webhook.site/454e7b77-f177-4ece-8236-ddf1c26ba7f8";
     var amount = "50000";
     var requestType = "captureWallet";
@@ -103,7 +104,9 @@ exports.momoPayment = catchAsyncErrors(async (req, res, next) => {
       },
       data: requestBody,
     };
+
     let result;
+
     try {
       result = await axios(options);
       return res.status(200).json(result.data);
@@ -131,7 +134,6 @@ exports.momoPayment = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.momoCallback = catchAsyncErrors(async (req, res, next) => {
-  console.log("This is callback 2");
   console.log("req.body", req.body);
 
   return res.status(200).json(req.body);
