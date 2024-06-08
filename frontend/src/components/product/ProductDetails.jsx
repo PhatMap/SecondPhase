@@ -46,14 +46,12 @@ const ProductDetails = () => {
   const { error: reviewError, success } = useSelector(
     (state) => state.newReview
   );
- 
-
 
   useEffect(() => {
     dispatch(getProductDetails(id));
-    if(user){
-    console.log("user_id",user._id);
-    dispatch(checkOrderReview(user._id, id))
+    if (user) {
+      console.log("user_id", user._id);
+      dispatch(checkOrderReview(user._id, id));
     }
     if (error) {
       toast.error(error);
@@ -69,10 +67,9 @@ const ProductDetails = () => {
       toast.success("Đánh Giá Thành Công");
       dispatch({ type: NEW_REVIEW_RESET });
     }
-    
-  }, [dispatch, error, id, reviewError, success,user]);
+  }, [dispatch, error, id, reviewError, success, user]);
 
-  const hasPurchased = useSelector(state => state.order.hasPurchased);
+  const hasPurchased = useSelector((state) => state.order.hasPurchased);
 
   useEffect(() => {
     if (product && product.images && product.images.length > 0) {
@@ -237,22 +234,31 @@ const ProductDetails = () => {
           <MetaData title={product.name} />
           <div className="detail-container">
             <ToastContainer />
-            <div className="detail-image-container">
-              <div className="detail-images">
-                {images &&
-                  images.map((image, index) => (
-                    <img
-                      key={image.public_id}
-                      src={image.url}
-                      alt={`Product Preview ${index}`}
-                      className={`${activeImage === image.url ? "mark" : ""} `}
-                      onMouseEnter={() => setActiveImage(image.url)}
-                    />
-                  ))}
-              </div>
+            <div style={{height:"100%"}}>
+              <div className="detail-image-container">
+                <div className="detail-images">
+                  {images &&
+                    images.map((image, index) => (
+                      <img
+                        key={image.public_id}
+                        src={image.url}
+                        alt={`Product Preview ${index}`}
+                        className={`image-thumbnail ${
+                          activeImage === image.url ? "mark" : ""
+                        } `}
+                        onMouseEnter={() => setActiveImage(image.url)}
+                      />
+                    ))}
+                </div>
 
-              <div className="detail-current-image">
-                <ProductImageZoom image={activeImage} />
+                <div className="detail-current-image">
+                  <ProductImageZoom image={activeImage} />
+                </div>
+              </div>
+              <div>
+                {product.reviews && product.reviews.length > 0 && (
+                  <ListReviews reviews={product.reviews} />
+                )}
               </div>
             </div>
 
@@ -399,31 +405,28 @@ const ProductDetails = () => {
                   Add to Cart
                 </button>
               </div>
-              {product.reviews && product.reviews.length > 0 && (
-                <ListReviews reviews={product.reviews} />
-              )}
-             {user ? (
-                  hasPurchased ? (
-                    <button
-                      id="review_btn"
-                      type="button"
-                      className="btn btn-primary mt-4"
-                      data-toggle="modal"
-                      data-target="#ratingModal"
-                      onClick={setUserRatings}
-                    >
-                      Đánh Giá Sản Phẩm 
-                    </button>
-                  ) : (
-                    <div className="alert alert-danger mt-5" type="alert">
-                      Vui lòng mua sản phẩm để đánh giá sản phẩm.
-                    </div>
-                  )
+              {user ? (
+                hasPurchased ? (
+                  <button
+                    id="review_btn"
+                    type="button"
+                    className="btn btn-primary mt-4"
+                    data-toggle="modal"
+                    data-target="#ratingModal"
+                    onClick={setUserRatings}
+                  >
+                    Đánh Giá Sản Phẩm
+                  </button>
                 ) : (
                   <div className="alert alert-danger mt-5" type="alert">
-                    Đăng nhập để gửi đánh giá của bạn.
+                    Vui lòng mua sản phẩm để đánh giá sản phẩm.
                   </div>
-                )}
+                )
+              ) : (
+                <div className="alert alert-danger mt-5" type="alert">
+                  Đăng nhập để gửi đánh giá của bạn.
+                </div>
+              )}
 
               <div className="row mt-2 mb-5">
                 <div className="rating w-50">

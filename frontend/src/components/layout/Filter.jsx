@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { getProducts, getProductsByFilter } from "../../actions/productActions";
+import { getProducts } from "../../actions/productActions";
 
 const Filter = ({ setShop }) => {
   const dispatch = useDispatch();
 
   const { loading, products, error, productsCount, resPerPage } = useSelector(
-    (state) => state.category
+    (state) => state.products
   );
 
   const [selectedStar, setSelectedStar] = useState(0);
@@ -85,9 +85,9 @@ const Filter = ({ setShop }) => {
         return;
       }
     }
-
     dispatch(
-      getProductsByFilter(
+      getProducts(
+        "",
         1,
         [minPrice ? minPrice : 0, maxPrice ? maxPrice : 1000000000],
         selectedCategory ? selectedCategory : "",

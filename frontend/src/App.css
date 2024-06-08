@@ -1094,6 +1094,11 @@ ul.CTAs a {
 }
 
 /* Reviews */
+.reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
 .rating {
   margin-top: 10rem;
@@ -1127,7 +1132,7 @@ ul.CTAs a {
 }
 
 .review_user {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: grey;
 }
 
@@ -1784,7 +1789,8 @@ ul.CTAs a {
 .detail-container {
   display: flex;
   padding: 20px;
-  gap: 150px;
+  gap: 20px;
+  height: fit-content;
 }
 
 .detail-container h1 {
@@ -1802,6 +1808,39 @@ ul.CTAs a {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+.detail-images::-webkit-scrollbar {
+  width: 6px; /* For Chrome, Safari, and Opera */
+}
+
+.detail-images::-webkit-scrollbar-track {
+  background: #f1f1f1; /* For Chrome, Safari, and Opera */
+}
+
+.detail-images::-webkit-scrollbar-thumb {
+  background: #888; /* For Chrome, Safari, and Opera */
+}
+
+.image-thumbnail {
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.image-thumbnail:hover,
+.image-thumbnail.mark {
+  opacity: 1;
+}
+
+.detail-current-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .detail-images img {
@@ -1817,6 +1856,7 @@ ul.CTAs a {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  height: fit-content;
 }
 
 .detail-color {

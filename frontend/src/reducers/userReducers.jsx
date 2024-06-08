@@ -60,33 +60,31 @@ import {
 } from "../constants/userConstants";
 
 export const authReducer = (state = { user: {} }, action) => {
-    switch (action.type) {
-      case NEW_USER_REQUEST:
-          return {
-              ...state,
-              loading: true
-          };
+  switch (action.type) {
+    case NEW_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
 
-      case NEW_USER_SUCCESS:
-          return {
-              ...state,
-              loading: false,
-              message: action.payload,
+    case NEW_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        message: action.payload,
+      };
 
-          };
-
-      case NEW_USER_FAIL:
-          return {
-              ...state,
-              loading: false,
-              error: action.payload
-          };
-      case CLEAR_MESSAGE:
-        return {
-          ...state,
-          message: null,
-        };
-
+    case NEW_USER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_MESSAGE:
+      return {
+        ...state,
+        message: null,
+      };
 
     case USER_ADDRESS_DELETE_REQUEST:
       return {

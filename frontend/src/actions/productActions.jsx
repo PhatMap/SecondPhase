@@ -30,20 +30,21 @@ import {
   DELETE_REVIEW_RESET,
   DELETE_REVIEW_FAIL,
   CLEAR_ERRORS,
-  PRODUCTS_BY_CATEGORY_REQUEST,
-  PRODUCTS_BY_CATEGORY_SUCCESS,
-  PRODUCTS_BY_CATEGORY_FAIL,
 } from "../constants/productConstants";
 
 export const getProducts =
-  (keyword = "", currentPage = 1) =>
+  (
+    keyword = "",
+    currentPage = 1,
+    price = [0, 1000000000],
+    category = "",
+    rating = 0
+  ) =>
   async (dispatch) => {
     try {
       dispatch({ type: ALL_PRODUCTS_REQUEST });
 
-      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}`;
-
-      console.log(link);
+      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`;
 
       const config = {
         headers: {
@@ -59,33 +60,6 @@ export const getProducts =
     } catch (error) {
       dispatch({
         type: ALL_PRODUCTS_FAIL,
-        payload: error.response.data.message,
-      });
-      throw error;
-    }
-  };
-
-export const getProductsByFilter =
-  (currentPage = 1, price = [0, 1000000000], category = "", rating = 0) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: PRODUCTS_BY_CATEGORY_REQUEST });
-      let link = `/api/v1/products?page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`;
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const { data } = await axios.get(link, config);
-
-      dispatch({
-        type: PRODUCTS_BY_CATEGORY_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: PRODUCTS_BY_CATEGORY_FAIL,
         payload: error.response.data.message,
       });
       throw error;
