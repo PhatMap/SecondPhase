@@ -134,19 +134,10 @@ const UserAddress = () => {
         <div className="delete-notify-container">
           <div className="delete-notify-form">
             <h1> Xóa địa chỉ này?</h1>
-            <div className="delete-notify-btn-container"></div>
-            <button
-              className="delete-notify-btn-container-yes"
-              onClick={() => handleDeleteConfirmed(deleteAddressId)}
-            >
-              Yes
-            </button>
-            <button
-              className="delete-notify-btn-container-no"
-              onClick={() => setShowModal(false)}
-            >
-              No
-            </button>
+            <div className="delete-notify-btn-container">
+              <button className="delete-notify-btn-container-yes" onClick={() => handleDeleteConfirmed(deleteAddressId)}>Yes</button>
+              <button className="delete-notify-btn-container-no" onClick={() => setShowModal(false)}>No</button>
+            </div>
           </div>
         </div>
       )}

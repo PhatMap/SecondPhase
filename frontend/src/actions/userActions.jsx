@@ -222,8 +222,11 @@ export const updatePassword = (passwords) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_PASSWORD_FAIL,
-      payload: error.response.data.message,
+      payload:  error.response.data.errMessage,
     });
+
+
+
   }
 };
 

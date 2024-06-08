@@ -54,7 +54,7 @@ const Profile = () => {
               <h4>Ngày Tạo </h4>
               <p>{String(user.createAt).substring(0, 10)}</p>
               <div className="profile-btn">
-                <Link to="/me/user-address" className="btn btn-primary btn-block mt-3"style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+                <Link to="/me/user-address" className="profile-btn" >
                   Địa Chỉ 
                 </Link>
               </div>
@@ -65,11 +65,11 @@ const Profile = () => {
                 </Link>
               )}
 
-              {/* <div className="profile-btn">
+              <div className="profile-btn">
                 <Link to="/password/update" className="profile-btn">
                   Mật Khẩu 
                 </Link>
-              </div> */}
+              </div>
             </div>
           </div>
         </Fragment>

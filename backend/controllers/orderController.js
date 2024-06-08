@@ -252,17 +252,17 @@ exports.checkOrderReview = catchAsyncErrors(async (req, res, next) => {
   //   return;
   // }
   for (const order of orders) {
-    if (order.orderStatus === "canceled") {
-      continue;
-    }
-    for (const item of order.orderItems) {
-      if (item.product.toString() === productId) {
-        hasPurchased = true;
-        break;
+    if (order.orderStatus === "Delivered" || order.orderStatus === "Received") {
+      for (const item of order.orderItems) {
+        if (item.product.toString() === productId) {
+          hasPurchased = true;
+          break;
+        }
       }
     }
     if (hasPurchased) break;
   }
+
   res.status(200).json({
     success: true,
     hasPurchased,
