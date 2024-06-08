@@ -143,6 +143,7 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
 
 exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
+  console.log("huydon",req.body.status );
   if (req.body.status === "canceled") {
     for (const item of order.orderItems) {
       await cancelorder(item.product, item.variant, item.size, item.quantity);
@@ -247,18 +248,21 @@ exports.checkOrderReview = catchAsyncErrors(async (req, res, next) => {
   const { userId, productId } = req.body;
   const orders = await Order.find({ user: userId });
   let hasPurchased = false;
-  if (order.orderStatus === "canceled") {
-    return;
-  }
+  // if (order.orderStatus === "canceled") {
+  //   return;
+  // }
   for (const order of orders) {
-    for (const item of order.orderItems) {
-      if (item.product.toString() === productId) {
-        hasPurchased = true;
-        break;
+    if (order.orderStatus === "Delivered" || order.orderStatus === "Received") {
+      for (const item of order.orderItems) {
+        if (item.product.toString() === productId) {
+          hasPurchased = true;
+          break;
+        }
       }
     }
     if (hasPurchased) break;
   }
+
   res.status(200).json({
     success: true,
     hasPurchased,

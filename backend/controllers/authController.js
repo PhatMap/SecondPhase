@@ -71,7 +71,7 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
   if (!user) {
     return res.status(401).json({
       success: false,
-      message: "Tài Khoản Hoặc Mật Khẩu Không Chính Xác",
+      message: "Tài Khoản Không Chính Xác",
     });
   }
   if (user.role === "banned") {
@@ -87,7 +87,7 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
   if (!isPasswordMatched) {
     return res.status(401).json({
       success: false,
-      message: "Tài Khoản Hoặc Mật Khẩu Không Chính Xác",
+      message: "Mật Khẩu Không Chính Xác",
     });
   }
 
@@ -215,7 +215,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
   const isMatch = await user.comparePassword(req.body.oldPassword);
   if (!isMatch) {
-    return next(new ErrorHandler("Old password is incorrect"));
+    return next(new ErrorHandler("Mật Khẩu Cũ Không Đúng"));
   }
 
   user.password = req.body.password;

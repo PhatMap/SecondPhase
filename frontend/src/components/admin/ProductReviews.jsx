@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
 import Loader from "../layout/Loader";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,6 +14,7 @@ import {
   clearErrors,
 } from "../../actions/productActions";
 import { DELETE_REVIEW_RESET } from "../../constants/productConstants";
+
 
 const ProductReviews = () => {
   const [productId, setProductId] = useState("");
@@ -25,7 +26,8 @@ const ProductReviews = () => {
   const { isDeleted, error: deleteError } = useSelector(
     (state) => state.review
   );
-
+  const [deleteReviewId, setDeleteReviewId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     dispatch(getAdminProducts());
 
@@ -111,15 +113,18 @@ const ProductReviews = () => {
   }, [dispatch, error, productId, isDeleted, deleteError]);
 
   const deleteReviewHandler = (id) => {
-    const isConfirmed = window.confirm("Bạn có chắc chắn muốn xóa review này?");
-    if (isConfirmed) {
-      dispatch(deleteReview(id, productId));
-    }
+    setDeleteReviewId(id);
+    setShowModal(true);
+
+  };
+  const handleDeleteConfirmed = () => {
+    dispatch(deleteReview(deleteReviewId, productId));
+    setShowModal(false);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(getProductReviews(productId));
+    
   };
 
   const setReviews = () => {
@@ -178,6 +183,7 @@ const ProductReviews = () => {
   return (
     <Fragment>
       <MetaData title={"Product Reviews"} />
+      <ToastContainer />
       <div className="row">
         <div className="col-12 col-md-2">
           <Sidebar />
@@ -227,6 +233,17 @@ const ProductReviews = () => {
           </Fragment>
         </div>
       </div>
+      {showModal && (
+      <div className="delete-notify-container">
+        <div className="delete-notify-form">
+          <h1> Xóa bình luận này?</h1>
+          <div className="delete-notify-btn-container">
+            <button className="delete-notify-btn-container-yes" onClick={() => handleDeleteConfirmed(deleteReviewId)}>Yes</button>
+            <button className="delete-notify-btn-container-no" onClick={() => setShowModal(false)}>No</button>
+          </div>
+        </div>
+      </div>
+    )}
     </Fragment>
   );
 };
