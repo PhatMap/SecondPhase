@@ -23,6 +23,8 @@ import {
   CHECK_ORDER_REVIEW_SUCCESS,
   CHECK_ORDER_REVIEW_FAIL,
   CLEAR_ERRORS,
+  MOMO_TRANSACTION_START,
+  MOMO_TRANSACTION_SUCCESS,
 } from "../constants/orderConstants";
 import {
   EMPTY_CART_FAIL,
@@ -62,6 +64,48 @@ export const createOrder = (order) => async (dispatch, getState) => {
         payload: error.response.data.message,
       });
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const momoPayment = (info) => async (dispatch, getState) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post("/api/v1/momo", info, config);
+
+    dispatch({
+      type: MOMO_TRANSACTION_START,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const momoDone = (orderId) => async (dispatch, getState) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post(
+      "/api/v1/momoCheckStatus",
+      orderId,
+      config
+    );
+
+    dispatch({
+      type: MOMO_TRANSACTION_SUCCESS,
+      payload: data.resultCode,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -118,7 +162,7 @@ export const allOrders = () => async (dispatch) => {
         totalAmount: data.totalAmount,
         totalPaidAmount: data.totalPaidAmount,
         totalPendingAmount: data.totalPendingAmount,
-    }
+      },
     });
   } catch (error) {
     dispatch({
@@ -139,7 +183,8 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.put(`/api/v1/admin/order/${id}`,
+    const { data } = await axios.put(
+      `/api/v1/admin/order/${id}`,
       orderData,
       config
     );
@@ -182,13 +227,12 @@ export const clearErrors = () => async (dispatch) => {
   });
 };
 
-
 export const checkOrderReview = (userId, productId) => async (dispatch) => {
   try {
     dispatch({ type: CHECK_ORDER_REVIEW_REQUEST });
-    console.log("userid",userId,"proid",productId);
+    console.log("userid", userId, "proid", productId);
 
-    const { data } = await axios.post('/api/v1/orders/me/checkOrderReview', {
+    const { data } = await axios.post("/api/v1/orders/me/checkOrderReview", {
       userId,
       productId,
     });
@@ -197,7 +241,7 @@ export const checkOrderReview = (userId, productId) => async (dispatch) => {
       type: CHECK_ORDER_REVIEW_SUCCESS,
       payload: data,
     });
-    console.log("data",data);
+    console.log("data", data);
   } catch (error) {
     dispatch({
       type: CHECK_ORDER_REVIEW_FAIL,

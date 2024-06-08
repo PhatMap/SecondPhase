@@ -56,6 +56,7 @@ import axios from "axios";
 // Payment
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import WaitingRoom from "./components/cart/WaitingRoom";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -105,6 +106,10 @@ function App() {
             <Route
               path="/confirm"
               element={<ProtectedRoute component={ConfirmOrder} />}
+            />
+            <Route
+              path="/Waiting"
+              element={<ProtectedRoute component={WaitingRoom} />}
             />
             <Route
               path="/success"

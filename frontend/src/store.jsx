@@ -25,9 +25,11 @@ import {
   orderDetailsReducer,
   allOrdersReducer,
   orderReducer,
+  momoReducer,
 } from "./reducers/orderReducers";
 
 const reducer = combineReducers({
+  momo: momoReducer,
   products: productsReducer,
   productDetails: productDetailsReducer,
   newProduct: newProductReducer,

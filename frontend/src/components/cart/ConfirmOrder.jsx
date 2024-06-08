@@ -5,7 +5,11 @@ import MetaData from "../layout/MetaData";
 import CheckoutSteps from "./CheckoutSteps";
 
 import { useDispatch, useSelector } from "react-redux";
-import { createOrder, clearErrors } from "../../actions/orderActions";
+import {
+  createOrder,
+  clearErrors,
+  momoPayment,
+} from "../../actions/orderActions";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -47,6 +51,15 @@ const ConfirmOrder = () => {
     const randomId = `${timestamp}${random}`;
     return randomId;
   }
+
+  const momoPay = async () => {
+    const data = {
+      totalPrice,
+    };
+
+    dispatch(momoPayment(data));
+    history("/waiting");
+  };
 
   const processToCashPayment = () => {
     const order = {
@@ -171,6 +184,9 @@ const ConfirmOrder = () => {
           </p>
 
           <hr />
+          <button className="confirm-order-card-btn momo" onClick={momoPay}>
+            Thanh toán MoMo
+          </button>
           <button className="confirm-order-card-btn" onClick={processToPayment}>
             Ngân Hàng (Bank card)
           </button>

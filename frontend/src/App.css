@@ -2310,6 +2310,15 @@ ul.CTAs a {
   color: white;
 }
 
+.confirm-order-card-btn.momo {
+  background-color: purple;
+}
+
+
+.confirm-order-card-btn.momo:hover {
+  background-color: rgb(193, 4, 193);
+}
+
 .confirm-order-card-btn:hover {
   background-color: rgb(0, 48, 137);
 }
