@@ -13,7 +13,6 @@ import {
   clearErrors,
 } from "../../actions/orderActions";
 import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 const OrdersList = () => {
   const history = useNavigate();

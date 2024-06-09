@@ -18,11 +18,7 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  const {
-    loading,
-    products,
-    error,
-  } = useSelector((state) => state.products);
+  const { loading, products, error } = useSelector((state) => state.products);
 
   const { keyword } = useParams();
 
@@ -43,21 +39,6 @@ const Home = () => {
       setFiveStarProducts(topRatedProducts);
     }
   }, [products]);
-
-  const renderProductsStar = () => {
-    return (
-      <div className="row">
-        {fiveStarProducts.map((product) => (
-          <Product
-            key={product._id}
-            product={product}
-            className="product-item"
-            style={{ width: "70px", marginLeft: "-150px" }}
-          />
-        ))}
-      </div>
-    );
-  };
 
   const handleShowMorestar = () => {
     navigate("/shop", { state: { fromFiveStar: true } });
@@ -80,7 +61,6 @@ const Home = () => {
 
     return () => clearInterval(intervalId);
   }, [backgroundImages.length]);
-
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [categories] = useState([
@@ -170,12 +150,18 @@ const Home = () => {
               ))}
             </div>
 
-            {/* Other parts of your component remain unchanged */}
-
             <h1 className="mt-12 mb-2 text-4xl font-bold">
               Sản Phẩm Được Đánh Giá Cao
             </h1>
-            {renderProductsStar()}
+            <div className="home-new-products">
+              {fiveStarProducts ? (
+                fiveStarProducts.map((product, index) => (
+                  <Product key={index} product={product} />
+                ))
+              ) : (
+                <p>Không có sản phẩm nào</p>
+              )}
+            </div>
             <button
               onClick={handleShowMorestar}
               className="text-2xl font-bold hover:text-blue-500"
@@ -183,7 +169,6 @@ const Home = () => {
               Xem Thêm
             </button>
           </div>
-          <div className="home-page-container"></div>
         </Fragment>
       )}
     </Fragment>
