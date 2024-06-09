@@ -6,6 +6,7 @@ const APIFeatures = require("../utils/apiFeatures");
 const Cart = require("../models/cart");
 
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
+  console.log("1");
   const {
     orderItems,
     shippingInfo,
@@ -16,7 +17,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     totalPrice,
     paymentInfo,
   } = req.body;
-
+  console.log("2");
   const order = await Order.create({
     userName,
     orderItems,
@@ -29,11 +30,12 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     paidAt: Date.now(),
     user: req.user._id,
   });
-
+  console.log("3");
   for (const item of orderItems) {
     await updateStock(item.product, item.variant, item.size, item.quantity);
     await updateCart(req.user._id, item.product, item.variant, item.size);
   }
+  console.log("4");
 
   res.status(200).json({
     success: true,
@@ -122,28 +124,27 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
     if (order.orderStatus === "canceled") {
       return;
     }
-      totalAmount += order.totalPrice;
-      
-      if (order.paymentInfo && order.paymentInfo.status === "succeeded") {
-          totalPaidAmount += order.totalPrice;
-      } else {
-          totalPendingAmount += order.totalPrice;
-      }
+    totalAmount += order.totalPrice;
+
+    if (order.paymentInfo && order.paymentInfo.status === "succeeded") {
+      totalPaidAmount += order.totalPrice;
+    } else {
+      totalPendingAmount += order.totalPrice;
+    }
   });
 
   res.status(200).json({
-      success: true,
-      totalAmount,
-      totalPaidAmount,
-      totalPendingAmount,
-      orders,
+    success: true,
+    totalAmount,
+    totalPaidAmount,
+    totalPendingAmount,
+    orders,
   });
 });
 
-
 exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
-  console.log("huydon",req.body.status );
+  console.log("huydon", req.body.status);
   if (req.body.status === "canceled") {
     for (const item of order.orderItems) {
       await cancelorder(item.product, item.variant, item.size, item.quantity);
@@ -181,7 +182,6 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
     }
   }
 
-
   await Order.findByIdAndRemove(req.params.id);
 
   res.status(200).json({
@@ -217,14 +217,14 @@ async function cancelorder(id, variantId, size, quantity) {
 
   let variantFound = false;
   let sizeFound = false;
- 
+
   product.variants.forEach((variant) => {
     if (variant.id.toString() === variantId.toString()) {
       variantFound = true;
       variant.inventory.forEach((value) => {
         if (value.size === size) {
           sizeFound = true;
-          value.stock += quantity;  // Tăng số lượng tồn kho
+          value.stock += quantity; // Tăng số lượng tồn kho
           variant.totalStock += quantity;
           product.totalStock += quantity;
         }
@@ -237,12 +237,13 @@ async function cancelorder(id, variantId, size, quantity) {
   }
 
   if (!sizeFound) {
-    console.error(`Size not found: ${size} for variant: ${variantId} in product: ${id}`);
+    console.error(
+      `Size not found: ${size} for variant: ${variantId} in product: ${id}`
+    );
   }
 
   await product.save(); // Save the updated product
 }
-
 
 exports.checkOrderReview = catchAsyncErrors(async (req, res, next) => {
   const { userId, productId } = req.body;

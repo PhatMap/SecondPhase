@@ -48,11 +48,13 @@ const Payment = () => {
   }, [dispatch, error]);
 
   const order = {
+    userName: user.name,
     orderItems: cartItems,
     shippingInfo,
   };
 
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
+
   if (orderInfo) {
     order.itemsPrice = orderInfo.itemsPrice;
     order.shippingPrice = orderInfo.shippingPrice;
@@ -79,8 +81,6 @@ const Payment = () => {
       res = await axios.post("/api/v1/payment/process", paymentData, config);
 
       const clientSecret = res.data.client_secret;
-
-      console.log(clientSecret);
 
       if (!stripe || !elements) {
         return;
@@ -128,7 +128,16 @@ const Payment = () => {
       <div className="row wrapper payment-container">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>
-          <h1 className="mb-4" style={{ fontSize: '28px', fontWeight: 'bold', textAlign: 'center' }}>Thông Tin Thẻ Thanh Toán</h1>
+            <h1
+              className="mb-4"
+              style={{
+                fontSize: "28px",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Thông Tin Thẻ Thanh Toán
+            </h1>
             <div className="form-group">
               <label htmlFor="card_num_field">Số Thẻ </label>
               <CardNumberElement
