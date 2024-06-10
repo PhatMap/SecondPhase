@@ -9,8 +9,9 @@ import {
   getUserCartProduct,
 } from "../../actions/cartActions";
 import DeleteNotify from "../layout/DeleteNotify";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const Cart = () => {
   const history = useNavigate();
@@ -18,6 +19,7 @@ const Cart = () => {
   const [show, setShow] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [all, setAll] = useState(false);
 
   const { cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
@@ -118,6 +120,7 @@ const Cart = () => {
   };
 
   const Choose = (value) => {
+    setAll(value);
     setSelectedItems(new Array(cartItems.length).fill(value));
     if (value) {
       setSelected(cartItems);
@@ -138,85 +141,150 @@ const Cart = () => {
           <h1 className="cart-not-login">Giỏ Hàng Trống </h1>
         ) : (
           <Fragment>
+            <ToastContainer />
             <div className="cart-items-container">
               <div className="cart-items">
-                <h2 className="cart-status">
-                  Giỏ Hàng có: <b>{cartItems.length} Sản Phẩm</b>
-                </h2>
                 <div style={{ display: "flex", gap: "20px" }}>
+                  <h2 className="cart-status">
+                    Giỏ Hàng có: <b>{cartItems.length} Sản Phẩm</b>
+                  </h2>
                   <button
-                    style={{ color: "darkblue" }}
-                    onClick={() => Choose(true)}
+                    className={`cart-select-all-btn ${all && "active"}`}
+                    onClick={() => Choose(!all)}
                   >
-                    Chọn tất cả
-                  </button>
-                  <button
-                    style={{ color: "red" }}
-                    onClick={() => Choose(false)}
-                  >
-                    Bỏ chọn tất cả
+                    {all ? "Bỏ Chọn Tất Cả" : "Chọn Tất Cả"}
                   </button>
                 </div>
                 {cartItems.map((item, index) => (
                   <div key={index}>
                     <div className="cart-item">
                       <div className="item-of-cart">
-                        <input
-                          type="checkbox"
-                          checked={selectedItems[index]}
-                          onChange={() => handleCheckboxChange(index)}
-                        />
-                        <img src={item.image} alt="Laptop" />
-
-                        <Link
-                          to={`/product/${item.product}`}
-                          style={{ fontSize: "25px" }}
-                        >
-                          {item.name} - {item.variantName}
-                        </Link>
-
-                        <div className="">
-                          <p className="cart-text cart-text-price ">
-                            {item.price} VNĐ
-                          </p>
-                        </div>
-
-                        <div className="">
-                          <p className="cart-text cart-text-size">
-                            {item.size}
-                          </p>
-                        </div>
-
-                        <div className="stockCounter d-inline">
-                          <span
-                            className="btn btn-danger minus"
-                            onClick={() => decreaseQty(index)}
+                        <div className="item-cart-down">
+                          <img src={item.image} alt="No image" />
+                          <div
+                            style={{
+                              display: "flex",
+                              width: "100%",
+                              height: "100%",
+                              justifyContent: "space-between",
+                            }}
                           >
-                            -
-                          </span>
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  gap: "15px",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    gap: "10px",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <p style={{ fontWeight: "bold" }}>
+                                    Tên sản phẩm:
+                                  </p>
+                                  <Link
+                                    to={`/product/${item.product}`}
+                                    style={{ color: "black" }}
+                                  >
+                                    {item.name}
+                                  </Link>
+                                </div>
 
-                          <input
-                            type="number"
-                            className="form-control count d-inline"
-                            value={item.quantity}
-                            onChange={(e) => handlerQuantity(e)}
-                            onBlur={(e) => handleBlur(e)}
-                          />
+                                <div style={{ display: "flex", gap: "80px" }}>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      gap: "10px",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <p style={{ fontWeight: "bold" }}>Mẫu:</p>
+                                    {item.variantName}
+                                  </div>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      gap: "10px",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <p style={{ fontWeight: "bold" }}>
+                                      Kích thước:
+                                    </p>
+                                    <p className="cart-text">{item.size}</p>
+                                  </div>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      gap: "10px",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <p style={{ fontWeight: "bold" }}>
+                                      Đơn giá:
+                                    </p>
+                                    <p className="cart-text">
+                                      {formatToVNDWithVND(item.price)}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
 
-                          <span
-                            className="btn btn-primary plus"
-                            onClick={() => increaseQty(index)}
-                          >
-                            +
-                          </span>
-                        </div>
-
-                        <div>
-                          <i
-                            style={{ display: "flex", alignItems: "center" }}
-                            className="fa fa-trash cart-delete-btn"
-                            onClick={() => setShow(true)}
-                          ></i>
+                              <div className="cart-item-stock">
+                                <p style={{ fontWeight: "bold" }}>Số lượng:</p>
+                                <input
+                                  type="text"
+                                  className=""
+                                  value={item.quantity}
+                                  onChange={(e) => handlerQuantity(e)}
+                                  onBlur={(e) => handleBlur(e)}
+                                  readOnly
+                                />
+                                <span
+                                  className="cart-item-btn minus"
+                                  onClick={() => decreaseQty(index)}
+                                >
+                                  -
+                                </span>
+                                <span
+                                  className="cart-item-btn plus"
+                                  onClick={() => increaseQty(index)}
+                                >
+                                  +
+                                </span>
+                              </div>
+                            </div>
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={selectedItems[index]}
+                                onChange={() => handleCheckboxChange(index)}
+                                className="cart-checkbox"
+                              />
+                              <i
+                                className="fa fa-trash cart-delete-btn"
+                                onClick={() => setShow(true)}
+                              ></i>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -254,17 +322,20 @@ const Cart = () => {
                 <p>
                   Tổng Thanh Toán:
                   <span className="order-summary-values">
-                    {selected.reduce(
-                      (acc, item) => acc + item.quantity * item.price,
-                      0
-                    )}{" "}
-                    VNĐ
+                    {formatToVNDWithVND(
+                      selected.reduce(
+                        (acc, item) => acc + item.quantity * item.price,
+                        0
+                      )
+                    )}
                   </span>
                 </p>
 
                 <hr />
                 <button
-                  className={`cart-checkout-btn ${selected.length === 0 && "disabled"}`}
+                  className={`cart-checkout-btn ${
+                    selected.length === 0 && "disabled"
+                  }`}
                   onClick={checkoutHandler}
                 >
                   Thanh Toán

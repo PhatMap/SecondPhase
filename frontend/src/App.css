@@ -504,6 +504,7 @@ footer {
   padding: 20px;
   justify-content: space-between;
   box-shadow: #080808 0px 4px 10px;
+  height: 300px;
 }
 
 .cart-checkout-btn {
@@ -516,6 +517,18 @@ footer {
   border-radius: 5px;
   background-color: rgb(35, 100, 219);
   margin: 5px;
+}
+
+.cart-select-all-btn:hover {
+  text-decoration: underline;
+}
+
+.cart-select-all-btn.active {
+  color: red;
+}
+
+.cart-select-all-btn:focus {
+  outline: none;
 }
 
 .cart-checkout-btn:hover {
@@ -552,16 +565,11 @@ footer {
 }
 
 .cart-text {
-  font-weight: bold;
-  font-size: 1.4rem;
+  font-size: 20px;
 }
 
 .cart-text-size {
   color: rgb(178, 148, 0);
-}
-
-.cart-text-price {
-  color: green;
 }
 
 #checkout_btn,
@@ -1634,23 +1642,80 @@ ul.CTAs a {
 .cart-item {
   display: flex;
   justify-content: center;
-  width: 900px;
-  padding: 5px;
+  width: 1000px;
+  height: fit-content;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  gap: 20px;
+}
+
+.cart-checkbox {
+  width: 25px;
+  height: 25px;
 }
 
 .item-of-cart {
   display: flex;
+  flex-direction: column;
   width: 100%;
+}
+
+.item-cart-down {
+  display: flex;
   align-items: center;
-  padding: 10px;
-  justify-content: space-around;
+  gap: 20px;
+}
+
+.short {
+  display: inline-block;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .item-of-cart img {
-  width: 80px;
-  height: 85px;
+  width: 10%;
+  height: 100%;
+}
+
+.cart-item-stock {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 20px;
+}
+
+.cart-item-btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.cart-item-btn.plus {
+  background-color: rgb(87, 87, 236);
+  color: white;
+}
+
+.cart-item-btn.minus {
+  background-color: #e41e1e;
+  color: white;
+}
+
+.cart-item-btn:hover {
+  background-color: #b8b2b2;
+  color: white;
+}
+
+.cart-item-stock input {
+  border: #080808 solid 1px;
+  border-radius: 5px;
+  width: 50px;
+  text-align: center;
 }
 
 .cart-not-login {
@@ -2313,7 +2378,6 @@ ul.CTAs a {
 .confirm-order-card-btn.momo {
   background-color: purple;
 }
-
 
 .confirm-order-card-btn.momo:hover {
   background-color: rgb(193, 4, 193);
