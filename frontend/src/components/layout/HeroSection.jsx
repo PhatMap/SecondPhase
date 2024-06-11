@@ -42,7 +42,7 @@ const HeroSection = () => {
               src="https://t4.ftcdn.net/jpg/02/25/72/09/240_F_225720925_zm8laVfcBujP7SX3FTLYOoUYFqgZcCoS.jpg"
             ></img>
             <p>Nếu bạn đã là một thành viên, thì mắt đầu mua hàng thôi!</p>
-            <button onClick={() => navigate("/shop")} className="home-text-btn">
+            <button onClick={() => navigate("/shop")} className="hero-text-btn">
               Mua Ngay
             </button>
           </div>
@@ -59,9 +59,13 @@ const HeroSection = () => {
               src="https://t3.ftcdn.net/jpg/01/02/21/86/240_F_102218652_SD8qEM2nAExy44ysvhHy8njlnOvHFkTY.jpg"
             ></img>
             <p>
-              Nếu chưa, hãy tạo tài khoản trở thành một thành viên của Vita để mua hàng
+              Nếu chưa, hãy tạo tài khoản trở thành một thành viên của Vita để
+              mua hàng
             </p>
-            <button onClick={() => navigate("/register")} className="home-text-btn">
+            <button
+              onClick={() => navigate("/register")}
+              className="hero-text-btn"
+            >
               Đăng ký ngay
             </button>
           </div>

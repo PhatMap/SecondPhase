@@ -1776,7 +1776,6 @@ ul.CTAs a {
   border-radius: 5px;
   font-weight: bold;
   font-size: 20px;
-  color: white;
   width: 40%;
 }
 
@@ -1809,7 +1808,6 @@ ul.CTAs a {
   border-radius: 5px;
   font-weight: bold;
   font-size: 20px;
-  color: black;
   width: 40%;
 }
 
@@ -1848,6 +1846,19 @@ ul.CTAs a {
 .home-text-btn {
   font-size: xx-large;
   font-weight: bold;
+}
+
+.hero-text-btn {
+  width: fit-content;
+  color: white;
+  font-size: xx-large;
+  font-weight: bold;
+  background-color: #080808;
+  padding: 5px;
+}
+
+.hero-text-btn:hover {
+  color: #007bff;
 }
 
 .home-text-btn:hover {
