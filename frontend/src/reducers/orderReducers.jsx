@@ -25,7 +25,11 @@ import {
   CLEAR_ERRORS,
   MOMO_TRANSACTION_START,
   MOMO_TRANSACTION_SUCCESS,
+  FETCH_ORDER_STATS_REQUEST,
+  FETCH_ORDER_STATS_SUCCESS,
+  FETCH_ORDER_STATS_FAIL
 } from "../constants/orderConstants";
+
 
 export const newOrderReducer = (state = {}, action) => {
   switch (action.type) {
@@ -143,6 +147,19 @@ export const allOrdersReducer = (state = { orders: [] }, action) => {
         error: null,
       };
 
+      case FETCH_ORDER_STATS_REQUEST:
+        return { ...state, loading: true };
+    case FETCH_ORDER_STATS_SUCCESS:
+        return {
+            ...state,
+            loading: false,
+            monthlyRevenue: action.payload.monthlyRevenue,
+            monthlyOrderCount: action.payload.monthlyOrderCount,
+            error: null
+        };
+    case FETCH_ORDER_STATS_FAIL:
+        return { ...state, loading: false, error: action.payload };
+
     default:
       return state;
   }
@@ -150,6 +167,9 @@ export const allOrdersReducer = (state = { orders: [] }, action) => {
 
 export const orderReducer = (state = {}, action) => {
   switch (action.type) {
+
+
+
     case UPDATE_ORDER_REQUEST:
     case DELETE_ORDER_REQUEST:
       return {

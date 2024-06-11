@@ -25,6 +25,9 @@ import {
   CLEAR_ERRORS,
   MOMO_TRANSACTION_START,
   MOMO_TRANSACTION_SUCCESS,
+  FETCH_ORDER_STATS_REQUEST,
+  FETCH_ORDER_STATS_SUCCESS,
+  FETCH_ORDER_STATS_FAIL
 } from "../constants/orderConstants";
 import {
   EMPTY_CART_FAIL,
@@ -247,5 +250,34 @@ export const checkOrderReview = (userId, productId) => async (dispatch) => {
       type: CHECK_ORDER_REVIEW_FAIL,
       payload: error.response.data.message,
     });
+  }
+};
+
+
+
+
+export const fetchOrderStats = () => async (dispatch) => {
+  try {
+      dispatch({ type: FETCH_ORDER_STATS_REQUEST });
+
+      // Gửi yêu cầu tới máy chủ
+      const response = await fetch("/api/v1/order-stats");
+      const data = await response.json();
+
+      // Gửi dữ liệu thành công đến reducer
+      dispatch({
+          type: FETCH_ORDER_STATS_SUCCESS,
+          payload: {
+            monthlyRevenue:data.monthlyRevenue,
+            monthlyOrderCount:data.monthlyOrderCount,
+          }
+      });
+      console.log("Data from server:", data);
+  } catch (error) {
+      // Gửi thông báo lỗi đến reducer
+      dispatch({
+          type: FETCH_ORDER_STATS_FAIL,
+          payload: error.message
+      });
   }
 };

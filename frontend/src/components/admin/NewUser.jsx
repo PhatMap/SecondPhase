@@ -74,9 +74,13 @@ const NewUser = () => {
   const { name, email, password, confirmPassword, address } = user;
 
   const [avatar, setAvatar] = useState("");
+<<<<<<< Updated upstream
   const [avatarPreview, setAvatarPreview] = useState(
     "/images/default_avatar.jpg"
   );
+=======
+  const [avatarPreview, setAvatarPreview] = useState("../images/default_avatar.jpg");
+>>>>>>> Stashed changes
 
   const dispatch = useDispatch();
 

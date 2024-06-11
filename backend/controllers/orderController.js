@@ -269,3 +269,35 @@ exports.checkOrderReview = catchAsyncErrors(async (req, res, next) => {
     hasPurchased,
   });
 });
+
+
+exports.getOrderStats = catchAsyncErrors(async (req, res, next) => {
+  const orders = await Order.find({ orderStatus: "Delivered", deliverAt: { $exists: true } });
+
+  const monthlyRevenue = {};
+  const monthlyOrderCount = {};
+
+  orders.forEach(order => {
+    if (order.deliverAt) { // Kiểm tra nếu trường deliverAt tồn tại
+      console.log("order.deliverAt",order.deliverAt);
+      const deliverDate = new Date(order.deliverAt);
+      const month = deliverDate.getMonth() + 1; // Tháng từ 0-11
+      const year = deliverDate.getFullYear();
+      const key = `${year}-${month}`;
+      console.log("delived",deliverDate);
+      if (!monthlyRevenue[key]) {
+        monthlyRevenue[key] = 0;
+        monthlyOrderCount[key] = 0;
+      }
+
+      monthlyRevenue[key] += order.totalPrice;
+      monthlyOrderCount[key] += 1;
+    }
+  });
+
+  res.status(200).json({
+    success: true,
+    monthlyRevenue,
+    monthlyOrderCount
+  });
+});
