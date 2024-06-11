@@ -15,7 +15,6 @@ import {
 } from "../../actions/productActions";
 import { DELETE_REVIEW_RESET } from "../../constants/productConstants";
 
-
 const ProductReviews = () => {
   const [productId, setProductId] = useState("");
   const history = useNavigate();
@@ -115,7 +114,6 @@ const ProductReviews = () => {
   const deleteReviewHandler = (id) => {
     setDeleteReviewId(id);
     setShowModal(true);
-
   };
   const handleDeleteConfirmed = () => {
     dispatch(deleteReview(deleteReviewId, productId));
@@ -124,7 +122,6 @@ const ProductReviews = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    
   };
 
   const setReviews = () => {
@@ -184,12 +181,12 @@ const ProductReviews = () => {
     <Fragment>
       <MetaData title={"Product Reviews"} />
       <ToastContainer />
-      <div className="row">
-        <div className="col-12 col-md-2">
+      <div className="sidebar-content-container">
+        <div className="">
           <Sidebar />
         </div>
 
-        <div className="col-12 col-md-10">
+        <div className="manage-product-container">
           <Fragment>
             <h1
               className="my-4"
@@ -234,16 +231,26 @@ const ProductReviews = () => {
         </div>
       </div>
       {showModal && (
-      <div className="delete-notify-container">
-        <div className="delete-notify-form">
-          <h1> Xóa bình luận này?</h1>
-          <div className="delete-notify-btn-container">
-            <button className="delete-notify-btn-container-yes" onClick={() => handleDeleteConfirmed(deleteReviewId)}>Yes</button>
-            <button className="delete-notify-btn-container-no" onClick={() => setShowModal(false)}>No</button>
+        <div className="delete-notify-container">
+          <div className="delete-notify-form">
+            <h1> Xóa bình luận này?</h1>
+            <div className="delete-notify-btn-container">
+              <button
+                className="delete-notify-btn-container-yes"
+                onClick={() => handleDeleteConfirmed(deleteReviewId)}
+              >
+                Yes
+              </button>
+              <button
+                className="delete-notify-btn-container-no"
+                onClick={() => setShowModal(false)}
+              >
+                No
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    )}
+      )}
     </Fragment>
   );
 };

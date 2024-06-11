@@ -131,14 +131,23 @@ const OrdersList = () => {
     <Fragment>
       <MetaData title={"All Orders"} />
       <ToastContainer />
-      <div className="row">
-        <div className="col-12 col-md-2">
+      <div className="sidebar-content-container">
+        <div className="">
           <Sidebar />
         </div>
 
         <div className="manage-product-container">
           <Fragment>
-            <h1 className="my-4" style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'center' }}>All Orders</h1>
+            <h1
+              className="my-4"
+              style={{
+                fontSize: "40px",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              All Orders
+            </h1>
 
             {loading ? (
               <Loader />
@@ -156,17 +165,26 @@ const OrdersList = () => {
         </div>
       </div>
       {showModal && (
-      <div className="delete-notify-container">
-        <div className="delete-notify-form">
-          <h1> Bạn có chắc chắn muốn xóa đơn hàng này không?</h1>
-          <div className="delete-notify-btn-container">
-            <button className="delete-notify-btn-container-yes" onClick={() => handleDeleteConfirmed(deleteOrderId)}>Yes</button>
-            <button className="delete-notify-btn-container-no" onClick={() => setShowModal(false)}>No</button>
+        <div className="delete-notify-container">
+          <div className="delete-notify-form">
+            <h1> Bạn có chắc chắn muốn xóa đơn hàng này không?</h1>
+            <div className="delete-notify-btn-container">
+              <button
+                className="delete-notify-btn-container-yes"
+                onClick={() => handleDeleteConfirmed(deleteOrderId)}
+              >
+                Yes
+              </button>
+              <button
+                className="delete-notify-btn-container-no"
+                onClick={() => setShowModal(false)}
+              >
+                No
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    )}
-
+      )}
     </Fragment>
   );
 };

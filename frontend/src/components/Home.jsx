@@ -7,7 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getProducts } from "../actions/productActions";
 import "rc-slider/assets/index.css";
-import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useParams, useNavigate } from "react-router-dom";
+import HeroSection from "./layout/HeroSection";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -113,61 +114,68 @@ const Home = () => {
       ) : (
         <Fragment>
           <MetaData title={"Home"} />
-          <div className="flex flex-col font-sans items-center background-1">
-            <h1 className="mt-12 mb-2 text-4xl font-bold">Sản Phẩm Mới Nhất</h1>
-            <div className="home-new-products">
-              {products.slice(0, 4).map((product) => (
-                <Product key={product._id} product={product} />
-              ))}
+          <div className="home-container background-1">
+            <div>
+              <HeroSection />
             </div>
-            <button
-              onClick={() => navigate("/shop")}
-              className="text-2xl font-bold hover:text-blue-500"
-            >
-              Xem Thêm
-            </button>
+            <div className="home-component">
+              <h1>Sản Phẩm Mới Nhất</h1>
+              <div className="home-new-products">
+                {products.slice(0, 4).map((product) => (
+                  <Product key={product._id} product={product} />
+                ))}
+              </div>
+              <button
+                onClick={() => navigate("/shop")}
+                className="home-text-btn"
+              >
+                Xem Thêm
+              </button>
+            </div>
 
-            <h1 className="mt-12 mb-4 text-4xl font-bold ">
-              Danh Mục Sản Phẩm
-            </h1>
-            <div className="flex w-screen justify-evenly">
-              {categories.map((category, index) => (
-                <div
-                  className="flex flex-col items-center hover:text-blue-500"
-                  key={index}
-                  onClick={() => navigate(category.path)}
-                >
-                  <img
-                    src={category.images[currentImageIndex]}
-                    alt={category.name}
+            <div className="home-component">
+              <h1>Danh Mục Sản Phẩm</h1>
+              <div className="home-new-products">
+                {categories.map((category, index) => (
+                  <div
                     style={{
-                      height: "400px",
-                      width: "300px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
                     }}
-                  />
-                  <p className="text-2xl font-bold">{category.name}</p>
-                </div>
-              ))}
+                    className="home-text-btn"
+                    key={index}
+                    onClick={() => navigate(category.path)}
+                  >
+                    <img
+                      src={category.images[currentImageIndex]}
+                      alt={category.name}
+                      style={{
+                        height: "400px",
+                        width: "300px",
+                      }}
+                    />
+                    <p>{category.name}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <h1 className="mt-12 mb-2 text-4xl font-bold">
-              Sản Phẩm Được Đánh Giá Cao
-            </h1>
-            <div className="home-new-products">
-              {fiveStarProducts ? (
-                fiveStarProducts.map((product, index) => (
-                  <Product key={index} product={product} />
-                ))
-              ) : (
-                <p>Không có sản phẩm nào</p>
-              )}
+            <div className="home-component">
+              <h1>Sản Phẩm Được Đánh Giá Cao</h1>
+              <div className="home-new-products">
+                {fiveStarProducts ? (
+                  fiveStarProducts.map((product, index) => (
+                    <Product key={index} product={product} />
+                  ))
+                ) : (
+                  <p>Không có sản phẩm nào</p>
+                )}
+              </div>
+              <button onClick={handleShowMorestar} className="home-text-btn">
+                Xem Thêm
+              </button>
             </div>
-            <button
-              onClick={handleShowMorestar}
-              className="text-2xl font-bold hover:text-blue-500"
-            >
-              Xem Thêm
-            </button>
           </div>
         </Fragment>
       )}

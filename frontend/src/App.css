@@ -1008,21 +1008,21 @@ footer {
 
 .sidebar-wrapper {
   display: flex;
-  width: 100%;
+  width: 245px;
   align-items: stretch;
   min-height: 100vh;
   font-weight: normal;
-
   margin-top: 0;
   height: 100%;
   left: 0;
   top: 0;
   z-index: 10;
 }
+
 #sidebar {
   min-width: 100%;
   max-width: 100%;
-  background: #333333;
+  background: #1c1b1b;
   color: #fff;
   transition: all 0.3s;
 }
@@ -1629,8 +1629,231 @@ ul.CTAs a {
   background-color: blue;
   text-decoration: none;
 }
+/* HeroSection.jsx */
+.hero-container {
+  background-color: transparent;
+  width: 1500px;
+  height: 590px;
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  gap: 10px;
+}
+
+.hero-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.hero-img p {
+  position: absolute;
+  top: 30%;
+  left: 7px;
+  margin: 0;
+  width: 97%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 40px;
+  color: black;
+}
+
+.hero-content {
+  width: 1000px;
+  height: 50%;
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+
+.hero-content p {
+  position: absolute;
+  top: 30%;
+  left: 10px;
+  margin: 0;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 40px;
+  color: black;
+  width: 45%;
+}
+
+.hero-content-1 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+
+.hero-content-1 p {
+  position: absolute;
+  top: 2%;
+  left: 245px;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 41px;
+  color: black;
+  width: 49%;
+  height: 96%;
+  display: flex;
+  align-items: center;
+}
+
+.hero-content-2 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+
+.hero-content-2 p {
+  position: absolute;
+  top: 2%;
+  left: 390px;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 31px;
+  color: black;
+  width: 20%;
+}
+
+.hero-content-3 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+
+.hero-content-3 p {
+  position: absolute;
+  top: 30%;
+  left: 7px;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 30px;
+  color: black;
+  width: 96%;
+}
+
+.hero-content-4 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+
+.hero-content-4 p {
+  position: absolute;
+  top: 2%;
+  left: 155px;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 26px;
+  color: black;
+  width: 50%;
+}
+
+.hero-content-4 button {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  margin: 0;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+  width: 40%;
+}
+
+.hero-content-5 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+
+.hero-content-5 p {
+  position: absolute;
+  top: 2%;
+  left: 7px;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 30px;
+  color: black;
+  width: 50%;
+}
+
+.hero-content-5 button {
+  position: absolute;
+  top: 50%;
+  left: 190px;
+  margin: 0;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  color: black;
+  width: 40%;
+}
+
+.hero-access {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  gap: 10px;
+}
 
 /* Home.jsx */
+.home-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-family: sans-serif;
+  padding: 10px;
+}
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  font-family: sans-serif;
+  padding: 10px;
+}
+
+.home-container h1 {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.home-text-btn {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.home-text-btn:hover {
+  color: #007bff;
+}
+
 .home-new-products {
   display: flex;
   gap: 20px;
@@ -1638,6 +1861,10 @@ ul.CTAs a {
   margin-bottom: 20px;
 }
 
+.sidebar-content-container {
+  display: flex;
+  justify-content: flex-start;
+}
 /* Cart.jsx */
 .cart-item {
   display: flex;
@@ -2515,11 +2742,11 @@ ul.CTAs a {
 /* ProductList.jsx */
 
 .manage-product-container {
-  margin-top: 20px;
-  width: 1000px;
   display: flex;
   gap: 20px;
   flex-direction: column;
+  width: 100%;
+  padding: 10px;
 }
 
 .user-order-container {

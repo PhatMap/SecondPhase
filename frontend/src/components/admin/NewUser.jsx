@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 import Address from "../user/Address";
-import { newUser,clearErrors,clearMessage } from "../../actions/userActions";
+import { newUser, clearErrors, clearMessage } from "../../actions/userActions";
+import Back from "../layout/Back";
 
 const NewUser = () => {
   const history = useNavigate();
@@ -23,7 +24,13 @@ const NewUser = () => {
   const [selectedAddressInfo, setSelectedAddressInfo] = useState(null);
 
   const isCompleteAddress = (address) => {
-    if (address && address.province && address.district && address.town && address.location) {
+    if (
+      address &&
+      address.province &&
+      address.district &&
+      address.town &&
+      address.location
+    ) {
       return (
         address.province.trim() !== "" &&
         address.district.trim() !== "" &&
@@ -59,20 +66,24 @@ const NewUser = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    address: [{ province: "", district: "", town: "", location: "", phone: "" }],
+    address: [
+      { province: "", district: "", town: "", location: "", phone: "" },
+    ],
   });
 
   const { name, email, password, confirmPassword, address } = user;
 
   const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState("/images/default_avatar.jpg");
+  const [avatarPreview, setAvatarPreview] = useState(
+    "/images/default_avatar.jpg"
+  );
 
   const dispatch = useDispatch();
 
-  const { message,error, loading } = useSelector((state) => state.auth);
+  const { message, error, loading } = useSelector((state) => state.auth);
   const successAddUser = useSelector((state) => state.user.success);
   useEffect(() => {
-    console.log("asdsdad",message);
+    console.log("asdsdad", message);
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -83,16 +94,14 @@ const NewUser = () => {
       dispatch(clearMessage());
       history("/admin/users");
     }
-
-  }, [dispatch,message, error, history]);
-
+  }, [dispatch, message, error, history]);
 
   const isValidPhoneNumber = (phone) => {
     const phoneRegex = /^[0-9]{10}$/;
     return phoneRegex.test(phone);
   };
 
-  const submitHandler =async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     setErrorMessage("");
     setFormError("");
@@ -142,10 +151,16 @@ const NewUser = () => {
       return;
     }
 
-    if (nameError || emailError || phoneError || passwordError || confirmPasswordError || errorMessage) {
+    if (
+      nameError ||
+      emailError ||
+      phoneError ||
+      passwordError ||
+      confirmPasswordError ||
+      errorMessage
+    ) {
       return;
     }
-    
 
     const formData = new FormData();
     formData.append("name", name);
@@ -159,22 +174,22 @@ const NewUser = () => {
       formData.append(`address[${index}][location]`, address.location);
       formData.append(`address[${index}][phone]`, address.phone);
     });
-      await dispatch(newUser(formData))
+    await dispatch(newUser(formData));
   };
 
   const onChange = (e) => {
     const { name, value } = e.target;
-  
+
     if (name === "avatar") {
       const reader = new FileReader();
-  
+
       reader.onload = () => {
         if (reader.readyState === 2) {
           setAvatarPreview(reader.result);
           setAvatar(reader.result);
         }
       };
-  
+
       reader.readAsDataURL(e.target.files[0]);
     } else {
       setUser((prevState) => {
@@ -187,7 +202,7 @@ const NewUser = () => {
         }
       });
     }
-  
+
     switch (name) {
       case "name":
         setNameError("");
@@ -209,13 +224,18 @@ const NewUser = () => {
         break;
     }
   };
-  
 
   return (
     <Fragment>
       <MetaData title={"Register User"} />
       <div className="register-wrapper">
-        <form className="register-form-container" onSubmit={submitHandler} encType="multipart/form-data">
+        <form
+          className="register-form-container"
+          onSubmit={submitHandler}
+          encType="multipart/form-data"
+        >
+          <Back />
+
           <h1 className="register-heading">Khách Hàng </h1>
           <div className="register-form-group">
             <label htmlFor="name_field">Họ Tên</label>
@@ -228,7 +248,11 @@ const NewUser = () => {
               value={name}
               onChange={onChange}
             />
-            {nameError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{nameError}</p>}
+            {nameError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {nameError}
+              </p>
+            )}
           </div>
           <div className="register-form-group">
             <label htmlFor="email_field">Email</label>
@@ -241,8 +265,16 @@ const NewUser = () => {
               value={email}
               onChange={onChange}
             />
-            {emailError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{emailError}</p>}
-            {emailFormatError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{emailFormatError}</p>}
+            {emailError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {emailError}
+              </p>
+            )}
+            {emailFormatError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {emailFormatError}
+              </p>
+            )}
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           </div>
           <div className="register-form-group">
@@ -256,7 +288,11 @@ const NewUser = () => {
               value={address[0].phone}
               onChange={onChange}
             />
-            {phoneError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{phoneError}</p>}
+            {phoneError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {phoneError}
+              </p>
+            )}
           </div>
           <div className="register-form-group">
             <label htmlFor="password_field">Mật Khẩu</label>
@@ -269,7 +305,11 @@ const NewUser = () => {
               value={password}
               onChange={onChange}
             />
-            {passwordError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{passwordError}</p>}
+            {passwordError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {passwordError}
+              </p>
+            )}
           </div>
           <div className="register-form-group">
             <label htmlFor="confirm_password_field">Nhập Lại Mật Khẩu</label>
@@ -282,11 +322,19 @@ const NewUser = () => {
               value={confirmPassword}
               onChange={onChange}
             />
-            {confirmPasswordError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{confirmPasswordError}</p>}
+            {confirmPasswordError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {confirmPasswordError}
+              </p>
+            )}
           </div>
           <div className="register-form-group">
             <Address handleAddressChange={handleAddressChange} />
-            {formError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{formError}</p>}
+            {formError && (
+              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
+                {formError}
+              </p>
+            )}
           </div>
           <div className="register-form-group">
             <label htmlFor="avatar_upload">Ảnh Đại Diện</label>
@@ -305,7 +353,10 @@ const NewUser = () => {
                   accept="image/*"
                   onChange={onChange}
                 />
-                <label className="register-custom-file-label" htmlFor="customFile">
+                <label
+                  className="register-custom-file-label"
+                  htmlFor="customFile"
+                >
                   Chọn Ảnh
                 </label>
               </div>
@@ -316,8 +367,10 @@ const NewUser = () => {
             type="submit"
             className="register-btn"
             disabled={loading ? true : false}
-          >{errorMessage && <p style={{ color: "red", fontSize: "0.8em" }}>{errorMessage}</p>}
-
+          >
+            {errorMessage && (
+              <p style={{ color: "red", fontSize: "0.8em" }}>{errorMessage}</p>
+            )}
             Đăng Kí
           </button>
         </form>

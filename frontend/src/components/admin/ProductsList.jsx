@@ -102,7 +102,7 @@ const ProductsList = () => {
         price: `$${product.price}`,
         totalStock: product.totalStock,
         actions: (
-          <Fragment>
+          <div style={{ display: "flex" }}>
             <Link
               to={`/admin/product/${product._id}`}
               className="btn btn-primary py-1 px-2"
@@ -118,7 +118,7 @@ const ProductsList = () => {
             >
               <i className="fa fa-trash"></i>
             </button>
-          </Fragment>
+          </div>
         ),
       });
     });
@@ -133,31 +133,37 @@ const ProductsList = () => {
   return (
     <Fragment>
       <MetaData title={"All Products"} />
-      <div className="row">
-        <div className="col-12 col-md-2">
+      <div className="sidebar-content-container">
+        <div className="">
           <Sidebar />
         </div>
 
         <div className="manage-product-container">
-          <Fragment>
-          <h1 className="my-4" style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'center' }}>Tất Cả Sản Phẩm </h1>
-            <Link to="/admin/product" className="product-add-btn-container">
-              <i className="fa fa-plus product-add-btn"></i>
-              <p>Thêm Sản Phẩm </p>
-            </Link>
-            {loading ? (
-              <Loader />
-            ) : (
-              <MDBDataTable
-                data={setProducts()}
-                className="product-list-table"
-                bordered
-                striped
-                hover
-                noBottomColumns
-              />
-            )}
-          </Fragment>
+          <h1
+            className="my-4"
+            style={{
+              fontSize: "40px",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Tất Cả Sản Phẩm{" "}
+          </h1>
+          <Link to="/admin/product" className="product-add-btn-container">
+            <i className="fa fa-plus product-add-btn"></i>
+            <p>Thêm Sản Phẩm </p>
+          </Link>
+          {loading ? (
+            <Loader />
+          ) : (
+            <MDBDataTable
+              data={setProducts()}
+              bordered
+              striped
+              hover
+              noBottomColumns
+            />
+          )}
         </div>
         {show && (
           <DeleteNotify

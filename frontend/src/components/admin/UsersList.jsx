@@ -9,7 +9,12 @@ import Sidebar from "./Sidebar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { allUsers, updateUser, deleteUser, clearErrors } from "../../actions/userActions";
+import {
+  allUsers,
+  updateUser,
+  deleteUser,
+  clearErrors,
+} from "../../actions/userActions";
 import { DELETE_USER_RESET } from "../../constants/userConstants";
 import DeleteNotify from "../layout/DeleteNotify";
 
@@ -39,13 +44,13 @@ const UsersList = () => {
       dispatch({ type: DELETE_USER_RESET });
       setDeleteMessage(""); // Reset delete message
     }
-    if (users.length > prevUsersCount &&prevUsersCount>0) {
+    if (users.length > prevUsersCount && prevUsersCount > 0) {
       toast.success("Thêm Người Dùng Thành Công");
     }
 
     // Update the previous user count state
     setPrevUsersCount(users.length);
-  }, [dispatch, error, isDeleted,users.length, prevUsersCount]);
+  }, [dispatch, error, isDeleted, users.length, prevUsersCount]);
 
   const handleDeleteUser = (id, role) => {
     if (role === "admin") {
@@ -61,13 +66,14 @@ const UsersList = () => {
     if (deleteUserRole === "user") {
       const formData = new FormData();
       formData.set("role", "banned");
-      dispatch(updateUser(deleteUserId, formData))
+      dispatch(updateUser(deleteUserId, formData));
       dispatch(allUsers());
-      toast.success("Người dùng đã được chuyển sang vai trò 'banned' thành công");
+      toast.success(
+        "Người dùng đã được chuyển sang vai trò 'banned' thành công"
+      );
     } else {
-      dispatch(deleteUser(deleteUserId))
+      dispatch(deleteUser(deleteUserId));
       dispatch(allUsers());
-
     }
     setShowModal(false); // Ẩn modal sau khi xác nhận xóa
   };
@@ -144,14 +150,23 @@ const UsersList = () => {
   return (
     <Fragment>
       <MetaData title={"All Users"} />
-      <div className="row">
-        <div className="col-12 col-md-2">
+      <div className="sidebar-content-container">
+        <div className="">
           <Sidebar />
         </div>
 
-        <div className="manage-alluser-container">
+        <div className="manage-product-container">
           <Fragment>
-          <h1 className="my-4" style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'center' }}>Danh Sách Khách Hàng</h1>
+            <h1
+              className="my-4"
+              style={{
+                fontSize: "40px",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Danh Sách Khách Hàng
+            </h1>
             <Link to="/admin/users/new" className="alluser-add-btn-container">
               <i className="fa fa-plus alluser-add-btn"></i>
               <p>Khách Hàng Mới</p>
