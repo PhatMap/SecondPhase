@@ -56,7 +56,7 @@ const Dashboard = () => {
                     </div>
 
                     <div className="col-12 col-md-10">
-                        <h1 className="my-4" style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'center' }}>Quản Lí</h1>
+                        <h1 className="my-4" style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'center',color:'#33FFFF' }}>Quản Lí</h1>
 
                         {loading ? <Loader /> : (
                             <Fragment>
@@ -66,9 +66,9 @@ const Dashboard = () => {
                                     <div className="col-xl-4 col-sm-12 mb-3">
                                         <div className="card-custom text-white o-hidden h-100">
                                             <div className="card-body">
-                                                <div className="image-container"style={{ backgroundImage: `url('../images/tải xuống (1).jpg')`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                <div className="image-container"style={{ backgroundImage: `url('../images/Screenshot 2024-06-16 033242.png')`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                 <div className="text-overlay">
-                                                    Tổng Cộng <br /> <b>{ formatToVNDWithVND(totalAmount)} VND</b>
+                                                    Tổng Cộng <br /> <b>{ formatToVNDWithVND(totalAmount)} </b>
                                                 </div>
                                                 </div>
                                             </div>
@@ -78,10 +78,10 @@ const Dashboard = () => {
                                     <div className="col-xl-4 col-sm-12 mb-3">
                                          <div className="card-custom">
                                             <div className="card-body">
-                                              <div className="image-container" style={{ backgroundImage: `url('../images/images (6).jpg')`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                              <div className="image-container" style={{ backgroundImage: `url('../images/hinh-nen-iphone-11-26.webp')`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                  <div className="overlay"></div>
                                                     <div className="text-overlay">
-                                                       Đã Thanh Toán <br /> <b>{formatToVNDWithVND(totalPaidAmount) } VND</b>
+                                                       Đã Thanh Toán <br /> <b>{formatToVNDWithVND(totalPaidAmount) } </b>
                                                      </div>
                                                  </div>
                                              </div>
@@ -91,9 +91,9 @@ const Dashboard = () => {
                                     <div className="col-xl-4 col-sm-12 mb-3">
                                     <div className="card-custom text-white o-hidden h-100">
                                         <div className="card-body">
-                                            <div className="image-container" style={{ backgroundImage: `url('../images/tải xuống (2).jpg')`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                            <div className="image-container" style={{ backgroundImage: `url('../images/Screenshot 2024-06-16 033139.png')`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                               <div className="text-overlay">
-                                                 Chưa Thanh Toán <br /> <b>{formatToVNDWithVND(totalPendingAmount) } VND</b>
+                                                 Chưa Thanh Toán <br /> <b>{formatToVNDWithVND(totalPendingAmount) } </b>
                                                 </div>
                                              </div>
                                             </div>
@@ -206,7 +206,7 @@ const Dashboard = () => {
 
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="image-container" style={{ 
-                                        backgroundImage: `url('../images/hinh-nen-den-22.jpg')`, 
+                                        backgroundImage: `url('../images/Screenshot 2024-06-16 032352.png')`, 
                                         backgroundSize: 'cover', 
                                         backgroundPosition: 'center', 
                                         height: '200px', 
