@@ -31,10 +31,6 @@ const Shop = () => {
   }
 
   useEffect(() => {
-    dispatch(getProducts(keyword, currentPage, [0, 1000000000], category, 0));
-  }, [dispatch, keyword, category, currentPage]);
-
-  useEffect(() => {
     setShop(products);
   }, [products]);
 
@@ -56,7 +52,13 @@ const Shop = () => {
         />
         <h1>SHOP</h1>
         <div className="shop-products-filter-container">
-          <Filter setShop={setShop} />
+          <Filter
+            category={category}
+            keyword={keyword}
+            setShop={setShop}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
 
           <div
             style={{
