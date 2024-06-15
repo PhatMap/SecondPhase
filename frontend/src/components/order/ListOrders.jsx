@@ -17,9 +17,9 @@ const ListOrders = () => {
     Processing: "Xử Lý",
     canceled: " Đơn đã Hủy",
     "Order Confirmed": "Xác Nhận",
-    Received: "Đã Nhận",
-    Shipping: "Giao Hàng",
-    Delivered: "Hoàn Thành",
+    "Shipping": "Giao Hàng",
+    "Delivered": "Hoàn Thành",
+    // Thêm các trạng thái khác nếu cần
   };
 
   useEffect(() => {
@@ -69,16 +69,9 @@ const ListOrders = () => {
         numOfItems: order.orderItems.length,
         amount: `${formatToVNDWithVND(order.totalPrice)}`,
         status: (
-          <p
-            style={{
-              color:
-                order.orderStatus === "Delivered"
-                  ? "green"
-                  : order.orderStatus === "Received"
-                  ? "orange"
-                  : "red",
-            }}
-          >
+          <p style={{ 
+            color: order.orderStatus === "Delivered" ? "green" :  "red"
+          }}>
             {statusTranslations[order.orderStatus]}
           </p>
         ),
@@ -97,7 +90,7 @@ const ListOrders = () => {
     <Fragment>
       <MetaData title={"My Orders"} />
       <div className="user-order-container">
-        <h1>My Orders</h1>
+        <h1>Đơn Hàng Của tôi</h1>
         {loading ? (
           <Loader />
         ) : (

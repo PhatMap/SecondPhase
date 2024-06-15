@@ -27,9 +27,8 @@ const OrdersList = () => {
     Processing: "Xử Lý",
     canceled: "Đơn đã Hủy",
     "Order Confirmed": "Xác Nhận",
-    Shipping: "Giao Hàng",
-    Received: "Đã Nhận",
-    Delivered: "Hoàn Thành",
+    "Shipping": "Giao Hàng",
+    "Delivered": "Hoàn Thành",
   };
 
   useEffect(() => {
@@ -48,8 +47,8 @@ const OrdersList = () => {
   }, [dispatch, error, isDeleted, history]);
 
   const deleteOrderHandler = (id, orderStatus) => {
-    if (orderStatus === "Delivered" || orderStatus === "Received") {
-      toast.error("Không thể xóa đơn hàng đã giao hoặc đã nhận.");
+    if (orderStatus === "Delivered" ) {
+      toast.error("Không thể xóa đơn hàng hoàn thành.");
       return;
     }
     setDeleteOrderId(id);
@@ -97,16 +96,9 @@ const OrdersList = () => {
         numofItems: order.orderItems.length,
         amount: `${formatToVNDWithVND(order.totalPrice)}`,
         status: (
-          <p
-            style={{
-              color:
-                order.orderStatus === "Delivered"
-                  ? "green"
-                  : order.orderStatus === "Received"
-                  ? "orange"
-                  : "red",
-            }}
-          >
+          <p style={{ 
+            color: order.orderStatus === "Delivered" ? "green" :  "red"
+          }}>
             {statusTranslations[order.orderStatus]}
           </p>
         ),
@@ -151,7 +143,7 @@ const OrdersList = () => {
                 textAlign: "center",
               }}
             >
-              All Orders
+              Tất Cả Đơn Hàng
             </h1>
 
             {loading ? (

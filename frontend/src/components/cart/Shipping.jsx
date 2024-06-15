@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { countries } from "countries-list";
 
 import MetaData from "../layout/MetaData";
@@ -7,26 +7,27 @@ import CheckoutSteps from "./CheckoutSteps";
 
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartActions";
-import { useNavigate } from "react-router-dom";
 import Address from "../user/Address";
-import { getUserAddress } from "../../actions/userActions";
 
 const Shipping = () => {
-  const history = useNavigate();
-  const countriesList = Object.values(countries);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { shippingInfo } = useSelector((state) => state.cart);
 
-  const [province, setProvince] = useState(shippingInfo.province || "");
-  const [district, setDistrict] = useState(shippingInfo.district || "");
-  const [town, setTown] = useState(shippingInfo.town || "");
-  const [location, setLocation] = useState(shippingInfo.location || "");
-  const [phoneNo, setPhoneNo] = useState(shippingInfo.phone || "");
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
+  const [town, setTown] = useState("");
+  const [location, setLocation] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [showPhoneInput, setShowPhoneInput] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [formError, setFormError] = useState("");
+
+  useEffect(() => {
+    localStorage.removeItem("shippingInfo");
+  }, []);
 
   const isValidPhoneNumber = (phoneNo) => {
     const phoneRegex = /^[0-9]{10}$/;
@@ -56,7 +57,6 @@ const Shipping = () => {
     e.preventDefault();
     setErrorMessage("");
     setFormError("");
-    console.log("casdsad", province, district, town, location, phoneNo);
     if (!province || !district || !town || !location) {
       setFormError("Vui lòng chọn địa chỉ");
       return;
@@ -72,9 +72,8 @@ const Shipping = () => {
     dispatch(
       saveShippingInfo({ province, district, town, location, phone: phoneNo })
     );
-    history("/confirm");
+    navigate("/confirm");
   };
-
   return (
     <Fragment>
       <MetaData title={"Shipping Info"} />

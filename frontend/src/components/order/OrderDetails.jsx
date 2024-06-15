@@ -18,13 +18,12 @@ import { formatToVNDWithVND } from "../../utils/formatHelper";
 const OrderDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [isReceived, setIsReceived] = useState(false);
+  const [isDelivered, setIsDelivered] = useState(false);
 
   const statusTranslations = {
     Processing: "Đang Xử Lý",
     "Order Confirmed": "Đã Xác Nhận",
     Shipping: "Đang Giao Hàng",
-    Received: "Đã Nhận",
     Delivered: "Hoàn Thành",
     // Thêm các trạng thái khác nếu cần
   };
@@ -103,7 +102,7 @@ const OrderDetails = () => {
     }
 
     const formData = new FormData();
-    formData.set("status", "Received");
+    formData.set("status", "Delivered");
     dispatch(updateOrder(order._id, formData))
       .then(() => {
         toast.success("Đã cập nhật trạng thái đơn hàng thành công");

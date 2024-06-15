@@ -1,9 +1,9 @@
 [
   {
     "name": "Giày sandal nữ MWC NUSD 2423",
-    "price": 30,
+    "price": 300000,
     "description": "Chiều cao : 4cm\n\nChất liệu : Da tổng hợp\n\nĐế : PVC xẻ rãnh chống trơn trượt\n\nKiểu dáng : Sandal đế bằng\n\nMàu sắc : ĐEN - KEM\n\nXuất sứ thương hiệu : Việt Nam",
-    "ratings": 0,
+    "ratings": 4.5,
     "images": [
       {
         "public_id": "products/ulqd5yquyeep0sobuz8f",
@@ -34,17 +34,17 @@
         "inventory": [
           {
             "size": "XS",
-            "price": 25,
+            "price": 250000,
             "stock": 5
           },
           {
             "size": "S",
-            "price": 23,
+            "price": 230000,
             "stock": 8
           },
           {
             "size": "XL",
-            "price": 27,
+            "price": 270000,
             "stock": 10
           }
         ],
@@ -65,12 +65,12 @@
         "inventory": [
           {
             "size": "M",
-            "price": 30,
+            "price": 300000,
             "stock": 10
           },
           {
             "size": "XL",
-            "price": 34,
+            "price": 340000,
             "stock": 9
           }
         ],
@@ -79,16 +79,35 @@
     ],
     "totalStock": 42,
     "category": "Shoe",
-    "numOfReviews": 0,
+    "numOfReviews": 2,
     "user": "6654b2f605a0d7b79eeb7753",
-    "reviews": [],
+    "reviews": [
+      {
+        
+        "user": "6654b2f605a0d7b79eeb7753",
+        "name": "Lã Quý Quân",
+        "rating": 4,
+        "comment": "Ok sản phẩm tốt",
+        "createAt": "2024-05-16T19:00:00.000+00:00"
+        
+      },
+      {
+       
+        "user": "6654b45905a0d7b79eeb787b",
+        "name": "Quân Lã",
+        "rating": 5,
+        "comment": "Giao hàng nhanh so với thời gian dự kiến",
+        "createAt": "2024-06-16T20:00:00.000+00:00"
+      
+      }
+    ],
     "createAt": "2024-06-01T19:12:11.270Z",
 
     "__v": 0
   },
   {
     "name": "Giày cao gót MWC G063",
-    "price": 35,
+    "price": 350000,
     "description": "Chiều cao: khoảng 7-8cm\nChất liệu: da tổng hợp\nĐế: êm mềm, độ đàn hồi tốt, chống trơn trượt\nKiểu dáng: Sandal cao gót\nMàu sắc: Đen - Trắng",
     "ratings": 0,
     "images": [
@@ -125,17 +144,17 @@
         "inventory": [
           {
             "size": "S",
-            "price": 28,
+            "price": 280000,
             "stock": 10
           },
           {
             "size": "L",
-            "price": 29,
+            "price": 290000,
             "stock": 7
           },
           {
             "size": "XL",
-            "price": 33,
+            "price": 330000,
             "stock": 21
           }
         ],
@@ -156,17 +175,17 @@
         "inventory": [
           {
             "size": "XL",
-            "price": 45,
+            "price": 450000,
             "stock": 22
           },
           {
             "size": "XXL",
-            "price": 46,
+            "price": 460000,
             "stock": 30
           },
           {
             "size": "M",
-            "price": 33,
+            "price": 330000,
             "stock": 10
           }
         ],
@@ -184,7 +203,7 @@
   },
   {
     "name": "Dép cao gót MWC G053",
-    "price": 40,
+    "price": 400000,
     "description": "Chiều cao: 4cm\nChất liệu: da tổng hợp\nĐế: êm mềm, độ đàn hồi tốt, chống trơn trượt\nKiểu dáng: Dép cao gót\nMàu sắc: Kem Nâu",
     "ratings": 0,
     "images": [
@@ -221,12 +240,12 @@
         "inventory": [
           {
             "size": "XS",
-            "price": 45,
+            "price": 450000,
             "stock": 35
           },
           {
             "size": "S",
-            "price": 36,
+            "price": 360000,
             "stock": 21
           }
         ],
@@ -243,7 +262,7 @@
   },
   {
     "name": "Dép cao gót MWC 4428",
-    "price": 32,
+    "price": 320000,
     "description": "Chiều cao: 5cm\nĐế: PVC êm mềm, độ đàn hồi tốt, chống trơn trượt\nChất liệu: vải Jean\nKiểu dáng: Dép cao gót\n",
     "ratings": 0,
     "images": [
@@ -268,17 +287,17 @@
         "inventory": [
           {
             "size": "S",
-            "price": 32,
+            "price": 320000,
             "stock": 21
           },
           {
             "size": "M",
-            "price": 22,
+            "price": 220000,
             "stock": 32
           },
           {
             "size": "XL",
-            "price": 35,
+            "price": 350000,
             "stock": 12
           }
         ],
@@ -299,12 +318,12 @@
         "inventory": [
           {
             "size": "XXL",
-            "price": 32,
+            "price": 320000,
             "stock": 21
           },
           {
             "size": "L",
-            "price": 22,
+            "price": 220000,
             "stock": 34
           }
         ],
@@ -325,12 +344,12 @@
         "inventory": [
           {
             "size": "M",
-            "price": 42,
+            "price": 420000,
             "stock": 24
           },
           {
             "size": "XL",
-            "price": 44,
+            "price": 440000,
             "stock": 12
           }
         ],
@@ -347,7 +366,7 @@
   },
   {
     "name": "Giày cao gót MWC 4468 - Cao Gót Bít Mũi",
-    "price": 25,
+    "price": 250000,
     "description": "Thiết kế dáng Slingback bít mũi, mặt giày được sử dụng chất liệu da tổng hợp cao cấp phối quai hậu 2 trong 1 đính đá sang chảnh thời thời trang.\n\nGiày cao gót với gót vuông vững chắc dễ đi, dễ phối hợp với nhiều trang phục khác nhau tạo nên vẻ đẹp thon gọn, sang chảnh cho đôi chân.",
     "ratings": 0,
     "images": [
@@ -372,16 +391,16 @@
         "inventory": [
           {
             "size": "M",
-            "price": 22,
-            "stock": 24
+            "price": 220000,
+            "stock": 240
           },
           {
             "size": "XL",
-            "price": 34,
-            "stock": 25
+            "price": 340000,
+            "stock": 254
           }
         ],
-        "totalStock": 49
+        "totalStock": 494
       },
       {
         "name": "Trắng",
@@ -398,12 +417,12 @@
         "inventory": [
           {
             "size": "L",
-            "price": 32,
+            "price": 320000,
             "stock": 53
           },
           {
             "size": "XXL",
-            "price": 34,
+            "price": 340000,
             "stock": 43
           }
         ],
@@ -420,7 +439,7 @@
   },
   {
     "name": "Giày Thể Thao Nam MWC NATT- 5703",
-    "price": 67,
+    "price": 670000,
     "description": "Giày được thiết kế dáng buộc dây năng động,mặt giày sử dụng da lộn phối vải dệt thời trang, phối màu trẻ trung phong cách.\n\nĐặc biệt sản phẩm sử dụng chất liệu cao cấp có độ bền tối ưu giúp bạn thoải mái trong mọi hoàn cảnh.",
     "ratings": 0,
     "images": [
@@ -453,12 +472,12 @@
         "inventory": [
           {
             "size": "S",
-            "price": 43,
+            "price": 430000,
             "stock": 56
           },
           {
             "size": "L",
-            "price": 56,
+            "price": 560000,
             "stock": 64
           }
         ],
@@ -479,12 +498,12 @@
         "inventory": [
           {
             "size": "XL",
-            "price": 75,
+            "price": 750000,
             "stock": 24
           },
           {
             "size": "L",
-            "price": 73,
+            "price": 730000,
             "stock": 42
           }
         ],
@@ -501,7 +520,7 @@
   },
   {
     "name": "Giày Thể Thao Nam MWC NATT",
-    "price": 55,
+    "price": 550000,
     "description": "Chiều cao : khoảng 4cm\n\nChất liệu : da tổng hợp\n\nĐế : PVC êm mềm, độ đàn hồi tốt, chống trơn trượt\n\nKiểu dáng : giày Sneaker cổ thấp",
     "ratings": 0,
     "images": [
@@ -526,12 +545,12 @@
         "inventory": [
           {
             "size": "L",
-            "price": 63,
+            "price": 630000,
             "stock": 53
           },
           {
             "size": "XL",
-            "price": 66,
+            "price": 660000,
             "stock": 74
           }
         ],
@@ -580,17 +599,17 @@
         "inventory": [
           {
             "size": "S",
-            "price": 43,
+            "price": 430000,
             "stock": 53
           },
           {
             "size": "M",
-            "price": 45,
+            "price": 450000,
             "stock": 124
           },
           {
             "size": "XL",
-            "price": 53,
+            "price": 530000,
             "stock": 123
           }
         ],
@@ -607,7 +626,7 @@
   },
   {
     "name": "Giày Thể Thao Nam MWC NATT- 5480",
-    "price": 40,
+    "price": 400000,
     "description": "Giày được thiết kế dáng buộc dây sneaker,mặt giày được phối màu và sử dụng chất liệu da si mờ phối lưới thời trang.\n\nĐặc biệt sản phẩm sử dụng chất liệu cao cấp có độ bền tối ưu giúp bạn thoải mái trong mọi hoàn cảnh.",
     "ratings": 0,
     "images": [
@@ -636,12 +655,12 @@
         "inventory": [
           {
             "size": "L",
-            "price": 42,
+            "price": 420000,
             "stock": 55
           },
           {
             "size": "M",
-            "price": 36,
+            "price": 360000,
             "stock": 124
           }
         ],
@@ -662,12 +681,12 @@
         "inventory": [
           {
             "size": "S",
-            "price": 34,
+            "price": 340000,
             "stock": 125
           },
           {
             "size": "XL",
-            "price": 46,
+            "price": 460000,
             "stock": 214
           }
         ],
@@ -684,7 +703,7 @@
   },
   {
     "name": "Giày Thể Thao Nam MWC NATT- 5704",
-    "price": 43,
+    "price": 430000,
     "description": "Giày được thiết kế dáng buộc dây năng động,mặt giày vải dệt dày dặn ,viền ép nhiệt phong cách hiện đại,màu sắc khỏe khoắn",
     "ratings": 0,
     "images": [
@@ -717,17 +736,17 @@
         "inventory": [
           {
             "size": "S",
-            "price": 39,
+            "price": 390000,
             "stock": 23
           },
           {
             "size": "L",
-            "price": 44,
+            "price": 440000,
             "stock": 21
           },
           {
             "size": "XL",
-            "price": 45,
+            "price": 450000,
             "stock": 23
           }
         ],
@@ -744,7 +763,7 @@
   },
   {
     "name": "Giày Thể Thao Nam Phối Sọc Thể Thao",
-    "price": 55,
+    "price": 550000,
     "description": "Chiều cao : giày 4cm\n\nChất liệu : vải dệt lưới",
     "ratings": 0,
     "images": [
@@ -773,17 +792,17 @@
         "inventory": [
           {
             "size": "S",
-            "price": 49,
+            "price": 490000,
             "stock": 45
           },
           {
             "size": "M",
-            "price": 53,
+            "price": 530000,
             "stock": 24
           },
           {
             "size": "XXL",
-            "price": 76,
+            "price": 760000,
             "stock": 12
           }
         ],
@@ -800,9 +819,9 @@
   },
   {
     "name": "Giày Thể Thao Nam MWC NATT- 5455 Giày Thể Thao Nam Cao Cấp",
-    "price": 32,
+    "price": 320000,
     "description": "Giày được thiết kế kiểu dáng buộc dây sneaker cực ngầu phối sọc thể thao năng động, phong cách hiện đại,màu sắc khỏe khoắn.",
-    "ratings": 0,
+    "ratings": 4.6,
     "images": [
       {
         "public_id": "products/fmsnnseg62gwaotcmbof",
@@ -825,17 +844,17 @@
         "inventory": [
           {
             "size": "L",
-            "price": 30,
+            "price": 300000,
             "stock": 55
           },
           {
             "size": "XL",
-            "price": 41,
+            "price": 410000,
             "stock": 421
           },
           {
             "size": "S",
-            "price": 29,
+            "price": 290000,
             "stock": 429
           }
         ],
@@ -844,15 +863,35 @@
     ],
     "totalStock": 905,
     "category": "Shoe",
-    "numOfReviews": 0,
+    "numOfReviews": 3,
     "user": "6654b2f605a0d7b79eeb7753",
-    "reviews": [],
+    "reviews": [ {
+      "user": "6654b2f605a0d7b79eeb7753",
+      "name": "Lã Quý Quân",
+      "rating": 4,
+      "comment": "Giày rất đẹp và chất lượng!",
+      "createAt": "2024-05-16T19:00:00.000+00:00"
+    },
+    {
+      "user": "6654b45905a0d7b79eeb787b",
+      "name": "Quân Lã",
+      "rating": 5,
+      "comment": "Rất hài lòng với sản phẩm này!",
+      "createAt": "2024-06-16T20:00:00.000+00:00"
+    },
+    {
+      "user": "666859779635ca2e247537c1",
+      "name": "21424",
+      "rating": 5,
+      "comment": "Sản phẩm rất ấn tượng, phù hợp với phong cách của tôi!",
+      "createAt": "2024-06-16T20:30:00.000+00:00"
+    }],
     "createAt": "2024-06-01T19:52:58.573Z",
     "__v": 0
   },
   {
     "name": "ĐẦM XÒE CỔ V PHỐI ĐAI",
-    "price": 78,
+    "price": 780000,
     "description": "\nDòng sản phẩm\tLadies\nNhóm sản phẩm\tĐầm\nCổ áo\tCổ chữ V",
     "ratings": 0,
     "images": [
@@ -881,12 +920,12 @@
         "inventory": [
           {
             "size": "L",
-            "price": 98,
+            "price": 980000,
             "stock": 422
           },
           {
             "size": "XS",
-            "price": 63,
+            "price": 630000,
             "stock": 666
           }
         ],
@@ -907,12 +946,12 @@
         "inventory": [
           {
             "size": "S",
-            "price": 69,
+            "price": 690000,
             "stock": 64
           },
           {
             "size": "XL",
-            "price": 87,
+            "price": 870000,
             "stock": 235
           }
         ],
@@ -929,7 +968,7 @@
   },
   {
     "name": "ĐẦM XÒE TAY CÁCH ĐIỆU",
-    "price": 76,
+    "price": 760000,
     "description": "\nDòng sản phẩm\tYou\nNhóm sản phẩm\tĐầm\nCổ áo\tCổ khác",
     "ratings": 0,
     "images": [
@@ -954,12 +993,12 @@
         "inventory": [
           {
             "size": "M",
-            "price": 56,
+            "price": 560000,
             "stock": 325
           },
           {
             "size": "XL",
-            "price": 89,
+            "price": 890000,
             "stock": 353
           }
         ],
@@ -976,7 +1015,7 @@
   },
   {
     "name": "ĐẦM LỤA THÊU HOA DÁNG XÒE",
-    "price": 67,
+    "price": 670000,
     "description": "Thiết kế đầm cổ đức, tay hến, độ dài ngang bắp chân, eo đầm ôm xếp ly tạo kiểu xòe tôn dáng. Chi tiết thêu hoa ở vai cùng công nghệ cắt đục lỗ tạo điểm nhấn giúp thiết kế đầm thêm ấn tượng, thu hút hơn",
     "ratings": 0,
     "images": [
@@ -1005,17 +1044,17 @@
         "inventory": [
           {
             "size": "M",
-            "price": 59,
+            "price": 590000,
             "stock": 427
           },
           {
             "size": "XL",
-            "price": 74,
+            "price": 740000,
             "stock": 245
           },
           {
             "size": "XXL",
-            "price": 78,
+            "price": 780000,
             "stock": 636
           }
         ],
@@ -1032,9 +1071,9 @@
   },
   {
     "name": "ĐẦM TRƠN NHẤN CHUN",
-    "price": 88,
+    "price": 880000,
     "description": "Đầm trơn dáng xòe, độ dài qua gối. Cổ tàu trụ, tay ngắn. Dọc đường vai và eo được nhấn chun co dãn. Dọc thân đầm là khuy cài.",
-    "ratings": 0,
+    "ratings": 5,
     "images": [
       {
         "public_id": "products/qogsq6vq5mcog1cgeogq",
@@ -1057,12 +1096,12 @@
         "inventory": [
           {
             "size": "S",
-            "price": 76,
+            "price": 760000,
             "stock": 353
           },
           {
             "size": "L",
-            "price": 87,
+            "price": 870000,
             "stock": 532
           }
         ],
@@ -1083,17 +1122,17 @@
         "inventory": [
           {
             "size": "M",
-            "price": 76,
+            "price": 760000,
             "stock": 467
           },
           {
             "size": "XL",
-            "price": 93,
+            "price": 930000,
             "stock": 563
           },
           {
             "size": "XXL",
-            "price": 98,
+            "price": 980000,
             "stock": 643
           }
         ],
@@ -1102,15 +1141,21 @@
     ],
     "totalStock": 2558,
     "category": "Dress",
-    "numOfReviews": 0,
+    "numOfReviews": 1,
     "user": "6654b2f605a0d7b79eeb7753",
-    "reviews": [],
+    "reviews": [ {
+      "user": "6654b2f605a0d7b79eeb7753",
+      "name": "Lã Quý Quân",
+      "rating": 5,
+      "comment": "Vải đẹp nha mấy xí, dày dặn ok lắm nha còn dài nửa săn sale còn nửa giá quá là oke",
+      "createAt": "2024-05-16T19:00:00.000+00:00"
+    }],
     "createAt": "2024-06-01T20:01:55.390Z",
     "__v": 0
   },
   {
     "name": "AURORA DRESS - ĐẦM SUÔNG DỆT BURN OUT",
-    "price": 67,
+    "price": 670000,
     "description": "Đơn giản nhưng vẫn đủ khiến quý cô siêu lòng với Aurora Dress, thiết kế đầm sang trọng được điểm họa tiết dệt burn out đầy sức hút",
     "ratings": 0,
     "images": [
@@ -1135,17 +1180,17 @@
         "inventory": [
           {
             "size": "S",
-            "price": 66,
+            "price": 660000,
             "stock": 65
           },
           {
             "size": "M",
-            "price": 67,
+            "price": 670000,
             "stock": 646
           },
           {
             "size": "L",
-            "price": 78,
+            "price": 780000,
             "stock": 535
           }
         ],
@@ -1162,12 +1207,12 @@
         "inventory": [
           {
             "size": "XL",
-            "price": 74,
+            "price": 740000,
             "stock": 555
           },
           {
             "size": "M",
-            "price": 64,
+            "price": 640000,
             "stock": 435
           }
         ],
@@ -1184,7 +1229,7 @@
   },
   {
     "name": "ĐẦM THUN IN HOA",
-    "price": 75,
+    "price": 750000,
     "description": "Note: Đầm thun đen có viền cổ màu ngẫu nhiên",
     "ratings": 0,
     "images": [
@@ -1213,12 +1258,12 @@
         "inventory": [
           {
             "size": "S",
-            "price": 53,
+            "price": 530000,
             "stock": 63
           },
           {
             "size": "L",
-            "price": 76,
+            "price": 760000,
             "stock": 353
           }
         ],
@@ -1239,12 +1284,12 @@
         "inventory": [
           {
             "size": "M",
-            "price": 64,
+            "price": 640000,
             "stock": 563
           },
           {
             "size": "XL",
-            "price": 87,
+            "price": 870000,
             "stock": 865
           }
         ],
@@ -1261,9 +1306,9 @@
   },
   {
     "name": "ĐẦM THUN IN HOA",
-    "price": 75,
+    "price": 750000,
     "description": "Note: Đầm thun đen có viền cổ màu ngẫu nhiên",
-    "ratings": 0,
+    "ratings": 5,
     "images": [
       {
         "public_id": "products/gegmoffj4eotclmb3rvn",
@@ -1290,12 +1335,12 @@
         "inventory": [
           {
             "size": "S",
-            "price": 53,
+            "price": 530000,
             "stock": 63
           },
           {
             "size": "L",
-            "price": 76,
+            "price": 760000,
             "stock": 353
           }
         ],
@@ -1316,12 +1361,12 @@
         "inventory": [
           {
             "size": "M",
-            "price": 64,
+            "price": 640000,
             "stock": 563
           },
           {
             "size": "XL",
-            "price": 87,
+            "price": 870000,
             "stock": 865
           }
         ],
@@ -1330,15 +1375,35 @@
     ],
     "totalStock": 1844,
     "category": "Dress",
-    "numOfReviews": 0,
+    "numOfReviews": 3,
     "user": "6654b2f605a0d7b79eeb7753",
-    "reviews": [],
+    "reviews": [ {
+      "user": "6654b2f605a0d7b79eeb7753",
+      "name": "Lã Quý Quân",
+      "rating": 3,
+      "comment": "Sản phẩn giống hình. Mặc lên cũng khá tôn dáng. Nhưng chất thì không được ưng lắm",
+      "createAt": "2024-06-16T21:00:00.000+00:00"
+    },
+    {
+      "user": "6654b45905a0d7b79eeb787b",
+      "name": "Quân Lã",
+      "rating": 5,
+      "comment": "xinh nhé các b . Mà i như như mk thử ngoài shop dc cái mua trên này rẻ hơn dc 1/3 ",
+      "createAt": "2024-06-16T22:00:00.000+00:00"
+    },
+    {
+      "user": "666859779635ca2e247537c1",
+      "name": "21424",
+      "rating": 5,
+      "comment": "đẹp nha mọi người  đầm mặc lên nhìn okee lắm ạ.",
+      "createAt": "2024-06-16T23:00:00.000+00:00"
+    }],
     "createAt": "2024-06-01T20:07:48.667Z",
     "__v": 0
   },
   {
     "name": "ĐẦM ÔM NHÚN TẠO KIỂU",
-    "price": 76,
+    "price": 760000,
     "description": "Đầm ôm basic, một thiết kế mà bất cứ nàng hiện đại nào cũng nên sở hữu trong tủ đồ. Dáng ôm body quyến rũ, tôn lên đường cong cơ thể. ",
     "ratings": 0,
     "images": [
@@ -1363,12 +1428,12 @@
         "inventory": [
           {
             "size": "S",
-            "price": 64,
+            "price": 640000,
             "stock": 72
           },
           {
             "size": "XL",
-            "price": 79,
+            "price": 790000,
             "stock": 635
           }
         ],
@@ -1385,7 +1450,7 @@
   },
   {
     "name": "ĐẦM THUN DÁNG SUÔNG",
-    "price": 54,
+    "price": 540000,
     "description": "Đầm thun cổ tròn, tay ngắn. Dáng đầm suông, phần eo có dây kéo rút tạo kiểu. Mặt trước in và thêu chữ khác màu tạo điểm nhấn",
     "ratings": 0,
     "images": [
@@ -1414,17 +1479,17 @@
         "inventory": [
           {
             "size": "S",
-            "price": 45,
+            "price": 450000,
             "stock": 635
           },
           {
             "size": "M",
-            "price": 56,
+            "price": 560000,
             "stock": 352
           },
           {
             "size": "XL",
-            "price": 67,
+            "price": 670000,
             "stock": 235
           }
         ],
@@ -1445,12 +1510,12 @@
         "inventory": [
           {
             "size": "S",
-            "price": 49,
+            "price": 490000,
             "stock": 535
           },
           {
             "size": "L",
-            "price": 53,
+            "price": 530000,
             "stock": 747
           }
         ],
@@ -1467,7 +1532,7 @@
   },
   {
     "name": "ĐẦM XÒE DỆT KIM",
-    "price": 66,
+    "price": 660000,
     "description": "Đầm len dệt kim cổ chữ V, vạt trước đắp chéo, tay lỡ. Chiết eo có đỉa. Vải kiểu dập ly nổi.\n\nMang phong cách tinh tế, bắt mắt, dễ dàng kết hợp với các phụ kiện thời trang khác. Chất liệu len dệt kim có độ co giãn nhất định, ít nhàu, dễ bảo quản. Bạn có thể diện đi chơi, dạo phố hay đi làm.\n\nMàu sắc: Vàng hoa cúc - Đen - Nude\n\n",
     "ratings": 0,
     "images": [
@@ -1492,17 +1557,17 @@
         "inventory": [
           {
             "size": "XXL",
-            "price": 76,
+            "price": 760000,
             "stock": 452
           },
           {
             "size": "L",
-            "price": 49,
+            "price": 490000,
             "stock": 632
           },
           {
             "size": "XL",
-            "price": 53,
+            "price": 530000,
             "stock": 563
           }
         ],
@@ -1523,12 +1588,12 @@
         "inventory": [
           {
             "size": "L",
-            "price": 65,
+            "price": 650000,
             "stock": 323
           },
           {
             "size": "XL",
-            "price": 68,
+            "price": 680000,
             "stock": 532
           }
         ],
@@ -1545,9 +1610,9 @@
   },
   {
     "name": "SET ÁO DÀI HOÀNG CÚC",
-    "price": 70,
+    "price": 700000,
     "description": "Màu sắc: Họa tiết Be",
-    "ratings": 0,
+    "ratings": 5,
     "images": [
       {
         "public_id": "products/bgszxbxu6cfzikzj3wso",
@@ -1570,17 +1635,17 @@
         "inventory": [
           {
             "size": "L",
-            "price": 67,
+            "price": 670000,
             "stock": 532
           },
           {
             "size": "XL",
-            "price": 69,
+            "price": 690000,
             "stock": 635
           },
           {
             "size": "XXL",
-            "price": 74,
+            "price": 740000,
             "stock": 456
           }
         ],
@@ -1589,15 +1654,21 @@
     ],
     "totalStock": 1623,
     "category": "Dress",
-    "numOfReviews": 0,
+    "numOfReviews": 5,
     "user": "6654b2f605a0d7b79eeb7753",
-    "reviews": [],
+    "reviews": [ {
+      "user": "6654b2f605a0d7b79eeb7753",
+      "name": "Lã Quý Quân",
+      "rating": 5,
+      "comment": "Áo Rộng rãi thoáng mái ,",
+      "createAt": "2024-05-16T19:00:00.000+00:00"
+    }],
     "createAt": "2024-06-01T20:23:40.740Z",
     "__v": 0
   },
   {
     "name": "SET BỘ ÁO DÀI Ý CHÂU",
-    "price": 70,
+    "price": 700000,
     "description": "Đắm chìm trong vẻ đẹp mong manh, tựa sương mai của người phụ nữ trong tà áo dài",
     "ratings": 0,
     "images": [
@@ -1626,17 +1697,17 @@
         "inventory": [
           {
             "size": "M",
-            "price": 64,
+            "price": 640000,
             "stock": 523
           },
           {
             "size": "L",
-            "price": 67,
+            "price": 670000,
             "stock": 634
           },
           {
             "size": "XL",
-            "price": 69,
+            "price": 690000,
             "stock": 523
           }
         ],
@@ -1656,7 +1727,7 @@
     "name": "Áo thun nữ croptop tay ngắn",
     "price": 30000,
     "description": "Tự tin với phong cách! Đón nhận sự thay đổi với chiếc áo Croptop rộng thiết kế cách điệu\n\nChất liệu : được làm từ vải thun cotton mỏng với khả năng co giãn giúp bạn tự do vận động mà không gặp khó khăn.\n\nThông tin chi tiết : \nVới thiết kế áo cổ tròn form croptop tay ngắn trẻ trung\nBiến kiểu phần lai áo tạo điểm nhấn khác biệt khoe vòng 2 1 cách tinh tế\nBạn có thể kết hợp nó với quần jeans bình thường hoặc chân váy để tạo nên phong cách cá nhân riêng",
-    "ratings": 0,
+    "ratings": 5,
     "images": [
       {
         "public_id": "products/umomatvxl4bofrb1gs6k",
@@ -1733,9 +1804,17 @@
     ],
     "totalStock": 300,
     "category": "Shirt",
-    "numOfReviews": 0,
+    "numOfReviews": 1,
     "user": "6627e33c55f5c45cedf90d21",
-    "reviews": [],
+    "reviews": [
+      {
+        "user": "6654b2f605a0d7b79eeb7753",
+        "name": "Lã Quý Quân",
+        "rating": 5,
+        "comment": "Áo Rộng rãi thoáng mái ,",
+        "createAt": "2024-05-16T19:00:00.000+00:00"
+      }
+    ],
     "createAt": "2024-06-01T21:17:00.223Z",
     "__v": 0
   },
@@ -2132,7 +2211,7 @@
     "name": "Quần Vải Nữ Ống Rộng Xếp Ly Trơn Form Wide Leg",
     "price": 570000,
     "description": "Quần vải nữ ống rộng - 10S24PFOW002 là một trong những sản phẩm nổi bật được Routine thiết kế phù hợp theo xu hướng, phong cách thời trang hiện đại, item này sở hữu nhiều tính năng vượt trội, ưu điểm nổi bật giúp người mặc thoải mái tự tin diện trong nhiều dịp khác nhau, bao gồm:\n\nChất liệu Polyester: Polyester là chất liệu được điều chế từ dầu mỏ và than đá. Có mặt vải bóng, nhẹ và khá mát tay khi sờ vào.\nLoại vải này có nhiều ưu điểm như bền, ít nhăn, độ đàn hồi cao, chống thấm nước nên rất dễ bảo quản và chăm sóc.\nForm dáng Wide Leg: là form được thiết kế với dáng quần suông rộng, phần eo và phần đùi được may ôm vừa vào cơ thể, phần lai quần sẽ rộng hơn một chút, cạp quần cao.\nChiếc quần này tạo ra hiệu ứng chân dài rất tốt, phù hợp với những người có chiều cao khiêm tốn.\nNgoài ra, đối với những người có khuyết điểm thì chiếc quần form Wide Leg này sẽ là sự lựa chọn hoàn hảo vì nó che khuyết điểm cực tốt và tôn lên các đường nét của cơ thể tạo ra cho người mặc một hình ảnh tự tin hơn, trẻ trung hơn nhưng vẫn mang nét thanh lịch, chỉn chu.\nQuần Vải Nữ Ống còn có thiết kế trơn và kiểu dáng suông rộng cùng chi tiết túi xéo nổi bật.\nNgoài ra quần vải nữ ống có thêm một chi tiết khiến các bạn trẻ khá thích chính là phần xếp ly làm cho quần đứng form và phần lưng thun co giãn giúp người mặc dễ điều chỉnh và thoải mái cử động khi mặc.\nKiểu quần phù hợp cho cả đi học, đi làm hay đi du lịch, dễ mix cùng nhiều trang phục khác nhau.",
-    "ratings": 0,
+    "ratings": 5,
     "images": [
       {
         "public_id": "products/gbpytnw0ltib7jkfloth",
@@ -2204,9 +2283,15 @@
     ],
     "totalStock": 285,
     "category": "Trousers",
-    "numOfReviews": 0,
+    "numOfReviews": 5,
     "user": "6627e33c55f5c45cedf90d21",
-    "reviews": [],
+    "reviews": [ {
+      "user": "6654b2f605a0d7b79eeb7753",
+      "name": "Lã Quý Quân",
+      "rating": 5,
+      "comment": "Quần Rộng rãi thoáng mái ,",
+      "createAt": "2024-05-16T19:00:00.000+00:00"
+    }],
     "createAt": "2024-06-01T22:04:07.535Z",
     "__v": 0
   },
@@ -2214,7 +2299,7 @@
     "name": "Quần Jean Nam Ống Ôm Wash Dye Trơn Form Slim",
     "price": 590000,
     "description": "Bạn đang tìm kiếm một mẫu quần jean nam ốp ôm vừa vặn, phong cách và thoải mái? Đây chính là sự lựa chọn hoàn hảo cho bạn. Với chất liệu denim cao cấp và thiết kế form slim, chiếc quần jean này không chỉ mang lại sự thoải mái mà còn tôn lên vẻ đẹp và phong cách của bạn.\n\nĐặc điểm nổi bật:\nChất liệu cao cấp: Sử dụng denim chất lượng, vừa mềm mại vừa bền đẹp, giúp bạn thoải mái khi mặc cả ngày dài.\nỐng ôm form slim: Thiết kế ống quần ôm sát tôn lên vóc dáng nam tính, phù hợp với mọi hoạt động trong cuộc sống hàng ngày.\nWash Dye trơn: Màu sắc trơn nhẹ nhàng và đẹp mắt, dễ dàng kết hợp với các loại áo phông, áo sơ mi, áo khoác, tạo nên phong cách riêng biệt cho bạn.",
-    "ratings": 0,
+    "ratings": 4.5,
     "images": [
       {
         "public_id": "products/kjzney2sdqo2tcptqtaz",
@@ -2306,9 +2391,22 @@
     ],
     "totalStock": 286,
     "category": "Trousers",
-    "numOfReviews": 0,
+    "numOfReviews": 2,
     "user": "6627e33c55f5c45cedf90d21",
-    "reviews": [],
+    "reviews": [ {
+      "user": "6654b2f605a0d7b79eeb7753",
+      "name": "Lã Quý Quân",
+      "rating": 4,
+      "comment": "Giày rất đẹp và chất lượng!",
+      "createAt": "2024-05-16T19:00:00.000+00:00"
+    },
+    {
+      "user": "6654b45905a0d7b79eeb787b",
+      "name": "Quân Lã",
+      "rating": 5,
+      "comment": "Rất hài lòng với sản phẩm này!",
+      "createAt": "2024-06-16T20:00:00.000+00:00"
+    }],
     "createAt": "2024-06-01T22:07:43.391Z",
     "__v": 0
   },
@@ -2316,7 +2414,7 @@
     "name": "Quần Dài Kaki Nam Trơn Lưng Thun Rút Dây Form Straight Crop",
     "price": 540000,
     "description": "Bạn đang tìm kiếm một lựa chọn quần phù hợp cho cả công việc và các dịp không chính thức? Mẫu quần dài kaki nam trơn này sẽ làm hài lòng bạn. Với thiết kế straight crop, chất liệu kaki cao cấp và đặc biệt là lưng thun rút dây, chiếc quần này mang lại sự thoải mái cùng với phong cách lịch lãm và trẻ trung.\n\nĐặc điểm nổi bật:\n\nChất liệu kaki cao cấp: Chất liệu kaki không chỉ đảm bảo độ bền và độ bền mà còn tạo cảm giác thoải mái khi mặc.\nLưng thun rút dây: Thiết kế lưng thun với dây rút linh hoạt giúp điều chỉnh độ ôm và thoải mái tối ưu cho mọi vóc dáng.\nStraight crop: Thiết kế straight crop tạo nên phong cách hiện đại và trẻ trung, phù hợp với nhiều dịp khác nhau từ công việc đến dạo phố hay dự tiệc.",
-    "ratings": 0,
+    "ratings": 4,
     "images": [
       {
         "public_id": "products/nzlx679ig2xarzk7z5gx",
@@ -2397,9 +2495,22 @@
     ],
     "totalStock": 344,
     "category": "Trousers",
-    "numOfReviews": 0,
+    "numOfReviews": 2,
     "user": "6627e33c55f5c45cedf90d21",
-    "reviews": [],
+    "reviews": [ {
+      "user": "6654b2f605a0d7b79eeb7753",
+      "name": "Lã Quý Quân",
+      "rating": 4,
+      "comment": "Đẹp mà hỏi nhỏ mk 50kg sz m vẫn hơi kích tý",
+      "createAt": "2024-05-16T19:00:00.000+00:00"
+    },
+    {
+      "user": "6654b45905a0d7b79eeb787b",
+      "name": "Quân Lã",
+      "rating": 4,
+      "comment": "Giao hàng nhanh.mặc lên fom khá đẹp.",
+      "createAt": "2024-06-16T20:00:00.000+00:00"
+    }],
     "createAt": "2024-06-01T22:16:41.589Z",
     "__v": 0
   }

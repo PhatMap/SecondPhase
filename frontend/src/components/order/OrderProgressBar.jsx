@@ -6,7 +6,7 @@ const OrderProgressBar = ({ currentStatus }) => {
     "Processing": "Xử Lý",
     "Order Confirmed": "Xác Nhận",
     "Shipping": "Giao Hàng",
-    "Received": "Đã Nhận",
+   
     "Delivered": "Hoàn Thành",
     
     // Thêm các trạng thái khác nếu cần
@@ -15,10 +15,7 @@ const OrderProgressBar = ({ currentStatus }) => {
   // Define the English steps array
   let steps = Object.keys(stepTranslations);
 
-  // Thêm trạng thái "Received" vào mảng steps nếu chưa tồn tại
-  if (!steps.includes("Received")) {
-    steps.push("Received");
-  }
+
 
   // Get the current step index
   const currentStepIndex = steps.indexOf(currentStatus);

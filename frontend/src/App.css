@@ -1825,9 +1825,10 @@ ul.CTAs a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   font-family: sans-serif;
   padding: 10px;
+  margin-top: -7rem;
 }
 .home-container {
   display: flex;
@@ -1845,7 +1846,7 @@ ul.CTAs a {
 }
 
 .home-text-btn {
-  font-size: xx-large;
+  font-size: 24px;
   font-weight: bold;
 }
 
@@ -1857,6 +1858,23 @@ ul.CTAs a {
   background-color: #080808;
   padding: 5px;
 }
+
+.more-text-btn {
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid #050709;
+  background-color: transparent;
+  color: #050305;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.more-text-btn:hover {
+  background-color: #b1d3f5;
+  color: #0531f4;
+}
+
 
 .hero-text-btn:hover {
   color: #007bff;

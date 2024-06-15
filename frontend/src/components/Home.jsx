@@ -33,7 +33,7 @@ const Home = () => {
   useEffect(() => {
     if (products.length > 0) {
       const topRatedProducts = products
-        .filter((p) => p.ratings >= 4.5)
+        .filter((p) => p.ratings >= 4)
 
         .slice(0, 4);
 
@@ -127,7 +127,7 @@ const Home = () => {
               </div>
               <button
                 onClick={() => navigate("/shop")}
-                className="home-text-btn"
+                className="more-text-btn"
               >
                 Xem Thêm
               </button>
@@ -172,7 +172,7 @@ const Home = () => {
                   <p>Không có sản phẩm nào</p>
                 )}
               </div>
-              <button onClick={handleShowMorestar} className="home-text-btn">
+              <button onClick={handleShowMorestar} className="more-text-btn">
                 Xem Thêm
               </button>
             </div>
