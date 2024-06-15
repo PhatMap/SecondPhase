@@ -68,11 +68,12 @@ const AddressShip = () => {
           <p>No addresses found</p>
         )}
       </div>
-      <div className="text-center mt-5">
+      <div className="text-center mt-5" style={{marginRight:"-70rem", marginBottom: "2rem", }}>
         <Link to="/shipping" className="btn btn-outline-danger btn-sm">
           Quay lại
         </Link>
       </div>
+
     </Fragment>
   );
 };
