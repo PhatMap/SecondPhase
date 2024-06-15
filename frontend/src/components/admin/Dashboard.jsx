@@ -12,6 +12,7 @@ import { allOrders ,fetchOrderStats } from '../../actions/orderActions';
 import { allUsers } from '../../actions/userActions';
 import ChartComponent from '../Chart';
 import OrderChart from '../OrderChart';
+import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 
 
@@ -67,7 +68,7 @@ const Dashboard = () => {
                                             <div className="card-body">
                                                 <div className="image-container"style={{ backgroundImage: `url('../images/tải xuống (1).jpg')`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                 <div className="text-overlay">
-                                                    Tổng Cộng <br /> <b>{totalAmount && totalAmount.toFixed(2)} VND</b>
+                                                    Tổng Cộng <br /> <b>{ formatToVNDWithVND(totalAmount)} VND</b>
                                                 </div>
                                                 </div>
                                             </div>
@@ -80,7 +81,7 @@ const Dashboard = () => {
                                               <div className="image-container" style={{ backgroundImage: `url('../images/images (6).jpg')`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                  <div className="overlay"></div>
                                                     <div className="text-overlay">
-                                                       Đã Thanh Toán <br /> <b>{totalPaidAmount && totalPaidAmount.toFixed(2)} VND</b>
+                                                       Đã Thanh Toán <br /> <b>{formatToVNDWithVND(totalPaidAmount) } VND</b>
                                                      </div>
                                                  </div>
                                              </div>
@@ -92,7 +93,7 @@ const Dashboard = () => {
                                         <div className="card-body">
                                             <div className="image-container" style={{ backgroundImage: `url('../images/tải xuống (2).jpg')`, backgroundSize: 'cover', backgroundPosition: 'center', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                               <div className="text-overlay">
-                                                 Chưa Thanh Toán <br /> <b>{totalPendingAmount && totalPendingAmount.toFixed(2)} VND</b>
+                                                 Chưa Thanh Toán <br /> <b>{formatToVNDWithVND(totalPendingAmount) } VND</b>
                                                 </div>
                                              </div>
                                             </div>
