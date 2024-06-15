@@ -1,4 +1,4 @@
-import React, { Fragment, useState,useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 import MetaData from "../layout/MetaData";
@@ -13,6 +13,7 @@ import {
   clearErrors,
 } from "../../actions/orderActions";
 import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
+import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const OrdersList = () => {
   const history = useNavigate();
@@ -23,12 +24,12 @@ const OrdersList = () => {
   const [deleteOrderId, setDeleteOrderId] = useState(null);
 
   const statusTranslations = {
-    "Processing": "Xử Lý",
-    "canceled": "Đơn đã Hủy",
+    Processing: "Xử Lý",
+    canceled: "Đơn đã Hủy",
     "Order Confirmed": "Xác Nhận",
-    "Shipping": "Giao Hàng",
-    "Received": "Đã Nhận",
-    "Delivered": "Hoàn Thành",
+    Shipping: "Giao Hàng",
+    Received: "Đã Nhận",
+    Delivered: "Hoàn Thành",
   };
 
   useEffect(() => {
@@ -53,39 +54,37 @@ const OrdersList = () => {
     }
     setDeleteOrderId(id);
     setShowModal(true);
-    
   };
   const handleDeleteConfirmed = (id) => {
     dispatch(deleteOrder(id));
     setShowModal(false);
   };
-  
 
   const setOrders = () => {
     const data = {
       columns: [
         {
-          label: "Customer name",
+          label: "Tên Khách Hàng",
           field: "name",
           sort: "asc",
         },
         {
-          label: "No of Items",
+          label: "Số Sản Phẩm",
           field: "numofItems",
           sort: "asc",
         },
         {
-          label: "Total Amount",
+          label: "Tổng Tiền",
           field: "amount",
           sort: "asc",
         },
         {
-          label: "Status",
+          label: "Trạng thái đơn",
           field: "status",
           sort: "asc",
         },
         {
-          label: "Actions",
+          label: "Tác vụ",
           field: "actions",
         },
       ],
@@ -96,12 +95,18 @@ const OrdersList = () => {
       data.rows.push({
         name: order.userName,
         numofItems: order.orderItems.length,
-        amount: `${order.totalPrice} VND`,
+        amount: `${formatToVNDWithVND(order.totalPrice)}`,
         status: (
-          <p style={{ 
-            color: order.orderStatus === "Delivered" ? "green" : 
-                   order.orderStatus === "Received" ? "orange" : "red"
-          }}>
+          <p
+            style={{
+              color:
+                order.orderStatus === "Delivered"
+                  ? "green"
+                  : order.orderStatus === "Received"
+                  ? "orange"
+                  : "red",
+            }}
+          >
             {statusTranslations[order.orderStatus]}
           </p>
         ),

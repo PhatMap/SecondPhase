@@ -1,4 +1,4 @@
-import React, { Fragment,useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import MetaData from "../layout/MetaData";
@@ -13,6 +13,7 @@ import {
   clearErrors,
 } from "../../actions/orderActions";
 import OrderProgressBar from "./OrderProgressBar";
+import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -20,11 +21,11 @@ const OrderDetails = () => {
   const [isReceived, setIsReceived] = useState(false);
 
   const statusTranslations = {
-    "Processing": "Đang Xử Lý",
+    Processing: "Đang Xử Lý",
     "Order Confirmed": "Đã Xác Nhận",
-    "Shipping": "Đang Giao Hàng",
-    "Received": "Đã Nhận",
-    "Delivered": "Hoàn Thành",
+    Shipping: "Đang Giao Hàng",
+    Received: "Đã Nhận",
+    Delivered: "Hoàn Thành",
     // Thêm các trạng thái khác nếu cần
   };
   const {
@@ -63,17 +64,19 @@ const OrderDetails = () => {
       return;
     }
 
-    const confirmCancel = window.confirm("Bạn có chắc chắn muốn hủy đơn hàng này không?");
+    const confirmCancel = window.confirm(
+      "Bạn có chắc chắn muốn hủy đơn hàng này không?"
+    );
     if (!confirmCancel) {
       return;
     }
 
     const formData = new FormData();
-    formData.set("status", "canceled"); // Cập nhật trạng thái thành "canceled"
+    formData.set("status", "canceled");
     dispatch(updateOrder(order._id, formData))
       .then(() => {
         toast.success("Đơn hàng đã được hủy thành công");
-        window.location.reload(); // Làm mới trang sau khi hủy đơn hàng thành công
+        window.location.reload();
       })
       .catch((err) => {
         toast.error(err.message);
@@ -85,32 +88,31 @@ const OrderDetails = () => {
   };
 
   const canReceive = () => {
-    return orderStatus === "Shipping" ;
+    return orderStatus === "Shipping";
   };
- 
-    const receiveOrderHandler = () => {
-      if (!canReceive()) {
-        toast.error("Đơn Hàng Chưa Được Giao Không Thể Nhận");
-        return;
-      }
-  
-      const confirmCancel = window.confirm("Bạn có chắc đã nhận được đơn hàng?");
-      if (!confirmCancel) {
-        return;
-      }
-  
-      const formData = new FormData();
-      formData.set("status", "Received"); // Cập nhật trạng thái thành "canceled"
-      dispatch(updateOrder(order._id, formData))
-        .then(() => {
-          toast.success("Đã cập nhật trạng thái đơn hàng thành công");
-          window.location.reload(); // Làm mới trang sau khi hủy đơn hàng thành công
-        })
-        .catch((err) => {
-          toast.error(err.message);
-        });
-    };
-  
+
+  const receiveOrderHandler = () => {
+    if (!canReceive()) {
+      toast.error("Đơn Hàng Chưa Được Giao Không Thể Nhận");
+      return;
+    }
+
+    const confirmCancel = window.confirm("Bạn có chắc đã nhận được đơn hàng?");
+    if (!confirmCancel) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.set("status", "Received");
+    dispatch(updateOrder(order._id, formData))
+      .then(() => {
+        toast.success("Đã cập nhật trạng thái đơn hàng thành công");
+        window.location.reload();
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
 
   return (
     <Fragment>
@@ -126,27 +128,32 @@ const OrderDetails = () => {
 
               <OrderProgressBar currentStatus={orderStatus} />
 
-  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px" }}>
-  <button
-    className="btn btn-success"
-    onClick={receiveOrderHandler}
-    disabled={loading || !canReceive()}
-    style={{width: "10rem" }}
-    
-  >
-    Đã Nhận
-  </button>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "20px",
+                }}
+              >
+                <button
+                  className="btn btn-success"
+                  onClick={receiveOrderHandler}
+                  disabled={loading || !canReceive()}
+                  style={{ width: "10rem" }}
+                >
+                  Đã Nhận
+                </button>
 
-  <button
-    className="btn btn-danger"
-    onClick={cancelOrderHandler}
-    disabled={loading || !canCancelOrder()}
-    style={{ marginRight: "65rem",width: "10rem" }}
-  >
-    Hủy Đơn 
-  </button>
-</div>
-
+                <button
+                  className="btn btn-danger"
+                  onClick={cancelOrderHandler}
+                  disabled={loading || !canCancelOrder()}
+                  style={{ marginRight: "65rem", width: "10rem" }}
+                >
+                  Hủy Đơn
+                </button>
+              </div>
 
               <strong>
                 <h1>Thông tin đơn hàng</h1>
@@ -162,7 +169,7 @@ const OrderDetails = () => {
                 {shippingDetails}
               </p>
               <p>
-                <b>Số tiền:</b> {totalPrice} VNĐ
+                <b>Số tiền:</b> {formatToVNDWithVND(totalPrice)} 
               </p>
 
               <hr />
@@ -181,7 +188,6 @@ const OrderDetails = () => {
               >
                 <h4 className="my-4">Trạng thái đơn hàng:</h4>
                 <b>{statusTranslations[orderStatus]}</b>
-
               </div>
 
               <hr />
@@ -222,7 +228,7 @@ const OrderDetails = () => {
                       </div>
 
                       <div className="">
-                        <p>{item.price} VNĐ</p>
+                        <p>{formatToVNDWithVND(item.price)}</p>
                       </div>
 
                       <div className="">

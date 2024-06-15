@@ -14,6 +14,7 @@ import {
 import { UPDATE_ORDER_RESET } from "../../constants/orderConstants";
 import OrderProgressBar from "../order/OrderProgressBar";
 import Back from "../layout/Back";
+import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const ProcessOrder = () => {
   const { id } = useParams();
@@ -42,16 +43,16 @@ const ProcessOrder = () => {
   }, [dispatch, error, isUpdated, orderId]);
 
   const updateOrderHandler = () => {
-    console.log("status",orderStatus);
-    if (orderStatus === "canceled")  {
+    console.log("status", orderStatus);
+    if (orderStatus === "canceled") {
       toast.error("Không thể chỉnh sửa đơn hàng đã hủy");
       return;
     }
     const formData = new FormData();
     formData.set("status", status);
     if (status === "Delivered") {
-    formData.set("paymentInfo.status", "succeeded");
-  }
+      formData.set("paymentInfo.status", "succeeded");
+    }
     dispatch(updateOrder(order._id, formData));
   };
 
@@ -77,7 +78,7 @@ const ProcessOrder = () => {
           <Loader />
         ) : (
           <div className="order-details-container">
-            <Back/>
+            <Back />
             <div style={{ width: "250px" }}>
               <h4 className="">Trạng thái đơn hàng</h4>
 
@@ -92,7 +93,6 @@ const ProcessOrder = () => {
                   <option value="Order Confirmed">Xác Nhận </option>
                   <option value="Shipping">Giao Hàng</option>
                   <option value="Delivered">Hoàn Thành </option>
-                
                 </select>
               </div>
 
@@ -122,7 +122,7 @@ const ProcessOrder = () => {
                 `${theOrder.province},${theOrder.district}, ${theOrder.town}, ${theOrder.location}`}
             </p>
             <p>
-              <b>Số tiền:</b> {totalPrice} VNĐ
+              <b>Số tiền:</b> {formatToVNDWithVND(totalPrice)}
             </p>
 
             <hr />
@@ -182,7 +182,7 @@ const ProcessOrder = () => {
                     <div>{item.size}</div>
 
                     <div className="">
-                      <p>{item.price} VNĐ</p>
+                      <p>{formatToVNDWithVND(item.price)}</p>
                     </div>
 
                     <div className="">

@@ -17,6 +17,7 @@ import {
 } from "../../actions/productActions";
 import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
 import DeleteNotify from "../layout/DeleteNotify";
+import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const ProductsList = () => {
   const history = useNavigate();
@@ -99,7 +100,7 @@ const ProductsList = () => {
           />
         ),
         name: product.name,
-        price: `$${product.price}`,
+        price: `${formatToVNDWithVND(product.price)}`,
         totalStock: product.totalStock,
         actions: (
           <div style={{ display: "flex" }}>

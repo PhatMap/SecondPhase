@@ -151,7 +151,6 @@ export const getOrderDetails = (id) => async (dispatch) => {
   }
 };
 
-// Get all orders - ADMIN
 export const allOrders = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_ORDERS_REQUEST });
