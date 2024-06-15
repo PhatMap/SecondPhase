@@ -23,7 +23,7 @@ const Shipping = () => {
   const [location, setLocation] = useState(shippingInfo.location || "");
   const [phoneNo, setPhoneNo] = useState(shippingInfo.phone || "");
   const [showAddressForm, setShowAddressForm] = useState(false);
-  const [showPhoneInput, setShowPhoneInput] = useState(true); // Biến để kiểm soát việc hiển thị phần nhập số điện thoại
+  const [showPhoneInput, setShowPhoneInput] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [formError, setFormError] = useState("");
@@ -51,27 +51,23 @@ const Shipping = () => {
         break;
     }
   };
- 
 
   const submitHandler = (e) => {
     e.preventDefault();
     setErrorMessage("");
     setFormError("");
-    console.log("casdsad",province,district,town,location,phoneNo)
-    if(!province||!district||!town||!location)
-      {setFormError("Vui lòng chọn địa chỉ");
-       return;
-        
-      }
-     else {
+    console.log("casdsad", province, district, town, location, phoneNo);
+    if (!province || !district || !town || !location) {
+      setFormError("Vui lòng chọn địa chỉ");
+      return;
+    } else {
       setFormError("");
     }
-   if (!isValidPhoneNumber(phoneNo)) {
+    if (!isValidPhoneNumber(phoneNo)) {
       setPhoneError("Số Điện Thoại Không Đúng Định Dạng");
       return;
     } else {
       setPhoneError("");
-      
     }
     dispatch(
       saveShippingInfo({ province, district, town, location, phone: phoneNo })
@@ -88,13 +84,30 @@ const Shipping = () => {
       <div className="shipping-wrapper">
         <form className="shipping-form-container" onSubmit={submitHandler}>
           <h1 className="shipping-heading">Địa Chỉ Giao Hàng </h1>
+          <Fragment>
+            <button
+              className="shipping-btn"
+              style={{ marginTop: "1rem", marginBottom: "1rem" }}
+              onClick={() => history("/shipping/address")}
+            >
+              Địa Chỉ Đã Lưu
+            </button>
+          </Fragment>
+          {showAddressForm && (
+            <div className="register-form-group">
+              <Address handleAddressChange={handleAddressChange} />
+              {formError && (
+                <p
+                  className="error"
+                  style={{ color: "red", fontSize: "0.8em" }}
+                >
+                  {formError}
+                </p>
+              )}
+            </div>
+          )}
 
-          {showAddressForm && (<div className="register-form-group">
-            <Address handleAddressChange={handleAddressChange} />
-            {formError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{formError}</p>}
-          </div>)}
-
-          {!showPhoneInput && ( 
+          {!showPhoneInput && (
             <div className="shipping-form-group">
               <label htmlFor="phone_field">Số Điện Thoại</label>
               <input
@@ -105,42 +118,44 @@ const Shipping = () => {
                 onChange={(e) => setPhoneNo(e.target.value)}
                 required
               />
-               {phoneError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{phoneError}</p>}
+              {phoneError && (
+                <p
+                  className="error"
+                  style={{ color: "red", fontSize: "0.8em" }}
+                >
+                  {phoneError}
+                </p>
+              )}
             </div>
           )}
 
-          {!showAddressForm && ( 
+          {!showAddressForm && (
             <button
               type="button"
               onClick={() => {
                 setShowAddressForm(true);
-                setShowPhoneInput(false); 
+                setShowPhoneInput(false);
               }}
               className="shipping-btn"
             >
-              Nhập Địa Chỉ Mới
+              Tạo Địa Chỉ Mới
             </button>
           )}
 
-          {showAddressForm && ( 
+          {showAddressForm && (
             <Fragment>
               <button type="submit" className="shipping-btn">
                 Tiếp Tục
               </button>
             </Fragment>
-              )}
-              <Fragment>
-                <button 
-                  className="shipping-btn" style={{ marginTop: '1rem', marginBottom: '1rem' }}
-                  onClick={() => history("/shipping/address")}
-                >
-                  Đã Có Địa Chỉ? Tới Xem
-                </button>
-              </Fragment>
-              <Link to="/cart" className="btn btn-outline-danger btn-sm" >Quay lại</Link>
-
-
- 
+          )}
+          <Link
+            to="/cart"
+            className="btn btn-outline-danger"
+            style={{ marginTop: "20px" }}
+          >
+            Quay lại
+          </Link>
         </form>
       </div>
     </Fragment>

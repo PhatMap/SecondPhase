@@ -13,6 +13,7 @@ import {
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const ConfirmOrder = () => {
   const history = useNavigate();
@@ -150,8 +151,8 @@ const ConfirmOrder = () => {
 
                   <div className="col-4 col-lg-4 mt-4 mt-lg-0">
                     <p>
-                      {item.quantity} x ${item.price} ={" "}
-                      <b>${(item.quantity * item.price).toFixed(2)}</b>
+                      {item.quantity} x {formatToVNDWithVND(item.price)} ={" "}
+                      <b>{formatToVNDWithVND(item.quantity * item.price)}</b>
                     </p>
                   </div>
                 </div>
@@ -166,21 +167,31 @@ const ConfirmOrder = () => {
           <h4>Hóa Đơn </h4>
           <hr />
           <p>
-            Tổng giá trị sản phẩm:{" "}
-            <span className="order-summary-values">{itemsPrice} VNĐ </span>
+            Tổng giá trị sản phẩm:
+            <span className="order-summary-values">
+              {formatToVNDWithVND(itemsPrice)}
+            </span>
           </p>
           <p>
-            Vận Chuyển :{" "}
-            <span className="order-summary-values">{shippingPrice} VNĐ</span>
+            Vận Chuyển :
+            <span className="order-summary-values">
+              {formatToVNDWithVND(shippingPrice)}
+            </span>
           </p>
           <p>
-            Thuế: <span className="order-summary-values">{taxPrice} VNĐ</span>
+            Thuế:
+            <span className="order-summary-values">
+              {formatToVNDWithVND(taxPrice)}
+            </span>
           </p>
 
           <hr />
 
           <p>
-            Tổng: <span className="order-summary-values">{totalPrice} VNĐ</span>
+            Tổng:
+            <span className="order-summary-values">
+              {formatToVNDWithVND(totalPrice)}
+            </span>
           </p>
 
           <hr />
@@ -197,7 +208,6 @@ const ConfirmOrder = () => {
             Trực Tiếp (COD)
           </button>
           <div>
-            {" "}
             <Link
               to="/shipping"
               className="btn btn-outline-danger btn-sm"

@@ -35,37 +35,43 @@ const AddressShip = () => {
       <CheckoutSteps shipping />
       <div className="container container-fluid">
         {user && user.address && user.address.length > 0 ? (
-         <table className="custom-table">
-            <thead>
-              <tr>
-                <th>Province</th>
-                <th>District</th>
-                <th>Town</th>
-                <th>Location</th>
-                <th>Phone</th>
-                <th>Action</th>
+          <table className="custom-table">
+            <th>Tỉnh/ Thành phố</th>
+            <th>Quận</th>
+            <th>Huyện</th>
+            <th>Chi tiết</th>
+            <th>Số điện thoại</th>
+            {user.address.map((address) => (
+              <tr key={address._id}>
+                <td>{address.province}</td>
+                <td>{address.district}</td>
+                <td>{address.town}</td>
+                <td>{address.location}</td>
+                <td>{address.phone}</td>
+                <td>
+                  <button
+                    className="btn btn-primary"
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "center",
+                    }}
+                    onClick={() => handleSelectAddress(address)}
+                  >
+                    Select
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {user.address.map((address) => (
-                <tr key={address._id}>
-                  <td>{address.province}</td>
-                  <td>{address.district}</td>
-                  <td>{address.town}</td>
-                  <td>{address.location}</td>
-                  <td>{address.phone}</td>
-                  <td>
-                    <button onClick={() => handleSelectAddress(address)}>Select</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+            ))}
           </table>
         ) : (
           <p>No addresses found</p>
         )}
-      </div><div className="text-center mt-5">
-        <Link to="/shipping" className="btn btn-outline-danger btn-sm">Quay lại</Link>
+      </div>
+      <div className="text-center mt-5">
+        <Link to="/shipping" className="btn btn-outline-danger btn-sm">
+          Quay lại
+        </Link>
       </div>
     </Fragment>
   );

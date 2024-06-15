@@ -26,7 +26,6 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
   const [selectedVariant, setSelectedVariant] = useState("");
   const [stock, setStock] = useState("");
   const [price, setPrice] = useState("");
@@ -98,6 +97,10 @@ const ProductDetails = () => {
       toast.error("Hãy chọn sản phẩm và kích cỡ");
       return;
     }
+    if (quantity === "") {
+      toast.error("Hãy nhập số lượng cho vào giỏ hàng");
+      return;
+    }
 
     const item = {
       product: product._id,
@@ -142,6 +145,38 @@ const ProductDetails = () => {
     const qty = count.valueAsNumber - 1;
     setQuantity(qty);
   };
+
+  const ChooseSize = (index, newSize, newPrice, newStock) => {
+    setQuantity(1);
+
+    if (size === newSize) {
+      setInventoryIndex("");
+      setSize("");
+      setPrice(product.price);
+      setStock(variant.totalStock);
+    } else {
+      setInventoryIndex(index);
+      setSize(newSize);
+      setPrice(newPrice);
+      setStock(newStock);
+    }
+  };
+
+  const handlerQuantity = (e) => {
+    const inputValue = e.target.value;
+
+    if (inputValue > stock) {
+      setQuantity(1);
+    } else {
+      if (inputValue < 0) {
+        setQuantity(-inputValue);
+      } else {
+        setQuantity(inputValue);
+      }
+    }
+  };
+
+  const [comment, setComment] = useState("");
 
   function setUserRatings() {
     const stars = document.querySelectorAll(".star");
@@ -191,40 +226,6 @@ const ProductDetails = () => {
     dispatch(newReview(formData));
   };
 
-  const ChooseSize = (index, newSize, newPrice, newStock) => {
-    setQuantity(1);
-
-    if (size === newSize) {
-      setInventoryIndex("");
-      setSize("");
-      setPrice(product.price);
-      setStock(variant.totalStock);
-    } else {
-      setInventoryIndex(index);
-      setSize(newSize);
-      setPrice(newPrice);
-      setStock(newStock);
-    }
-  };
-
-  const handlerQuantity = (e) => {
-    const inputValue = e.target.value;
-
-    if (inputValue > stock) {
-      setQuantity(1);
-      return;
-    } else {
-      setQuantity(inputValue);
-    }
-  };
-
-  const handleBlur = (e) => {
-    const inputValue = e.target.value;
-    if (inputValue === "") {
-      setQuantity(1);
-    }
-  };
-
   return (
     <Fragment>
       {loading ? (
@@ -234,7 +235,7 @@ const ProductDetails = () => {
           <MetaData title={product.name} />
           <div className="detail-container">
             <ToastContainer />
-            <div style={{height:"100%"}}>
+            <div style={{ height: "100%" }}>
               <div className="detail-image-container">
                 <div className="detail-images">
                   {images &&
@@ -369,6 +370,7 @@ const ProductDetails = () => {
                 </div>
               </div>
               <hr />
+
               <div className="d-flex justify-content-between align-items-center">
                 {size && (
                   <div className="stockCounter d-inline">
@@ -384,7 +386,6 @@ const ProductDetails = () => {
                       className="form-control count d-inline"
                       value={quantity}
                       onChange={(e) => handlerQuantity(e)}
-                      onBlur={(e) => handleBlur(e)}
                     />
 
                     <span
@@ -427,7 +428,6 @@ const ProductDetails = () => {
                   Đăng nhập để gửi đánh giá của bạn.
                 </div>
               )}
-
               <div className="row mt-2 mb-5">
                 <div className="rating w-50">
                   <div

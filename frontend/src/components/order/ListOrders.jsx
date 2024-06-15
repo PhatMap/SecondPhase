@@ -1,27 +1,25 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
-
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
-
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { myOrders, clearErrors } from "../../actions/orderActions";
+import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const ListOrders = () => {
   const dispatch = useDispatch();
 
   const { loading, error, orders } = useSelector((state) => state.myOrders);
   const statusTranslations = {
-    "Processing": "Xử Lý",
-    "canceled": " Đơn đã Hủy",
+    Processing: "Xử Lý",
+    canceled: " Đơn đã Hủy",
     "Order Confirmed": "Xác Nhận",
-    "Received": "Đã Nhận",
-    "Shipping": "Giao Hàng",
-    "Delivered": "Hoàn Thành",
-    // Thêm các trạng thái khác nếu cần
+    Received: "Đã Nhận",
+    Shipping: "Giao Hàng",
+    Delivered: "Hoàn Thành",
   };
 
   useEffect(() => {
@@ -42,7 +40,7 @@ const ListOrders = () => {
           sort: "asc",
         },
         {
-          label: "Số lượng sản phẩm",
+          label: "Số sản phẩm",
           field: "numOfItems",
           sort: "asc",
         },
@@ -69,12 +67,18 @@ const ListOrders = () => {
       data.rows.push({
         id: order._id,
         numOfItems: order.orderItems.length,
-        amount: `$${order.totalPrice}`,
+        amount: `${formatToVNDWithVND(order.totalPrice)}`,
         status: (
-          <p style={{ 
-            color: order.orderStatus === "Delivered" ? "green" : 
-                   order.orderStatus === "Received" ? "orange" : "red"
-          }}>
+          <p
+            style={{
+              color:
+                order.orderStatus === "Delivered"
+                  ? "green"
+                  : order.orderStatus === "Received"
+                  ? "orange"
+                  : "red",
+            }}
+          >
             {statusTranslations[order.orderStatus]}
           </p>
         ),
