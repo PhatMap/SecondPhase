@@ -265,17 +265,17 @@ const ProductDetails = () => {
 
             <div className="detail-content">
               <h1>{product.name}</h1>
-              <p id="product_id">Product # {product._id}</p>
+              <p id="product_id">ID #{product._id}</p>
               <hr />
-              <p>
-                Status:{" "}
+              <h1>
+                Trạng thái:{" "}
                 <span
                   id="stock_status"
                   className={product.totalStock > 0 ? "greenColor" : "redColor"}
                 >
-                  {product.totalStock > 0 ? "In Stock" : "Out of Stock"}
+                  {product.totalStock > 0 ? "Còn hàng" : "Hết hàng"}
                 </span>
-              </p>
+              </h1>
               <hr />
               <div className="detail-color">
                 <h1>Đánh giá:</h1>
@@ -289,7 +289,7 @@ const ProductDetails = () => {
               </div>
               <hr />
               <div className="detail-description">
-                <h1 className="">Mô tả:</h1>
+                <h1>Mô tả:</h1>
                 <p>{product.description}</p>
               </div>
               <hr />
@@ -302,7 +302,7 @@ const ProductDetails = () => {
                     display: "flex",
                     gap: "40px",
                     flexWrap: "wrap",
-                    maxWidth: "calc(4 * (75px + 40px))",
+                    maxWidth: "calc(5 * (75px + 40px))",
                   }}
                 >
                   {product.variants && product.variants.length > 0 ? (
@@ -333,21 +333,36 @@ const ProductDetails = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="detail-color">
                     <h1>Kích cỡ:</h1>
-                    {inventory.map((item, index) => (
-                      <button
-                        className="size-button"
-                        key={index}
-                        onClick={() => {
-                          ChooseSize(index, item.size, item.price, item.stock);
-                        }}
-                        style={{
-                          border: size === item.size ? "solid 2px black" : "",
-                        }}
-                      >
-                        <div>{item.size}</div>
-                        <div>{item.stock}</div>
-                      </button>
-                    ))}
+                    <div className="size-button-container">
+                      {inventory.map((item, index) => (
+                        <button
+                          className="size-button"
+                          key={index}
+                          onClick={() => {
+                            ChooseSize(
+                              index,
+                              item.size,
+                              item.price,
+                              item.stock
+                            );
+                          }}
+                          style={{
+                            border: size === item.size ? "solid 2px black" : "",
+                            display: "flex",
+                          }}
+                        >
+                          <div style={{ display: "flex" }}>{item.size} -</div>
+                          <div
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+                            <p style={{ minWidth: "80px", fontSize: "15px" }}>
+                              Số lượng:
+                            </p>{" "}
+                            {item.stock}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
@@ -355,7 +370,7 @@ const ProductDetails = () => {
               <div className="d-flex justify-content-between align-items-center">
                 <div className="detail-color">
                   <h1>Giá:</h1>
-                  <p style={{ fontSize: "30px", color: "green" }}>
+                  <p style={{ fontSize: "20px", color: "green" }}>
                     {formatToVNDWithVND(price)}
                   </p>
                 </div>
@@ -364,7 +379,7 @@ const ProductDetails = () => {
               <div className="d-flex justify-content-between align-items-center">
                 <div className="detail-color">
                   <h1>Số lượng:</h1>
-                  <p style={{ fontSize: "30px", color: "green" }}>
+                  <p style={{ fontSize: "20px", color: "green" }}>
                     {stock > 0 ? stock : "Hết hàng"}
                   </p>
                 </div>

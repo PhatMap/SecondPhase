@@ -5,9 +5,9 @@ const Footer = () => {
   return (
     <footer>
       <div className="footer-container">
-        <div className="flex justify-around font-sans">
+        <div className="footer-form">
           <div>
-            <h2 className="font-bold text-2xl">About us</h2>
+            <h2 className="font-bold text-2xl">Về Chúng Tôi</h2>
             <div
               style={{
                 display: "flex",
@@ -70,7 +70,7 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h2 className="font-bold text-2xl">Link</h2>
+            <h2 className="font-bold text-2xl">Đường Dẫn</h2>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <Link to="/shop" style={{ textDecoration: "none" }}>
                 Shop
@@ -81,7 +81,7 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <h2 className="font-bold text-2xl">Payment</h2>
+            <h2 className="font-bold text-2xl">Thanh Toán</h2>
             <div style={{ display: "flex" }}>
               <svg
                 version="1.1"
@@ -724,7 +724,7 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <h2 className="font-bold text-2xl">Introduce</h2>
+            <h2 className="font-bold text-2xl">Giới Thiệu</h2>
             <p
               style={{
                 fontSize: "15px",

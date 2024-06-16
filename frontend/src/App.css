@@ -450,6 +450,13 @@ footer {
   border-color: black;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.footer-form {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 /* Cart */
@@ -1145,6 +1152,12 @@ ul.CTAs a {
   color: grey;
 }
 
+.size-button-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
 .size-button.selected {
   background-color: black;
   color: white;
@@ -1156,9 +1169,8 @@ ul.CTAs a {
 }
 
 .size-button {
-  margin-right: 5mm;
-  font-size: 30px;
-  width: 70px;
+  font-size: 20px;
+  width: 100%;
 }
 
 .size-button:focus {
@@ -1208,12 +1220,15 @@ ul.CTAs a {
 
 .Header-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
 }
 .Header-container-left {
   display: flex;
   align-items: center;
   gap: 100px;
+  flex-wrap: wrap;
 }
 .Header-shop-link {
   color: white;
@@ -1297,12 +1312,14 @@ ul.CTAs a {
 .Header-container-right {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .Header-container-center {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .Header-container-right h1 {
@@ -1437,6 +1454,7 @@ ul.CTAs a {
 .shop-products-filter-container {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   gap: 50px;
   margin-bottom: 40px;
   justify-content: center;
@@ -1563,9 +1581,18 @@ ul.CTAs a {
   gap: 20px;
 }
 
+@media (max-width: 1200px) {
+  .shop-products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
+    gap: 20px;
+    justify-content: center;
+  }
+}
+
 .shop-product {
-  flex: 0 1 calc(33.333% - 20px); /* 33.333% width minus the gap for 3 items per row */
-  box-sizing: border-box; /* Ensure padding and border are included in the width */
+  flex: 0 1 calc(33.333% - 20px);
+  box-sizing: border-box;
 }
 
 .shop-pagination {
@@ -1875,7 +1902,6 @@ ul.CTAs a {
   color: #0531f4;
 }
 
-
 .hero-text-btn:hover {
   color: #007bff;
 }
@@ -2112,11 +2138,10 @@ ul.CTAs a {
   display: flex;
   padding: 20px;
   gap: 20px;
-  height: fit-content;
 }
 
 .detail-container h1 {
-  font-size: 2rem;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -2179,13 +2204,14 @@ ul.CTAs a {
   flex-direction: column;
   gap: 15px;
   height: fit-content;
+  margin-left: 60px;
 }
 
 .detail-color {
   display: flex;
   gap: 20px;
   align-items: center;
-  font-size: x-large;
+  font-size: 20px;
 }
 
 .detail-size {
@@ -2199,8 +2225,13 @@ ul.CTAs a {
   gap: 20px;
 }
 
+.detail-description h1 {
+  font-size: 20px;
+  width: 50%;
+}
+
 .detail-description p {
-  font-size: large;
+  font-size: 18px;
   margin-top: 10px;
 }
 
@@ -3090,7 +3121,7 @@ ul.CTAs a {
   padding: 5px;
   border: #a1a1a1 1px solid;
   width: auto;
-  height: 60px;
+  height: 40px;
 }
 
 .product-variant-form.active {

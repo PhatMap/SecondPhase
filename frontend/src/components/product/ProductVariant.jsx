@@ -46,7 +46,7 @@ const ProductVariant = ({
     <label onClick={() => handlerMark()}>
       <div className={`product-variant-form ${isSelected ? "active" : ""}`}>
         <img
-          style={{ width: "50px" }}
+          style={{ width: "35px", height: "40px"}}
           src={variant?.images[0]?.url}
           alt={variant.name}
         />
@@ -55,7 +55,7 @@ const ProductVariant = ({
         <h3>{variant.name}</h3>
         <div className={`separator ${isSelected ? "active" : ""}`} />
 
-        <p>{variant.totalStock}</p>
+        <p>Tổng số lượng: {variant.totalStock}</p>
       </div>
     </label>
   );
