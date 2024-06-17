@@ -15,24 +15,21 @@ const UpdatePassword = () => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const dispatch = useDispatch();
-  const [oldPasswordError, setOldPasswordError] = useState("");
+  const [isUpdate, setisUpdating] = useState(false);
   
 
   const {user, error, isUpdated, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (error) {
-      if (error === "Mật Khẩu Cũ Không Đúng") {
-        setOldPasswordError("Mật Khẩu Cũ Không Đúng")
-      } else {
-        toast.error(error);
-      }
-      dispatch(clearErrors());
-    }
+
 
     if (isUpdated) {
+
       toast.success("Mật Khẩu Cập Nhật Thành Công");
-      history("/me");
+      setTimeout(() => {
+          history("/me");
+          setisUpdating(false);
+              }, 2000);
 
       dispatch({
         type: UPDATE_PASSWORD_RESET,
@@ -42,10 +39,7 @@ const UpdatePassword = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!oldPassword) {
-      setOldPasswordError("Nhập mật Khẩu Cũ");
-      return;
-    }
+
   
 
     if (!password) {
@@ -65,9 +59,8 @@ const UpdatePassword = () => {
     }
 
     const formData = new FormData();
-    formData.set("oldPassword", oldPassword);
     formData.set("password", password);
-
+    setisUpdating(true);
     dispatch(updatePassword(formData));
   };
 
@@ -80,18 +73,6 @@ const UpdatePassword = () => {
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>
           <h1 className="register-heading">Đổi Mật Khẩu</h1>
-            <div className="form-group">
-              <label for="old_password_field">Mật Khẩu </label>
-              <input
-                type="password"
-                id="old_password_field"
-                className="form-control"
-                value={oldPassword}
-                onChange={(e) => setOldPassword(e.target.value)}
-              />
-            {oldPasswordError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{oldPasswordError}</p>}
-
-            </div>
             <div className="form-group">
               <label for="new_password_field">Mật Khẩu Mới</label>
               <input
@@ -117,7 +98,7 @@ const UpdatePassword = () => {
             <button
               type="submit"
                 className="register-btn"
-              disabled={loading ? true : false}
+              disabled={isUpdate}
             >
              Cập Nhật
             </button>

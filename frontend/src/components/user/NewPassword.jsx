@@ -36,8 +36,6 @@ const NewPassword = () => {
 
     const formData = new FormData();
     formData.set("password", password);
-    formData.set("confirmPassword", confirmPassword);
-
     dispatch(resetPassword(token, formData));
   };
 

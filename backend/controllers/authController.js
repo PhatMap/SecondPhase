@@ -212,12 +212,6 @@ exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
 
 exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id).select("+password");
-
-  const isMatch = await user.comparePassword(req.body.oldPassword);
-  if (!isMatch) {
-    return next(new ErrorHandler("Mật Khẩu Cũ Không Đúng"));
-  }
-
   user.password = req.body.password;
   await user.save();
 
