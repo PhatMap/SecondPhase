@@ -83,7 +83,16 @@ const Shipping = () => {
       <div className="shipping-wrapper">
         <form className="shipping-form-container" onSubmit={submitHandler}>
           <h1 className="shipping-heading">Địa Chỉ Giao Hàng </h1>
-          
+
+          <Fragment>
+            <button
+              className="shipping-btn"
+              style={{ marginTop: "1rem", marginBottom: "1rem" }}
+              onClick={() => navigate("/shipping/address")}
+            >
+              Địa Chỉ Đã Lưu
+            </button>
+          </Fragment>
           {showAddressForm && (
             <div className="register-form-group">
               <Address handleAddressChange={handleAddressChange} />
@@ -132,7 +141,6 @@ const Shipping = () => {
               Tạo Địa Chỉ Mới
             </button>
           )}
-          
 
           {showAddressForm && (
             <Fragment>
@@ -141,15 +149,6 @@ const Shipping = () => {
               </button>
             </Fragment>
           )}
-          <Fragment>
-            <button
-              className="shipping-btn"
-              style={{ marginTop: "1rem", marginBottom: "1rem" }}
-              onClick={() =>   navigate("/shipping/address")}
-            >
-              Địa Chỉ Đã Lưu
-            </button>
-          </Fragment>
           <Link
             to="/cart"
             className="btn btn-outline-danger"

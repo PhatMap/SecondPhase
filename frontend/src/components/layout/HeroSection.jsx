@@ -6,68 +6,46 @@ const HeroSection = () => {
 
   return (
     <div className="hero-container">
-      <div className="hero-img">
-        <img
-          style={{
-            width: "100%",
-            height: "100%",
-            borderRadius: "10px",
-            position: "relative",
-          }}
-          src="https://i.pinimg.com/564x/ec/8a/9f/ec8a9f65aba5508166d4597ff73335ec.jpg"
-        ></img>
-        <p>Chào mừng đến với cửa hàng bán quần áo online Vita</p>
+      <div className="hero-container-left">
+        <h1>Vita Thời Trang Là Không Gian Sáng Tạo Của Bạn</h1>
+        <p>
+          Khám phá những bộ sưu tập độc đáo, phong cách và phù hợp với cá tính
+          của bạn.
+        </p>
+        <p>Cập nhật xu hướng mới nhất và tự tin tỏa sáng mỗi ngày!</p>
+        <button>Bắt Đầu Ngay</button>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-        <div className="hero-content">
-          <div className="hero-content-1">
-            <img
-              style={{ width: "100%", height: "100%", borderRadius: "10px" }}
-              src="https://t4.ftcdn.net/jpg/02/15/56/11/240_F_215561126_V3wRxN02qeveaTVIdFO3B38V7KcvugWG.jpg"
-            ></img>
-            <p>Vita bán quần áo dành cho cả nam lẫn nữ</p>
+      <div className="hero-container-right">
+        <div className="hero-container-right-row2">
+          <div className="hero-container-right-child-two">
+            <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDRkbjExbW5veHR6bnV2ajN1MGhqNG5sZHhheHQxaG9rNWN2MWlhMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o85xz8JTqWzfoi3FS/giphy.webp"></img>
           </div>
-          <div className="hero-content-2">
-            <img
-              style={{ width: "100%", height: "100%", borderRadius: "10px" }}
-              src="https://t4.ftcdn.net/jpg/01/25/20/69/240_F_125206974_j27EqUh2nNbMSbUR5hpJkWVoC2xA47Hd.jpg"
-            ></img>
-            <p>Mẫu mã phồn đa và chất lượng</p>
+          <div className="hero-container-right-child-two">
+            <img src="https://i.giphy.com/Zd65b3ip4xF58L1w5C.webp"></img>
           </div>
         </div>
-        <div className="hero-access">
-          <div className="hero-content-5">
-            <img
-              style={{ width: "100%", height: "100%", borderRadius: "10px" }}
-              src="https://t4.ftcdn.net/jpg/02/25/72/09/240_F_225720925_zm8laVfcBujP7SX3FTLYOoUYFqgZcCoS.jpg"
-            ></img>
-            <p>Nếu bạn đã là một thành viên, thì mắt đầu mua hàng thôi!</p>
-            <button onClick={() => navigate("/shop")} className="hero-text-btn">
-              Mua Ngay
-            </button>
+        <div className="hero-container-right-row1">
+          <div className="hero-container-right-child">
+            {" "}
+            <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExejM2Y3BkeWo1dXZ1Z2ZuajAyYjJoNXE0ZWJveGV0dTdjZGdhemVvdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9Xelwd9mYPbRx8XCn2/giphy.webp"></img>
           </div>
-          <div className="hero-content-3">
-            <img
-              style={{ width: "100%", height: "100%", borderRadius: "10px" }}
-              src="https://t4.ftcdn.net/jpg/01/14/15/15/240_F_114151562_Xr9UxHAObjum6Rfm340DyvikJ4rsZdZw.jpg"
-            ></img>
-            <p>Chấp nhận thanh toán cả tiền mặt và chuyển khoản</p>
+          <div className="hero-container-right-child">
+            {" "}
+            <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExazhkYW85YWFyeTZvcXZybXU1enh2NXB4OHE3bWc2dXo0MjhrYmp0cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Gu13dC880a9P0bxuCN/giphy.webp"></img>
           </div>
-          <div className="hero-content-4">
-            <img
-              style={{ width: "100%", height: "100%", borderRadius: "10px" }}
-              src="https://t3.ftcdn.net/jpg/01/02/21/86/240_F_102218652_SD8qEM2nAExy44ysvhHy8njlnOvHFkTY.jpg"
-            ></img>
-            <p>
-              Nếu chưa, hãy tạo tài khoản trở thành một thành viên của Vita để
-              mua hàng
-            </p>
-            <button
-              onClick={() => navigate("/register")}
-              className="hero-text-btn"
-            >
-              Đăng ký ngay
-            </button>
+          <div className="hero-container-right-child">
+            {" "}
+            <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaW50a3NkMDMzcGZvNzU0Ym95anY2NHljaTJmMmN1eXEwODZpd2RmcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0cgvxzEf7TFuAdRAkM/giphy.webp"></img>
+          </div>
+        </div>
+        <div className="hero-container-right-row2">
+          <div className="hero-container-right-child-two">
+            {" "}
+            <img src="https://i.giphy.com/nRTNEdfV9YVSU.webp"></img>
+          </div>
+          <div className="hero-container-right-child-two">
+            {" "}
+            <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExd21wdWV0cGd2djJjeTJ3NzF1cWw3ZnJtZTlpbm0wd2plMDlwcmN1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FW9uJVY81rGHS/giphy.webp"></img>
           </div>
         </div>
       </div>
