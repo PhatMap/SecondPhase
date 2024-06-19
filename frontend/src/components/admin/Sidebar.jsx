@@ -35,6 +35,12 @@ const Sidebar = () => {
               <i className="fa fa-star"></i> Quản lý Đánh Giá
             </Link>
           </li>
+
+          <li>
+            <Link to="/" style={{ color: "red" }}>
+              <i className="fa fa-user"></i> Thoát
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>

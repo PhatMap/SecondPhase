@@ -28,12 +28,6 @@ body {
   border-radius: 5px;
 }
 
-/*Navbar elements*/
-nav {
-  background: black;
-  padding: 1rem 1rem;
-}
-
 .login-btn {
   background-color: #e3e3e3;
   color: #2e2e2e;
@@ -1214,15 +1208,23 @@ ul.CTAs a {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: black;
   backdrop-filter: blur(10px);
+  height: 50px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.black{
+  background-color: black;
 }
 
 .Header-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
   align-items: center;
+  width: 100%;
 }
 .Header-container-left {
   display: flex;
@@ -1754,14 +1756,14 @@ ul.CTAs a {
   gap: 10px;
   font-family: sans-serif;
   padding: 10px;
-  margin-top: -7rem;
+  margin-top: 20px;
 }
 .home-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 150px;
+  gap: 20px;
   font-family: sans-serif;
   padding: 10px;
 }

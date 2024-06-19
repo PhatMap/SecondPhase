@@ -9,6 +9,7 @@ import { getProducts } from "../actions/productActions";
 import "rc-slider/assets/index.css";
 import { useParams, useNavigate } from "react-router-dom";
 import HeroSection from "./layout/HeroSection";
+import Header from "./layout/Header";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -115,9 +116,8 @@ const Home = () => {
         <Fragment>
           <MetaData title={"Home"} />
           <div className="home-container background-1">
-            <div>
-              <HeroSection />
-            </div>
+            <Header />
+            <HeroSection />
             <div className="home-component">
               <h1>Sản Phẩm Mới Nhất</h1>
               <div className="home-new-products">

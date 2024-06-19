@@ -11,7 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Popper } from "@mui/material";
 import { getUserCart } from "../../actions/cartActions";
 
-const Header = () => {
+const Header = ({color}) => {
   const location = useLocation();
 
   const [menu, setMenu] = useState(false);
@@ -87,7 +87,7 @@ const Header = () => {
 
   return (
     <Fragment>
-      <nav className={isSticky ? "Header" : ""}>
+      <nav className={`Header ${color ? color:""}`} >
         <div className="Header-container">
           <div className="Header-container-right">
             <Link to="/" style={{ textDecoration: "none" }}>

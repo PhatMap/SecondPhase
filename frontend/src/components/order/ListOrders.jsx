@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { myOrders, clearErrors } from "../../actions/orderActions";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
+import Header from "../layout/Header";
 
 const ListOrders = () => {
   const dispatch = useDispatch();
@@ -17,8 +18,8 @@ const ListOrders = () => {
     Processing: "Xử Lý",
     canceled: " Đơn đã Hủy",
     "Order Confirmed": "Xác Nhận",
-    "Shipping": "Giao Hàng",
-    "Delivered": "Hoàn Thành",
+    Shipping: "Giao Hàng",
+    Delivered: "Hoàn Thành",
     // Thêm các trạng thái khác nếu cần
   };
 
@@ -69,9 +70,11 @@ const ListOrders = () => {
         numOfItems: order.orderItems.length,
         amount: `${formatToVNDWithVND(order.totalPrice)}`,
         status: (
-          <p style={{ 
-            color: order.orderStatus === "Delivered" ? "green" :  "red"
-          }}>
+          <p
+            style={{
+              color: order.orderStatus === "Delivered" ? "green" : "red",
+            }}
+          >
             {statusTranslations[order.orderStatus]}
           </p>
         ),
@@ -88,6 +91,7 @@ const ListOrders = () => {
 
   return (
     <Fragment>
+      <Header color={"black"} />
       <MetaData title={"My Orders"} />
       <div className="user-order-container">
         <h1>Đơn Hàng Của tôi</h1>

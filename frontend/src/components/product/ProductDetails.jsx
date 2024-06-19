@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import ProductImageZoom from "./ProductImageZoom";
 import ProductVariant from "./ProductVariant";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
+import Header from "../layout/Header";
 
 const ProductDetails = () => {
   const { loading, error, product } = useSelector(
@@ -232,6 +233,7 @@ const ProductDetails = () => {
         <Loader />
       ) : (
         <Fragment>
+          <Header color={"black"} />
           <MetaData title={product.name} />
           <div className="detail-container">
             <ToastContainer />

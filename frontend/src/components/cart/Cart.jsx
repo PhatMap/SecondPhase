@@ -12,6 +12,7 @@ import DeleteNotify from "../layout/DeleteNotify";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
+import Header from "../layout/Header";
 
 const Cart = () => {
   const history = useNavigate();
@@ -135,44 +136,38 @@ const Cart = () => {
 
   return (
     <Fragment>
+      <Header color={"black"}/>
       <MetaData title={"Your Cart"} />
-      {user ? (
-        cartItems.length === 0 ? (
-          <h1 className="cart-not-login">Giỏ Hàng Trống </h1>
-        ) : (
-          <Fragment>
-            <ToastContainer />
-            <div className="cart-items-container">
-              <div className="cart-items">
-                <div style={{ display: "flex", gap: "20px" }}>
-                  <h2 className="cart-status">
-                    Giỏ Hàng có: <b>{cartItems.length} Sản Phẩm</b>
-                  </h2>
-                  <button
-                    className={`cart-select-all-btn ${all && "active"}`}
-                    onClick={() => Choose(!all)}
-                  >
-                    {all ? "Bỏ Chọn Tất Cả" : "Chọn Tất Cả"}
-                  </button>
-                </div>
-                {cartItems.map((item, index) => (
-                  <div key={index}>
-                    <div className="cart-item">
-                      <div className="item-of-cart">
-                        <div className="item-cart-down">
-                          <img src={item.image} alt="No image" />
-                          <div
-                            style={{
-                              display: "flex",
-                              width: "100%",
-                              height: "100%",
-                              justifyContent: "space-between",
-                            }}
-                          >
+        {user ? (
+          cartItems.length === 0 ? (
+            <h1 className="cart-not-login">Giỏ Hàng Trống </h1>
+          ) : (
+            <Fragment>
+              <ToastContainer />
+              <div className="cart-items-container">
+                <div className="cart-items">
+                  <div style={{ display: "flex", gap: "20px" }}>
+                    <h2 className="cart-status">
+                      Giỏ Hàng có: <b>{cartItems.length} Sản Phẩm</b>
+                    </h2>
+                    <button
+                      className={`cart-select-all-btn ${all && "active"}`}
+                      onClick={() => Choose(!all)}
+                    >
+                      {all ? "Bỏ Chọn Tất Cả" : "Chọn Tất Cả"}
+                    </button>
+                  </div>
+                  {cartItems.map((item, index) => (
+                    <div key={index}>
+                      <div className="cart-item">
+                        <div className="item-of-cart">
+                          <div className="item-cart-down">
+                            <img src={item.image} alt="No image" />
                             <div
                               style={{
                                 display: "flex",
-                                flexDirection: "column",
+                                width: "100%",
+                                height: "100%",
                                 justifyContent: "space-between",
                               }}
                             >
@@ -180,173 +175,182 @@ const Cart = () => {
                                 style={{
                                   display: "flex",
                                   flexDirection: "column",
-                                  gap: "15px",
+                                  justifyContent: "space-between",
                                 }}
                               >
                                 <div
                                   style={{
                                     display: "flex",
-                                    gap: "10px",
-                                    alignItems: "center",
+                                    flexDirection: "column",
+                                    gap: "15px",
                                   }}
                                 >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      gap: "10px",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <p style={{ fontWeight: "bold" }}>
+                                      Tên sản phẩm:
+                                    </p>
+                                    <Link
+                                      to={`/product/${item.product}`}
+                                      style={{ color: "black" }}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </div>
+
+                                  <div style={{ display: "flex", gap: "80px" }}>
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        gap: "10px",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <p style={{ fontWeight: "bold" }}>Mẫu:</p>
+                                      {item.variantName}
+                                    </div>
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        gap: "10px",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <p style={{ fontWeight: "bold" }}>
+                                        Kích thước:
+                                      </p>
+                                      <p className="cart-text">{item.size}</p>
+                                    </div>
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        gap: "10px",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <p style={{ fontWeight: "bold" }}>
+                                        Đơn giá:
+                                      </p>
+                                      <p className="cart-text">
+                                        {formatToVNDWithVND(item.price)}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="cart-item-stock">
                                   <p style={{ fontWeight: "bold" }}>
-                                    Tên sản phẩm:
+                                    Số lượng:
                                   </p>
-                                  <Link
-                                    to={`/product/${item.product}`}
-                                    style={{ color: "black" }}
+                                  <input
+                                    type="text"
+                                    className=""
+                                    value={item.quantity}
+                                    onChange={(e) => handlerQuantity(e)}
+                                    onBlur={(e) => handleBlur(e)}
+                                    readOnly
+                                  />
+                                  <span
+                                    className="cart-item-btn minus"
+                                    onClick={() => decreaseQty(index)}
                                   >
-                                    {item.name}
-                                  </Link>
-                                </div>
-
-                                <div style={{ display: "flex", gap: "80px" }}>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      gap: "10px",
-                                      alignItems: "center",
-                                    }}
+                                    -
+                                  </span>
+                                  <span
+                                    className="cart-item-btn plus"
+                                    onClick={() => increaseQty(index)}
                                   >
-                                    <p style={{ fontWeight: "bold" }}>Mẫu:</p>
-                                    {item.variantName}
-                                  </div>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      gap: "10px",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <p style={{ fontWeight: "bold" }}>
-                                      Kích thước:
-                                    </p>
-                                    <p className="cart-text">{item.size}</p>
-                                  </div>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      gap: "10px",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <p style={{ fontWeight: "bold" }}>
-                                      Đơn giá:
-                                    </p>
-                                    <p className="cart-text">
-                                      {formatToVNDWithVND(item.price)}
-                                    </p>
-                                  </div>
+                                    +
+                                  </span>
                                 </div>
                               </div>
-
-                              <div className="cart-item-stock">
-                                <p style={{ fontWeight: "bold" }}>Số lượng:</p>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  justifyContent: "space-between",
+                                  alignItems: "center",
+                                }}
+                              >
                                 <input
-                                  type="text"
-                                  className=""
-                                  value={item.quantity}
-                                  onChange={(e) => handlerQuantity(e)}
-                                  onBlur={(e) => handleBlur(e)}
-                                  readOnly
+                                  type="checkbox"
+                                  checked={selectedItems[index]}
+                                  onChange={() => handleCheckboxChange(index)}
+                                  className="cart-checkbox"
                                 />
-                                <span
-                                  className="cart-item-btn minus"
-                                  onClick={() => decreaseQty(index)}
-                                >
-                                  -
-                                </span>
-                                <span
-                                  className="cart-item-btn plus"
-                                  onClick={() => increaseQty(index)}
-                                >
-                                  +
-                                </span>
+                                <i
+                                  className="fa fa-trash cart-delete-btn"
+                                  onClick={() => setShow(true)}
+                                ></i>
                               </div>
-                            </div>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                              }}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={selectedItems[index]}
-                                onChange={() => handleCheckboxChange(index)}
-                                className="cart-checkbox"
-                              />
-                              <i
-                                className="fa fa-trash cart-delete-btn"
-                                onClick={() => setShow(true)}
-                              ></i>
                             </div>
                           </div>
                         </div>
                       </div>
+                      {show && (
+                        <DeleteNotify
+                          func={removeCartItemHandler}
+                          paras={[item.product, item.variant, item.size]}
+                          show={setShow}
+                        />
+                      )}
                     </div>
-                    {show && (
-                      <DeleteNotify
-                        func={removeCartItemHandler}
-                        paras={[item.product, item.variant, item.size]}
-                        show={setShow}
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              <div className="cart-checkout-container">
-                <strong>
-                  <h4
-                    style={{ display: "flex", justifyContent: "center" }}
-                    className="cart-status"
-                  >
-                    Hóa Đơn
-                  </h4>
-                </strong>
-                <hr />
-                <p>
-                  Số Lượng:
-                  <span className="order-summary-values">
-                    {selected.reduce(
-                      (acc, item) => acc + Number(item.quantity),
-                      0
-                    )}{" "}
-                    Món
-                  </span>
-                </p>
-                <p>
-                  Tổng Thanh Toán:
-                  <span className="order-summary-values">
-                    {formatToVNDWithVND(
-                      selected.reduce(
-                        (acc, item) => acc + item.quantity * item.price,
+                <div className="cart-checkout-container">
+                  <strong>
+                    <h4
+                      style={{ display: "flex", justifyContent: "center" }}
+                      className="cart-status"
+                    >
+                      Hóa Đơn
+                    </h4>
+                  </strong>
+                  <hr />
+                  <p>
+                    Số Lượng:
+                    <span className="order-summary-values">
+                      {selected.reduce(
+                        (acc, item) => acc + Number(item.quantity),
                         0
-                      )
-                    )}
-                  </span>
-                </p>
+                      )}{" "}
+                      Món
+                    </span>
+                  </p>
+                  <p>
+                    Tổng Thanh Toán:
+                    <span className="order-summary-values">
+                      {formatToVNDWithVND(
+                        selected.reduce(
+                          (acc, item) => acc + item.quantity * item.price,
+                          0
+                        )
+                      )}
+                    </span>
+                  </p>
 
-                <hr />
-                <button
-                  className={`cart-checkout-btn ${
-                    selected.length === 0 && "disabled"
-                  }`}
-                  onClick={checkoutHandler}
-                >
-                  Thanh Toán
-                </button>
+                  <hr />
+                  <button
+                    className={`cart-checkout-btn ${
+                      selected.length === 0 && "disabled"
+                    }`}
+                    onClick={checkoutHandler}
+                  >
+                    Thanh Toán
+                  </button>
+                </div>
               </div>
-            </div>
-          </Fragment>
-        )
-      ) : (
-        <h2 className="cart-not-login">Login to see your cart</h2>
-      )}
+            </Fragment>
+          )
+        ) : (
+          <h2 className="cart-not-login">Login to see your cart</h2>
+        )}
     </Fragment>
   );
 };

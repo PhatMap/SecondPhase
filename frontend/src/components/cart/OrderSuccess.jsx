@@ -1,10 +1,12 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MetaData from "../layout/MetaData";
+import Header from "../layout/Header";
 
 const OrderSuccess = () => {
   return (
     <Fragment>
+      <Header color={"black"}/>
       <MetaData title={"Order Success"} />
 
       <div className="order-sucess-container">

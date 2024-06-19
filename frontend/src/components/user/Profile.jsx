@@ -4,12 +4,14 @@ import { useSelector } from "react-redux";
 
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
+import Header from "../layout/Header";
 
 const Profile = () => {
   const { user, loading } = useSelector((state) => state.auth);
 
   return (
     <Fragment>
+      <Header color={"black"}/>
       {loading ? (
         <Loader />
       ) : (

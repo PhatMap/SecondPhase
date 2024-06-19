@@ -9,6 +9,7 @@ import { getProducts } from "../actions/productActions";
 import "rc-slider/assets/index.css";
 import { useParams } from "react-router-dom"; // Import useNavigate and Link
 import Filter from "./layout/Filter";
+import Header from "./layout/Header";
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const Shop = () => {
     <Fragment>
       <MetaData title={"Shop"} />
       <div className="shop-container background-1">
+        <Header />
         <ToastContainer
           position="top-right"
           autoClose={2000}
