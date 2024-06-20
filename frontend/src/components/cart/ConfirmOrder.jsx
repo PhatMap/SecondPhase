@@ -54,11 +54,12 @@ const ConfirmOrder = () => {
   }
 
   const momoPay = async () => {
+    const integerTotalPrice = Math.floor(totalPrice);
     const data = {
-      totalPrice,
+      totalPrice: integerTotalPrice,
     };
 
-    dispatch(momoPayment(data));
+   await dispatch(momoPayment(data));
     history("/waiting");
   };
 

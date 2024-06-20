@@ -31,6 +31,9 @@ exports.momoPayment = catchAsyncErrors(async (req, res, next) => {
   try {
     //https://developers.momo.vn/#/docs/en/aiov2/?id=payment-method
     //parameters
+    console.log("sas",req.body);
+    const { totalPrice } = req.body;
+    console.log("fsafsfaf",totalPrice);
     var partnerCode = "MOMO";
     var accessKey = "F8BBA842ECF85";
     var secretkey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
@@ -41,7 +44,7 @@ exports.momoPayment = catchAsyncErrors(async (req, res, next) => {
     var ipnUrl =
       "https://marmot-joint-nominally.ngrok-free.app/api/v1/momoCallback";
     // var ipnUrl = redirectUrl = "https://webhook.site/454e7b77-f177-4ece-8236-ddf1c26ba7f8";
-    var amount = "50000";
+    var amount = totalPrice;
     var requestType = "captureWallet";
     var extraData = ""; //pass empty value if your merchant does not have stores
 
