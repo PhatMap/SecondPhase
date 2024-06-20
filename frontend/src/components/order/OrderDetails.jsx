@@ -152,6 +152,17 @@ const OrderDetails = () => {
                 >
                   Hủy Đơn
                 </button>
+
+
+                <div>
+            <Link
+              to="/orders/me"
+              className="btn btn-outline-danger btn-sm"
+              style={{ marginTop: "1rem", marginLeft:"-150px" }}
+            >
+              Quay lại
+            </Link> </div>
+              
               </div>
 
               <strong>
