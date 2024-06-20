@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import React from "react";
 
-const Footer = () => {
+const Footer = ({color}) => {
   return (
-    <footer>
+    <footer className={`footer ${color ? color : ""}`}>
       <div className="footer-container">
         <div className="footer-form">
           <div>

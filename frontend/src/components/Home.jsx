@@ -10,6 +10,7 @@ import "rc-slider/assets/index.css";
 import { useParams, useNavigate } from "react-router-dom";
 import HeroSection from "./layout/HeroSection";
 import Header from "./layout/Header";
+import Footer from "./layout/Footer";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -102,7 +103,7 @@ const Home = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 2); // Giả sử mỗi danh mục có 2 ảnh
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 2); 
     }, 5000);
 
     return () => clearInterval(interval);
@@ -175,6 +176,9 @@ const Home = () => {
               <button onClick={handleShowMorestar} className="more-text-btn">
                 Xem Thêm
               </button>
+            </div>
+            <div style={{width:"101.3%"}}>
+              <Footer />
             </div>
           </div>
         </Fragment>

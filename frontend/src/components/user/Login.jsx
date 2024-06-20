@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../actions/userActions";
 
 import GoogleButton from "./GoogleLogin";
+import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const Login = () => {
   const history = useNavigate();
@@ -49,8 +51,6 @@ const Login = () => {
     dispatch(login(email, password));
   };
 
-  
-
   return (
     <Fragment>
       <ToastContainer />
@@ -58,11 +58,14 @@ const Login = () => {
         <Loader />
       ) : (
         <Fragment>
+          <Header color={"black"} />
           <MetaData title={"Login"} />
 
           <div className="login-container">
-           <form className="login-form" onSubmit={submitHandler}>
-          
+            <div
+              style={{ height: "650px", display: "flex", alignItems: "center" }}
+            >
+              <form className="login-form" onSubmit={submitHandler}>
                 <h1 className="login-heading">Đăng Nhập </h1>
                 <div className="login-input-container">
                   <label className="login-label">Email</label>
@@ -101,18 +104,25 @@ const Login = () => {
                     alignItems: "center",
                   }}
                 >
-                  <button id="login_button" type="submit" className="login-button">
-                      Đăng Nhập
-                    </button>
+                  <button
+                    id="login_button"
+                    type="submit"
+                    className="login-button"
+                  >
+                    Đăng Nhập
+                  </button>
                   <GoogleButton />
                 </div>
                 <div className="login-footer">
-                <p className="login-footer-text">Chưa Có Tài Khoản?</p>
-                <Link to="/register">Đăng Kí </Link>
+                  <p className="login-footer-text">Chưa Có Tài Khoản?</p>
+                  <Link to="/register">Đăng Kí </Link>
                 </div>
               </form>
             </div>
-          
+            <div style={{ width: "110%" }}>
+              <Footer color="black" />
+            </div>
+          </div>
         </Fragment>
       )}
     </Fragment>

@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getProducts } from "../../actions/productActions";
+import { useNavigate } from "react-router-dom";
 
 const Filter = ({
-  setShop,
-  currentPage,
   category,
   keyword,
+  currentPage,
   setCurrentPage,
+  selectedStar,
+  setSelectedStar,
+  minPrice,
+  setMinPrice,
+  maxPrice,
+  setMaxPrice,
+  selectedCategory,
+  setSelectedCategory,
 }) => {
   const dispatch = useDispatch();
+  const history = useNavigate();
 
-  const { loading, products, error, productsCount, resPerPage } = useSelector(
-    (state) => state.products
-  );
-
-  const [selectedStar, setSelectedStar] = useState(0);
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const { loading, products } = useSelector((state) => state.products);
 
   const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
   const categoriesVietnamese = {
@@ -29,7 +31,7 @@ const Filter = ({
     Shoe: "Giày Nam Nữ",
   };
 
-  const handleMinPrice = (e) => {
+  const handleMinPrice = useCallback((e) => {
     const inputValue = e.target.value.replace(/[^0-9]/g, "");
 
     if (inputValue !== "") {
@@ -41,9 +43,9 @@ const Filter = ({
     } else {
       setMinPrice("");
     }
-  };
+  });
 
-  const handleMaxPrice = (e) => {
+  const handleMaxPrice = useCallback((e) => {
     const inputValue = e.target.value.replace(/[^0-9]/g, "");
 
     if (inputValue !== "") {
@@ -55,32 +57,32 @@ const Filter = ({
     } else {
       setMaxPrice("");
     }
-  };
+  });
 
-  const hanldeSelectedCategory = (category) => {
+  const hanldeSelectedCategory = useCallback((category) => {
     if (selectedCategory === category) {
       setSelectedCategory("");
     } else {
       setSelectedCategory(category);
     }
-  };
+  });
 
-  const hanldeSelectedStar = (star) => {
+  const hanldeSelectedStar = useCallback((star) => {
     if (selectedStar === star) {
       setSelectedStar(0);
     } else {
       setSelectedStar(star);
     }
-  };
+  });
 
-  const clearFilter = () => {
+  const clearFilter = useCallback(() => {
     setSelectedCategory("");
     setSelectedStar(0);
     setMinPrice("");
     setMaxPrice("");
-  };
+  });
 
-  const handleFiltering = () => {
+  const handleFiltering = useCallback(() => {
     if (maxPrice != "" && minPrice != "") {
       if (minPrice > maxPrice) {
         toast.error("Giá thấp nhất phải nhỏ hơn giá cao nhất");
@@ -92,45 +94,19 @@ const Filter = ({
       }
     }
     setCurrentPage(1);
+
+    history("/shop");
+
     dispatch(
       getProducts(
         keyword ? keyword : "",
         1,
         [minPrice ? minPrice : 0, maxPrice ? maxPrice : 1000000000],
-        selectedCategory ? selectedCategory : category ? category : "",
+        selectedCategory ? selectedCategory : "",
         selectedStar ? selectedStar : 0
       )
     );
-  };
-
-  useEffect(() => {
-    setCurrentPage(1);
-    dispatch(
-      getProducts(
-        keyword ? keyword : "",
-        1,
-        [0, 1000000000],
-        category ? category : "",
-        0
-      )
-    );
-  }, [category, keyword]);
-
-  useEffect(() => {
-    dispatch(
-      getProducts(
-        keyword ? keyword : "",
-        currentPage,
-        [minPrice ? minPrice : 0, maxPrice ? maxPrice : 1000000000],
-        selectedCategory ? selectedCategory : category ? category : "",
-        selectedStar ? selectedStar : 0
-      )
-    );
-  }, [currentPage]);
-
-  useEffect(() => {
-    setShop(products);
-  }, [products]);
+  });
 
   return (
     <div className="shop-filter">

@@ -207,13 +207,6 @@ body {
   margin-left: 0.5rem;
 }
 
-/* Footer */
-footer {
-  bottom: 0; /* Stick it to the bottom */
-  width: 100%; /* Full width */
-  margin-bottom: 0;
-}
-
 /* Ratings */
 
 .rating-outer {
@@ -436,15 +429,18 @@ footer {
 }
 
 /* Footer */
+.footer {
+  width: 100%;
+  height: 200px;
+}
 .footer-container {
-  background-color: black;
+  backdrop-filter: blur(30px);
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-color: black;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  padding: 20px;
 }
 
 .footer-form {
@@ -1215,7 +1211,7 @@ ul.CTAs a {
   width: 100%;
 }
 
-.black{
+.black {
   background-color: black;
 }
 
@@ -1296,13 +1292,11 @@ ul.CTAs a {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
-  color: black;
+  color: white;
   width: 100px;
   height: 40px;
   border-radius: 5px;
-  font-size: 20px;
-  font-family: sans-serif;
+  font-size: 25px;
 }
 
 .Header-login:hover {
@@ -2140,9 +2134,11 @@ ul.CTAs a {
 .login-container {
   background-color: white;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   height: auto;
-  padding: 2rem;
+  padding: 10px;
 }
 
 .login-form {
@@ -2152,6 +2148,8 @@ ul.CTAs a {
   width: 24rem;
   background-color: white;
   box-shadow: #080808 0px 4px 8px;
+  height: 30rem;
+
 }
 
 .login-heading {

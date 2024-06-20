@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { forgotPassword, clearErrors } from "../../actions/userActions";
+import Back from "../layout/Back";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -41,9 +42,10 @@ const ForgotPassword = () => {
 
       <div className="forget-wrapper">
         <form className="forget-form-container" onSubmit={submitHandler}>
-          <h1 className="forget-heading">Forgot Password</h1>
+          <Back/>
+          <h1 className="forget-heading">Quên mật khẩu</h1>
           <div className="forget-form-group">
-            <label htmlFor="email_field">Enter Email</label>
+            <label htmlFor="email_field">Nhập Email</label>
             <input
               type="email"
               id="email_field"
@@ -55,7 +57,7 @@ const ForgotPassword = () => {
           </div>
 
           <button className="forget-btn" disabled={loading ? true : false}>
-            Send Email
+            Gửi Email
           </button>
         </form>
       </div>

@@ -10,9 +10,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Popper } from "@mui/material";
 import { getUserCart } from "../../actions/cartActions";
+import { getProducts } from "../../actions/productActions";
 
-const Header = ({color}) => {
+const Header = ({ color }) => {
   const location = useLocation();
+  const history = useNavigate();
+  const dispatch = useDispatch();
 
   const [menu, setMenu] = useState(false);
   const menuRef = useRef(null);
@@ -43,8 +46,6 @@ const Header = ({color}) => {
   const handleCartClose = () => {
     setAnchorE2(null);
   };
-
-  const dispatch = useDispatch();
 
   const { user, loading, isGoogleLoggedIn } = useSelector(
     (state) => state.auth
@@ -87,7 +88,7 @@ const Header = ({color}) => {
 
   return (
     <Fragment>
-      <nav className={`Header ${color ? color:""}`} >
+      <nav className={`Header ${color ? color : ""}`}>
         <div className="Header-container">
           <div className="Header-container-right">
             <Link to="/" style={{ textDecoration: "none" }}>
@@ -122,8 +123,10 @@ const Header = ({color}) => {
                 <></>
               )}
             </div>
-            <Link
-              to="/shop"
+            <button
+              onClick={() => {
+                window.location.href = "/shop";
+              }}
               className={
                 location.pathname === "/shop"
                   ? "Header-shop-link active"
@@ -131,7 +134,7 @@ const Header = ({color}) => {
               }
             >
               Shop
-            </Link>
+            </button>
 
             <div className="Header-cart-count">
               <Link to="/cart" className="Header-cart">
