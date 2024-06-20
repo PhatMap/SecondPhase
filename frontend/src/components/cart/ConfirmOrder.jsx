@@ -58,8 +58,15 @@ const ConfirmOrder = () => {
     const data = {
       totalPrice: integerTotalPrice,
     };
+    const datamomo = {
+      itemsPrice: itemsPrice.toFixed(2),
+      shippingPrice,
+      taxPrice,
+      totalPrice,
+    };
 
    await dispatch(momoPayment(data));
+   sessionStorage.setItem("orderInfo", JSON.stringify(datamomo));
     history("/waiting");
   };
 
