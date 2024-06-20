@@ -226,7 +226,6 @@ const ProductReviews = () => {
                 noBottomColumns
               />
             )}
-            {productId && <h2 className="centered-title">Đánh giá sản phẩm</h2>}
           </Fragment>
         </div>
       </div>
