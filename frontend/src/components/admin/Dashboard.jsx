@@ -168,7 +168,7 @@ const Dashboard = () => {
                     <div
                       className="image-container"
                       style={{
-                        backgroundImage: `url('../images/images (3).jpg')`,
+                        backgroundImage: `url('../images/Screenshot 2024-06-17 222645.png')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         height: "200px",
