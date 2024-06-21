@@ -260,11 +260,7 @@ const NewProduct = () => {
   return (
     <Fragment>
       <MetaData title={"New Product"} />
-      <div className="row">
-        <div className="col-12 col-md-2">
-          <Sidebar />
-        </div>
-
+      <div className="dashboard-container">
         <div className="col-12 col-md-10">
           <Fragment>
             <div className="wrapper my-5">

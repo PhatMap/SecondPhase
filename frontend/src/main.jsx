@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import "./index.css";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
-import { Helmet, HelmetProvider } from "react-helmet-async";
+import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
@@ -23,7 +23,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           progress={undefined}
           theme="light"
         />
-        <App />
+        <Router>
+          <App />
+        </Router>
       </Provider>
     </React.StrictMode>
   </GoogleOAuthProvider>

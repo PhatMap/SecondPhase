@@ -129,10 +129,6 @@ const OrdersList = () => {
       <MetaData title={"All Orders"} />
       <ToastContainer />
       <div className="sidebar-content-container">
-        <div className="">
-          <Sidebar />
-        </div>
-
         <div className="manage-product-container">
           <Fragment>
             <h1

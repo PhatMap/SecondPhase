@@ -13,6 +13,7 @@ import {
 } from "../../actions/userActions";
 import { UPDATE_USER_RESET } from "../../constants/userConstants";
 import { useNavigate, useParams } from "react-router-dom";
+import Back from "../layout/Back";
 
 const UpdateUser = () => {
   const history = useNavigate();
@@ -70,14 +71,11 @@ const UpdateUser = () => {
     <Fragment>
       <MetaData title={`Update User`} />
       <div className="row">
-        <div className="col-12 col-md-2">
-          <Sidebar />
-        </div>
-
         <div className="col-12 col-md-10">
           <div className="row wrapper">
             <div className="userupdate-container">
               <form className="shadow-lg" onSubmit={submitHandler}>
+                <Back />
                 <h1 className="userupdate-heading">Khách Hàng</h1>
 
                 <div className="form-group">
@@ -89,7 +87,7 @@ const UpdateUser = () => {
                     name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    readOnly 
+                    readOnly
                   />
                 </div>
 
@@ -122,11 +120,8 @@ const UpdateUser = () => {
                   </select>
                 </div>
 
-                <button
-                  type="submit"
-                  className="userupdate-button"
-                >
-                  Thay Đổi 
+                <button type="submit" className="userupdate-button">
+                  Thay Đổi
                 </button>
               </form>
             </div>

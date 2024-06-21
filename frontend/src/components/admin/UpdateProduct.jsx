@@ -294,10 +294,6 @@ const UpdateProduct = () => {
     <Fragment>
       <MetaData title={"Update Product"} />
       <div className="row">
-        <div className="col-12 col-md-2">
-          <Sidebar />
-        </div>
-
         <div className="col-12 col-md-10">
           <Fragment>
             <div className="wrapper my-5">

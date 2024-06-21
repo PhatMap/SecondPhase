@@ -1002,89 +1002,114 @@ body {
   color: #fa9c23;
 }
 
+.new-product-container{
+  width: 100%;
+}
+
 /* Admin Sidebar */
 
 .sidebar-wrapper {
   display: flex;
-  width: 245px;
-  align-items: stretch;
-  min-height: 100vh;
+  width: 40px;
+  height: 700px;
   font-weight: normal;
-  margin-top: 0;
-  height: 100%;
-  left: 0;
+  position: sticky;
   top: 0;
-  z-index: 10;
+  left: 0;
+  overflow: hidden;
+  transition: width 0.3s ease-in-out;
+}
+.sidebar-wrapper:hover {
+  animation: expandSidebar 0.3s ease-in-out forwards;
+  z-index: 1000;
 }
 
-#sidebar {
-  min-width: 100%;
-  max-width: 100%;
-  background: #1c1b1b;
-  color: #fff;
-  transition: all 0.3s;
-}
-#sidebar.active {
-  margin-left: -250px;
+.sidebar-wrapper:not(:hover) {
+  animation: collapseSidebar 0.3s ease-in-out forwards;
 }
 
-#sidebar .sidebar-header {
-  padding: 20px;
-  background: #232f3e;
-}
-#sidebar ul.components {
-  padding: 5px 0px;
-  border-bottom: 1px solid #232f3e;
+@keyframes expandSidebar {
+  from {
+    width: 40px;
+  }
+  to {
+    width: 260px;
+  }
 }
 
-#sidebar ul li a {
-  padding: 10px;
-  font-size: 1.1em;
-  display: block;
+@keyframes collapseSidebar {
+  from {
+    width: 260px;
+  }
+  to {
+    width: 40px;
+  }
+}
+
+.sidebar-element-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+}
+
+.App-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.App-form {
+  width: 100%;
+  height: 100%;
+}
+.sidebar-form {
+  background-color: black;
   color: white;
-  text-decoration: none;
-}
-#sidebar ul li a:hover {
-  color: #232f3e;
-  background: #fff;
+  width: 100%;
 }
 
-#sidebar ul li a i {
-  margin-right: 0.3rem;
-}
-
-#sidebar ul li.active > a,
-a[aria-expanded="true"] {
-  color: #fff;
-  background: #232f3e;
-}
-a[data-toggle="collapse"] {
+.sidebar-form li {
+  min-height: 70px;
+  min-width: 220px;
   position: relative;
+  transition: all 0.3s ease;
 }
-.dropdown-toggle::after {
-  display: block;
+
+.sidebar-form li::after {
+  content: "";
   position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 4px;
+  background: linear-gradient(45deg, #2980b9, #3498db);
+  transition: all 0.3s ease;
 }
 
-ul ul a {
-  font-size: 1rem !important;
-  padding-left: 30px !important;
-  background: #232f3e;
+.sidebar-form li:hover::after {
+  width: 100%;
 }
 
-ul.CTAs {
-  padding: 20px;
+.sidebar-form li:hover {
+  background-color: white;
+  color: black;
+  cursor: pointer;
 }
 
-ul.CTAs a {
-  text-align: center;
-  font-size: 0.9em !important;
-  display: block;
-  border-radius: 5px;
-  margin-bottom: 5px;
+.sidebar-element {
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.sidebar-element:hover {
+  text-decoration: none;
+  color: black;
 }
 
 /* Products List Admin */
@@ -2149,7 +2174,6 @@ ul.CTAs a {
   background-color: white;
   box-shadow: #080808 0px 4px 8px;
   height: 30rem;
-
 }
 
 .login-heading {
@@ -3095,14 +3119,19 @@ ul.CTAs a {
 
 /* Dashboard */
 .dashboard-container {
-  position: relative;
   background-image: url("./images/grey-material-design-4k-7l-2048x2048.jpg");
-  background-size: cover;
-  background-position: center;
   width: 100%;
-  min-height: 100vh; /* Đảm bảo chiều cao tối thiểu là chiều cao của màn hình */
+  height: 100%;
+  padding: 20px;
 }
 
+.dashboard-container h1 {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  color: #33ffff;
+  margin-bottom: 20px;
+}
 .image-container {
   position: relative;
   text-align: center;

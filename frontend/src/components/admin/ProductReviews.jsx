@@ -182,10 +182,6 @@ const ProductReviews = () => {
       <MetaData title={"Product Reviews"} />
       <ToastContainer />
       <div className="sidebar-content-container">
-        <div className="">
-          <Sidebar />
-        </div>
-
         <div className="manage-product-container">
           <Fragment>
             <h1

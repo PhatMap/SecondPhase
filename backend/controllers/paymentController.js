@@ -31,9 +31,7 @@ exports.momoPayment = catchAsyncErrors(async (req, res, next) => {
   try {
     //https://developers.momo.vn/#/docs/en/aiov2/?id=payment-method
     //parameters
-    console.log("sas",req.body);
     const { totalPrice } = req.body;
-    console.log("fsafsfaf",totalPrice);
     var partnerCode = "MOMO";
     var accessKey = "F8BBA842ECF85";
     var secretkey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
@@ -136,11 +134,13 @@ exports.momoPayment = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
+
 exports.momoCallback = catchAsyncErrors(async (req, res, next) => {
   console.log("req.body", req.body);
 
   return res.status(200).json(req.body);
 });
+
 
 exports.momoCheckStatus = catchAsyncErrors(async (req, res, next) => {
   const { orderId } = req.body;

@@ -70,10 +70,6 @@ const ProcessOrder = () => {
     <Fragment>
       <MetaData title={`Process Order # ${order && order._id}`} />
       <div className="order-and-sidebar">
-        <div className="sidebar">
-          <Sidebar />
-        </div>
-
         {loading ? (
           <Loader />
         ) : (

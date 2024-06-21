@@ -135,10 +135,6 @@ const ProductsList = () => {
     <Fragment>
       <MetaData title={"All Products"} />
       <div className="sidebar-content-container">
-        <div className="">
-          <Sidebar />
-        </div>
-
         <div className="manage-product-container">
           <h1
             className="my-4"

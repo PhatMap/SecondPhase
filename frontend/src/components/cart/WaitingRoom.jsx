@@ -16,9 +16,6 @@ const WaitingRoom = () => {
     (state) => state.momo
   );
 
-
-
- 
   const [order, setOrder] = useState({
     userName: user.name,
     orderItems: cartItems,
@@ -44,17 +41,14 @@ const WaitingRoom = () => {
       });
     }
   }, [user, cartItems, shippingInfo]);
-  console.log("gia totalPrice ",order.totalPrice);
-  console.log("gia shippingPrice",order.shippingPrice);
-  console.log("gia  taxPrice ",order. taxPrice);
-  console.log("gia ",order. itemsPrice);
-
-
-
+  console.log("gia totalPrice ", order.totalPrice);
+  console.log("gia shippingPrice", order.shippingPrice);
+  console.log("gia  taxPrice ", order.taxPrice);
+  console.log("gia ", order.itemsPrice);
+  console.log("yes", url);
 
   useEffect(() => {
     if (orderId && orderStatus === 0) {
-      console.log("yes", orderId, orderStatus);
       const newWindow = window.open(url, "_blank");
 
       const checkClosed = setInterval(() => {
@@ -71,17 +65,13 @@ const WaitingRoom = () => {
     if (paid === 0) {
       console.log("yesngsha", orderId, orderStatus);
       order.paymentInfo = {
-        id: orderId, 
+        id: orderId,
         status: "succeeded",
       };
-        dispatch(createOrder(order));
-        history("/success");
-      
-
+      dispatch(createOrder(order));
+      history("/success");
     }
-    
   }, [paid]);
-
 
   return <Loader />;
 };
