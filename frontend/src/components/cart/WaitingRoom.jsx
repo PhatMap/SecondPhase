@@ -4,13 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { momoDone } from "../../actions/orderActions";
 import { useNavigate } from "react-router-dom";
 import { createOrder, clearErrors } from "../../actions/orderActions";
+import io from "socket.io-client";
 
 const WaitingRoom = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
-  const { error } = useSelector((state) => state.newOrder);
+  // const { error } = useSelector((state) => state.newOrder);
+  const [callbackData, setCallbackData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const { orderId, orderStatus, paid, url } = useSelector(
     (state) => state.momo
@@ -41,11 +45,6 @@ const WaitingRoom = () => {
       });
     }
   }, [user, cartItems, shippingInfo]);
-  console.log("gia totalPrice ", order.totalPrice);
-  console.log("gia shippingPrice", order.shippingPrice);
-  console.log("gia  taxPrice ", order.taxPrice);
-  console.log("gia ", order.itemsPrice);
-  console.log("yes", url);
 
   useEffect(() => {
     if (orderId && orderStatus === 0) {
@@ -62,18 +61,66 @@ const WaitingRoom = () => {
   }, [orderId, orderStatus]);
 
   useEffect(() => {
-    if (paid === 0) {
-      console.log("yesngsha", orderId, orderStatus);
-      order.paymentInfo = {
-        id: orderId,
-        status: "succeeded",
-      };
-      dispatch(createOrder(order));
-      history("/success");
+    if (callbackData !== null && callbackData !== undefined) {
+      console.log("Here Here", callbackData.resultCode);
+      if (callbackData.resultCode === 0) {
+        order.paymentInfo = {
+          id: orderId,
+          status: "succeeded",
+        };
+        dispatch(createOrder(order));
+        history("/success");
+      } else {
+        console.log("Transition failed");
+      }
+    } else {
+      console.log("callbackData is null or undefined");
     }
-  }, [paid]);
+  }, [callbackData]);
 
-  return <Loader />;
+  useEffect(() => {
+    const socket = io("http://localhost:4000", {
+      withCredentials: true,
+    });
+
+    socket.on("connect", () => {
+      console.log("Connected to server");
+      setIsLoading(false);
+    });
+
+    socket.on("connect_error", (err) => {
+      console.log("Connection error:", err);
+      setError("Failed to connect to the server");
+      setIsLoading(false);
+    });
+
+    socket.on("momoCallback", (data) => {
+      console.log("Received callback data:", data);
+      setCallbackData(data);
+      setIsLoading(false);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return callbackData ? (
+    <div>
+      <h2>Payment Result:</h2>
+      <pre>{JSON.stringify(callbackData, null, 2)}</pre>
+    </div>
+  ) : (
+    <div>Waiting for payment result...</div>
+  );
 };
 
 export default WaitingRoom;

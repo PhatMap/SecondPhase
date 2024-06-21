@@ -134,13 +134,20 @@ exports.momoPayment = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
+let io;
+
+exports.setIo = (_io) => {
+  io = _io;
+};
 
 exports.momoCallback = catchAsyncErrors(async (req, res, next) => {
   console.log("req.body", req.body);
 
+  if (io) {
+    io.emit("momoCallback", req.body);
+  }
   return res.status(200).json(req.body);
 });
-
 
 exports.momoCheckStatus = catchAsyncErrors(async (req, res, next) => {
   const { orderId } = req.body;

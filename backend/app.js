@@ -8,6 +8,18 @@ const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
 
+const http = require("http");
+const { Server } = require("socket.io");
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
 const errorMiddlewares = require("./middlewares/errors");
 
 dotenv.config({ path: "backend/config/config.env" });
@@ -30,6 +42,11 @@ cloudinary.config({
   api_secret: "0PalAWB6WXyk7srvsbPxNosjvp0",
 });
 
+io.on("connection", (socket) => {
+  console.log("A client connected");
+});
+
+
 // Routes
 const products = require("./routes/product");
 const auth = require("./routes/auth");
@@ -46,4 +63,4 @@ app.use("/api/v1", cart);
 // Error middleware
 app.use(errorMiddlewares);
 
-module.exports = app;
+module.exports = { app, server, io };
