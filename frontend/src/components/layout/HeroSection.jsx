@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
-  const navigate = useNavigate();
+  const history = useNavigate();
 
   return (
     <div className="hero-container">
@@ -13,7 +13,7 @@ const HeroSection = () => {
           của bạn.
         </p>
         <p>Cập nhật xu hướng mới nhất và tự tin tỏa sáng mỗi ngày!</p>
-        <button>Bắt Đầu Ngay</button>
+        <button onClick={() => history("/shop")}>Bắt Đầu Ngay</button>
       </div>
       <div className="hero-container-right">
         <div className="hero-container-right-row2">

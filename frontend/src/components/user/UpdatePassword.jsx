@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword, clearErrors } from "../../actions/userActions";
 import { UPDATE_PASSWORD_RESET } from "../../constants/userConstants";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UpdatePassword = () => {
   const history = useNavigate();
@@ -16,20 +16,18 @@ const UpdatePassword = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const dispatch = useDispatch();
   const [isUpdate, setisUpdating] = useState(false);
-  
 
-  const {user, error, isUpdated, loading } = useSelector((state) => state.user);
+  const { user, error, isUpdated, loading } = useSelector(
+    (state) => state.user
+  );
 
   useEffect(() => {
-
-
     if (isUpdated) {
-
       toast.success("Mật Khẩu Cập Nhật Thành Công");
       setTimeout(() => {
-          history("/me");
-          setisUpdating(false);
-              }, 2000);
+        history("/me");
+        setisUpdating(false);
+      }, 2000);
 
       dispatch({
         type: UPDATE_PASSWORD_RESET,
@@ -39,8 +37,6 @@ const UpdatePassword = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-  
 
     if (!password) {
       setPasswordError("Mật khẩu không được để trống");
@@ -72,7 +68,18 @@ const UpdatePassword = () => {
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>
-          <h1 className="register-heading">Đổi Mật Khẩu</h1>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-start",
+              }}
+            >
+              <Link to="/me" className="btn-one">
+                Quay lại
+              </Link>
+            </div>
+            <h1 className="register-heading">Đổi Mật Khẩu</h1>
             <div className="form-group">
               <label for="new_password_field">Mật Khẩu Mới</label>
               <input
@@ -82,7 +89,14 @@ const UpdatePassword = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              {passwordError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{passwordError}</p>}
+              {passwordError && (
+                <p
+                  className="error"
+                  style={{ color: "red", fontSize: "0.8em" }}
+                >
+                  {passwordError}
+                </p>
+              )}
             </div>
             <div className="form-group">
               <label for="confirm_password_field">Nhập Lại Mật Khẩu </label>
@@ -93,14 +107,17 @@ const UpdatePassword = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              {confirmPasswordError && <p className="error" style={{ color: "red", fontSize: "0.8em" }}>{confirmPasswordError}</p>}
+              {confirmPasswordError && (
+                <p
+                  className="error"
+                  style={{ color: "red", fontSize: "0.8em" }}
+                >
+                  {confirmPasswordError}
+                </p>
+              )}
             </div>
-            <button
-              type="submit"
-                className="register-btn"
-              disabled={isUpdate}
-            >
-             Cập Nhật
+            <button type="submit" className="register-btn" disabled={isUpdate}>
+              Cập Nhật
             </button>
           </form>
         </div>

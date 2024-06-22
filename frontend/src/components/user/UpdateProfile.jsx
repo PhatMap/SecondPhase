@@ -80,6 +80,18 @@ const UpdateProfile = () => {
 
       <div className="profile-update-container">
         <div className="profile-update-box">
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-start",
+              marginLeft: "40px",
+            }}
+          >
+            <Link to="/me" className="btn-one">
+              Quay lại
+            </Link>
+          </div>
           <form onSubmit={submitHandler} encType="multipart/form-data">
             <h1
               style={{
@@ -91,11 +103,13 @@ const UpdateProfile = () => {
                 marginBottom: "50px",
               }}
             >
-            Thông Tin Cá Nhân
+              Thông Tin Cá Nhân
             </h1>
 
             <div className="form-group">
-              <label htmlFor="email_field"style={{ fontWeight: "bold" }}>Họ Tên </label>
+              <label htmlFor="email_field" style={{ fontWeight: "bold" }}>
+                Họ Tên{" "}
+              </label>
               <input
                 type="name"
                 id="name_field"
@@ -107,7 +121,9 @@ const UpdateProfile = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="email_field"style={{ fontWeight: "bold" }}>Email</label>
+              <label htmlFor="email_field" style={{ fontWeight: "bold" }}>
+                Email
+              </label>
               <input
                 type="email"
                 id="email_field"
@@ -115,12 +131,14 @@ const UpdateProfile = () => {
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                readOnly 
+                readOnly
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="avatar_upload"style={{ fontWeight: "bold" }}>Ảnh Đại Diện </label>
+              <label htmlFor="avatar_upload" style={{ fontWeight: "bold" }}>
+                Ảnh Đại Diện{" "}
+              </label>
               <div className="d-flex align-items-center">
                 <div>
                   <figure className="avatar mr-3 item-rtl">
@@ -152,13 +170,10 @@ const UpdateProfile = () => {
                 className="profile-btn"
                 disabled={loading ? true : false}
               >
-                Cập Nhật 
+                Cập Nhật
               </button>
-              
             </div>
-            
           </form>
-          <Link to="/me" className="btn btn-outline-danger btn-sm"  style={{ float: 'right' }}>Quay lại</Link>
         </div>
       </div>
     </Fragment>

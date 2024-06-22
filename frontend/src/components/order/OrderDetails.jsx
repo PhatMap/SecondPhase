@@ -117,12 +117,20 @@ const OrderDetails = () => {
     <Fragment>
       <MetaData title={"Order Details"} />
 
-      {loading ? (
+      {loading ? (  
         <Loader />
       ) : (
         <Fragment>
           <div className="order-details-container">
             <div className="order-details-form">
+              <div>
+                <Link
+                  to="/orders/me"
+                  className="btn btn-outline-danger btn-sm"
+                >
+                  Quay lại
+                </Link>
+              </div>
               <h1>Order id: {order._id}</h1>
 
               <OrderProgressBar currentStatus={orderStatus} />
@@ -152,17 +160,6 @@ const OrderDetails = () => {
                 >
                   Hủy Đơn
                 </button>
-
-
-                <div>
-            <Link
-              to="/orders/me"
-              className="btn btn-outline-danger btn-sm"
-              style={{ marginTop: "1rem", marginLeft:"-150px" }}
-            >
-              Quay lại
-            </Link> </div>
-              
               </div>
 
               <strong>
@@ -179,7 +176,7 @@ const OrderDetails = () => {
                 {shippingDetails}
               </p>
               <p>
-                <b>Số tiền:</b> {formatToVNDWithVND(totalPrice)} 
+                <b>Số tiền:</b> {formatToVNDWithVND(totalPrice)}
               </p>
 
               <hr />

@@ -1002,7 +1002,7 @@ body {
   color: #fa9c23;
 }
 
-.new-product-container{
+.new-product-container {
   width: 100%;
 }
 
@@ -1979,15 +1979,39 @@ body {
 /* Profile.jsx*/
 .profile-container {
   display: flex;
+  flex-direction: column;
+  height: 640px;
+}
+
+.profile-form {
+  display: flex;
+  width: 100%;
+  height: 100%;
   justify-content: space-evenly;
-  margin: 40px;
 }
 
 .profile-avatar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  gap: 5px;
+}
+
+.profile-content {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.profile-content h1 {
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.profile-content p {
+  font-size: 30px;
 }
 
 .profile-container img {
@@ -2035,7 +2059,7 @@ body {
   align-items: center;
   font-family: sans-serif;
   width: 100%;
-  height: 600px;
+  height: 690px;
   background-color: whitesmoke;
 }
 
@@ -2299,10 +2323,41 @@ body {
 .register-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
   padding: 1rem;
+  width: 100%;
+}
+
+.register-form-up {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+
+.register-form-down {
+  display: flex;
+  width: 50%;
+  gap: 20px;
+}
+
+.register-form-column {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.register-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 50%;
+}
+
+.address-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 30%;
 }
 
 .register-form-container {
@@ -2311,7 +2366,6 @@ body {
   background-color: white;
   border-radius: 0.5rem;
   width: 100%;
-  max-width: 500px;
 }
 
 .register-heading {
@@ -2323,6 +2377,7 @@ body {
 
 .register-form-group {
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .register-form-control {
@@ -3258,4 +3313,20 @@ body {
   border-radius: 4px;
   padding: 5px;
   box-sizing: border-box;
+}
+
+.btn-one {
+  background-color: white;
+  color: red !important;
+  border: red 1px solid;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-one:hover {
+  text-decoration: none;
+  background-color: red !important;
+  color: white !important;
 }
