@@ -260,26 +260,26 @@ const NewProduct = () => {
   return (
     <Fragment>
       <MetaData title={"New Product"} />
-      <div className="dashboard-container">
-        <div className="col-12 col-md-10">
-          <Fragment>
-            <div className="wrapper my-5">
-              <form
-                className="new-product-form"
-                onSubmit={submitHandler}
-                encType="multipart/form-data"
-              >
-                <Back />
-                <h1
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    fontSize: "25px",
-                  }}
-                >
-                  Thêm sản phẩm
-                </h1>
-                <div className="form-group">
+      <div className="new-product-container">
+        <div className="new-product-form-container">
+          <form
+            className="new-product-form"
+            onSubmit={submitHandler}
+            encType="multipart/form-data"
+          >
+            <Back />
+            <h1
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                fontSize: "25px",
+              }}
+            >
+              Thêm sản phẩm
+            </h1>
+            <div className="new-product-column">
+              <div className="new-product-row-one">
+                <div className="new-product-form-group">
                   <label htmlFor="category_field">Danh mục</label>
                   <select
                     className={`form-control ${emptyCategory ? "invalid" : ""}`}
@@ -313,7 +313,7 @@ const NewProduct = () => {
                     ""
                   )}
                 </div>
-                <div className="form-group">
+                <div className="new-product-form-group">
                   <label htmlFor="name_field">Tên sản phẩm</label>
                   <input
                     type="text"
@@ -340,8 +340,32 @@ const NewProduct = () => {
                     ""
                   )}
                 </div>
-
-                <div className="form-group">
+                <div className="new-product-form-group">
+                  <label htmlFor="price_field">Giá cơ bản</label>
+                  <input
+                    type="text"
+                    placeholder="Nhập giá sản phẩm"
+                    className={`form-control ${emptyPrice ? "invalid" : ""}`}
+                    value={price < 0 ? 0 : price}
+                    onChange={(e) => handlePriceChange(e)}
+                  />
+                  {emptyPrice ? (
+                    <p
+                      style={{
+                        fontWeight: "normal",
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Sản phẩm chưa có giá
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+              <div className="new-product-row-two">
+                <div className="new-product-form-group">
                   <label htmlFor="description_field">Mô tả</label>
                   <textarea
                     placeholder="Nhập mô tả sản phẩm"
@@ -370,163 +394,139 @@ const NewProduct = () => {
                     ""
                   )}
                 </div>
-
-                <div className="form-group">
-                  <label htmlFor="price_field">Giá cơ bản</label>
-                  <input
-                    type="text"
-                    placeholder="Nhập giá sản phẩm"
-                    className={`form-control ${emptyPrice ? "invalid" : ""}`}
-                    value={price < 0 ? 0 : price}
-                    onChange={(e) => handlePriceChange(e)}
-                  />
-                  {emptyPrice ? (
-                    <p
-                      style={{
-                        fontWeight: "normal",
-                        color: "red",
-                        fontSize: "13px",
-                      }}
-                    >
-                      Sản phẩm chưa có giá
-                    </p>
-                  ) : (
-                    ""
-                  )}
-                </div>
-
-                <div>
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "20px",
-                      alignItems: "center",
-                      marginBottom: "20px",
-                    }}
-                  >
-                    <label htmlFor="sizes_field">Mẫu mã</label>
-                    <button
-                      type="button"
-                      className="varient-btn"
-                      onClick={() => {
-                        setShow(true);
-                      }}
-                    >
-                      <i className="fa fa-plus"></i>Thêm
-                    </button>
-                  </div>
-                  {emptyVariants ? (
-                    <p
-                      style={{
-                        fontWeight: "normal",
-                        color: "red",
-                        fontSize: "13px",
-                      }}
-                    >
-                      Sản phẩm chưa có mẫu
-                    </p>
-                  ) : (
-                    ""
-                  )}
-                  {show && <AddVariant show={setShow} variants={setVariants} />}
-                  <div className="varient-list">
-                    {variants &&
-                      variants.map((variant, index) => (
-                        <Variant
-                          key={index}
-                          variant={variant}
-                          index={index}
-                          updateVariant={updateVariant}
-                          removeVariant={removeVariant}
-                          variantError={setVariantError}
-                        />
-                      ))}
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label>Ảnh </label>
-                  <div className="">
-                    <label
-                      className={`upload-form ${emptyImages ? "invalid" : ""}`}
-                      onDrop={handleDrop}
-                      onDragOver={handleDragOver}
-                      onDragLeave={handleDragLeave}
-                    >
-                      <input
-                        type="file"
-                        name="images"
-                        onChange={onChange}
-                        multiple
-                        hidden
-                      />
-                      <i
-                        class="fa fa-cloud-upload"
-                        aria-hidden="true"
-                        style={{ fontSize: "30px" }}
-                      ></i>
-                      <p>
-                        <strong>Kéo Thả </strong>hoặc <strong>Nhấn </strong>
-                        để đưa ảnh lên
-                      </p>
-                    </label>
-                    {emptyImages ? (
-                      <p
-                        style={{
-                          fontWeight: "normal",
-                          color: "red",
-                          fontSize: "13px",
-                        }}
-                      >
-                        Sản phẩm chưa có ảnh
-                      </p>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "40px",
-                      flexWrap: "wrap",
-                      maxWidth: "calc(8 * (75px + 40px))",
-                    }}
-                  >
-                    {imagesPreview.map((img, index) => (
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          height: "50px",
-                          gap: "5px",
-                        }}
-                      >
-                        <img
-                          src={img}
-                          key={index}
-                          alt="Images Preview"
-                          style={{ height: "100%" }}
-                        />
-                        <i
-                          className="fa fa-remove variant-remove-btn"
-                          onClick={() => handlerImageRemove(index)}
-                        ></i>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="new-product-btn"
-                  disabled={loading ? true : false}
-                >
-                  THÊM SẢN PHẨM
-                </button>
-              </form>
+              </div>
             </div>
-          </Fragment>
+
+            <div className="form-group">
+              <label>Ảnh </label>
+              <div className="">
+                <label
+                  className={`upload-form ${emptyImages ? "invalid" : ""}`}
+                  onDrop={handleDrop}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                >
+                  <input
+                    type="file"
+                    name="images"
+                    onChange={onChange}
+                    multiple
+                    hidden
+                  />
+                  <i
+                    class="fa fa-cloud-upload"
+                    aria-hidden="true"
+                    style={{ fontSize: "30px" }}
+                  ></i>
+                  <p>
+                    <strong>Kéo Thả </strong>hoặc <strong>Nhấn </strong>
+                    để đưa ảnh lên
+                  </p>
+                </label>
+                {emptyImages ? (
+                  <p
+                    style={{
+                      fontWeight: "normal",
+                      color: "red",
+                      fontSize: "13px",
+                    }}
+                  >
+                    Sản phẩm chưa có ảnh
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: "40px",
+                  flexWrap: "wrap",
+                  maxWidth: "calc(8 * (75px + 40px))",
+                }}
+              >
+                {imagesPreview.map((img, index) => (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      height: "50px",
+                      gap: "5px",
+                    }}
+                  >
+                    <img
+                      src={img}
+                      key={index}
+                      alt="Images Preview"
+                      style={{ height: "100%" }}
+                    />
+                    <i
+                      className="fa fa-remove variant-remove-btn"
+                      onClick={() => handlerImageRemove(index)}
+                    ></i>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "20px",
+                  alignItems: "center",
+                  marginBottom: "20px",
+                }}
+              >
+                <label htmlFor="sizes_field">Mẫu mã</label>
+                <button
+                  type="button"
+                  className="varient-btn"
+                  onClick={() => {
+                    setShow(true);
+                  }}
+                >
+                  <i className="fa fa-plus"></i>Thêm
+                </button>
+              </div>
+              {emptyVariants ? (
+                <p
+                  style={{
+                    fontWeight: "normal",
+                    color: "red",
+                    fontSize: "13px",
+                  }}
+                >
+                  Sản phẩm chưa có mẫu
+                </p>
+              ) : (
+                ""
+              )}
+              {show && <AddVariant show={setShow} variants={setVariants} />}
+              <div className="varient-list">
+                {variants &&
+                  variants.map((variant, index) => (
+                    <Variant
+                      key={index}
+                      variant={variant}
+                      index={index}
+                      updateVariant={updateVariant}
+                      removeVariant={removeVariant}
+                      variantError={setVariantError}
+                    />
+                  ))}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="new-product-btn"
+              disabled={loading ? true : false}
+            >
+              THÊM SẢN PHẨM
+            </button>
+          </form>
         </div>
       </div>
     </Fragment>

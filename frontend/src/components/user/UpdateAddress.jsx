@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const UpdateAddress = ( ) => {
+const UpdateAddress = () => {
   const { user, error, isDeleted } = useSelector((state) => state.auth);
   const history = useNavigate();
   const { id } = useParams();
@@ -17,7 +17,7 @@ const UpdateAddress = ( ) => {
     district: "",
     town: "",
     location: "",
-    phone: ""
+    phone: "",
   });
 
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const UpdateAddress = ( ) => {
         district: address.district,
         town: address.town,
         location: address.location,
-        phone: address.phone
+        phone: address.phone,
       });
     }
   }, [address]);
@@ -43,7 +43,7 @@ const UpdateAddress = ( ) => {
   const handleAddressChange = (field, value) => {
     setAddressData({
       ...addressData,
-      [field]: value
+      [field]: value,
     });
   };
 
@@ -61,12 +61,31 @@ const UpdateAddress = ( ) => {
     <div className="container container-fluid">
       <MetaData title={"Update Address"} />
       <div className="row wrapper">
-      <ToastContainer />
+        <ToastContainer />
         <div className="col-15 col-lg-6">
           <form className="shadow-lg" onSubmit={submitHandler}>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-start",
+              }}
+            >
+              <Link to="/me/user-address" className="btn-one">
+                Quay lại
+              </Link>
+            </div>
             <h1 className="addaddress-heading">Cập Nhật Địa Chỉ </h1>
             <div className="current-address">
-              <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '10px' }}>Địa chỉ hiện tại:</h2>
+              <h2
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  marginBottom: "10px",
+                }}
+              >
+                Địa chỉ hiện tại:
+              </h2>
             </div>
             {user.address.map((addressItem) => (
               <React.Fragment key={addressItem._id}>
@@ -97,12 +116,22 @@ const UpdateAddress = ( ) => {
               </React.Fragment>
             ))}
 
-           <div className="current-address">
-            <h2 style={{ fontSize: '2rem', fontWeight: 'bold' , marginBottom: '20px'}}>Địa Chỉ Mới:</h2>
-             </div>
+            <div className="current-address">
+              <h2
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  marginBottom: "20px",
+                }}
+              >
+                Địa Chỉ Mới:
+              </h2>
+            </div>
 
-
-            <Address handleAddressChange={handleAddressChange} addressData={addressData} />
+            <Address
+              handleAddressChange={handleAddressChange}
+              addressData={addressData}
+            />
             <div className="form-group">
               <label htmlFor="phone_field">Số Điện Thoại </label>
               <input
@@ -118,12 +147,11 @@ const UpdateAddress = ( ) => {
               type="submit"
               disabled={isupdateAddress}
               className="register-btn"
-              style={{ marginBottom:'2rem'}}
+              style={{ marginBottom: "2rem" }}
             >
               Cập Nhật
             </button>
           </form>
-          <Link to="/me/user-address" className="btn btn-outline-danger btn-sm"   style={{  marginTop: '-7rem',marginLeft:'270px'}}>Quay lại</Link>
         </div>
       </div>
     </div>
