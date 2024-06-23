@@ -103,7 +103,7 @@ const Home = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 2); 
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 2);
     }, 5000);
 
     return () => clearInterval(interval);
@@ -111,78 +111,67 @@ const Home = () => {
 
   return (
     <Fragment>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Fragment>
-          <MetaData title={"Home"} />
-          <div className="home-container background-1">
-            <Header />
-            <HeroSection />
-            <div className="home-component">
-              <h1>Sản Phẩm Mới Nhất</h1>
-              <div className="home-new-products">
-                {products.slice(0, 4).map((product) => (
-                  <Product key={product._id} product={product} />
-                ))}
-              </div>
-              <button
-                onClick={() => navigate("/shop")}
-                className="more-text-btn"
-              >
-                Xem Thêm
-              </button>
+      <MetaData title={"Home"} />
+      <div className="home-container background-1">
+        <Header />
+        <div className="home-form">
+          <HeroSection />
+          <div className="home-component">
+            <h1>Sản Phẩm Mới Nhất</h1>
+            <div className="home-new-products">
+              {products.slice(0, 4).map((product) => (
+                <Product key={product._id} product={product} />
+              ))}
             </div>
-
-            <div className="home-component">
-              <h1>Danh Mục Sản Phẩm</h1>
-              <div className="home-new-products">
-                {categories.map((category, index) => (
-                  <div
+            <button onClick={() => navigate("/shop")} className="more-text-btn">
+              Xem Thêm
+            </button>
+          </div>
+          <div className="home-component">
+            <h1>Danh Mục Sản Phẩm</h1>
+            <div className="home-new-products">
+              {categories.map((category, index) => (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                  className="home-text-btn"
+                  key={index}
+                  onClick={() => navigate(category.path)}
+                >
+                  <img
+                    src={category.images[currentImageIndex]}
+                    alt={category.name}
                     style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
+                      height: "400px",
+                      width: "300px",
                     }}
-                    className="home-text-btn"
-                    key={index}
-                    onClick={() => navigate(category.path)}
-                  >
-                    <img
-                      src={category.images[currentImageIndex]}
-                      alt={category.name}
-                      style={{
-                        height: "400px",
-                        width: "300px",
-                      }}
-                    />
-                    <p>{category.name}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="home-component">
-              <h1>Sản Phẩm Được Đánh Giá Cao</h1>
-              <div className="home-new-products">
-                {fiveStarProducts ? (
-                  fiveStarProducts.map((product, index) => (
-                    <Product key={index} product={product} />
-                  ))
-                ) : (
-                  <p>Không có sản phẩm nào</p>
-                )}
-              </div>
-              <button onClick={handleShowMorestar} className="more-text-btn">
-                Xem Thêm
-              </button>
-            </div>
-            <div style={{width:"101.3%"}}>
-              <Footer />
+                  />
+                  <p>{category.name}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </Fragment>
-      )}
+          <div className="home-component">
+            <h1>Sản Phẩm Được Đánh Giá Cao</h1>
+            <div className="home-new-products">
+              {fiveStarProducts ? (
+                fiveStarProducts.map((product, index) => (
+                  <Product key={index} product={product} />
+                ))
+              ) : (
+                <p>Không có sản phẩm nào</p>
+              )}
+            </div>
+            <button onClick={handleShowMorestar} className="more-text-btn">
+              Xem Thêm
+            </button>
+          </div>
+        </div>
+        <Footer />
+      </div>
     </Fragment>
   );
 };

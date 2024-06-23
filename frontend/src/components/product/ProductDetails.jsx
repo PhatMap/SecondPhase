@@ -226,295 +226,274 @@ const ProductDetails = () => {
 
     dispatch(newReview(formData));
   };
-
+  
   return (
     <Fragment>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Fragment>
-          <Header color={"black"} />
-          <MetaData title={product.name} />
-          <div className="detail-container">
-            <ToastContainer />
-            <div style={{ height: "100%" }}>
-              <div className="detail-image-container">
-                <div className="detail-images">
-                  {images &&
-                    images.map((image, index) => (
-                      <img
-                        key={image.public_id}
-                        src={image.url}
-                        alt={`Product Preview ${index}`}
-                        className={`image-thumbnail ${
-                          activeImage === image.url ? "mark" : ""
-                        } `}
-                        onMouseEnter={() => setActiveImage(image.url)}
-                      />
-                    ))}
-                </div>
-
-                <div className="detail-current-image">
-                  <ProductImageZoom image={activeImage} />
-                </div>
-              </div>
-              <div>
-                {product.reviews && product.reviews.length > 0 && (
-                  <ListReviews reviews={product.reviews} />
-                )}
-              </div>
+      <Header color={"black"} />
+      <MetaData title={product.name} />
+      <div className="detail-container">
+        <ToastContainer />
+        <div style={{ height: "100%" }}>
+          <div className="detail-image-container">
+            <div className="detail-images">
+              {images &&
+                images.map((image, index) => (
+                  <img
+                    key={image.public_id}
+                    src={image.url}
+                    alt={`Product Preview ${index}`}
+                    className={`image-thumbnail ${
+                      activeImage === image.url ? "mark" : ""
+                    } `}
+                    onMouseEnter={() => setActiveImage(image.url)}
+                  />
+                ))}
             </div>
 
-            <div className="detail-content">
-              <h1>{product.name}</h1>
-              <p id="product_id">ID #{product._id}</p>
-              <hr />
-              <h1>
-                Trạng thái:{" "}
-                <span
-                  id="stock_status"
-                  className={product.totalStock > 0 ? "greenColor" : "redColor"}
-                >
-                  {product.totalStock > 0 ? "Còn hàng" : "Hết hàng"}
-                </span>
-              </h1>
-              <hr />
-              <div className="detail-color">
-                <h1>Đánh giá:</h1>
-                {product?.ratings?.toFixed(1).replace(".", ",") ?? "No Ratings"}
-                <div className="rating-outer">
-                  <div
-                    className="rating-inner"
-                    style={{ width: `${(product.ratings / 5) * 100}%` }}
-                  ></div>
-                </div>
-              </div>
-              <hr />
-              <div className="detail-description">
-                <h1>Mô tả:</h1>
-                <p>{product.description}</p>
-              </div>
-              <hr />
+            <div className="detail-current-image">
+              <ProductImageZoom image={activeImage} />
+            </div>
+          </div>
+          <div>
+            {product.reviews && product.reviews.length > 0 && (
+              <ListReviews reviews={product.reviews} />
+            )}
+          </div>
+        </div>
+
+        <div className="detail-content">
+          <h1>{product.name}</h1>
+          <p id="product_id">ID #{product._id}</p>
+          <hr />
+          <h1>
+            Trạng thái:{" "}
+            <span
+              id="stock_status"
+              className={product.totalStock > 0 ? "greenColor" : "redColor"}
+            >
+              {product.totalStock > 0 ? "Còn hàng" : "Hết hàng"}
+            </span>
+          </h1>
+          <hr />
+          <div className="detail-color">
+            <h1>Đánh giá:</h1>
+            {product?.ratings?.toFixed(1).replace(".", ",") ?? "No Ratings"}
+            <div className="rating-outer">
               <div
-                style={{ display: "flex", alignItems: "center", gap: "20px" }}
-              >
-                <h1>Mẫu:</h1>
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "40px",
-                    flexWrap: "wrap",
-                    maxWidth: "calc(5 * (75px + 40px))",
-                  }}
-                >
-                  {product.variants && product.variants.length > 0 ? (
-                    product.variants.map((variant, index) => (
-                      <ProductVariant
-                        key={index}
-                        variant={variant}
-                        index={index}
-                        setSelectedVariant={setSelectedVariant}
-                        selectedVariant={selectedVariant}
-                        product={product}
-                        setStock={setStock}
-                        setPrice={setPrice}
-                        setActiveImage={setActiveImage}
-                        setImages={setImages}
-                        setInventory={setInventory}
-                        setVariant={setVariant}
-                        setSize={setSize}
-                      />
-                    ))
-                  ) : (
-                    <h1>Không có mẫu</h1>
-                  )}
-                </div>
-              </div>
-              {inventory && <hr />}
-              {inventory && inventory.length > 0 && (
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="detail-color">
-                    <h1>Kích cỡ:</h1>
-                    <div className="size-button-container">
-                      {inventory.map((item, index) => (
-                        <button
-                          className="size-button"
-                          key={index}
-                          onClick={() => {
-                            ChooseSize(
-                              index,
-                              item.size,
-                              item.price,
-                              item.stock
-                            );
-                          }}
-                          style={{
-                            border: size === item.size ? "solid 2px black" : "",
-                            display: "flex",
-                          }}
-                        >
-                          <div style={{ display: "flex" }}>{item.size} -</div>
-                          <div
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            <p style={{ minWidth: "80px", fontSize: "15px" }}>
-                              Số lượng:
-                            </p>{" "}
-                            {item.stock}
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-              <hr />
-              <div className="d-flex justify-content-between align-items-center">
-                <div className="detail-color">
-                  <h1>Giá:</h1>
-                  <p style={{ fontSize: "20px", color: "green" }}>
-                    {formatToVNDWithVND(price)}
-                  </p>
-                </div>
-              </div>
-              <hr />
-              <div className="d-flex justify-content-between align-items-center">
-                <div className="detail-color">
-                  <h1>Số lượng:</h1>
-                  <p style={{ fontSize: "20px", color: "green" }}>
-                    {stock > 0 ? stock : "Hết hàng"}
-                  </p>
-                </div>
-              </div>
-              <hr />
-
-              <div className="d-flex justify-content-between align-items-center">
-                {size && (
-                  <div className="stockCounter d-inline">
-                    <span
-                      className="btn btn-danger minus"
-                      onClick={decreaseQty}
-                    >
-                      -
-                    </span>
-
-                    <input
-                      type="number"
-                      className="form-control count d-inline"
-                      value={quantity}
-                      onChange={(e) => handlerQuantity(e)}
-                    />
-
-                    <span
-                      className="btn btn-primary plus"
-                      onClick={increaseQty}
-                    >
-                      +
-                    </span>
-                  </div>
-                )}
-                <button
-                  type="button"
-                  id="cart_btn"
-                  className="btn btn-primary d-inline ml-4"
-                  disabled={product.stock === 0}
-                  onClick={addToCart}
-                >
-                  Add to Cart
-                </button>
-              </div>
-              {user ? (
-                hasPurchased ? (
-                  <button
-                    id="review_btn"
-                    type="button"
-                    className="btn btn-primary mt-4"
-                    data-toggle="modal"
-                    data-target="#ratingModal"
-                    onClick={setUserRatings}
-                  >
-                    Đánh Giá Sản Phẩm
-                  </button>
-                ) : (
-                  <div className="alert alert-danger mt-5" type="alert">
-                    Vui lòng mua sản phẩm để đánh giá sản phẩm.
-                  </div>
-                )
+                className="rating-inner"
+                style={{ width: `${(product.ratings / 5) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+          <hr />
+          <div className="detail-description">
+            <h1>Mô tả:</h1>
+            <p>{product.description}</p>
+          </div>
+          <hr />
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <h1>Mẫu:</h1>
+            <div
+              style={{
+                display: "flex",
+                gap: "40px",
+                flexWrap: "wrap",
+                maxWidth: "calc(5 * (75px + 40px))",
+              }}
+            >
+              {product.variants && product.variants.length > 0 ? (
+                product.variants.map((variant, index) => (
+                  <ProductVariant
+                    key={index}
+                    variant={variant}
+                    index={index}
+                    setSelectedVariant={setSelectedVariant}
+                    selectedVariant={selectedVariant}
+                    product={product}
+                    setStock={setStock}
+                    setPrice={setPrice}
+                    setActiveImage={setActiveImage}
+                    setImages={setImages}
+                    setInventory={setInventory}
+                    setVariant={setVariant}
+                    setSize={setSize}
+                  />
+                ))
               ) : (
-                <div className="alert alert-danger mt-5" type="alert">
-                  Đăng nhập để gửi đánh giá của bạn.
-                </div>
+                <h1>Không có mẫu</h1>
               )}
-              <div className="row mt-2 mb-5">
-                <div className="rating w-50">
-                  <div
-                    className="modal fade"
-                    id="ratingModal"
-                    tabIndex="-1"
-                    role="dialog"
-                    aria-labelledby="ratingModalLabel"
-                    aria-hidden="true"
-                  >
-                    <div className="modal-dialog" role="document">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <h5 className="modal-title" id="ratingModalLabel">
-                            Submit Review
-                          </h5>
-                          <button
-                            type="button"
-                            className="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div className="modal-body">
-                          <ul className="stars">
-                            <li className="star">
-                              <i className="fa fa-star"></i>
-                            </li>
-                            <li className="star">
-                              <i className="fa fa-star"></i>
-                            </li>
-                            <li className="star">
-                              <i className="fa fa-star"></i>
-                            </li>
-                            <li className="star">
-                              <i className="fa fa-star"></i>
-                            </li>
-                            <li className="star">
-                              <i className="fa fa-star"></i>
-                            </li>
-                          </ul>
-
-                          <textarea
-                            name="review"
-                            id="review"
-                            className="form-control mt-3"
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                          ></textarea>
-
-                          <button
-                            className="btn my-3 float-right review-btn px-4 text-white"
-                            onClick={reviewHandler}
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            Submit
-                          </button>
-                        </div>
+            </div>
+          </div>
+          {inventory && <hr />}
+          {inventory && inventory.length > 0 && (
+            <div className="d-flex justify-content-between align-items-center">
+              <div className="detail-color">
+                <h1>Kích cỡ:</h1>
+                <div className="size-button-container">
+                  {inventory.map((item, index) => (
+                    <button
+                      className="size-button"
+                      key={index}
+                      onClick={() => {
+                        ChooseSize(index, item.size, item.price, item.stock);
+                      }}
+                      style={{
+                        border: size === item.size ? "solid 2px black" : "",
+                        display: "flex",
+                      }}
+                    >
+                      <div style={{ display: "flex" }}>{item.size} -</div>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <p style={{ minWidth: "80px", fontSize: "15px" }}>
+                          Số lượng:
+                        </p>{" "}
+                        {item.stock}
                       </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+          <hr />
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="detail-color">
+              <h1>Giá:</h1>
+              <p style={{ fontSize: "20px", color: "green" }}>
+                {formatToVNDWithVND(price)}
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="detail-color">
+              <h1>Số lượng:</h1>
+              <p style={{ fontSize: "20px", color: "green" }}>
+                {stock > 0 ? stock : "Hết hàng"}
+              </p>
+            </div>
+          </div>
+          <hr />
+
+          <div className="d-flex justify-content-between align-items-center">
+            {size && (
+              <div className="stockCounter d-inline">
+                <span className="btn btn-danger minus" onClick={decreaseQty}>
+                  -
+                </span>
+
+                <input
+                  type="number"
+                  className="form-control count d-inline"
+                  value={quantity}
+                  onChange={(e) => handlerQuantity(e)}
+                />
+
+                <span className="btn btn-primary plus" onClick={increaseQty}>
+                  +
+                </span>
+              </div>
+            )}
+            <button
+              type="button"
+              id="cart_btn"
+              className="btn btn-primary d-inline ml-4"
+              disabled={product.stock === 0}
+              onClick={addToCart}
+            >
+              Add to Cart
+            </button>
+          </div>
+          {user ? (
+            hasPurchased ? (
+              <button
+                id="review_btn"
+                type="button"
+                className="btn btn-primary mt-4"
+                data-toggle="modal"
+                data-target="#ratingModal"
+                onClick={setUserRatings}
+              >
+                Đánh Giá Sản Phẩm
+              </button>
+            ) : (
+              <div className="alert alert-danger mt-5" type="alert">
+                Vui lòng mua sản phẩm để đánh giá sản phẩm.
+              </div>
+            )
+          ) : (
+            <div className="alert alert-danger mt-5" type="alert">
+              Đăng nhập để gửi đánh giá của bạn.
+            </div>
+          )}
+          <div className="row mt-2 mb-5">
+            <div className="rating w-50">
+              <div
+                className="modal fade"
+                id="ratingModal"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="ratingModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="ratingModalLabel">
+                        Submit Review
+                      </h5>
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div className="modal-body">
+                      <ul className="stars">
+                        <li className="star">
+                          <i className="fa fa-star"></i>
+                        </li>
+                        <li className="star">
+                          <i className="fa fa-star"></i>
+                        </li>
+                        <li className="star">
+                          <i className="fa fa-star"></i>
+                        </li>
+                        <li className="star">
+                          <i className="fa fa-star"></i>
+                        </li>
+                        <li className="star">
+                          <i className="fa fa-star"></i>
+                        </li>
+                      </ul>
+
+                      <textarea
+                        name="review"
+                        id="review"
+                        className="form-control mt-3"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      ></textarea>
+
+                      <button
+                        className="btn my-3 float-right review-btn px-4 text-white"
+                        onClick={reviewHandler}
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        Submit
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </Fragment>
-      )}
+        </div>
+      </div>
     </Fragment>
   );
 };

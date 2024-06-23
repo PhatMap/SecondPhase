@@ -40,6 +40,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import WaitingRoom from "./components/cart/WaitingRoom";
 import Sidebar from "./components/admin/Sidebar";
+import ScrollToTop from "./utils/ScrollToTop";
 
 function App() {
   const location = useLocation();
@@ -88,6 +89,7 @@ function App() {
         </div>
       )}
       <div className="App-form">
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />

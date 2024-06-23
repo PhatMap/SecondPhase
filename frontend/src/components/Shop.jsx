@@ -73,75 +73,69 @@ const Shop = () => {
   return (
     <Fragment>
       <MetaData title={"Shop"} />
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="shop-container background-1">
-          <Header />
-          <ToastContainer
-            position="top-right"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
+      <div className="shop-container background-1">
+        <Header />
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+        <h1>SHOP</h1>
+        <div className="shop-products-filter-container">
+          <Filter
+            category={category}
+            keyword={keyword}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            selectedStar={selectedStar}
+            setSelectedStar={setSelectedStar}
+            minPrice={minPrice}
+            setMinPrice={setMinPrice}
+            maxPrice={maxPrice}
+            setMaxPrice={setMaxPrice}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
           />
-          <h1>SHOP</h1>
-          <div className="shop-products-filter-container">
-            <Filter
-              category={category}
-              keyword={keyword}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              selectedStar={selectedStar}
-              setSelectedStar={setSelectedStar}
-              minPrice={minPrice}
-              setMinPrice={setMinPrice}
-              maxPrice={maxPrice}
-              setMaxPrice={setMaxPrice}
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-            />
 
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-              }}
-            >
-              <div className="shop-products-container">
-                {shop.map((product) => (
-                  <Product key={product._id} product={product} />
-                ))}
-              </div>
-              <div className="shop-pagination">
-                <Pagination
-                  activePage={currentPage}
-                  itemsCountPerPage={
-                    productsCount > resPerPage ? resPerPage : productsCount
-                  }
-                  totalItemsCount={
-                    productsCount > resPerPage ? productsCount : 1
-                  }
-                  onChange={setCurrentPageNo}
-                  nextPageText={"Tiếp"}
-                  prevPageText={"Trước"}
-                  firstPageText={"Đầu"}
-                  lastPageText={"Cuối"}
-                  itemClass="page-item"
-                  linkClass="page-link"
-                />
-              </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+            }}
+          >
+            <div className="shop-products-container">
+              {shop.map((product) => (
+                <Product key={product._id} product={product} />
+              ))}
+            </div>
+            <div className="shop-pagination">
+              <Pagination
+                activePage={currentPage}
+                itemsCountPerPage={
+                  productsCount > resPerPage ? resPerPage : productsCount
+                }
+                totalItemsCount={productsCount > resPerPage ? productsCount : 1}
+                onChange={setCurrentPageNo}
+                nextPageText={"Tiếp"}
+                prevPageText={"Trước"}
+                firstPageText={"Đầu"}
+                lastPageText={"Cuối"}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
             </div>
           </div>
-          <Footer />
         </div>
-      )}
+        <Footer />
+      </div>
     </Fragment>
   );
 };
