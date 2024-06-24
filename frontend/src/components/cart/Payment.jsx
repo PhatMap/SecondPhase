@@ -3,7 +3,7 @@ import React, { Fragment, useEffect } from "react";
 import MetaData from "../layout/MetaData";
 import CheckoutSteps from "./CheckoutSteps";
 
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder, clearErrors } from "../../actions/orderActions";
@@ -122,9 +122,8 @@ const Payment = () => {
   return (
     <Fragment>
       <MetaData title={"Payment"} />
-
+      <ToastContainer />
       <CheckoutSteps shipping confirmOrder payment />
-
       <div className="row wrapper payment-container">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>

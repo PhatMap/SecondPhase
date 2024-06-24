@@ -5,13 +5,14 @@ import { momoDone } from "../../actions/orderActions";
 import { useNavigate } from "react-router-dom";
 import { createOrder, clearErrors } from "../../actions/orderActions";
 import io from "socket.io-client";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const WaitingRoom = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
-  // const { error } = useSelector((state) => state.newOrder);
   const [callbackData, setCallbackData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,57 +21,23 @@ const WaitingRoom = () => {
     (state) => state.momo
   );
 
-  const [order, setOrder] = useState({
-    userName: user.name,
-    orderItems: cartItems,
-    shippingInfo,
-    itemsPrice: 0,
-    shippingPrice: 0,
-    taxPrice: 0,
-    totalPrice: 0,
-  });
-
-  useEffect(() => {
-    const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
-    if (orderInfo) {
-      setOrder({
-        ...order,
-        userName: user.name,
-        orderItems: cartItems,
-        shippingInfo,
-        itemsPrice: orderInfo.itemsPrice,
-        shippingPrice: orderInfo.shippingPrice,
-        taxPrice: orderInfo.taxPrice,
-        totalPrice: orderInfo.totalPrice,
-      });
-    }
-  }, [user, cartItems, shippingInfo]);
+  const momoOrder = JSON.parse(sessionStorage.getItem("momoOrder"));
 
   useEffect(() => {
     if (orderId && orderStatus === 0) {
-      const newWindow = window.open(url, "_blank");
-
-      const checkClosed = setInterval(() => {
-        if (!newWindow || newWindow.closed) {
-          clearInterval(checkClosed);
-          const data = { orderId: orderId };
-          dispatch(momoDone(data));
-        }
-      }, 1000);
+      window.open(url, "_blank");
     }
   }, [orderId, orderStatus]);
 
   useEffect(() => {
+    console.log("Here 2", momoOrder);
     if (callbackData !== null && callbackData !== undefined) {
       console.log("Here Here", callbackData.resultCode);
       if (callbackData.resultCode === 0) {
-        order.paymentInfo = {
-          id: orderId,
-          status: "succeeded",
-        };
-        dispatch(createOrder(order));
+        dispatch(createOrder(momoOrder));
         history("/success");
       } else {
+        toast.error("Lỗi thanh toán qua MoMo không thành công");
         console.log("Transition failed");
       }
     } else {
@@ -79,6 +46,8 @@ const WaitingRoom = () => {
   }, [callbackData]);
 
   useEffect(() => {
+    console.log("Here 1", momoOrder);
+
     const socket = io("http://localhost:4000", {
       withCredentials: true,
     });
@@ -105,21 +74,64 @@ const WaitingRoom = () => {
     };
   }, []);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return callbackData ? (
-    <div>
-      <h2>Payment Result:</h2>
-      <pre>{JSON.stringify(callbackData, null, 2)}</pre>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "690px",
+      }}
+    >
+      <ToastContainer />
+
+      <div
+        style={{
+          width: "150px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+        }}
+      >
+        <i
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            color: "red",
+            fontSize: "300px",
+          }}
+          class="fa fa-exclamation-circle"
+        ></i>
+        <button
+          onClick={() => history(-1)}
+          style={{ width: "100%" }}
+          className="btn-one"
+        >
+          Thanh Toán Lại
+        </button>
+        <button
+          onClick={() => history("/")}
+          style={{ width: "100%" }}
+          className="btn-two"
+        >
+          Về Trang chủ
+        </button>
+      </div>
     </div>
   ) : (
-    <div>Waiting for payment result...</div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <ToastContainer />
+      <Loader />
+      <p>Đang chờ xác nhận thanh toán...</p>
+    </div>
   );
 };
 

@@ -3385,6 +3385,22 @@ body {
   color: white !important;
 }
 
+.btn-two {
+  background-color: white;
+  color: blue !important;
+  border: blue 1px solid;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-two:hover {
+  text-decoration: none;
+  background-color: blue !important;
+  color: white !important;
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;

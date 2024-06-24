@@ -58,21 +58,29 @@ const ConfirmOrder = () => {
     const data = {
       totalPrice: integerTotalPrice,
     };
-    const datamomo = {
-      itemsPrice: itemsPrice.toFixed(2),
+    const order = {
+      itemsPrice: itemsPrice,
       shippingPrice,
       taxPrice,
       totalPrice,
+      userName: user.name,
+      orderItems: items,
+      shippingInfo: infor,
     };
 
-   await dispatch(momoPayment(data));
-   sessionStorage.setItem("orderInfo", JSON.stringify(datamomo));
+    order.paymentInfo = {
+      id: generateRandomId(),
+      status: "Progress",
+    };
+
+    await dispatch(momoPayment(data));
+    sessionStorage.setItem("momoOrder", JSON.stringify(order));
     history("/waiting");
   };
 
   const processToCashPayment = () => {
     const order = {
-      itemsPrice: itemsPrice.toFixed(2),
+      itemsPrice: itemsPrice,
       shippingPrice,
       taxPrice,
       totalPrice,
