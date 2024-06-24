@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import Back from "../layout/Back";
 import Variant from "./Variant";
 import AddVariant from "./AddVariant";
+import { set } from "mongoose";
 
 const NewProduct = () => {
   const history = useNavigate();
@@ -36,6 +37,7 @@ const NewProduct = () => {
   const [emptyImages, setEmptyImages] = useState(false);
   const [emptyVariants, setEmptyVariants] = useState(false);
   const [variantError, setVariantError] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
   const { loading, error, success } = useSelector((state) => state.newProduct);
@@ -55,6 +57,8 @@ const NewProduct = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    setLoad(true);
 
     if (
       name === "" ||
@@ -519,12 +523,8 @@ const NewProduct = () => {
               </div>
             </div>
 
-            <button
-              type="submit"
-              className="new-product-btn"
-              disabled={loading ? true : false}
-            >
-              THÊM SẢN PHẨM
+            <button type="submit" className="new-product-btn" disabled={load}>
+              {load ? "ĐANG THÊM..." : "THÊM SẢN PHẨM"}
             </button>
           </form>
         </div>

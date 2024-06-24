@@ -15,6 +15,7 @@ import {
   clearErrors,
 } from "../../actions/productActions";
 import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
+import ScrollToTop from "../../utils/ScrollToTop";
 
 const ProductsList = () => {
   const history = useNavigate();

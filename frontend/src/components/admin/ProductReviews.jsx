@@ -76,7 +76,7 @@ const ProductReviews = () => {
           <button
             className="btn btn-primary py-1 px-2"
             onClick={() => {
-              setProductId(product._id); // Cập nhật productId và tải review
+              setProductId(product._id);
               setCurrentProduct(product);
               dispatch(getProductReviews(product._id));
             }}
@@ -177,6 +177,12 @@ const ProductReviews = () => {
     return data;
   };
 
+  useEffect(() => {
+    if (reviews) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  }, [reviews]);
+
   return (
     <Fragment>
       <MetaData title={"Product Reviews"} />
@@ -192,23 +198,8 @@ const ProductReviews = () => {
                 textAlign: "center",
               }}
             >
-              Sản Phẩm{" "}
+              Quản Lý Đánh Giá
             </h1>
-
-            {reviews && reviews.length > 0 ? (
-              <MDBDataTable
-                data={setReviews()}
-                className="px-3"
-                bordered
-                striped
-                hover
-                noBottomColumns
-              />
-            ) : (
-              <p className="mt-5 text-center" style={{ fontSize: "24px" }}>
-                No Reviews.
-              </p>
-            )}
 
             {loading ? (
               <Loader />
@@ -221,6 +212,21 @@ const ProductReviews = () => {
                 hover
                 noBottomColumns
               />
+            )}
+
+            {reviews && reviews.length > 0 ? (
+              <MDBDataTable
+                data={setReviews()}
+                className="px-3"
+                bordered
+                striped
+                hover
+                noBottomColumns
+              />
+            ) : (
+              <p className="mt-5 text-center" style={{ fontSize: "24px" }}>
+                Không có đánh giá
+              </p>
             )}
           </Fragment>
         </div>

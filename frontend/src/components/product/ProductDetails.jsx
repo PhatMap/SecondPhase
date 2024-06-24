@@ -226,7 +226,7 @@ const ProductDetails = () => {
 
     dispatch(newReview(formData));
   };
-  
+
   return (
     <Fragment>
       <Header color={"black"} />
@@ -286,9 +286,14 @@ const ProductDetails = () => {
             </div>
           </div>
           <hr />
-          <div className="detail-description">
-            <h1>Mô tả:</h1>
-            <p>{product.description}</p>
+          <div
+            className="detail-description"
+            style={{ whiteSpace: "pre-wrap" }}
+          >
+            <p>
+              <strong style={{fontSize:"20px"}}>Mô tả: </strong>
+              {product.description}
+            </p>
           </div>
           <hr />
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>

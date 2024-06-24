@@ -7,7 +7,6 @@ const Product = ({ product }) => {
   const [summary, setSummary] = useState("");
 
   const handleOnMouseEnter = () => {
-    setCurrentImage(product.images[1].url || product.images[0].url);
     setSummary(
       <div className="product-summary">
         <h5>{product.name}</h5>
@@ -25,6 +24,9 @@ const Product = ({ product }) => {
           View Details
         </Link>
       </div>
+    );
+    setCurrentImage(
+      product.images[1].url ? product.images[1].url : product.images[0].url
     );
   };
 

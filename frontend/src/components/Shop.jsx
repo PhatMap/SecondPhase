@@ -51,6 +51,7 @@ const Shop = () => {
   }, [category, keyword]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (currentPage) {
       dispatch(
         getProducts(
