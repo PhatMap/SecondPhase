@@ -92,7 +92,7 @@ const NewUser = () => {
     if (message) {
       toast.error("Thêm thành công");
       dispatch(clearMessage());
-      history("/admin/users");
+      history("/shop/users");
     }
   }, [dispatch, message, error, history]);
 

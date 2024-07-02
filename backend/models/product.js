@@ -109,7 +109,7 @@ const productSchema = new mongoose.Schema({
       message: "Product total stock cannot be negative",
     },
   },
-  category: {
+  category: { 
     type: String,
     required: [true, "please select category for this product"],
     enum: {

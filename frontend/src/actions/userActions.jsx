@@ -110,11 +110,7 @@ export const googleLogin =
         { email, name, avatar, googleId },
         config
       );
-      console.log(
-        "Dispatching googleLogin action with email:",
-        data.user.email
-      );
-
+      
       dispatch({
         type: GOOGLE_LOGIN_SUCCESS,
         payload: data.user,
@@ -150,7 +146,7 @@ export const register = (userData) => async (dispatch) => {
       type: REGISTER_USER_FAIL,
       payload: error.response.data.message,
     });
-    console.log("asdasd",error.response.data.message);
+    console.log("asdasd", error.response.data.message);
   }
 };
 
@@ -222,11 +218,8 @@ export const updatePassword = (passwords) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_PASSWORD_FAIL,
-      payload:  error.response.data.errMessage,
+      payload: error.response.data.errMessage,
     });
-
-
-
   }
 };
 
@@ -325,7 +318,7 @@ export const allUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
 
-    const { data } = await axios.get("/api/v1/admin/users");
+    const { data } = await axios.get("/api/v1/shop/users");
 
     dispatch({
       type: ALL_USERS_SUCCESS,
@@ -351,7 +344,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `/api/v1/admin/user/${id}`,
+      `/api/v1/shop/user/${id}`,
       userData,
       config
     );
@@ -373,7 +366,7 @@ export const getUserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/admin/user/${id}`);
+    const { data } = await axios.get(`/api/v1/shop/user/${id}`);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -392,7 +385,7 @@ export const deleteUser = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_USER_REQUEST });
 
-    const { data } = await axios.delete(`/api/v1/admin/user/${id}`);
+    const { data } = await axios.delete(`/api/v1/shop/user/${id}`);
 
     dispatch({
       type: DELETE_USER_SUCCESS,
@@ -405,7 +398,6 @@ export const deleteUser = (id) => async (dispatch) => {
     });
   }
 };
-
 
 export const updateAddress = (addresses) => async (dispatch, getState) => {
   try {
@@ -487,31 +479,34 @@ export const addAddress = (addressData) => async (dispatch) => {
     });
   }
 };
-export const updateUserAddress = (addressId, updatedAddress) => async (dispatch) => {
-  try {
-    dispatch({ type: UPDATE_USER_ADDRESS_REQUEST });
+export const updateUserAddress =
+  (addressId, updatedAddress) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_USER_ADDRESS_REQUEST });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
+      const { data } = await axios.put(
+        `/api/v1/me/update-address/${addressId}`,
+        updatedAddress,
+        config
+      );
 
-    const { data } = await axios.put(`/api/v1/me/update-address/${addressId}`, updatedAddress, config);
-
-
-    dispatch({
-      type: UPDATE_USER_ADDRESS_SUCCESS,
-      payload: data.success,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_USER_ADDRESS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: UPDATE_USER_ADDRESS_SUCCESS,
+        payload: data.success,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_USER_ADDRESS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 export const newUser = (userData) => async (dispatch) => {
   try {
     dispatch({ type: NEW_USER_REQUEST });
@@ -522,7 +517,11 @@ export const newUser = (userData) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post("/api/v1/admin/users/new", userData, config);
+    const { data } = await axios.post(
+      "/api/v1/shop/users/new",
+      userData,
+      config
+    );
 
     dispatch({
       type: NEW_USER_SUCCESS,
@@ -534,13 +533,12 @@ export const newUser = (userData) => async (dispatch) => {
       type: NEW_USER_FAIL,
       payload: error.response.data.message, // Trả về thông báo lỗi từ server
     });
-    console.log("Yêu cầu gửi không thành công. Lỗi:", error.response.data.message);
+    console.log(
+      "Yêu cầu gửi không thành công. Lỗi:",
+      error.response.data.message
+    );
   }
 };
-
-
-
-
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {

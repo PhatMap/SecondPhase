@@ -27,8 +27,8 @@ const OrdersList = () => {
     Processing: "Xử Lý",
     canceled: "Đơn đã Hủy",
     "Order Confirmed": "Xác Nhận",
-    "Shipping": "Giao Hàng",
-    "Delivered": "Hoàn Thành",
+    Shipping: "Giao Hàng",
+    Delivered: "Hoàn Thành",
   };
 
   useEffect(() => {
@@ -41,13 +41,13 @@ const OrdersList = () => {
 
     if (isDeleted) {
       toast.success("Xóa Đơn Hàng Thành Công");
-      history("/admin/orders");
+      history("/shop/orders");
       dispatch({ type: DELETE_ORDER_RESET });
     }
   }, [dispatch, error, isDeleted, history]);
 
   const deleteOrderHandler = (id, orderStatus) => {
-    if (orderStatus === "Delivered" ) {
+    if (orderStatus === "Delivered") {
       toast.error("Không thể xóa đơn hàng hoàn thành.");
       return;
     }
@@ -96,16 +96,18 @@ const OrdersList = () => {
         numofItems: order.orderItems.length,
         amount: `${formatToVNDWithVND(order.totalPrice)}`,
         status: (
-          <p style={{ 
-            color: order.orderStatus === "Delivered" ? "green" :  "red"
-          }}>
+          <p
+            style={{
+              color: order.orderStatus === "Delivered" ? "green" : "red",
+            }}
+          >
             {statusTranslations[order.orderStatus]}
           </p>
         ),
         actions: (
           <Fragment>
             <Link
-              to={`/admin/order/${order._id}`}
+              to={`/shop/order/${order._id}`}
               className="btn btn-primary py-1 px-2"
             >
               <i className="fa fa-eye"></i>

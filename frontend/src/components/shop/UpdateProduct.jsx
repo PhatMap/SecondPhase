@@ -2,24 +2,26 @@ import React, { Fragment, useState, useEffect, useCallback } from "react";
 
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
+
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
-  newProduct,
+  updateProduct,
+  getProductDetails,
   clearErrors,
   uploadImages,
 } from "../../actions/productActions";
-import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
-import { useNavigate } from "react-router-dom";
+import { UPDATE_PRODUCT_RESET } from "../../constants/productConstants";
+import { useNavigate, useParams } from "react-router-dom";
 import Back from "../layout/Back";
 import Variant from "./Variant";
 import AddVariant from "./AddVariant";
-import { set } from "mongoose";
 
-const NewProduct = () => {
+const UpdateProduct = () => {
   const history = useNavigate();
-  const dispatch = useDispatch();
+  const { id } = useParams();
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -37,28 +39,54 @@ const NewProduct = () => {
   const [emptyImages, setEmptyImages] = useState(false);
   const [emptyVariants, setEmptyVariants] = useState(false);
   const [variantError, setVariantError] = useState(false);
-  const [load, setLoad] = useState(false);
 
-  const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
-  const { loading, error, success } = useSelector((state) => state.newProduct);
+  const categories = ["", "Trousers", "Shirt", "Dress", "Shoe"];
+
+  const dispatch = useDispatch();
+
+  const { error, product } = useSelector((state) => state.productDetails);
+  const {
+    loading,
+    error: updateError,
+    isUpdated,
+  } = useSelector((state) => state.product);
+
+  const productId = id;
 
   useEffect(() => {
+    if (!product || (product && product._id !== productId) || isUpdated) {
+      dispatch(getProductDetails(productId));
+    } else {
+      setName(product.name);
+      setPrice(product.price);
+      setDescription(product.description);
+      setCategory(product.category);
+      setImages(product.images);
+      setImagesPreview(product.images);
+      setVariants(product.variants);
+    }
+
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
 
-    if (success) {
-      history("/admin/products");
-      toast.success("Product created successfully");
-      dispatch({ type: NEW_PRODUCT_RESET });
+    if (updateError) {
+      toast.error(updateError);
+      dispatch(clearErrors());
     }
-  }, [dispatch, error, success, history]);
+
+    if (isUpdated) {
+      history("/shop/products");
+
+      toast.success("Product updated successfully");
+
+      dispatch({ type: UPDATE_PRODUCT_RESET });
+    }
+  }, [dispatch, error, isUpdated, updateError, product, productId]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
-    setLoad(true);
 
     if (
       name === "" ||
@@ -102,19 +130,22 @@ const NewProduct = () => {
     let variantsImages = [];
 
     await Promise.all(
-      variants.map(async (variant, index) => {
+      variants.map(async (variant, vari) => {
         await Promise.all(
-          variant.images.map(async (image) => {
-            const upload = new FormData();
-            upload.append("images", image);
-            try {
-              const result = await dispatch(uploadImages(upload));
-              variantsImages.push({
-                id: index,
-                image: result,
-              });
-            } catch (error) {
-              console.error("Error uploading image:", error);
+          variant.images.map(async (image, img) => {
+            if (typeof image !== "object") {
+              const upload = new FormData();
+              upload.append("images", image);
+              try {
+                const result = await dispatch(uploadImages(upload));
+                variantsImages.push({
+                  variip: vari,
+                  imgip: img,
+                  image: result,
+                });
+              } catch (error) {
+                console.error("Error uploading image:", error);
+              }
             }
           })
         );
@@ -125,25 +156,19 @@ const NewProduct = () => {
 
     const updatedVariants = [...variants];
 
-    updatedVariants.forEach((variant, index) => {
-      let variantImages = [];
-      console.log(variantsResult);
-
-      variantsResult.forEach((result) => {
-        if (result.id === index) {
-          variantImages.push({
-            public_id: result.image.image.public_id,
-            url: result.image.image.url,
+    updatedVariants.forEach((variant, i) => {
+      variant.images.forEach((image, j) => {
+        if (typeof image !== "object") {
+          variantsResult.forEach((result) => {
+            if (result.variip === i && result.imgip === j) {
+              variant.images[j] = {
+                public_id: result.image.image.public_id,
+                url: result.image.image.url,
+              };
+            }
           });
         }
       });
-
-      const updatedVariant = {
-        ...updatedVariants[index],
-        images: variantImages,
-      };
-
-      updatedVariants[index] = updatedVariant;
     });
 
     let totalStock = 0;
@@ -159,9 +184,11 @@ const NewProduct = () => {
     let cloudinaryImages = [];
 
     images.forEach((image) => {
-      const upload = new FormData();
-      upload.append("images", image);
-      cloudinaryImages.push(dispatch(uploadImages(upload)));
+      if (!image.url) {
+        const upload = new FormData();
+        upload.append("images", image);
+        cloudinaryImages.push(dispatch(uploadImages(upload)));
+      }
     });
 
     const cloudinaryResult = await Promise.all(cloudinaryImages);
@@ -171,9 +198,15 @@ const NewProduct = () => {
       imagesLinks.push(result.image);
     });
 
+    images.forEach((image) => {
+      if (image.url) {
+        imagesLinks.push(image);
+      }
+    });
+
     formData.set("images", JSON.stringify(imagesLinks));
 
-    dispatch(newProduct(formData));
+    dispatch(updateProduct(product._id, formData));
   };
 
   const onChange = (e) => {
@@ -257,13 +290,9 @@ const NewProduct = () => {
     setImages(newImagesFiles);
   };
 
-  useEffect(() => {
-    console.log(variants);
-  }, [variants]);
-
   return (
     <Fragment>
-      <MetaData title={"New Product"} />
+      <MetaData title={"Update Product"} />
       <div className="new-product-container">
         <div className="new-product-form-container">
           <form
@@ -460,7 +489,7 @@ const NewProduct = () => {
                     }}
                   >
                     <img
-                      src={img}
+                      src={img.url ? img.url : img}
                       key={index}
                       alt="Images Preview"
                       style={{ height: "100%" }}
@@ -523,8 +552,12 @@ const NewProduct = () => {
               </div>
             </div>
 
-            <button type="submit" className="new-product-btn" disabled={load}>
-              {load ? "ĐANG THÊM..." : "THÊM SẢN PHẨM"}
+            <button
+              type="submit"
+              className="new-product-btn"
+              disabled={loading ? true : false}
+            >
+              CẬP NHẬT SẢN PHẨM
             </button>
           </form>
         </div>
@@ -533,4 +566,4 @@ const NewProduct = () => {
   );
 };
 
-export default NewProduct;
+export default UpdateProduct;

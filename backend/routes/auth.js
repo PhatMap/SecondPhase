@@ -39,18 +39,19 @@ router.route("/googleLogout").get(googleLogout);
 
 router.route("/me").get(isAuthenticatedUser, getUserProfile);
 router.post("/me/add-address", isAuthenticatedUser, addUserAddress);
-router.route("/me/update-address/:addressId").put(isAuthenticatedUser, updateUserAddress);
-router.delete('/me/address/:addressId', isAuthenticatedUser, deleteUserAddress);
-
-router.get('/me/address', isAuthenticatedUser, getUserAddress);
-
-
-router.route("/admin/users/new").post(NewUser);
 router
-  .route("/admin/users")
+  .route("/me/update-address/:addressId")
+  .put(isAuthenticatedUser, updateUserAddress);
+router.delete("/me/address/:addressId", isAuthenticatedUser, deleteUserAddress);
+
+router.get("/me/address", isAuthenticatedUser, getUserAddress);
+
+router.route("/shop/users/new").post(NewUser);
+router
+  .route("/shop/users")
   .get(isAuthenticatedUser, authorizeRoles("admin"), allUsers);
 router
-  .route("/admin/user/:id")
+  .route("/shop/user/:id")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getUserDetails)
   .put(isAuthenticatedUser, authorizeRoles("admin"), updateUser)
   .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser);

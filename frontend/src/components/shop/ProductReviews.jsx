@@ -34,7 +34,7 @@ const ProductReviews = () => {
       toast.error(error);
       dispatch(clearErrors());
 
-      history("/admin/products");
+      history("/shop/products");
     }
   }, [dispatch, error, deleteError, isDeleted, history]);
 

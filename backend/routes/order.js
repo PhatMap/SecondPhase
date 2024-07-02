@@ -18,14 +18,16 @@ router.route("/order-stats").get(getOrderStats);
 
 router.route("/order/:id").get(isAuthenticatedUser, getSingleOrder);
 router.route("/orders/me").get(isAuthenticatedUser, myOrders);
-router.route("/orders/me/checkOrderReview").post(isAuthenticatedUser,checkOrderReview);
+router
+  .route("/orders/me/checkOrderReview")
+  .post(isAuthenticatedUser, checkOrderReview);
 
 router
-  .route("/admin/orders")
+  .route("/shop/orders")
   .get(isAuthenticatedUser, authorizeRoles("admin"), allOrders);
 
 router
-  .route("/admin/order/:id")
+  .route("/shop/order/:id")
   .put(isAuthenticatedUser, authorizeRoles("admin"), updateOrder)
   .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteOrder);
 

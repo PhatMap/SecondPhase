@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Home from "./components/Home";
 import Shop from "./components/Shop";
 import ProductDetails from "./components/product/ProductDetails";
@@ -21,17 +21,17 @@ import NewPassword from "./components/user/NewPassword";
 import UserAddress from "./components/user/UserAddress";
 import AddAddress from "./components/user/AddAddress";
 import UpdateAddress from "./components/user/UpdateAddress";
-import Dashboard from "./components/admin/Dashboard";
-import ProductsList from "./components/admin/ProductsList";
-import NewProduct from "./components/admin/NewProduct";
-import UpdateProduct from "./components/admin/UpdateProduct";
-import OrdersList from "./components/admin/OrdersList";
-import ProcessOrder from "./components/admin/ProcessOrder";
-import UsersList from "./components/admin/UsersList";
-import UpdateUser from "./components/admin/UpdateUser";
-import ProductReviews from "./components/admin/ProductReviews";
+import Dashboard from "./components/shop/Dashboard";
+import ProductsList from "./components/shop/ProductsList";
+import NewProduct from "./components/shop/NewProduct";
+import UpdateProduct from "./components/shop/UpdateProduct";
+import OrdersList from "./components/shop/OrdersList";
+import ProcessOrder from "./components/shop/ProcessOrder";
+import UsersList from "./components/shop/UsersList";
+import UpdateUser from "./components/shop/UpdateUser";
+import ProductReviews from "./components/shop/ProductReviews";
 import ProtectedRoute from "./components/route/ProtectedRoute";
-import NewUser from "./components/admin/NewUser";
+import NewUser from "./components/shop/NewUser";
 import { loadUser } from "./actions/userActions";
 import { useSelector } from "react-redux";
 import store from "./store";
@@ -39,10 +39,13 @@ import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import WaitingRoom from "./components/cart/WaitingRoom";
-import Sidebar from "./components/admin/Sidebar";
+import Sidebar from "./components/shop/Sidebar";
 import ScrollToTop from "./utils/ScrollToTop";
+import AdminLogin from "./components/admin/Login";
+import AdminDashboard from "./components/admin/Dashboard";
 
 function App() {
+  const history = useNavigate();
   const location = useLocation();
   const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -64,17 +67,16 @@ function App() {
     getStripeApiKey();
   }, []);
 
-  const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
 
   const sidebarPaths = [
     "/dashboard",
-    "/admin/products",
-    "/admin/orders",
-    "/admin/users",
-    "/admin/reviews",
-    "/admin/product",
-    "/admin/order/",
-    "/admin/user/",
+    "/shop/products",
+    "/shop/orders",
+    "/shop/users",
+    "/shop/reviews",
+    "/shop/product",
+    "/shop/order/",
+    "/shop/user/",
   ];
 
   const showSidebar = sidebarPaths.some((path) =>
@@ -168,46 +170,51 @@ function App() {
             element={<ProtectedRoute isAdmin={true} component={Dashboard} />}
           />
           <Route
-            path="/admin/products"
+            path="/shop/products"
             element={<ProtectedRoute isAdmin={true} component={ProductsList} />}
           />
           <Route
-            path="/admin/product"
+            path="/shop/product"
             element={<ProtectedRoute isAdmin={true} component={NewProduct} />}
           />
           <Route
-            path="/admin/product/:id"
+            path="/shop/product/:id"
             element={
               <ProtectedRoute isAdmin={true} component={UpdateProduct} />
             }
           />
           <Route
-            path="/admin/orders"
+            path="/shop/orders"
             element={<ProtectedRoute isAdmin={true} component={OrdersList} />}
           />
           <Route
-            path="/admin/order/:id"
+            path="/shop/order/:id"
             element={<ProtectedRoute isAdmin={true} component={ProcessOrder} />}
           />
           <Route
-            path="/admin/users"
+            path="/shop/users"
             element={<ProtectedRoute isAdmin={true} component={UsersList} />}
           />
 
           <Route
-            path="/admin/user/:id"
+            path="/shop/user/:id"
             element={<ProtectedRoute isAdmin={true} component={UpdateUser} />}
           />
           <Route
-            path="/admin/users/new"
+            path="/shop/users/new"
             element={<ProtectedRoute isAdmin={true} component={NewUser} />}
           />
           <Route
-            path="/admin/reviews"
+            path="/shop/reviews"
             element={
               <ProtectedRoute isAdmin={true} component={ProductReviews} />
             }
           />
+        </Routes>
+
+        <Routes>
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Routes>
       </div>
     </div>

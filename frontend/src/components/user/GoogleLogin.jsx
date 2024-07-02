@@ -13,8 +13,19 @@ function LoginGoogle() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
-  const { isAuthenticated, error } = useSelector((state) => state.auth);
+  const { user, isAuthenticated, error } = useSelector((state) => state.auth);
+  let route = "/";
+  useEffect(() => {
+    if (user) {
+      if (user.role === "admin") {
+        route = "/admin/dashboard";
+      } else if (user.role === "shopkeeper") {
+        route = "/shop/dashboard";
+      }
+    }
+  }, [user]);
+
+  const redirect = location.search ? location.search.split("=")[1] : route;
 
   useEffect(() => {
     if (isAuthenticated) {

@@ -128,7 +128,7 @@ const UsersList = () => {
         actions: (
           <Fragment>
             <Link
-              to={`/admin/user/${user._id}`}
+              to={`/shop/user/${user._id}`}
               className="btn btn-primary py-1 px-2"
             >
               <i className="fa fa-pencil"></i>
@@ -151,7 +151,6 @@ const UsersList = () => {
     <Fragment>
       <MetaData title={"All Users"} />
       <div className="sidebar-content-container">
-
         <div className="manage-product-container">
           <Fragment>
             <h1
@@ -164,7 +163,7 @@ const UsersList = () => {
             >
               Danh Sách Khách Hàng
             </h1>
-            <Link to="/admin/users/new" className="alluser-add-btn-container">
+            <Link to="/shop/users/new" className="alluser-add-btn-container">
               <i className="fa fa-plus alluser-add-btn"></i>
               <p>Khách Hàng Mới</p>
             </Link>

@@ -48,7 +48,7 @@ const UpdateUser = () => {
     if (isUpdated) {
       toast.success("Thay Đổi Thành Công");
 
-      history("/admin/users");
+      history("/shop/users");
 
       dispatch({
         type: UPDATE_USER_RESET,

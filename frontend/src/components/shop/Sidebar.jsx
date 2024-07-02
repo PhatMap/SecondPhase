@@ -13,25 +13,25 @@ const Sidebar = () => {
           </li>
 
           <li>
-            <Link to="/admin/products" className="sidebar-element">
+            <Link to="/shop/products" className="sidebar-element">
               <i className="fa fa-product-hunt"></i> Quản lý Sản Phẩm
             </Link>
           </li>
 
           <li>
-            <Link to="/admin/orders" className="sidebar-element">
+            <Link to="/shop/orders" className="sidebar-element">
               <i className="fa fa-shopping-basket"></i> Quản lý Đơn Hàng
             </Link>
           </li>
 
           <li>
-            <Link to="/admin/users" className="sidebar-element">
+            <Link to="/shop/users" className="sidebar-element">
               <i className="fa fa-users"></i> Quản lý Người Dùng
             </Link>
           </li>
 
           <li>
-            <Link to="/admin/reviews" className="sidebar-element">
+            <Link to="/shop/reviews" className="sidebar-element">
               <i className="fa fa-star"></i> Quản lý Đánh Giá
             </Link>
           </li>
