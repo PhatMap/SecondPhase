@@ -1,7 +1,12 @@
 import React from "react";
+import Userchart from "./chart/Userchart";
 
 const Dashboard = () => {
-  return <div>Admiin dashboard</div>;
+  return (
+    <div className="admin-container">
+      <Userchart />
+    </div>
+  );
 };
 
 export default Dashboard;

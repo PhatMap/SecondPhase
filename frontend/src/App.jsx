@@ -41,8 +41,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import WaitingRoom from "./components/cart/WaitingRoom";
 import Sidebar from "./components/shop/Sidebar";
 import ScrollToTop from "./utils/ScrollToTop";
-import AdminLogin from "./components/admin/Login";
-import AdminDashboard from "./components/admin/Dashboard";
+import Centre from "./components/admin/Centre";
 
 function App() {
   const history = useNavigate();
@@ -66,7 +65,6 @@ function App() {
     }
     getStripeApiKey();
   }, []);
-
 
   const sidebarPaths = [
     "/dashboard",
@@ -212,10 +210,7 @@ function App() {
           />
         </Routes>
 
-        <Routes>
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        </Routes>
+        <Centre />
       </div>
     </div>
   );
