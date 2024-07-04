@@ -21,6 +21,7 @@ const {
   googleLoginUser,
   googleLogout,
   NewUser,
+  getUsers,
 } = require("../controllers/authController");
 
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
@@ -50,6 +51,9 @@ router.route("/shop/users/new").post(NewUser);
 router
   .route("/shop/users")
   .get(isAuthenticatedUser, authorizeRoles("admin"), allUsers);
+router
+  .route("/admin/users")
+  .get(isAuthenticatedUser, authorizeRoles("admin"), getUsers);
 router
   .route("/shop/user/:id")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getUserDetails)

@@ -4,6 +4,28 @@ class APIFeatures {
     this.queryStr = queryStr;
   }
 
+  filterUser() {
+    const keyword = this.queryStr.keyword
+      ? {
+          $or: [
+            { name: { $regex: this.queryStr.keyword, $options: "i" } },
+            { email: { $regex: this.queryStr.keyword, $options: "i" } },
+            { role: { $regex: this.queryStr.keyword, $options: "i" } },
+          ],
+        }
+      : {};
+    const role = this.queryStr.role
+      ? {
+          role: {
+            $regex: this.queryStr.role,
+            $options: "i",
+          },
+        }
+      : {};
+    this.query = this.query.find({ ...keyword }).find({ ...role });
+    return this;
+  }
+
   search() {
     const keyword = this.queryStr.keyword
       ? {
@@ -42,6 +64,15 @@ class APIFeatures {
 
   pagination(resPerPage) {
     const currentPage = Number(this.queryStr.page) || 1;
+    const skip = resPerPage * (currentPage - 1);
+
+    this.query = this.query.limit(resPerPage).skip(skip);
+    return this;
+  }
+
+  adminPagination() {
+    const currentPage = Number(this.queryStr.page) || 1;
+    const resPerPage = Number(this.queryStr.resPerPage) || 1;
     const skip = resPerPage * (currentPage - 1);
 
     this.query = this.query.limit(resPerPage).skip(skip);

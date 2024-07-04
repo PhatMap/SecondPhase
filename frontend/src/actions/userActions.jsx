@@ -61,6 +61,9 @@ import {
   NEW_USER_REQUEST,
   NEW_USER_SUCCESS,
   NEW_USER_FAIL,
+  GET_USERS_REQUEST,
+  GET_USERS_SUCCESS,
+  GET_USERS_FAIL,
 } from "../constants/userConstants";
 
 // Login
@@ -110,7 +113,7 @@ export const googleLogin =
         { email, name, avatar, googleId },
         config
       );
-      
+
       dispatch({
         type: GOOGLE_LOGIN_SUCCESS,
         payload: data.user,
@@ -331,6 +334,35 @@ export const allUsers = () => async (dispatch) => {
     });
   }
 };
+
+export const getUsers =
+  (currentPage = 1, role = "", keyword = "", resPerPage = 1) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: GET_USERS_REQUEST });
+
+      const { data } = await axios.get(
+        "/api/v1/admin/users?page=" +
+          currentPage +
+          "&role=" +
+          role +
+          "&keyword=" +
+          keyword +
+          "&resPerPage=" +
+          resPerPage
+      );
+
+      dispatch({
+        type: GET_USERS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_USERS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // Update user - ADMIN
 export const updateUser = (id, userData) => async (dispatch) => {

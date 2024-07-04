@@ -5,10 +5,9 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
+const APIFeatures = require("../utils/apiFeatures");
 
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
- 
-
   if (!req.body.avatar) {
     return res.status(400).json({
       success: false,
@@ -278,6 +277,26 @@ exports.allUsers = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+exports.getUsers = catchAsyncErrors(async (req, res, next) => {
+  const apiFeatures = new APIFeatures(User.find(), req.query)
+    .filterUser()
+    .sort();
+
+  let users = await apiFeatures.query;
+
+  const userCount = users.length;
+
+  apiFeatures.adminPagination();
+
+  users = await apiFeatures.query.clone();
+
+  res.status(200).json({
+    success: true,
+    users,
+    total: userCount,
+  });
+});
+
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
@@ -405,8 +424,6 @@ exports.updateUserAddress = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
-
 // userController.js
 exports.deleteUserAddress = catchAsyncErrors(async (req, res, next) => {
   try {
@@ -437,10 +454,7 @@ exports.deleteUserAddress = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-
 exports.NewUser = catchAsyncErrors(async (req, res, next) => {
-  
-
   if (!req.body.avatar) {
     return res.status(400).json({
       success: false,

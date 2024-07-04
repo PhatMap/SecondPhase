@@ -1,37 +1,27 @@
-import React from 'react'
+import React from "react";
 
-const DataTable = ({columns, rows}) => {
+const DataTable = ({ data }) => {
   return (
-    <table className="custom-table">
-      <th>Tỉnh/ Thành phố</th>
-      <th>Quận</th>
-      <th>Huyện</th>
-      <th>Chi tiết</th>
-      <th>Số điện thoại</th>
-      {/* {user.address.map((address) => (
-        <tr key={address._id}>
-          <td>{address.province}</td>
-          <td>{address.district}</td>
-          <td>{address.town}</td>
-          <td>{address.location}</td>
-          <td>{address.phone}</td>
-          <td>
-            <button
-              className="btn btn-primary"
-              style={{
-                display: "flex",
-                width: "100%",
-                justifyContent: "center",
-              }}
-              onClick={() => handleSelectAddress(address)}
-            >
-              Select
-            </button>
-          </td>
+    <table className="my-table">
+      <thead>
+        <tr>
+          {data.columns.map((column, columnIndex) => (
+            <th key={columnIndex}>{column.label}</th>
+          ))}
         </tr>
-      ))} */}
+      </thead>
+      <tbody>
+        {data.rows.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {data.columns.map((column, cellIndex) => (
+              <td key={cellIndex}>{row[column.field]}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+
     </table>
   );
-}
+};
 
-export default DataTable
+export default DataTable;

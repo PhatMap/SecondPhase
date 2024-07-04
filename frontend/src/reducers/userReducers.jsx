@@ -57,6 +57,9 @@ import {
   NEW_USER_SUCCESS,
   NEW_USER_FAIL,
   CLEAR_MESSAGE,
+  GET_USERS_REQUEST,
+  GET_USERS_SUCCESS,
+  GET_USERS_FAIL,
 } from "../constants/userConstants";
 
 export const authReducer = (state = { user: {} }, action) => {
@@ -300,6 +303,40 @@ export const forgotPasswordReducer = (state = {}, action) => {
 
     case FORGOT_PASSWORD_FAIL:
     case NEW_PASSWORD_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getUsersReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case GET_USERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_USERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        users: action.payload.users,
+        total: action.payload.total,
+      };
+
+    case GET_USERS_FAIL:
       return {
         ...state,
         loading: false,

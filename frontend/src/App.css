@@ -1080,6 +1080,8 @@ body {
 .Centre-container {
   display: flex;
   justify-content: flex-start;
+  width: 100%;
+  height: 100%;
 }
 
 .App-form {
@@ -3463,4 +3465,56 @@ body {
 
 .admin-container {
   width: 300px;
+}
+
+.flex-horizental {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.my-table {
+  width: 90%;
+}
+
+.my-table th,
+.my-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.my-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.flex-center-screen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Centre {
+  width: 100%;
+  height: 100%;
+}
+
+.select-bar{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  gap: 10px;
+}
+
+.select-bar button{
+  width: 125px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 5px;
 }

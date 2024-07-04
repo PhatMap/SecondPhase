@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getProducts } from "../actions/productActions";
 import "rc-slider/assets/index.css";
-import { useParams } from "react-router-dom"; // Import useNavigate and Link
+import { useParams } from "react-router-dom"; 
 import Filter from "./layout/Filter";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
