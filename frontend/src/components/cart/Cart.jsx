@@ -26,8 +26,12 @@ const Cart = () => {
   const { user } = useSelector((state) => state.auth);
 
   const removeCartItemHandler = async (id, variant, size) => {
-    await dispatch(removeItemFromCart(id, variant, size));
+    for (const item of selected) {
+      await dispatch(removeItemFromCart(item.product, item.variant, item.size));
+    }
     dispatch(getUserCart());
+    setSelected([]);
+    setShow(false);
   };
 
   const increaseQty = async (index) => {
@@ -156,6 +160,14 @@ const Cart = () => {
                     >
                       {all ? "Bỏ Chọn Tất Cả" : "Chọn Tất Cả"}
                     </button>
+                    {selected.length > 0 && (
+                  <button
+                  className={`cart-select-all-btn ${all && "active"}`}
+                    onClick={() => setShow(true)}
+                  >
+                    Xóa Đã Chọn
+                  </button>
+                )}
                   </div>
                   {cartItems.map((item, index) => (
                     <div key={index}>

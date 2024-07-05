@@ -88,7 +88,12 @@ const Shop = () => {
           pauseOnHover
           theme="light"
         />
-        <h1>SHOP</h1>
+       <h1
+                className="header-logo"
+                style={{ fontFamily: "Lobster, cursive" }}
+              >
+                VITASHOP
+              </h1>
         <div className="shop-products-filter-container">
           <Filter
             category={category}
