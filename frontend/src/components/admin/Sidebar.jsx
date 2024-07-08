@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = React.memo(() => {
   return (
     <div className="sidebar-wrapper">
       <nav className="sidebar-form">
@@ -27,6 +27,6 @@ const Sidebar = () => {
       </nav>
     </div>
   );
-};
+});
 
 export default Sidebar;

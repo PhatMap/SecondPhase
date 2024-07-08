@@ -9,7 +9,7 @@ import Address from "../user/Address";
 import { newUser, clearErrors, clearMessage } from "../../actions/userActions";
 import Back from "../layout/Back";
 
-const NewUser = () => {
+const AddUser = () => {
   const history = useNavigate();
   const [formError, setFormError] = useState("");
   const [nameError, setNameError] = useState("");
@@ -88,9 +88,9 @@ const NewUser = () => {
       dispatch(clearErrors());
     }
     if (message) {
-      toast.error("Thêm thành công");
+      toast.success("Thêm thành công");
       dispatch(clearMessage());
-      history("/shop/users");
+      history("/admin/users");
     }
   }, [dispatch, message, error, history]);
 
@@ -225,7 +225,7 @@ const NewUser = () => {
 
   return (
     <Fragment>
-      <MetaData title={"Register User"} />
+      <MetaData title={"Add User"} />
       <div className="register-wrapper">
         <form
           className="register-form-container"
@@ -233,131 +233,167 @@ const NewUser = () => {
           encType="multipart/form-data"
         >
           <Back />
+          <h1 className="register-heading">Thêm người dùng</h1>
+          {error && <p className="error">{error}</p>}
 
-          <h1 className="register-heading">Khách Hàng </h1>
-          <div className="register-form-group">
-            <label htmlFor="name_field">Họ Tên</label>
-            <input
-              type="text"
-              id="name_field"
-              className="register-form-control"
-              placeholder="Name"
-              name="name"
-              value={name}
-              onChange={onChange}
-            />
-            {nameError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {nameError}
-              </p>
-            )}
-          </div>
-          <div className="register-form-group">
-            <label htmlFor="email_field">Email</label>
-            <input
-              type="email"
-              id="email_field"
-              className="register-form-control"
-              placeholder="Email"
-              name="email"
-              value={email}
-              onChange={onChange}
-            />
-            {emailError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {emailError}
-              </p>
-            )}
-            {emailFormatError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {emailFormatError}
-              </p>
-            )}
-            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-          </div>
-          <div className="register-form-group">
-            <label htmlFor="phone_field">Số Điện Thoại</label>
-            <input
-              type="text"
-              id="phone_field"
-              className="register-form-control"
-              placeholder="Phone"
-              name="phone"
-              value={address[0].phone}
-              onChange={onChange}
-            />
-            {phoneError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {phoneError}
-              </p>
-            )}
-          </div>
-          <div className="register-form-group">
-            <label htmlFor="password_field">Mật Khẩu</label>
-            <input
-              type="password"
-              id="password_field"
-              className="register-form-control"
-              name="password"
-              placeholder="Password"
-              value={password}
-              onChange={onChange}
-            />
-            {passwordError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {passwordError}
-              </p>
-            )}
-          </div>
-          <div className="register-form-group">
-            <label htmlFor="confirm_password_field">Nhập Lại Mật Khẩu</label>
-            <input
-              type="password"
-              id="confirm_password_field"
-              className="register-form-control"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={onChange}
-            />
-            {confirmPasswordError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {confirmPasswordError}
-              </p>
-            )}
-          </div>
-          <div className="register-form-group">
-            <Address handleAddressChange={handleAddressChange} />
-            {formError && (
-              <p className="error" style={{ color: "red", fontSize: "0.8em" }}>
-                {formError}
-              </p>
-            )}
-          </div>
-          <div className="register-form-group">
-            <label htmlFor="avatar_upload">Ảnh Đại Diện</label>
-            <div className="d-flex align-items-center">
-              <div>
-                <figure className="register-avatar">
-                  <img src={avatarPreview} alt="Avatar Preview" />
-                </figure>
+          <div className="register-form-column">
+            <div className="register-form-row">
+              <div className="register-form-up">
+                <div className="register-form-group">
+                  <label htmlFor="name_field">Họ Tên</label>
+                  <input
+                    type="text"
+                    id="name_field"
+                    className="register-form-control"
+                    placeholder="Name"
+                    name="name"
+                    value={name}
+                    onChange={onChange}
+                  />
+                  {nameError && (
+                    <p
+                      className="error"
+                      style={{ color: "red", fontSize: "0.8em" }}
+                    >
+                      {nameError}
+                    </p>
+                  )}
+                </div>
+                <div className="register-form-group">
+                  <label htmlFor="avatar_upload">Ảnh Đại Diện</label>
+                  <div className="d-flex align-items-center">
+                    <div>
+                      <figure className="register-avatar">
+                        <img src={avatarPreview} alt="Avatar Preview" />
+                      </figure>
+                    </div>
+                    <div className="register-custom-file">
+                      <input
+                        type="file"
+                        name="avatar"
+                        className="register-custom-file-input"
+                        id="customFile"
+                        accept="image/*"
+                        onChange={onChange}
+                      />
+                      <label
+                        className="register-custom-file-label"
+                        htmlFor="customFile"
+                      >
+                        Chọn Ảnh
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="register-custom-file">
-                <input
-                  type="file"
-                  name="avatar"
-                  className="register-custom-file-input"
-                  id="customFile"
-                  accept="image/*"
-                  onChange={onChange}
-                />
-                <label
-                  className="register-custom-file-label"
-                  htmlFor="customFile"
+              <div className="register-form-up">
+                <div className="register-form-group">
+                  <label htmlFor="email_field">Email</label>
+                  <input
+                    type="email"
+                    id="email_field"
+                    className="register-form-control"
+                    placeholder="Email"
+                    name="email"
+                    value={email}
+                    onChange={onChange}
+                  />
+                  {emailError && (
+                    <p
+                      className="error"
+                      style={{ color: "red", fontSize: "0.8em" }}
+                    >
+                      {emailError}
+                    </p>
+                  )}
+                  {emailFormatError && (
+                    <p
+                      className="error"
+                      style={{ color: "red", fontSize: "0.8em" }}
+                    >
+                      {emailFormatError}
+                    </p>
+                  )}
+                  {errorMessage && (
+                    <p style={{ color: "red" }}>{errorMessage}</p>
+                  )}
+                </div>
+                <div className="register-form-group">
+                  <label htmlFor="password_field">Mật Khẩu</label>
+                  <input
+                    type="password"
+                    id="password_field"
+                    className="register-form-control"
+                    name="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={onChange}
+                  />
+                  {passwordError && (
+                    <p
+                      className="error"
+                      style={{ color: "red", fontSize: "0.8em" }}
+                    >
+                      {passwordError}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="register-form-up ">
+                <div className="register-form-group">
+                  <label htmlFor="phone_field">Số Điện Thoại</label>
+                  <input
+                    type="text"
+                    id="phone_field"
+                    className="register-form-control"
+                    placeholder="Phone"
+                    name="phone"
+                    value={address[0].phone}
+                    onChange={onChange}
+                  />
+                  {phoneError && (
+                    <p
+                      className="error"
+                      style={{ color: "red", fontSize: "0.8em" }}
+                    >
+                      {phoneError}
+                    </p>
+                  )}
+                </div>
+                <div className="register-form-group">
+                  <label htmlFor="confirm_password_field">
+                    Nhập Lại Mật Khẩu
+                  </label>
+                  <input
+                    type="password"
+                    id="confirm_password_field"
+                    className="register-form-control"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChange={onChange}
+                  />
+                  {confirmPasswordError && (
+                    <p
+                      className="error"
+                      style={{ color: "red", fontSize: "0.8em" }}
+                    >
+                      {confirmPasswordError}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="address-form-row">
+              <Address handleAddressChange={handleAddressChange} />
+              {formError && (
+                <p
+                  className="error"
+                  style={{ color: "red", fontSize: "0.8em" }}
                 >
-                  Chọn Ảnh
-                </label>
-              </div>
+                  {formError}
+                </p>
+              )}
             </div>
           </div>
           <button
@@ -366,10 +402,7 @@ const NewUser = () => {
             className="register-btn"
             disabled={loading ? true : false}
           >
-            {errorMessage && (
-              <p style={{ color: "red", fontSize: "0.8em" }}>{errorMessage}</p>
-            )}
-            Đăng Kí
+            Thêm người dùng
           </button>
         </form>
       </div>
@@ -377,4 +410,4 @@ const NewUser = () => {
   );
 };
 
-export default NewUser;
+export default AddUser;

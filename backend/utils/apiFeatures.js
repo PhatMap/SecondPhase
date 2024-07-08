@@ -5,24 +5,24 @@ class APIFeatures {
   }
 
   filterUser() {
-    const keyword = this.queryStr.keyword
-      ? {
-          $or: [
-            { name: { $regex: this.queryStr.keyword, $options: "i" } },
-            { email: { $regex: this.queryStr.keyword, $options: "i" } },
-            { role: { $regex: this.queryStr.keyword, $options: "i" } },
-          ],
-        }
-      : {};
-    const role = this.queryStr.role
-      ? {
-          role: {
-            $regex: this.queryStr.role,
-            $options: "i",
-          },
-        }
-      : {};
-    this.query = this.query.find({ ...keyword }).find({ ...role });
+    const { keyword, roles } = this.queryStr;
+
+    let query = {};
+
+    if (keyword) {
+      query.$or = [
+        { name: { $regex: keyword, $options: "i" } },
+        { email: { $regex: keyword, $options: "i" } },
+        { role: { $regex: keyword, $options: "i" } },
+      ];
+    }
+
+    if (roles) {
+      const roleArray = roles.split(",").map((r) => r.trim());
+      query.role = { $in: roleArray };
+    }
+
+    this.query = this.query.find(query);
     return this;
   }
 

@@ -1,11 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
-
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
-import Sidebar from "./Sidebar";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +20,6 @@ const UsersList = () => {
   const [showModal, setShowModal] = useState(false);
   const [deleteUserId, setDeleteUserId] = useState(null);
   const [deleteUserRole, setDeleteUserRole] = useState(null);
-  const history = useNavigate();
   const [prevUsersCount, setPrevUsersCount] = useState(0);
 
   const dispatch = useDispatch();
@@ -42,13 +38,12 @@ const UsersList = () => {
     if (isDeleted) {
       toast.success("Xóa Người Dùng Thành Công");
       dispatch({ type: DELETE_USER_RESET });
-      setDeleteMessage(""); // Reset delete message
+      setDeleteMessage(""); 
     }
     if (users.length > prevUsersCount && prevUsersCount > 0) {
       toast.success("Thêm Người Dùng Thành Công");
     }
 
-    // Update the previous user count state
     setPrevUsersCount(users.length);
   }, [dispatch, error, isDeleted, users.length, prevUsersCount]);
 
@@ -58,7 +53,7 @@ const UsersList = () => {
     } else {
       setDeleteUserId(id);
       setDeleteUserRole(role);
-      setShowModal(true); // Hiển thị modal
+      setShowModal(true);
     }
   };
 
@@ -75,11 +70,11 @@ const UsersList = () => {
       dispatch(deleteUser(deleteUserId));
       dispatch(allUsers());
     }
-    setShowModal(false); // Ẩn modal sau khi xác nhận xóa
+    setShowModal(false); 
   };
 
   const handleDeleteCancel = () => {
-    setShowModal(false); // Ẩn modal khi hủy xóa
+    setShowModal(false); 
   };
 
   const setUsers = () => {

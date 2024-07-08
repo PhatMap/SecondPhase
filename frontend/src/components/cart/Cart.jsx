@@ -105,7 +105,7 @@ const Cart = () => {
       return;
     } else {
     }
-  };
+  };  
 
   const handleBlur = (e) => {
     const inputValue = e.target.value;
