@@ -336,7 +336,7 @@ export const allUsers = () => async (dispatch) => {
 };
 
 export const getUsers =
-  (currentPage = 1, roles = [], keyword = "", resPerPage = 1) =>
+  (currentPage = 1, roles = [], keyword = "", resPerPage = 1, status = "") =>
   async (dispatch) => {
     try {
       dispatch({ type: GET_USERS_REQUEST });
@@ -344,7 +344,7 @@ export const getUsers =
       const { data } = await axios.get(
         `/api/v1/admin/users?page=${currentPage}&keyword=${keyword}&resPerPage=${resPerPage}&roles=${roles.join(
           ","
-        )}`
+        )}&status=${status}`
       );
 
       dispatch({

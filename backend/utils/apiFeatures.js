@@ -5,7 +5,7 @@ class APIFeatures {
   }
 
   filterUser() {
-    const { keyword, roles } = this.queryStr;
+    const { keyword, roles, status } = this.queryStr;
 
     let query = {};
 
@@ -20,6 +20,10 @@ class APIFeatures {
     if (roles) {
       const roleArray = roles.split(",").map((r) => r.trim());
       query.role = { $in: roleArray };
+    }
+
+    if (status) {
+      query.status = status;
     }
 
     this.query = this.query.find(query);

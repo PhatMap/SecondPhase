@@ -31,6 +31,10 @@ const ManageUsers = () => {
           field: "role",
         },
         {
+          label: "Trạng thái",
+          field: "status",
+        },
+        {
           label: "Tác vụ",
           field: "action",
         },
@@ -50,6 +54,7 @@ const ManageUsers = () => {
         ),
         email: user.email,
         role: user.role,
+        status: user.status,
         action: (
           <Fragment>
             <div className="flex-horizental">
@@ -92,6 +97,7 @@ const ManageUsers = () => {
   const [keyword, setKeyword] = useState("");
   const [resPerPage, setResPerPage] = useState(1);
   const [checkList, setCheckList] = useState([]);
+  const [status, setStatus] = useState("");
 
   const setCurrentPageNo = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -115,10 +121,10 @@ const ManageUsers = () => {
   }, []);
 
   useEffect(() => {
-    if (currentPage || filter || keyword || resPerPage) {
-      dispatch(getUsers(currentPage, filter, keyword, resPerPage));
+    if (currentPage || filter || keyword || resPerPage || status) {
+      dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
     }
-  }, [currentPage, filter, keyword, resPerPage]);
+  }, [currentPage, filter, keyword, resPerPage, status]);
 
   useEffect(() => {
     if (users) {
@@ -165,7 +171,7 @@ const ManageUsers = () => {
     }
   };
 
-  const roles = ["user", "shopkeepper", "admin"];
+  const roles = ["user", "shopkeeper", "admin"];
 
   const handleCheckbox = (index) => {
     const list = [...checkList];
@@ -184,10 +190,67 @@ const ManageUsers = () => {
     setFilter([]);
   };
 
+  const handleSegmentedTab = (choose) => {
+    if (choose !== status) {
+      setCurrentPage(1);
+      if (choose === "all") {
+        setStatus("");
+      }
+      if (choose === "active") {
+        setStatus("active");
+      }
+      if (choose === "inactive") {
+        setStatus("inactive");
+      }
+    }
+  };
+
   return (
     <Fragment>
       <ToastContainer />
       <div className="flex-center-screen">
+        <div className="tabs">
+          <label htmlFor="all" className={status === "" ? "marked" : ""}>
+            <input
+              type="radio"
+              id="all"
+              name="status"
+              value="all"
+              onChange={() => handleSegmentedTab("all")}
+              checked={status === ""}
+            />
+            Tất cẩ trạng thái
+          </label>
+
+          <label
+            htmlFor="active"
+            className={status === "active" ? "marked" : ""}
+          >
+            <input
+              type="radio"
+              id="active"
+              name="status"
+              value="active"
+              onChange={() => handleSegmentedTab("active")}
+              checked={status === "active"}
+            />
+            Đang hoạt động
+          </label>
+          <label
+            htmlFor="inactive"
+            className={status === "inactive" ? "marked" : ""}
+          >
+            <input
+              type="radio"
+              id="inactive"
+              name="status"
+              value="inactive"
+              onChange={() => handleSegmentedTab("inactive")}
+              checked={status === "inactive"}
+            />
+            Ngưng hoạt động
+          </label>
+        </div>
         <button className="add-btn" onClick={() => history("/admin/addUser")}>
           <i className="fa fa-plus"></i> Thêm người dùng
         </button>
@@ -226,9 +289,6 @@ const ManageUsers = () => {
               />
               <p>Quản trị viên</p>
             </label>
-            <button onClick={() => setFilter("user")}>Khách hàng</button>
-            <button onClick={() => setFilter("shopkeepper")}>Người bán</button>
-            <button onClick={() => setFilter("admin")}>Quản trị viên</button>
           </div>
           <input
             className="Search-input"

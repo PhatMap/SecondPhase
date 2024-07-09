@@ -1,0 +1,306 @@
+[
+  {
+    "name": "Trần Trung Phát",
+    "email": "phatmap234@gmail.com",
+    "password": "zzzzzzzz",
+    "avatar": {
+      "public_id": "avatars/vw6dfdd0rvg4xidmucdc",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717330848/avatars/vw6dfdd0rvg4xidmucdc.jpg"
+    },
+    "role": "admin",
+    "createdAt": "2021-07-20T14:00:00.000Z",
+    "address": {
+      "street": "Tỉnh Hà Giang",
+      "city": "Huyện Mèo Vạc",
+      "town": "Xã Khâu Vai",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0367562350"
+    },
+    "status": "active"
+  },
+  {
+    "name": "User 1",
+    "email": "user1@example.com",
+    "password": "password123",
+    "avatar": {
+      "public_id": "avatars/gasdwimx2cu8duhssi5g",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1716711407/avatars/gasdwimx2cu8duhssi5g.jpg"
+    },
+    "role": "user",
+    "createdAt": "2023-01-15T09:30:00.000Z",
+    "address": {
+      "street": "123 Nguyễn Huệ",
+      "city": "Quận 1",
+      "town": "Phường Bến Nghé",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0901234567"
+    },
+    "status": "active"
+  },
+  {
+    "name": "User 2",
+    "email": "user2@example.com",
+    "password": "securepass456",
+    "avatar": {
+      "public_id": "103691857358975475224",
+      "url": "https://lh3.googleusercontent.com/a/ACg8ocIyq2aXjC6x0oB9NtvpPvkdgP6kkQfZa2Q19J9OTahH0ji9qw=s96-c"
+    },
+    "role": "user",
+    "createdAt": "2023-02-20T14:45:00.000Z",
+    "address": {
+      "street": "456 Lê Lợi",
+      "city": "Quận 5",
+      "town": "Phường 6",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0912345678"
+    },
+    "status": "active"
+  },
+  {
+    "name": "User 3",
+    "email": "user3@example.com",
+    "password": "userpass789",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "user",
+    "createdAt": "2023-03-10T11:15:00.000Z",
+    "address": {
+      "street": "789 Trần Hưng Đạo",
+      "city": "Quận 3",
+      "town": "Phường 7",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0923456789"
+    },
+    "status": "inactive"
+  },
+  {
+    "name": "User 4",
+    "email": "user4@example.com",
+    "password": "pass1234",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "user",
+    "createdAt": "2023-04-05T16:20:00.000Z",
+    "address": {
+      "street": "101 Võ Văn Tần",
+      "city": "Quận 10",
+      "town": "Phường 9",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0934567890"
+    },
+    "status": "active"
+  },
+  {
+    "name": "User 5",
+    "email": "user5@example.com",
+    "password": "userpassword5",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "user",
+    "createdAt": "2023-05-12T08:50:00.000Z",
+    "address": {
+      "street": "202 Nguyễn Thị Minh Khai",
+      "city": "Quận 3",
+      "town": "Phường 5",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0945678901"
+    },
+    "status": "active"
+  },
+  {
+    "name": "User 6",
+    "email": "user6@example.com",
+    "password": "pass6789",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "user",
+    "createdAt": "2023-06-18T13:40:00.000Z",
+    "address": {
+      "street": "303 Điện Biên Phủ",
+      "city": "Quận Bình Thạnh",
+      "town": "Phường 15",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0956789012"
+    },
+    "status": "active"
+  },
+  {
+    "name": "User 7",
+    "email": "user7@example.com",
+    "password": "userpass7",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "user",
+    "createdAt": "2023-07-22T10:10:00.000Z",
+    "address": {
+      "street": "404 Cách Mạng Tháng Tám",
+      "city": "Quận 3",
+      "town": "Phường 12",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0967890123"
+    },
+    "status": "inactive"
+  },
+  {
+    "name": "User 8",
+    "email": "user8@example.com",
+    "password": "pass8user",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "user",
+    "createdAt": "2023-08-30T15:25:00.000Z",
+    "address": {
+      "street": "505 Nguyễn Văn Cừ",
+      "city": "Quận 5",
+      "town": "Phường 3",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0978901234"
+    },
+    "status": "active"
+  },
+  {
+    "name": "User 9",
+    "email": "user9@example.com",
+    "password": "user9pass",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "user",
+    "createdAt": "2023-09-14T12:05:00.000Z",
+    "address": {
+      "street": "606 Lý Tự Trọng",
+      "city": "Quận 1",
+      "town": "Phường Bến Thành",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0989012345"
+    },
+    "status": "active"
+  },
+  {
+    "name": "User 10",
+    "email": "user10@example.com",
+    "password": "pass10user",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "user",
+    "createdAt": "2023-10-25T17:55:00.000Z",
+    "address": {
+      "street": "707 Hồ Tùng Mậu",
+      "city": "Quận 1",
+      "town": "Phường Bến Nghé",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0990123456"
+    },
+    "status": "active"
+  },
+  {
+    "name": "Shopkeeper 1",
+    "email": "shop1@example.com",
+    "password": "shoppass1",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "shopkeeper",
+    "createdAt": "2023-11-05T09:00:00.000Z",
+    "address": {
+      "street": "808 Phạm Ngũ Lão",
+      "city": "Quận 1",
+      "town": "Phường Phạm Ngũ Lão",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0901112233"
+    },
+    "status": "active"
+  },
+  {
+    "name": "Shopkeeper 2",
+    "email": "shop2@example.com",
+    "password": "shop2pass",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "shopkeeper",
+    "createdAt": "2023-11-15T14:30:00.000Z",
+    "address": {
+      "street": "909 Lê Duẩn",
+      "city": "Quận 1",
+      "town": "Phường Bến Nghé",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0912223344"
+    },
+    "status": "active"
+  },
+  {
+    "name": "Shopkeeper 3",
+    "email": "shop3@example.com",
+    "password": "pass3shop",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "shopkeeper",
+    "createdAt": "2023-11-25T11:45:00.000Z",
+    "address": {
+      "street": "1010 Trần Quang Khải",
+      "city": "Quận 1",
+      "town": "Phường Tân Định",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0923334455"
+    },
+    "status": "inactive"
+  },
+  {
+    "name": "Shopkeeper 4",
+    "email": "shop4@example.com",
+    "password": "shopkeeper4",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "shopkeeper",
+    "createdAt": "2023-12-05T16:20:00.000Z",
+    "address": {
+      "street": "1111 Nguyễn Công Trứ",
+      "city": "Quận 1",
+      "town": "Phường Nguyễn Thái Bình",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0934445566"
+    },
+    "status": "active"
+  },
+  {
+    "name": "Shopkeeper 5",
+    "email": "shop5@example.com",
+    "password": "pass5shop",
+    "avatar": {
+      "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+      "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+    },
+    "role": "shopkeeper",
+    "createdAt": "2023-12-15T10:10:00.000Z",
+    "address": {
+      "street": "1212 Lý Thánh Tông",
+      "city": "Quận 10",
+      "town": "Phường 15",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0945556677"
+    },
+    "status": "active"
+  }
+]
