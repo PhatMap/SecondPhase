@@ -22,6 +22,7 @@ const {
   googleLogout,
   NewUser,
   getUsers,
+  banUser,
 } = require("../controllers/authController");
 
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
@@ -47,7 +48,8 @@ router.delete("/me/address/:addressId", isAuthenticatedUser, deleteUserAddress);
 
 router.get("/me/address", isAuthenticatedUser, getUserAddress);
 
-router.route("/shop/users/new").post(NewUser);
+router.route("/admin/users/new").post(NewUser);
+
 router
   .route("/shop/users")
   .get(isAuthenticatedUser, authorizeRoles("admin"), allUsers);
@@ -55,9 +57,11 @@ router
   .route("/admin/users")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getUsers);
 router
-  .route("/shop/user/:id")
+  .route("/admin/user/:id")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getUserDetails)
   .put(isAuthenticatedUser, authorizeRoles("admin"), updateUser)
   .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser);
-
+router
+  .route("/admin/ban/user/:id")
+  .put(isAuthenticatedUser, authorizeRoles("admin"), banUser);
 module.exports = router;

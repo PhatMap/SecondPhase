@@ -290,6 +290,8 @@ exports.getUsers = catchAsyncErrors(async (req, res, next) => {
 
   users = await apiFeatures.query.clone();
 
+  console.log(users);
+
   res.status(200).json({
     success: true,
     users,
@@ -313,17 +315,30 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.updateUser = catchAsyncErrors(async (req, res, next) => {
-  const newUserData = {
-    name: req.body.name,
-    email: req.body.email,
-    role: req.body.role,
-  };
+  const updatedUser = req.body.updatedUser;
+  const updatedData = JSON.parse(updatedUser);
 
-  const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+  await User.findByIdAndUpdate(req.params.id, updatedData, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+exports.banUser = catchAsyncErrors(async (req, res, next) => {
+  await User.findByIdAndUpdate(
+    req.params.id,
+    { status: req.body.status },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
 
   res.status(200).json({
     success: true,

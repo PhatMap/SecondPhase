@@ -2,13 +2,21 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DataTable from "../layout/DataTable";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, getUsers, updateUser } from "../../actions/userActions";
+import {
+  banUser,
+  deleteUser,
+  getUsers,
+  updateUser,
+} from "../../actions/userActions";
 import Pagination from "react-js-pagination";
 import DeleteNotify from "../layout/DeleteNotify";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { DELETE_USER_RESET } from "../../constants/userConstants";
-import { set } from "mongoose";
+import {
+  BAN_USER_RESET,
+  DELETE_USER_RESET,
+  UPDATE_USER_RESET,
+} from "../../constants/userConstants";
 
 const ManageUsers = () => {
   const setUsers = () => {
@@ -70,6 +78,12 @@ const ManageUsers = () => {
               >
                 <i className="fa fa-trash"></i>
               </button>
+              <button
+                className="btn btn-warning py-1 ml-2"
+                onClick={() => handleBanUser(user)}
+              >
+                <i className="fa fa-lock"></i>
+              </button>
             </div>
           </Fragment>
         ),
@@ -78,6 +92,14 @@ const ManageUsers = () => {
 
     return data;
   };
+
+  const { loading, error, users, total } = useSelector(
+    (state) => state.getUsers
+  );
+
+  const { isDeleted } = useSelector((state) => state.user);
+  const { isBanned } = useSelector((state) => state.banUser);
+
   const dispatch = useDispatch();
   const history = useNavigate();
   const [deleteMessage, setDeleteMessage] = useState("");
@@ -85,13 +107,6 @@ const ManageUsers = () => {
   const [deleteUserId, setDeleteUserId] = useState(null);
   const [deleteUserRole, setDeleteUserRole] = useState(null);
   const [prevUsersCount, setPrevUsersCount] = useState(0);
-
-  const { loading, error, users, total } = useSelector(
-    (state) => state.getUsers
-  );
-
-  const { isDeleted } = useSelector((state) => state.user);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState([]);
   const [keyword, setKeyword] = useState("");
@@ -114,7 +129,12 @@ const ManageUsers = () => {
       dispatch({ type: DELETE_USER_RESET });
       setDeleteMessage("");
     }
-  }, [dispatch, error, isDeleted]);
+    if (isBanned) {
+      toast.success("Người Dùng Đã Được Khóa");
+      dispatch({ type: BAN_USER_RESET });
+      dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
+    }
+  }, [dispatch, error, isDeleted, isBanned]);
 
   useEffect(() => {
     dispatch(getUsers());
@@ -138,6 +158,18 @@ const ManageUsers = () => {
     setCurrentPage(1);
   };
 
+  const handleBanUser = (user) => {
+    if (user.role === "admin") {
+      toast.error("Tài Khoản Admin Không Thể Khóa.");
+      return;
+    } else {
+      const formData = new FormData();
+      formData.set("status", "inactive");
+
+      dispatch(banUser(user._id, formData));
+    }
+  };
+
   const handleDeleteUser = (id, role) => {
     if (role === "admin") {
       toast.error("Tài Khoản Admin Không Thể Xóa.");
@@ -159,7 +191,6 @@ const ManageUsers = () => {
       );
     } else {
       dispatch(deleteUser(deleteUserId));
-      dispatch(getUsers());
     }
     setShowModal(false);
   };
@@ -171,7 +202,7 @@ const ManageUsers = () => {
     }
   };
 
-  const roles = ["user", "shopkeeper", "admin"];
+  const roles = ["customer", "shopkeeper", "admin"];
 
   const handleCheckbox = (index) => {
     const list = [...checkList];

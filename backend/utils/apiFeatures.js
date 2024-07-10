@@ -75,20 +75,20 @@ class APIFeatures {
   }
 
   adminPagination() {
-    const currentPage = Number(this.queryStr.page) || 1;
-    const resPerPage = Number(this.queryStr.resPerPage) || 1;
-    const skip = resPerPage * (currentPage - 1);
+    const page = Number(this.queryStr.page) || 1;
+    const limit = Number(this.queryStr.resPerPage) || 3;
+    const skip = (page - 1) * limit;
 
-    this.query = this.query.limit(resPerPage).skip(skip);
+    this.query = this.query.skip(skip).limit(limit);
     return this;
   }
 
   sort() {
     if (this.queryStr.sort) {
       const sortBy = this.queryStr.sort.split(",").join(" ");
-      this.query = this.query.sort(sortBy);
+      this.query = this.query.sort(sortBy + " -createdAt -_id");
     } else {
-      this.query = this.query.sort({ createAt: -1 });
+      this.query = this.query.sort("-createdAt -_id");
     }
     return this;
   }

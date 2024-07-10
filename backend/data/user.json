@@ -26,7 +26,7 @@
       "public_id": "avatars/gasdwimx2cu8duhssi5g",
       "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1716711407/avatars/gasdwimx2cu8duhssi5g.jpg"
     },
-    "role": "user",
+    "role": "customer",
     "createdAt": "2023-01-15T09:30:00.000Z",
     "address": {
       "street": "123 Nguyễn Huệ",
@@ -45,7 +45,7 @@
       "public_id": "103691857358975475224",
       "url": "https://lh3.googleusercontent.com/a/ACg8ocIyq2aXjC6x0oB9NtvpPvkdgP6kkQfZa2Q19J9OTahH0ji9qw=s96-c"
     },
-    "role": "user",
+    "role": "customer",
     "createdAt": "2023-02-20T14:45:00.000Z",
     "address": {
       "street": "456 Lê Lợi",
@@ -64,7 +64,7 @@
       "public_id": "avatars/kbgez12eqbrrr2fic6qv",
       "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
     },
-    "role": "user",
+    "role": "customer",
     "createdAt": "2023-03-10T11:15:00.000Z",
     "address": {
       "street": "789 Trần Hưng Đạo",
@@ -83,7 +83,7 @@
       "public_id": "avatars/kbgez12eqbrrr2fic6qv",
       "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
     },
-    "role": "user",
+    "role": "customer",
     "createdAt": "2023-04-05T16:20:00.000Z",
     "address": {
       "street": "101 Võ Văn Tần",
@@ -102,7 +102,7 @@
       "public_id": "avatars/kbgez12eqbrrr2fic6qv",
       "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
     },
-    "role": "user",
+    "role": "customer",
     "createdAt": "2023-05-12T08:50:00.000Z",
     "address": {
       "street": "202 Nguyễn Thị Minh Khai",
@@ -121,7 +121,7 @@
       "public_id": "avatars/kbgez12eqbrrr2fic6qv",
       "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
     },
-    "role": "user",
+    "role": "customer",
     "createdAt": "2023-06-18T13:40:00.000Z",
     "address": {
       "street": "303 Điện Biên Phủ",
@@ -140,7 +140,7 @@
       "public_id": "avatars/kbgez12eqbrrr2fic6qv",
       "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
     },
-    "role": "user",
+    "role": "customer",
     "createdAt": "2023-07-22T10:10:00.000Z",
     "address": {
       "street": "404 Cách Mạng Tháng Tám",
@@ -159,7 +159,7 @@
       "public_id": "avatars/kbgez12eqbrrr2fic6qv",
       "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
     },
-    "role": "user",
+    "role": "customer",
     "createdAt": "2023-08-30T15:25:00.000Z",
     "address": {
       "street": "505 Nguyễn Văn Cừ",
@@ -178,7 +178,7 @@
       "public_id": "avatars/kbgez12eqbrrr2fic6qv",
       "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
     },
-    "role": "user",
+    "role": "customer",
     "createdAt": "2023-09-14T12:05:00.000Z",
     "address": {
       "street": "606 Lý Tự Trọng",
@@ -197,7 +197,7 @@
       "public_id": "avatars/kbgez12eqbrrr2fic6qv",
       "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
     },
-    "role": "user",
+    "role": "customer",
     "createdAt": "2023-10-25T17:55:00.000Z",
     "address": {
       "street": "707 Hồ Tùng Mậu",

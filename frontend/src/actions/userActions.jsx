@@ -64,9 +64,11 @@ import {
   GET_USERS_REQUEST,
   GET_USERS_SUCCESS,
   GET_USERS_FAIL,
+  BAN_USER_REQUEST,
+  BAN_USER_SUCCESS,
+  BAN_USER_FAIL,
 } from "../constants/userConstants";
 
-// Login
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
@@ -96,7 +98,6 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-// Login Google
 export const googleLogin =
   (email, name, avatar, googleId) => async (dispatch) => {
     try {
@@ -321,7 +322,7 @@ export const allUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
 
-    const { data } = await axios.get("/api/v1/shop/users");
+    const { data } = await axios.get("/api/v1/admin/users");
 
     dispatch({
       type: ALL_USERS_SUCCESS,
@@ -360,7 +361,7 @@ export const getUsers =
   };
 
 // Update user - ADMIN
-export const updateUser = (id, userData) => async (dispatch) => {
+export const updateUser = (id, updatedUser) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
 
@@ -371,8 +372,8 @@ export const updateUser = (id, userData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `/api/v1/shop/user/${id}`,
-      userData,
+      `/api/v1/admin/user/${id}`,
+      updatedUser,
       config
     );
 
@@ -388,12 +389,36 @@ export const updateUser = (id, userData) => async (dispatch) => {
   }
 };
 
+export const banUser = (id, status) => async (dispatch) => {
+  try {
+    dispatch({ type: BAN_USER_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(`/api/v1/admin/ban/user/${id}`, status, config);
+
+    dispatch({
+      type: BAN_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: BAN_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 // Get user details - ADMIN
 export const getUserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/shop/user/${id}`);
+    const { data } = await axios.get(`/api/v1/admin/user/${id}`);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -412,7 +437,7 @@ export const deleteUser = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_USER_REQUEST });
 
-    const { data } = await axios.delete(`/api/v1/shop/user/${id}`);
+    const { data } = await axios.delete(`/api/v1/admin/user/${id}`);
 
     dispatch({
       type: DELETE_USER_SUCCESS,
@@ -534,6 +559,7 @@ export const updateUserAddress =
       });
     }
   };
+
 export const newUser = (userData) => async (dispatch) => {
   try {
     dispatch({ type: NEW_USER_REQUEST });
@@ -545,7 +571,7 @@ export const newUser = (userData) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "/api/v1/shop/users/new",
+      "/api/v1/admin/users/new",
       userData,
       config
     );

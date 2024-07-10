@@ -60,6 +60,10 @@ import {
   GET_USERS_REQUEST,
   GET_USERS_SUCCESS,
   GET_USERS_FAIL,
+  BAN_USER_REQUEST,
+  BAN_USER_SUCCESS,
+  BAN_USER_FAIL,
+  BAN_USER_RESET,
 } from "../constants/userConstants";
 
 export const authReducer = (state = { user: {} }, action) => {
@@ -407,6 +411,46 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const banUserReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case BAN_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case BAN_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isBanned: action.payload,
+      };
+
+    case BAN_USER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case BAN_USER_RESET:
+      return {
+        ...state,
+        loading: false,
+        isBanned: false,
       };
 
     case CLEAR_ERRORS:
