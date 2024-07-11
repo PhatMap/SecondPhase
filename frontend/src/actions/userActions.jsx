@@ -399,11 +399,15 @@ export const banUser = (id, status) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.put(`/api/v1/admin/ban/user/${id}`, status, config);
+    const { data } = await axios.put(
+      `/api/v1/admin/ban/user/${id}`,
+      status,
+      config
+    );
 
     dispatch({
       type: BAN_USER_SUCCESS,
-      payload: data.success,
+      payload: { success: data.success, type: data.type },
     });
   } catch (error) {
     dispatch({

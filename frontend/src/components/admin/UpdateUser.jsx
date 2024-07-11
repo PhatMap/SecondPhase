@@ -14,32 +14,48 @@ import {
 import { UPDATE_USER_RESET } from "../../constants/userConstants";
 import { useNavigate, useParams } from "react-router-dom";
 import Back from "../layout/Back";
+import Address from "../user/Address";
 
 const UpdateUser = () => {
+  const { error, isUpdated } = useSelector((state) => state.user);
+  const { loading, user } = useSelector((state) => state.userDetails);
+
   const history = useNavigate();
+  const dispatch = useDispatch();
   const { id } = useParams();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
-
-  const dispatch = useDispatch();
-
-  const { error, isUpdated } = useSelector((state) => state.user);
-  const { user } = useSelector((state) => state.userDetails);
-
-  const userId = id;
+  const [formError, setFormError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [emailFormatError, setEmailFormatError] = useState("");
+  const [addressSelected, setAddressSelected] = useState(false);
+  const [avatar, setAvatar] = useState("");
+  const [avatarPreview, setAvatarPreview] = useState(
+    "../images/default_avatar.jpg"
+  );
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    role: "",
+    avatar: { public_id: "", url: "" },
+  });
 
   useEffect(() => {
-    console.log(user && user._id !== userId);
-    if (user && user._id !== userId) {
-      dispatch(getUserDetails(userId));
+    if (user && user._id !== id) {
+      dispatch(getUserDetails(id));
     } else {
-      setName(user.name);
-      setEmail(user.email);
-      setRole(user.role);
+      setUserData(user);
     }
+  }, [user]);
 
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -54,15 +70,13 @@ const UpdateUser = () => {
         type: UPDATE_USER_RESET,
       });
     }
-  }, [dispatch, error, history, isUpdated, userId, user]);
+  }, [error, isUpdated]);
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const updatedUser = { ...user, name: name, email: email, role: role };
-
     const formData = new FormData();
-    formData.set("updatedUser", JSON.stringify(updatedUser));
+    formData.set("updatedUser", JSON.stringify(userData));
 
     dispatch(updateUser(user._id, formData));
   };
@@ -70,63 +84,130 @@ const UpdateUser = () => {
   return (
     <Fragment>
       <MetaData title={`Update User`} />
-      <div className="row">
-        <div className="col-12 col-md-10">
-          <div className="row wrapper">
-            <div className="userupdate-container">
-              <form className="shadow-lg" onSubmit={submitHandler}>
-                <Back />
-                <h1 className="userupdate-heading">Khách Hàng</h1>
+      <div className="register-wrapper">
+        <form
+          className="register-form-container"
+          onSubmit={submitHandler}
+          encType="multipart/form-data"
+        >
+          <Back />
+          <h1 className="register-heading">Cập Nhật người dùng</h1>
+          {error && <p className="error">{error}</p>}
 
-                <div className="form-group">
-                  <label htmlFor="name_field">Name</label>
+          <div className="register-form-column">
+            <div className="register-form-row">
+              <div className="register-form-up">
+                <div className="register-form-group">
+                  <label htmlFor="name_field">Họ Tên</label>
                   <input
-                    type="name"
+                    type="text"
                     id="name_field"
-                    className="form-control"
+                    className="register-form-control"
+                    placeholder="Name"
                     name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    readOnly
+                    value={userData.name}
+                    onChange={(e) =>
+                      setUserData({ ...userData, name: e.target.value })
+                    }
                   />
+                  {nameError && (
+                    <p
+                      className="error"
+                      style={{ color: "red", fontSize: "0.8em" }}
+                    >
+                      {nameError}
+                    </p>
+                  )}
                 </div>
-
-                <div className="form-group">
+                <div className="register-form-group">
+                  <label htmlFor="avatar_upload">Ảnh Đại Diện</label>
+                  <div className="d-flex align-items-center">
+                    <div>
+                      <figure className="register-avatar">
+                        <img src={userData.avatar?.url} alt="Avatar Preview" />
+                      </figure>
+                    </div>
+                    <div className="register-custom-file">
+                      <input
+                        type="file"
+                        name="avatar"
+                        className="register-custom-file-input"
+                        id="customFile"
+                        accept="image/*"
+                      />
+                      <label
+                        className="register-custom-file-label"
+                        htmlFor="customFile"
+                      >
+                        Chọn Ảnh
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="register-form-up">
+                <div className="register-form-group">
                   <label htmlFor="email_field">Email</label>
                   <input
                     type="email"
                     id="email_field"
-                    className="form-control"
+                    className="register-form-control"
+                    placeholder="Email"
                     name="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    readOnly
+                    value={userData.email}
+                    onChange={(e) =>
+                      setUserData({ ...userData, email: e.target.value })
+                    }
                   />
+                  {emailError && (
+                    <p
+                      className="error"
+                      style={{ color: "red", fontSize: "0.8em" }}
+                    >
+                      {emailError}
+                    </p>
+                  )}
+                  {emailFormatError && (
+                    <p
+                      className="error"
+                      style={{ color: "red", fontSize: "0.8em" }}
+                    >
+                      {emailFormatError}
+                    </p>
+                  )}
+                  {errorMessage && (
+                    <p style={{ color: "red" }}>{errorMessage}</p>
+                  )}
                 </div>
+              </div>
+            </div>
+            <div className="form-group">
+              <label htmlFor="role_field">Role</label>
 
-                <div className="form-group">
-                  <label htmlFor="role_field">Role</label>
-
-                  <select
-                    id="role_field"
-                    className="form-control"
-                    name="role"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                  >
-                    <option value="user">user</option>
-                    <option value="admin">admin</option>
-                    <option value="banned">banned</option>
-                  </select>
-                </div>
-
-                <button type="submit" className="userupdate-button">
-                  Thay Đổi
-                </button>
-              </form>
+              <select
+                id="role_field"
+                className="form-control"
+                name="role"
+                value={userData.role}
+                onChange={(e) =>
+                  setUserData({ ...userData, role: e.target.value })
+                }
+              >
+                <option value="customer">Khách hàng</option>
+                <option value="shopkeeper">Chủ cửa hàng</option>
+                <option value="admin">Quản trị viên</option>
+              </select>
             </div>
           </div>
-        </div>
+          <button
+            id="register_button"
+            type="submit"
+            className="register-btn"
+            disabled={loading ? true : false}
+          >
+            Cập Nhật người dùng
+          </button>
+        </form>
       </div>
     </Fragment>
   );

@@ -436,7 +436,8 @@ export const banUserReducer = (state = { user: {} }, action) => {
       return {
         ...state,
         loading: false,
-        isBanned: action.payload,
+        isBanned: action.payload.success,
+        type: action.payload.type,
       };
 
     case BAN_USER_FAIL:
@@ -451,6 +452,7 @@ export const banUserReducer = (state = { user: {} }, action) => {
         ...state,
         loading: false,
         isBanned: false,
+        type: null,
       };
 
     case CLEAR_ERRORS:

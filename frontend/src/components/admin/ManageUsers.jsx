@@ -50,45 +50,69 @@ const ManageUsers = () => {
       rows: [],
     };
 
-    users.forEach((user) => {
-      data.rows.push({
-        name: user.name,
-        image: (
-          <img
-            src={user.avatar.url}
-            alt={user.name}
-            style={{ width: "50px", height: "50px" }}
-          />
-        ),
-        email: user.email,
-        role: user.role,
-        status: user.status,
-        action: (
-          <Fragment>
-            <div className="flex-horizental">
-              <Link
-                to={`/admin/user/${user._id}`}
-                className="btn btn-primary py-1 px-2"
-              >
-                <i className="fa fa-pencil"></i>
-              </Link>
-              <button
-                className="btn btn-danger py-1 px-2 ml-2"
-                onClick={() => handleDeleteUser(user._id, user.role)}
-              >
-                <i className="fa fa-trash"></i>
-              </button>
-              <button
-                className="btn btn-warning py-1 ml-2"
-                onClick={() => handleBanUser(user)}
-              >
-                <i className="fa fa-lock"></i>
-              </button>
-            </div>
-          </Fragment>
-        ),
+    if (users.length > 0) {
+      users.forEach((user) => {
+        data.rows.push({
+          name: user.name,
+          image: (
+            <img
+              src={user.avatar.url}
+              alt={user.name}
+              style={{ width: "50px", height: "50px" }}
+            />
+          ),
+          email: user.email,
+          role:
+            user.role === "admin"
+              ? "Quản trị viên"
+              : user.role === "shopkeeper"
+              ? "Chủ cửa hàng"
+              : "Khách hàng",
+          status:
+            user.status === "active" ? "Đang hoạt động" : "Ngưng hoạt động",
+          action: (
+            <Fragment>
+              <div className="flex-horizental">
+                <Link
+                  to={`/admin/user/${user._id}`}
+                  className="btn btn-primary py-1 px-2"
+                >
+                  <i className="fa fa-pencil"></i>
+                </Link>
+                <button
+                  className="btn btn-danger py-1 px-2 ml-2"
+                  onClick={() => {
+                    setShow(true);
+                    setDeletedUser({ id: user._id, role: user.role });
+                  }}
+                >
+                  <i className="fa fa-trash"></i>
+                </button>
+                <button
+                  className="btn btn-warning py-1 ml-2"
+                  onClick={() => handleBanUser(user)}
+                >
+                  <i
+                    className={`fa ${
+                      user.status === "active" ? "fa fa-unlock" : "fa fa-lock"
+                    }`}
+                  ></i>
+                </button>
+              </div>
+            </Fragment>
+          ),
+        });
       });
-    });
+    } else {
+      data.rows.push({
+        name: "Trông",
+        image: <img style={{ width: "50px", height: "50px" }} />,
+        email: "Trông",
+        role: "Trông",
+        status: "Trông",
+        action: "Trông",
+      });
+    }
 
     return data;
   };
@@ -98,15 +122,13 @@ const ManageUsers = () => {
   );
 
   const { isDeleted } = useSelector((state) => state.user);
-  const { isBanned } = useSelector((state) => state.banUser);
+  const { isBanned, type } = useSelector((state) => state.banUser);
 
   const dispatch = useDispatch();
   const history = useNavigate();
   const [deleteMessage, setDeleteMessage] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [deleteUserId, setDeleteUserId] = useState(null);
-  const [deleteUserRole, setDeleteUserRole] = useState(null);
-  const [prevUsersCount, setPrevUsersCount] = useState(0);
+  const [show, setShow] = useState(false);
+  const [deletedUser, setDeletedUser] = useState({ id: "", role: "" });
   const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState([]);
   const [keyword, setKeyword] = useState("");
@@ -130,9 +152,16 @@ const ManageUsers = () => {
       setDeleteMessage("");
     }
     if (isBanned) {
-      toast.success("Người Dùng Đã Được Khóa");
-      dispatch({ type: BAN_USER_RESET });
-      dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
+      console.log("isBanned", type);
+      if (type === "Unban") {
+        toast.success("Mở khóa người dùng thành công");
+        dispatch({ type: BAN_USER_RESET });
+        dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
+      } else if (type === "Ban") {
+        toast.warning("Người Dùng Đã Được Khóa");
+        dispatch({ type: BAN_USER_RESET });
+        dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
+      }
     }
   }, [dispatch, error, isDeleted, isBanned]);
 
@@ -164,35 +193,20 @@ const ManageUsers = () => {
       return;
     } else {
       const formData = new FormData();
-      formData.set("status", "inactive");
+      formData.set("status", user.status === "active" ? "inactive" : "active");
 
       dispatch(banUser(user._id, formData));
     }
   };
 
-  const handleDeleteUser = (id, role) => {
-    if (role === "admin") {
+  const handleDeleteUser = () => {
+    if (deletedUser.role === "admin") {
       toast.error("Tài Khoản Admin Không Thể Xóa.");
+      return;
     } else {
-      setDeleteUserId(id);
-      setDeleteUserRole(role);
-      setShowModal(true);
+      dispatch(deleteUser(deletedUser.id));
+      dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
     }
-  };
-
-  const handleDeleteConfirmed = () => {
-    if (deleteUserRole === "user") {
-      const formData = new FormData();
-      formData.set("role", "banned");
-      dispatch(updateUser(deleteUserId, formData));
-      dispatch(getUsers());
-      toast.success(
-        "Người dùng đã được chuyển sang vai trò 'banned' thành công"
-      );
-    } else {
-      dispatch(deleteUser(deleteUserId));
-    }
-    setShowModal(false);
   };
 
   const handleResPerPage = (amount) => {
@@ -238,6 +252,9 @@ const ManageUsers = () => {
 
   return (
     <Fragment>
+      {show && (
+        <DeleteNotify show={setShow} func={handleDeleteUser} paras={[]} />
+      )}
       <ToastContainer />
       <div className="flex-center-screen">
         <div className="tabs">
@@ -342,13 +359,6 @@ const ManageUsers = () => {
           linkClass="page-link"
         />
       </div>
-      {showModal && (
-        <DeleteNotify
-          show={setShowModal}
-          func={handleDeleteConfirmed}
-          paras={[]}
-        />
-      )}
     </Fragment>
   );
 };
