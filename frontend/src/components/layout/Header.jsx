@@ -150,26 +150,26 @@ const Header = ({ color }) => {
             </div>
 
             <Popper
-            anchorEl={anchorE2}
-            open={openCart && user} // Chỉ mở Popper khi openCart = true và user đã đăng nhập
-            className="Header-cart-items"
-          >
-            {cartItems.map((item, index) => (
-              <MenuItem key={index}>
-                <div className="cart-MenuItem">
-                  <img src={item.image} height="40" width="40" />
-                  <div className="cart-MenuItem-container">
-                    <p>Tên sản phẩm: {item.name.substring(0, 20)}...</p>
-                    <p>Số lượng mua: {item.quantity}</p>
-                    <div className="cart-summary-color">
-                      <p>kích cỡ:</p>
-                      <p>{item.size}</p>
+              anchorEl={anchorE2}
+              open={openCart && user} // Chỉ mở Popper khi openCart = true và user đã đăng nhập
+              className="Header-cart-items"
+            >
+              {cartItems.map((item, index) => (
+                <MenuItem key={index}>
+                  <div className="cart-MenuItem">
+                    <img src={item.image} height="40" width="40" />
+                    <div className="cart-MenuItem-container">
+                      <p>Tên sản phẩm: {item.name.substring(0, 20)}...</p>
+                      <p>Số lượng mua: {item.quantity}</p>
+                      <div className="cart-summary-color">
+                        <p>kích cỡ:</p>
+                        <p>{item.size}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </MenuItem>
-            ))}
-          </Popper>
+                </MenuItem>
+              ))}
+            </Popper>
 
             {user ? (
               <div className="ml-4 dropdown d-inline">
@@ -210,6 +210,11 @@ const Header = ({ color }) => {
                   <Link className="dropdown-item" to="/me">
                     Thông Tin Cá Nhân
                   </Link>
+                  {user && user.role === "customer" && (
+                    <Link className="dropdown-item" to="/shop/register">
+                      Đăng ký bán hàng
+                    </Link>
+                  )}
 
                   <Link
                     className="dropdown-item text-danger"

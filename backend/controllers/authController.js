@@ -132,7 +132,6 @@ exports.googleLoginUser = catchAsyncErrors(async (req, res, next) => {
 
 exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
-  console.log("forgotPassword");
 
   if (!user) {
     return next(new ErrorHandler("User not found with this email", 404));
@@ -291,8 +290,6 @@ exports.getUsers = catchAsyncErrors(async (req, res, next) => {
 
   users = await apiFeatures.query.clone();
 
-  console.log(users);
-
   res.status(200).json({
     success: true,
     users,
@@ -319,6 +316,30 @@ exports.updateUser = catchAsyncErrors(async (req, res, next) => {
   const updatedUser = req.body.updatedUser;
   const updatedData = JSON.parse(updatedUser);
 
+  const emailExists = await User.findOne({
+    email: updatedData.email,
+    _id: { $ne: req.params.id },
+  });
+
+  if (emailExists) {
+    return res.status(400).json({
+      success: false,
+      message: "Email đã tồn tại.",
+    });
+  }
+
+  if (!updatedData.avatar.public_id) {
+    const result = await cloudinary.v2.uploader.upload(updatedData.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+
+    updatedData.avatar = {
+      public_id: result.public_id,
+      url: result.secure_url,
+    };
+  }
   await User.findByIdAndUpdate(req.params.id, updatedData, {
     new: true,
     runValidators: true,

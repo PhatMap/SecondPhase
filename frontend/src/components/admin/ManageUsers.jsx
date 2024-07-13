@@ -152,7 +152,6 @@ const ManageUsers = () => {
       setDeleteMessage("");
     }
     if (isBanned) {
-      console.log("isBanned", type);
       if (type === "Unban") {
         toast.success("Mở khóa người dùng thành công");
         dispatch({ type: BAN_USER_RESET });

@@ -3576,3 +3576,40 @@ body {
 .tabs input[type="radio"] {
   display: none;
 }
+
+.progress-bar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.progress-bar-stick {
+  background-color: #8a887d;
+  height: 2px;
+  width: 80%;
+  position: absolute;
+  top: 6.5px;
+  left: 166.5px;
+  z-index: -1;
+}
+
+.progress-bar-point {
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  background-color: orange;
+}
+
+.progress-bar-point-label-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.progress-bar-low {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}

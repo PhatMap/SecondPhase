@@ -127,7 +127,6 @@ const NewProduct = () => {
 
     updatedVariants.forEach((variant, index) => {
       let variantImages = [];
-      console.log(variantsResult);
 
       variantsResult.forEach((result) => {
         if (result.id === index) {

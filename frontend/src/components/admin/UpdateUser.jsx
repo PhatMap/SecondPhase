@@ -15,6 +15,7 @@ import { UPDATE_USER_RESET } from "../../constants/userConstants";
 import { useNavigate, useParams } from "react-router-dom";
 import Back from "../layout/Back";
 import Address from "../user/Address";
+import { set } from "mongoose";
 
 const UpdateUser = () => {
   const { error, isUpdated } = useSelector((state) => state.user);
@@ -24,9 +25,6 @@ const UpdateUser = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
   const [formError, setFormError] = useState("");
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -37,15 +35,17 @@ const UpdateUser = () => {
   const [emailFormatError, setEmailFormatError] = useState("");
   const [addressSelected, setAddressSelected] = useState(false);
   const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState(
-    "../images/default_avatar.jpg"
-  );
+
   const [userData, setUserData] = useState({
     name: "",
     email: "",
     role: "",
     avatar: { public_id: "", url: "" },
   });
+
+  useEffect(() => {
+    dispatch(getUserDetails(id));
+  }, []);
 
   useEffect(() => {
     if (user && user._id !== id) {
@@ -74,11 +74,26 @@ const UpdateUser = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.set("updatedUser", JSON.stringify(userData));
 
     dispatch(updateUser(user._id, formData));
+  };
+
+  const onChangeAvatar = (e) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setAvatar(reader.result);
+        setUserData((prevState) => ({
+          ...prevState,
+          avatar: reader.result,
+        }));
+      }
+    };
+
+    reader.readAsDataURL(e.target.files[0]);
   };
 
   return (
@@ -124,7 +139,10 @@ const UpdateUser = () => {
                   <div className="d-flex align-items-center">
                     <div>
                       <figure className="register-avatar">
-                        <img src={userData.avatar?.url} alt="Avatar Preview" />
+                        <img
+                          src={avatar ? avatar : userData.avatar.url}
+                          alt="Avatar Preview"
+                        />
                       </figure>
                     </div>
                     <div className="register-custom-file">
@@ -134,6 +152,7 @@ const UpdateUser = () => {
                         className="register-custom-file-input"
                         id="customFile"
                         accept="image/*"
+                        onChange={onChangeAvatar}
                       />
                       <label
                         className="register-custom-file-label"

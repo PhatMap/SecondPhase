@@ -42,6 +42,7 @@ import WaitingRoom from "./components/cart/WaitingRoom";
 import Sidebar from "./components/shop/Sidebar";
 import ScrollToTop from "./utils/ScrollToTop";
 import Centre from "./components/admin/Centre";
+import ShopRegister from "./components/shop/Register";
 
 function App() {
   const history = useNavigate();
@@ -208,9 +209,16 @@ function App() {
               <ProtectedRoute isAdmin={true} component={ProductReviews} />
             }
           />
+          <Route
+            path="/shop/register"
+            element={
+              <ProtectedRoute isCustomer={true} component={ShopRegister} />
+            }
+          />
         </Routes>
-
-        <Centre />
+        <Routes>
+          <Route path="/admin/*" element={<Centre />} />
+        </Routes>
       </div>
     </div>
   );

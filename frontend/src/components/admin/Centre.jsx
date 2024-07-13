@@ -24,11 +24,11 @@ const Centre = () => {
       )}
       <div className="Centre">
         <Routes>
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/users" element={<ManageUsers />} />
-          <Route path="/admin/addUser" element={<AddUser />} />
-          <Route path="/admin/user/:id" element={<UpdateUser />} />
+          <Route path="login" element={<AdminLogin />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="users" element={<ManageUsers />} />
+          <Route path="addUser" element={<AddUser />} />
+          <Route path="user/:id" element={<UpdateUser />} />
         </Routes>
       </div>
     </div>
