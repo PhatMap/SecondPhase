@@ -15,28 +15,27 @@ const ProgressBar = ({ step }) => {
 
   return (
     <div className="progress-bar-container">
-      <div className="progress-bar-stick" />
+      <div className="progress-bar-stick">
+        {steps.slice(1).map((_, index) => (
+          <div
+            key={index}
+            className={`progress-bar-stick-section ${
+              index < currentStep ? "completed" : ""
+            }`}
+          />
+        ))}
+      </div>
       <div className="progress-bar-low">
-        <div className="progress-bar-point-label-container">
-          <div className="progress-bar-point" />
-          <label>Thông tin cửa hàng</label>
-        </div>
-        <div className="progress-bar-point-label-container">
-          <div className="progress-bar-point" />
-          <label>Cài đặt vận chuyển</label>
-        </div>
-        <div className="progress-bar-point-label-container">
-          <div className="progress-bar-point" />
-          <label>Thông tin thuế</label>
-        </div>
-        <div className="progress-bar-point-label-container">
-          <div className="progress-bar-point" />
-          <label>Thông tin định danh</label>
-        </div>
-        <div className="progress-bar-point-label-container">
-          <div className="progress-bar-point" />
-          <label>Hoàn Thành</label>
-        </div>
+        {steps.map((stepKey, index) => (
+          <div key={stepKey} className="progress-bar-point-label-container">
+            <div
+              className={`progress-bar-point ${
+                index <= currentStep ? "completed" : ""
+              }`}
+            />
+            <label>{stepsList[stepKey]}</label>
+          </div>
+        ))}
       </div>
     </div>
   );
