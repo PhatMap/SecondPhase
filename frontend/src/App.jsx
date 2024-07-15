@@ -42,7 +42,7 @@ import WaitingRoom from "./components/cart/WaitingRoom";
 import Sidebar from "./components/shop/Sidebar";
 import ScrollToTop from "./utils/ScrollToTop";
 import Centre from "./components/admin/Centre";
-import ShopRegister from "./components/shop/Register";
+import ShopRegister from "./components/shop/register/Register";
 
 function App() {
   const history = useNavigate();

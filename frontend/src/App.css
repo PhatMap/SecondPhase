@@ -3592,7 +3592,9 @@ body {
   top: 6.5px;
   left: 11%;
   z-index: -1;
+  background-color: #8a887d;
   display: flex;
+  justify-content: space-around;
 }
 
 .progress-bar-stick-section {
@@ -3638,7 +3640,6 @@ body {
   border-radius: 10px;
   overflow: hidden;
   padding: 20px;
-  
 }
 
 .shop-infor-form {
@@ -3655,7 +3656,6 @@ body {
 }
 
 .shop-infor-form input {
-  width: 100%;
   border: #8d7e7e 1px solid;
   border-radius: 5px;
 }
@@ -3666,4 +3666,27 @@ body {
   align-items: center;
   width: 100%;
   padding-top: 20px;
+}
+
+.shipping-method-form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 150px;
+  width: 300px;
+  height: 100%;
+}
+
+.shipping-method-form > div {
+  display: contents;
+}
+
+.shipping-method-form label {
+  text-align: left;
+  padding-right: 10px;
+}
+
+.shipping-method-form input {
+  width: 100%;
+  border: #8d7e7e 1px solid;
+  border-radius: 5px;
 }

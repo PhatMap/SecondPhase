@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const applicationSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   shopInfor: {
     shopName: {
       type: String,
@@ -60,7 +65,7 @@ const applicationSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    taxAddress: {
+    businessAddress: {
       province: {
         type: String,
         required: true,
@@ -108,6 +113,7 @@ const applicationSchema = new mongoose.Schema({
   inforConfirm: {
     type: Boolean,
     required: true,
+    default: false,
   },
   createAt: {
     type: Date,

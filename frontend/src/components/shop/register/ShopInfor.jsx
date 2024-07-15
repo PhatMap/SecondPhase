@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Shopinfor = ({ shopInfor, setShopInfor }) => {
+const ShopInfor = ({ shopInfor, setShopInfor }) => {
   // {
   //       fullName: "",
   //       phoneNumber: "",
@@ -54,4 +54,4 @@ const Shopinfor = ({ shopInfor, setShopInfor }) => {
   );
 };
 
-export default Shopinfor;
+export default ShopInfor;
