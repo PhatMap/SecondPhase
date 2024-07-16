@@ -3690,3 +3690,73 @@ body {
   border: #8d7e7e 1px solid;
   border-radius: 5px;
 }
+
+
+
+.input-quantity-btn-container {
+  display: flex;
+  justify-content: space-around; /* Căn các phần tử con theo khoảng cách đều */
+}
+
+
+/*input-quantity*/
+.input-quantity-notify-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(1px);
+  /* background-color: rgba(247, 221, 221, 0.5); */
+  z-index: 1;
+}
+
+.input-quantity-notify-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: #080808 0px 4px 8px;
+  width: 300px;
+  height: 200px;
+}
+
+.input-quantity-notify-form h1 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.input-quantity-btn-container {
+  display: flex;
+  gap: 20px;
+}
+
+.input-quantity-btn-container-yes {
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: green;
+  color: white;
+}
+
+.input-quantity-btn-container-yes:hover {
+  background-color: rgb(2, 90, 2);
+}
+
+.input-quantity-btn-container-no {
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: red;
+  color: white;
+}
+
+.input-quantity-btn-container-no:hover {
+  background-color: rgb(134, 2, 2);
+}
+
