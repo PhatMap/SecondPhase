@@ -53,13 +53,14 @@ const auth = require("./routes/auth");
 const order = require("./routes/order");
 const payment = require("./routes/payment");
 const cart = require("./routes/cart");
+const category = require("./routes/category");
 
 app.use("/api/v1", products);
 app.use("/api/v1", auth);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
 app.use("/api/v1", cart);
-
+app.use("/api/v1", category);
 // Error middleware
 app.use(errorMiddlewares);
 

@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
 import Header from "../layout/Header";
+import Modal from 'react-modal';
 
 const Cart = () => {
   const history = useNavigate();
@@ -99,14 +100,12 @@ const Cart = () => {
   };
 
   const handlerQuantity = (e) => {
-    const inputValue = e.target.value;
-
-    if (inputValue > stock) {
-      return;
-    } else {
+    let inputValue = parseInt(e.target.value);
+    if (isNaN(inputValue) || inputValue < 1) {
     }
-  };  
-
+    setNewQuantity(inputValue);
+  };
+  
   const handleBlur = (e) => {
     const inputValue = e.target.value;
     if (inputValue === "") {
@@ -137,6 +136,50 @@ const Cart = () => {
   useEffect(() => {
     setSelectedItems(new Array(cartItems.length).fill(false));
   }, [cartItems]);
+
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [currentItemIndex, setCurrentItemIndex] = useState(null);
+  const [newQuantity, setNewQuantity] = useState();
+  const openModal = (index) => {
+    setCurrentItemIndex(index);
+    setNewQuantity(cartItems[index].quantity);
+    setModalIsOpen(true);
+  };
+  
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setCurrentItemIndex(null);
+  };
+  const updateQuantity = async () => {
+    if (currentItemIndex === null) return;
+    const choosed = cartItems[currentItemIndex];
+  
+    const item = {
+      product: choosed.product,
+      variant: choosed.variant,
+      inventory: choosed.inventory,
+      name: choosed.name,
+      variantName: choosed.variantName,
+      price: choosed.price,
+      image: choosed.image,
+      quantity: newQuantity - choosed.quantity,
+      size: choosed.size,
+    };
+  
+    const check = await dispatch(getUserCartProduct(item));
+  
+    if (check) {
+      await dispatch(addItemToCart(item));
+      dispatch(getUserCart());
+      toast.success("Sản phẩm đã cập nhật số lượng trong giỏ hàng");
+      closeModal();
+    } else {
+      toast.error("Số lượng vượt quá số lượng hiện hữu của sản phẩm");
+    }
+  };
+      
+
 
   return (
     <Fragment>
@@ -279,7 +322,32 @@ const Cart = () => {
                                   >
                                     +
                                   </span>
+                                  <button onClick={() => openModal(index)}>Nhập số lượng</button>
                                 </div>
+                              
+                                <div className="input-quantity-container" style={{ display: modalIsOpen ? 'flex' : 'none' }}>
+                              <div className="input-quantity-form">
+                                <h1>Nhập số lượng</h1>
+                                <input
+                                  type="number"
+                                  value={newQuantity}
+                                  onChange={(e) => handlerQuantity(e)}
+                                  className="centered-input"
+                                />
+
+                                <div className="input-quantity-btn-container">
+                                <button className="input-quantity-btn-container-yes" onClick={updateQuantity}>
+                                    Câp Nhật
+                                  </button>
+                                  <button className="input-quantity-btn-container-no" onClick={closeModal}>
+                                    Thoát
+                                  </button>
+
+                                </div>
+                              </div>
+                            </div>
+
+
                               </div>
                               <div
                                 style={{
@@ -295,10 +363,10 @@ const Cart = () => {
                                   onChange={() => handleCheckboxChange(index)}
                                   className="cart-checkbox"
                                 />
-                                <i
+                                {/* <i
                                   className="fa fa-trash cart-delete-btn"
                                   onClick={() => setShow(true)}
-                                ></i>
+                                ></i> */}
                               </div>
                             </div>
                           </div>
