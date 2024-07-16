@@ -3691,13 +3691,10 @@ body {
   border-radius: 5px;
 }
 
-
-
 .input-quantity-btn-container {
   display: flex;
   justify-content: space-around; /* Căn các phần tử con theo khoảng cách đều */
 }
-
 
 /*input-quantity*/
 .input-quantity-notify-container {
@@ -3760,3 +3757,22 @@ body {
   background-color: rgb(134, 2, 2);
 }
 
+.pickup-address-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.pickup-address-modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: fit-content;
+}

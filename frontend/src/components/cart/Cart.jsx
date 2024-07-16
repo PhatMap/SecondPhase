@@ -13,7 +13,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
 import Header from "../layout/Header";
-import Modal from 'react-modal';
 
 const Cart = () => {
   const history = useNavigate();
