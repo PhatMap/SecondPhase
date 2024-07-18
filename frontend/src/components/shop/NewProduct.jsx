@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import Back from "../layout/Back";
 import Variant from "./Variant";
 import AddVariant from "./AddVariant";
-import { set } from "mongoose";
 
 const NewProduct = () => {
   const history = useNavigate();

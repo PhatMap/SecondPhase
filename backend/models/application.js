@@ -12,7 +12,7 @@ const applicationSchema = new mongoose.Schema({
       required: true,
     },
     pickupAddress: {
-      fulllName: {
+      fullName: {
         type: String,
         required: true,
       },
@@ -33,7 +33,7 @@ const applicationSchema = new mongoose.Schema({
           type: String,
           required: true,
         },
-        detail: {
+        detailed: {
           type: String,
           required: true,
         },
@@ -53,6 +53,11 @@ const applicationSchema = new mongoose.Schema({
       name: {
         type: String,
         required: true,
+      },
+      active: {
+        type: Boolean,
+        required: true,
+        default: false,
       },
     },
   ],
@@ -78,7 +83,7 @@ const applicationSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      detail: {
+      detailed: {
         type: String,
         required: true,
       },
@@ -89,7 +94,7 @@ const applicationSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    cardImage: {
+    idCardImage: {
       public_id: {
         type: String,
         required: true,
@@ -99,7 +104,7 @@ const applicationSchema = new mongoose.Schema({
         required: true,
       },
     },
-    selfieWithCard: {
+    selfieWithId: {
       public_id: {
         type: String,
         required: true,

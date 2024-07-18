@@ -5,8 +5,17 @@ import ShippingMethod from "./ShippingMethod";
 import TaxInfor from "./TaxInfor";
 import IdentificationInfor from "./IdentificationInfor";
 import Finish from "./Finish";
+import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { newApplication } from "../../../actions/applicationActions";
 
 const Register = () => {
+  const { success, error, loading } = useSelector(
+    (state) => state.newApplication
+  );
+  const dispatch = useDispatch();
+
   const steps = [
     "shopInfor",
     "shippingMethod",
@@ -19,6 +28,46 @@ const Register = () => {
     const savedStep = localStorage.getItem("currentStepIndex");
     return savedStep ? parseInt(savedStep, 10) : 0;
   });
+
+  // const [formData, setFormData] = useState({
+  //   user_id: "",
+  //   shopInfor: {
+  //     shopName: "",
+  //     email: "",
+  //     phoneNumber: "",
+  //     pickupAddress: {
+  //       fullName: "",
+  //       phoneNumber: "",
+  //       address: {
+  //         province: "",
+  //         district: "",
+  //         ward: "",
+  //         detailed: "",
+  //       },
+  //     },
+  //   },
+  //   shippingMethod: [
+  //     { name: "express", active: false },
+  //     { name: "fast", active: false },
+  //     { name: "economical", active: false },
+  //   ],
+  //   taxInfor: {
+  //     taxCode: "",
+  //     billingEmail: "",
+  //     businessAddress: {
+  //       province: "",
+  //       district: "",
+  //       ward: "",
+  //       detailed: "",
+  //     },
+  //   },
+  //   identificationInfor: {
+  //     citizenId: "",
+  //     idCardImage: { public_id: "", url: "" },
+  //     selfieWithId: { public_id: "", url: "" },
+  //   },
+  // });
+
 
   const [formData, setFormData] = useState(() => {
     const savedFormData = localStorage.getItem("applicationFormData");
@@ -37,11 +86,15 @@ const Register = () => {
                 province: "",
                 district: "",
                 ward: "",
-                detail: "",
+                detailed: "",
               },
             },
           },
-          shippingMethod: [],
+          shippingMethod: [
+            { name: "express", active: false },
+            { name: "fast", active: false },
+            { name: "economical", active: false },
+          ],
           taxInfor: {
             taxCode: "",
             billingEmail: "",
@@ -49,13 +102,13 @@ const Register = () => {
               province: "",
               district: "",
               ward: "",
-              detail: "",
+              detailed: "",
             },
           },
           identificationInfor: {
             citizenId: "",
-            cardImage: { public_id: "", url: "" },
-            selfieWithCard: { public_id: "", url: "" },
+            idCardImage: { public_id: "", url: "" },
+            selfieWithId: { public_id: "", url: "" },
           },
         };
   });
@@ -63,14 +116,59 @@ const Register = () => {
   useEffect(() => {
     localStorage.setItem("currentStepIndex", currentStepIndex.toString());
     localStorage.setItem("applicationFormData", JSON.stringify(formData));
-  }, [currentStepIndex, formData]);
+  }, [currentStepIndex]);
 
-  const handleStepChange = (direction) => {
-    setCurrentStepIndex((prevIndex) => {
-      const newIndex = direction === "next" ? prevIndex + 1 : prevIndex - 1;
-      return Math.max(0, Math.min(newIndex, steps.length - 1));
-    });
+  const [isPending, setIsPending] = useState(false);
+  const [pendingToastId, setPendingToastId] = useState(null);
+
+  const handleStepChange = async (direction) => {
+    const newIndex =
+      direction === "next" ? currentStepIndex + 1 : currentStepIndex - 1;
+    const nextStep = Math.max(0, Math.min(newIndex, steps.length - 1));
+    if (nextStep !== 4) {
+      setCurrentStepIndex(nextStep);
+    } else {
+      await checkFinsh(nextStep);
+    }
   };
+
+  const checkFinsh = async (step) => {
+    if (step === 4) {
+      const toastId = toast.loading("Đang xử lý...");
+      setIsPending(true);
+      setPendingToastId(toastId);
+      await dispatch(newApplication(JSON.stringify(formData)));
+    }
+  };
+
+  useEffect(() => {
+    if (isPending && pendingToastId) {
+      if (success) {
+        toast.update(pendingToastId, {
+          render: "Đã hoàn thành đăng ký",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+        setCurrentStepIndex(4);
+        setIsPending(false);
+        setPendingToastId(null);
+        localStorage.removeItem("currentStepIndex");
+        localStorage.removeItem("applicationFormData");
+      }
+
+      if (error) {
+        toast.update(pendingToastId, {
+          render: error,
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
+        setIsPending(false);
+        setPendingToastId(null);
+      }
+    }
+  }, [success, error, loading]);
 
   const renderStep = () => {
     switch (currentStepIndex) {
@@ -109,7 +207,7 @@ const Register = () => {
           />
         );
       case 4:
-        return <Finish formData={formData} />;
+        return <Finish />;
       default:
         return null;
     }
@@ -117,20 +215,25 @@ const Register = () => {
 
   return (
     <div className="shop-register-container">
+      <ToastContainer />
       <ProgressBar step={steps[currentStepIndex]} />
       {renderStep()}
-      <button
-        onClick={() => handleStepChange("back")}
-        disabled={currentStepIndex === 0}
-      >
-        Back
-      </button>
-      <button
-        onClick={() => handleStepChange("next")}
-        disabled={currentStepIndex === steps.length - 1}
-      >
-        Next
-      </button>
+      {currentStepIndex < steps.length - 1 && (
+        <div className="shop-register-btn">
+          <button
+            onClick={() => handleStepChange("back")}
+            disabled={currentStepIndex === 0}
+          >
+            Back
+          </button>
+          <button
+            onClick={() => handleStepChange("next")}
+            disabled={currentStepIndex === steps.length - 1}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

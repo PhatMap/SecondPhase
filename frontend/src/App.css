@@ -3776,3 +3776,44 @@ body {
   border-radius: 5px;
   width: fit-content;
 }
+
+.pickup-address-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pickup-address-form label {
+  text-align: left;
+  margin-bottom: 0px;
+  display: block;
+}
+
+.pickup-address-form button {
+  color: blue;
+}
+
+.id-image {
+  width: 250px;
+  height: 100px;
+}
+
+.shop-register-btn {
+  display: flex;
+  width: 540px;
+  justify-content: space-between;
+  position: absolute;
+  top: 430px;
+}
+
+.shop-register-btn button {
+  margin-top: 10px;
+  border: #888 1px solid;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.shop-register-btn button:hover {
+  background: gainsboro;
+}

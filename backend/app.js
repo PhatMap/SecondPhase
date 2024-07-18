@@ -24,7 +24,6 @@ const errorMiddlewares = require("./middlewares/errors");
 
 dotenv.config({ path: "backend/config/config.env" });
 
-// Middleware setup
 app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -46,14 +45,13 @@ io.on("connection", (socket) => {
   console.log("A client connected");
 });
 
-
-// Routes
 const products = require("./routes/product");
 const auth = require("./routes/auth");
 const order = require("./routes/order");
 const payment = require("./routes/payment");
 const cart = require("./routes/cart");
 const category = require("./routes/category");
+const application = require("./routes/application");
 
 app.use("/api/v1", products);
 app.use("/api/v1", auth);
@@ -61,7 +59,8 @@ app.use("/api/v1", order);
 app.use("/api/v1", payment);
 app.use("/api/v1", cart);
 app.use("/api/v1", category);
-// Error middleware
+app.use("/api/v1", application);
+
 app.use(errorMiddlewares);
 
 module.exports = { app, server, io };

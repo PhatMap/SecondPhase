@@ -6,7 +6,6 @@ const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 const APIFeatures = require("../utils/apiFeatures");
-const { type } = require("os");
 
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   if (!req.body.avatar) {
