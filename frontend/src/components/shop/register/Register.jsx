@@ -68,7 +68,6 @@ const Register = () => {
   //   },
   // });
 
-
   const [formData, setFormData] = useState(() => {
     const savedFormData = localStorage.getItem("applicationFormData");
     return savedFormData
@@ -77,11 +76,12 @@ const Register = () => {
           user_id: "",
           shopInfor: {
             shopName: "",
+            ownerName: "",
             email: "",
-            phoneNumber: "",
+            primaryPhone: "",
             pickupAddress: {
-              fullName: "",
-              phoneNumber: "",
+              contactName: "",
+              contactPhone: "",
               address: {
                 province: "",
                 district: "",

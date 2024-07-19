@@ -6,12 +6,17 @@ import ManageUsers from "./ManageUsers";
 import Sidebar from "./Sidebar";
 import AddUser from "./AddUser";
 import UpdateUser from "./UpdateUser";
+import ManageApplications from "./ManageApplications";
 
 const Centre = () => {
   const location = useLocation();
 
   const showSidebar = useMemo(() => {
-    const sidebarPaths = ["/admin/users", "/admin/dashboard"];
+    const sidebarPaths = [
+      "/admin/users",
+      "/admin/dashboard",
+      "/admin/applications",
+    ];
     return sidebarPaths.some((path) => location.pathname.startsWith(path));
   }, [location.pathname]);
 
@@ -29,6 +34,7 @@ const Centre = () => {
           <Route path="users" element={<ManageUsers />} />
           <Route path="addUser" element={<AddUser />} />
           <Route path="user/:id" element={<UpdateUser />} />
+          <Route path="applications" element={<ManageApplications />} />
         </Routes>
       </div>
     </div>

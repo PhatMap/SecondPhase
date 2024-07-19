@@ -3,6 +3,7 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const Application = require("../models/application");
 const cloudinary = require("cloudinary");
 const user = require("../models/user");
+const APIFeatures = require("../utils/apiFeatures");
 
 exports.newApplication = catchAsyncErrors(async (req, res, next) => {
   const { formData } = req.body;
@@ -75,9 +76,22 @@ exports.newApplication = catchAsyncErrors(async (req, res, next) => {
   //   identificationInfor: applicationFromData.identificationInfor,
   // };
 
+  console.log(applicationFromData);
+
   await Application.create(applicationFromData);
 
   res.status(200).json({
     success: true,
+  });
+});
+
+exports.getApplications = catchAsyncErrors(async (req, res, next) => {
+  const apiFeatures = new APIFeatures(Application.find(), req.query).sort();
+
+  const applications = await apiFeatures.query;
+
+  res.status(200).json({
+    success: true,
+    applications,
   });
 });

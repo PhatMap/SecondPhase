@@ -11,12 +11,16 @@ const applicationSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    ownerName: {
+      type: String,
+      required: true,
+    },
     pickupAddress: {
-      fullName: {
+      contactName: {
         type: String,
         required: true,
       },
-      phoneNumber: {
+      contactPhone: {
         type: String,
         required: true,
       },
@@ -43,7 +47,7 @@ const applicationSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    phoneNumber: {
+    primaryPhone: {
       type: String,
       required: true,
     },

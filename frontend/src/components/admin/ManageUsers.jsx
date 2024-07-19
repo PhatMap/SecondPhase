@@ -19,6 +19,143 @@ import {
 } from "../../constants/userConstants";
 
 const ManageUsers = () => {
+  const { loading, error, users, total } = useSelector(
+    (state) => state.getUsers
+  );
+
+  const { isDeleted } = useSelector((state) => state.user);
+  const { isBanned, type } = useSelector((state) => state.banUser);
+
+  const dispatch = useDispatch();
+  const history = useNavigate();
+  const [show, setShow] = useState(false);
+  const [deletedUser, setDeletedUser] = useState({ id: "", role: "" });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filter, setFilter] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const [resPerPage, setResPerPage] = useState(1);
+  const [checkList, setCheckList] = useState([]);
+  const [status, setStatus] = useState("");
+
+  const setCurrentPageNo = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+
+    if (isDeleted) {
+      toast.success("Xóa Người Dùng Thành Công");
+      dispatch({ type: DELETE_USER_RESET });
+    }
+    if (isBanned) {
+      if (type === "Unban") {
+        toast.success("Mở khóa người dùng thành công");
+        dispatch({ type: BAN_USER_RESET });
+        dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
+      } else if (type === "Ban") {
+        toast.warning("Người Dùng Đã Được Khóa");
+        dispatch({ type: BAN_USER_RESET });
+        dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
+      }
+    }
+  }, [dispatch, error, isDeleted, isBanned]);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
+
+  useEffect(() => {
+    console.log("currentPage", currentPage);
+    if (currentPage || filter || keyword || resPerPage || status) {
+      dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
+    }
+  }, [currentPage, filter, keyword, resPerPage, status]);
+
+  useEffect(() => {
+    if (users) {
+      setUsers();
+    }
+  }, [users]);
+
+  const handleSearch = (e) => {
+    const keyword = e.target.value;
+    setKeyword(keyword);
+    setCurrentPage(1);
+  };
+
+  const handleBanUser = (user) => {
+    if (user.role === "admin") {
+      toast.error("Tài Khoản Admin Không Thể Khóa.");
+      return;
+    } else {
+      const formData = new FormData();
+      formData.set("status", user.status === "active" ? "inactive" : "active");
+
+      dispatch(banUser(user._id, formData));
+    }
+  };
+
+  const handleDeleteUser = () => {
+    if (deletedUser.role === "admin") {
+      toast.error("Tài Khoản Admin Không Thể Xóa.");
+      return;
+    } else {
+      dispatch(deleteUser(deletedUser.id));
+      dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
+    }
+  };
+
+  const handleResPerPage = (amount) => {
+    if (amount !== resPerPage) {
+      setResPerPage(amount);
+      setCurrentPage(1);
+    }
+  };
+
+  const roles = ["customer", "shopkeeper", "admin"];
+
+  const handleCheckbox = (index) => {
+    const list = [...checkList];
+    list[index] = !list[index];
+    setCheckList(list);
+
+    if (list[index] === true) {
+      setFilter([...filter, roles[index]]);
+    } else {
+      setFilter(filter.filter((role) => role !== roles[index]));
+    }
+  };
+
+  const handleCheckAll = () => {
+    setCheckList([false, false, false]);
+    setFilter([]);
+  };
+
+  const handleSegmentedTab = (choose) => {
+    if (choose !== status) {
+      setCurrentPage(1);
+      if (choose === "all") {
+        setStatus("");
+      }
+      if (choose === "active") {
+        setStatus("active");
+      }
+      if (choose === "inactive") {
+        setStatus("inactive");
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (users.length === 0 && currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  }, [users]);
+
   const setUsers = () => {
     const data = {
       columns: [
@@ -115,138 +252,6 @@ const ManageUsers = () => {
     }
 
     return data;
-  };
-
-  const { loading, error, users, total } = useSelector(
-    (state) => state.getUsers
-  );
-
-  const { isDeleted } = useSelector((state) => state.user);
-  const { isBanned, type } = useSelector((state) => state.banUser);
-
-  const dispatch = useDispatch();
-  const history = useNavigate();
-  const [deleteMessage, setDeleteMessage] = useState("");
-  const [show, setShow] = useState(false);
-  const [deletedUser, setDeletedUser] = useState({ id: "", role: "" });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [filter, setFilter] = useState([]);
-  const [keyword, setKeyword] = useState("");
-  const [resPerPage, setResPerPage] = useState(1);
-  const [checkList, setCheckList] = useState([]);
-  const [status, setStatus] = useState("");
-
-  const setCurrentPageNo = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
-
-    if (isDeleted) {
-      toast.success("Xóa Người Dùng Thành Công");
-      dispatch({ type: DELETE_USER_RESET });
-      setDeleteMessage("");
-    }
-    if (isBanned) {
-      if (type === "Unban") {
-        toast.success("Mở khóa người dùng thành công");
-        dispatch({ type: BAN_USER_RESET });
-        dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
-      } else if (type === "Ban") {
-        toast.warning("Người Dùng Đã Được Khóa");
-        dispatch({ type: BAN_USER_RESET });
-        dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
-      }
-    }
-  }, [dispatch, error, isDeleted, isBanned]);
-
-  useEffect(() => {
-    dispatch(getUsers());
-  }, []);
-
-  useEffect(() => {
-    if (currentPage || filter || keyword || resPerPage || status) {
-      dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
-    }
-  }, [currentPage, filter, keyword, resPerPage, status]);
-
-  useEffect(() => {
-    if (users) {
-      setUsers();
-    }
-  }, [users]);
-
-  const handleSearch = (e) => {
-    const keyword = e.target.value;
-    setKeyword(keyword);
-    setCurrentPage(1);
-  };
-
-  const handleBanUser = (user) => {
-    if (user.role === "admin") {
-      toast.error("Tài Khoản Admin Không Thể Khóa.");
-      return;
-    } else {
-      const formData = new FormData();
-      formData.set("status", user.status === "active" ? "inactive" : "active");
-
-      dispatch(banUser(user._id, formData));
-    }
-  };
-
-  const handleDeleteUser = () => {
-    if (deletedUser.role === "admin") {
-      toast.error("Tài Khoản Admin Không Thể Xóa.");
-      return;
-    } else {
-      dispatch(deleteUser(deletedUser.id));
-      dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
-    }
-  };
-
-  const handleResPerPage = (amount) => {
-    if (amount !== resPerPage) {
-      setResPerPage(amount);
-      setCurrentPage(1);
-    }
-  };
-
-  const roles = ["customer", "shopkeeper", "admin"];
-
-  const handleCheckbox = (index) => {
-    const list = [...checkList];
-    list[index] = !list[index];
-    setCheckList(list);
-
-    if (list[index] === true) {
-      setFilter([...filter, roles[index]]);
-    } else {
-      setFilter(filter.filter((role) => role !== roles[index]));
-    }
-  };
-
-  const handleCheckAll = () => {
-    setCheckList([false, false, false]);
-    setFilter([]);
-  };
-
-  const handleSegmentedTab = (choose) => {
-    if (choose !== status) {
-      setCurrentPage(1);
-      if (choose === "all") {
-        setStatus("");
-      }
-      if (choose === "active") {
-        setStatus("active");
-      }
-      if (choose === "inactive") {
-        setStatus("inactive");
-      }
-    }
   };
 
   return (

@@ -29,11 +29,18 @@ const ShopInfor = ({ shopInfor, setShopInfor }) => {
             name="shopName"
             onChange={(e) => handleChange(e)}
           />
+          <label>Tên chủ cửa hàng:</label>
+          <input
+            type="text"
+            value={shopInfor.ownerName}
+            name="ownerName"
+            onChange={(e) => handleChange(e)}
+          />
           <label>Số điện thoại:</label>
           <input
             type="text"
-            value={shopInfor.phoneNumber}
-            name="phoneNumber"
+            value={shopInfor.primaryPhone}
+            name="primaryPhone"
             onChange={(e) => handleChange(e)}
           />
           <label>Email:</label>
@@ -44,11 +51,11 @@ const ShopInfor = ({ shopInfor, setShopInfor }) => {
             onChange={(e) => handleChange(e)}
           />
           <label>Địa chỉ lấy hàng: </label>
-          {shopInfor.pickupAddress.fullName !== "" ? (
+          {shopInfor.pickupAddress.contactName !== "" ? (
             <div className="pickup-address-form">
               <label>
-                {shopInfor.pickupAddress.fullName} {" | "}
-                {shopInfor.pickupAddress.phoneNumber}
+                {shopInfor.pickupAddress.contactName} {" | "}
+                {shopInfor.pickupAddress.contactPhone}
               </label>
               <label>{shopInfor.pickupAddress.address.detailed}</label>
               <label>{shopInfor.pickupAddress.address.province}</label>

@@ -6,8 +6,8 @@ const PickupAddress = ({ onClose, pickupAddress, setPickupAddress }) => {
 
   const [formData, setFormData] = useState(
     pickupAddress || {
-      fullName: "",
-      phoneNumber: "",
+      contactName: "",
+      contactPhone: "",
       address: {
         province: "",
         district: "",
@@ -89,15 +89,15 @@ const PickupAddress = ({ onClose, pickupAddress, setPickupAddress }) => {
           <label>Họ tên người nhận:</label>
           <input
             type="text"
-            name="fullName"
-            value={formData.fullName}
+            name="contactName"
+            value={formData.contactName}
             onChange={(e) => handleChange(e)}
           />
-          <label>Só điện thoại</label>
+          <label>Số điện thoại</label>
           <input
             type="text"
-            name="phoneNumber"
-            value={formData.phoneNumber}
+            name="contactPhone"
+            value={formData.contactPhone}
             onChange={(e) => handleChange(e)}
           />
           <label>Tỉnh/Thành phố</label>

@@ -1,5 +1,8 @@
 import axios from "axios";
 import {
+  GET_APPLICATIONS_FAIL,
+  GET_APPLICATIONS_REQUEST,
+  GET_APPLICATIONS_SUCCESS,
   NEW_APPLICATION_FAIL,
   NEW_APPLICATION_REQUEST,
   NEW_APPLICATION_SUCCESS,
@@ -22,6 +25,26 @@ export const newApplication = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_APPLICATION_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const getApplications = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_APPLICATIONS_REQUEST,
+    });
+
+    const { data } = await axios.get("/api/v1/admin/applications");
+
+    dispatch({
+      type: GET_APPLICATIONS_SUCCESS,
+      payload: data.applications,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_APPLICATIONS_FAIL,
       payload: error.message,
     });
   }
