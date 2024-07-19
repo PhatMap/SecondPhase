@@ -6,7 +6,9 @@ import ManageUsers from "./ManageUsers";
 import Sidebar from "./Sidebar";
 import AddUser from "./AddUser";
 import UpdateUser from "./UpdateUser";
-import ManageApplications from "./ManageApplications";
+import ManageCategories from "./ManageCategories";
+
+
 
 const Centre = () => {
   const location = useLocation();
@@ -34,7 +36,7 @@ const Centre = () => {
           <Route path="users" element={<ManageUsers />} />
           <Route path="addUser" element={<AddUser />} />
           <Route path="user/:id" element={<UpdateUser />} />
-          <Route path="applications" element={<ManageApplications />} />
+          <Route path="category" element={<ManageCategories />} />
         </Routes>
       </div>
     </div>
