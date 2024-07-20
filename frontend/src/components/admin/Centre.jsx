@@ -7,7 +7,8 @@ import Sidebar from "./Sidebar";
 import AddUser from "./AddUser";
 import UpdateUser from "./UpdateUser";
 import ManageCategories from "./ManageCategories";
-
+import NewCategory from "./NewCategory";
+import UpdateCategory from "./UpdateCategory";
 
 
 const Centre = () => {
@@ -18,6 +19,7 @@ const Centre = () => {
       "/admin/users",
       "/admin/dashboard",
       "/admin/applications",
+      "/admin/categories",
     ];
     return sidebarPaths.some((path) => location.pathname.startsWith(path));
   }, [location.pathname]);
@@ -36,7 +38,9 @@ const Centre = () => {
           <Route path="users" element={<ManageUsers />} />
           <Route path="addUser" element={<AddUser />} />
           <Route path="user/:id" element={<UpdateUser />} />
-          <Route path="category" element={<ManageCategories />} />
+          <Route path="categories" element={<ManageCategories />} />
+          <Route path="category/new" element={<NewCategory />} />
+          <Route path="category/update/:id" element={<UpdateCategory />} />
         </Routes>
       </div>
     </div>

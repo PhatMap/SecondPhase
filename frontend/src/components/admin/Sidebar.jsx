@@ -24,7 +24,7 @@ const Sidebar = React.memo(() => {
             </Link>
           </li>
           <li>
-            <Link to="/admin/category" className="sidebar-element">
+            <Link to="/admin/categories" className="sidebar-element">
               <i className="fa fa-user"></i> Quản Lý Danh Mục
             </Link>
           </li>

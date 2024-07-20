@@ -14,19 +14,18 @@ import {
   DELETE_CATEGORY_RESET,
   CREATE_CATEGORY_RESET,
   UPDATE_CATEGORY_RESET,
+  GET_CATEGORY_REQUEST,
+  GET_CATEGORY_SUCCESS,
+  GET_CATEGORY_FAIL,
 } from '../constants/categoryConstants';
 
-
-export const categoryReducer = (state = {categories: []}, action) => {
+export const categoryReducer = (state = { categories: [], totalCategories: 0, category: null, loading: false, success: false, error: null }, action) => {
   switch (action.type) {
     case GET_CATEGORIES_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
     case CREATE_CATEGORY_REQUEST:
     case UPDATE_CATEGORY_REQUEST:
     case DELETE_CATEGORY_REQUEST:
+    case GET_CATEGORY_REQUEST:
       return {
         ...state,
         loading: true,
@@ -38,6 +37,13 @@ export const categoryReducer = (state = {categories: []}, action) => {
         loading: false,
         categories: action.payload.categories,
         totalCategories: action.payload.totalCategories,
+      };
+
+    case GET_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        category: action.payload.category,
       };
 
     case CREATE_CATEGORY_SUCCESS:
@@ -60,6 +66,7 @@ export const categoryReducer = (state = {categories: []}, action) => {
     case CREATE_CATEGORY_FAIL:
     case UPDATE_CATEGORY_FAIL:
     case DELETE_CATEGORY_FAIL:
+    case GET_CATEGORY_FAIL:
       return {
         ...state,
         loading: false,

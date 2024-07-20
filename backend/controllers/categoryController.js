@@ -27,7 +27,7 @@ exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
 
   const totalCategories = categories.length;
 
-  apiFeatures.pagination();
+  apiFeatures. adminPagination();
 
   categories = await apiFeatures.query.clone();
 
@@ -83,4 +83,19 @@ exports.deleteCategory = catchAsyncErrors(async (req, res, next) => {
         success: true,
         message: `Đã xóa danh mục ${category.categoryName} và ${deleteResult.deletedCount} sản phẩm liên quan`,
     });
+});
+exports.getCategoryById = catchAsyncErrors(async (req, res, next) => {
+  const category = await Category.findById(req.params.id);
+
+  if (!category) {
+    return res.status(404).json({
+      success: false,
+      message: "Category not found",
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    category,
+  });
 });

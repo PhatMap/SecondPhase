@@ -2,18 +2,14 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DataTable from "../layout/DataTable";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCategories,
-  deleteCategory
-} from "../../actions/categoryActions";
+import { getCategories, deleteCategory } from "../../actions/categoryActions";
 import Pagination from "react-js-pagination";
-import DeleteNotify from "../layout/DeleteNotify";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   DELETE_CATEGORY_RESET,
   UPDATE_CATEGORY_RESET,
-  CREATE_CATEGORY_RESET
+  CREATE_CATEGORY_RESET,
 } from "../../constants/categoryConstants";
 
 const ManageCategories = () => {
@@ -84,16 +80,10 @@ const ManageCategories = () => {
           action: (
             <Fragment>
               <div className="flex-horizontal">
-                <Link
-                  to={`/admin/category/${category._id}/edit`}
-                  className="btn btn-primary py-1 px-2"
-                >
+                <Link to={`/admin/category/update/${category._id}`} className="btn btn-primary py-1 px-2">
                   <i className="fa fa-pencil"></i>
                 </Link>
-                <button
-                  className="btn btn-danger py-1 px-2 ml-2"
-                  onClick={() => deleteHandler(category._id)}
-                >
+                <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteHandler(category._id)}>
                   <i className="fa fa-trash"></i>
                 </button>
               </div>
@@ -164,7 +154,19 @@ const ManageCategories = () => {
         </Fragment>
       )}
       {show && (
-        <DeleteNotify show={show} onClose={cancelDelete} onDelete={confirmDelete} />
+        <div className="delete-notify-container">
+          <div className="delete-notify-form">
+            <h1>Confirm delete?</h1>
+            <div className="delete-notify-btn-container">
+              <button className="delete-notify-btn-container-yes" onClick={confirmDelete}>
+                Yes
+              </button>
+              <button className="delete-notify-btn-container-no" onClick={cancelDelete}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </Fragment>
   );
