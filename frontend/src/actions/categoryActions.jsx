@@ -1,11 +1,11 @@
 import axios from 'axios';
 import {
-  CREATE_CATEGORY_REQUEST,
-  CREATE_CATEGORY_SUCCESS,
-  CREATE_CATEGORY_FAIL,
   GET_CATEGORIES_REQUEST,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_FAIL,
+  CREATE_CATEGORY_REQUEST,
+  CREATE_CATEGORY_SUCCESS,
+  CREATE_CATEGORY_FAIL,
   UPDATE_CATEGORY_REQUEST,
   UPDATE_CATEGORY_SUCCESS,
   UPDATE_CATEGORY_FAIL,
@@ -14,6 +14,31 @@ import {
   DELETE_CATEGORY_FAIL,
 } from '../constants/categoryConstants';
 
+export const getCategories = (
+  currentPage = 1,
+  keyword = "",
+  resPerPage = ""
+) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_CATEGORIES_REQUEST });
+
+    const { data } = await axios.get(
+      '/api/v1/admin/categories' );
+    
+    console.log("Data received:", data); // Kiểm tra dữ liệu nhận được từ backend
+
+    dispatch({
+      type: GET_CATEGORIES_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_CATEGORIES_FAIL,
+      payload: error.response ? error.response.data.message : error.message,
+    });
+    console.log("Error:", error.response ? error.response.data.message : error.message);
+  }
+};
 // Create Category
 export const createCategory = (categoryData) => async (dispatch) => {
   try {
@@ -39,27 +64,8 @@ export const createCategory = (categoryData) => async (dispatch) => {
   }
 };
 
-// Get all categories
-export const getCategories = () => async (dispatch) => {
-  try {
-    dispatch({ type: GET_CATEGORIES_REQUEST });
-
-    const { data } = await axios.get('/api/v1/admin/categories');
-
-    dispatch({
-      type: GET_CATEGORIES_SUCCESS,
-      payload: data.categories,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_CATEGORIES_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
-
 // Update Category
-export const updateCategory = (categoryId, categoryData) => async (dispatch) => {
+export const updateCategory = (id, categoryData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_CATEGORY_REQUEST });
 
@@ -69,11 +75,11 @@ export const updateCategory = (categoryId, categoryData) => async (dispatch) => 
       }
     };
 
-    const { data } = await axios.put(`/api/v1/admin/category/update/${categoryId}`, categoryData, config);
+    const { data } = await axios.put(`/api/v1/admin/category/${id}`, categoryData, config);
 
     dispatch({
       type: UPDATE_CATEGORY_SUCCESS,
-      payload: data,
+      payload: data.success,
     });
   } catch (error) {
     dispatch({
@@ -84,15 +90,15 @@ export const updateCategory = (categoryId, categoryData) => async (dispatch) => 
 };
 
 // Delete Category
-export const deleteCategory = (categoryId) => async (dispatch) => {
+export const deleteCategory = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_CATEGORY_REQUEST });
 
-    const { data } = await axios.delete(`/api/v1/admin/category/delete/${categoryId}`);
+    const { data } = await axios.delete(`/api/v1/admin/category/${id}`);
 
     dispatch({
       type: DELETE_CATEGORY_SUCCESS,
-      payload: data,
+      payload: data.success,
     });
   } catch (error) {
     dispatch({

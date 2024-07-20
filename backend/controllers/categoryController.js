@@ -2,6 +2,7 @@ const Category = require("../models/category");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const cloudinary = require("cloudinary").v2;
 const Product = require("../models/product");
+const APIFeatures = require("../utils/apiFeatures");
 
 // Controller function to create a new category
 exports.createCategory = catchAsyncErrors(async (req, res, next) => {
@@ -17,16 +18,28 @@ exports.createCategory = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 // Lấy tất cả danh mục
 exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
-  const categories = await Category.find();
+  const apiFeatures = new APIFeatures(Category.find(), req.query)
+    .search()
+    .filter()
+    .sort();
+
+  let categories = await apiFeatures.query;
+
+  const totalCategories = categories.length;
+
+  apiFeatures.adminPagination();
+
+  categories = await apiFeatures.query.clone();
 
   res.status(200).json({
     success: true,
     categories,
+    totalCategories,
   });
 });
+
 // Controller function to update a category
 exports.updateCategory = catchAsyncErrors(async (req, res, next) => {
   const { categoryId } = req.params;
