@@ -52,6 +52,22 @@ class APIFeatures {
     return this;
   }
 
+  filterCategory() {
+    const { keyword } = this.queryStr;
+
+    let query = {};
+
+    if (keyword) {
+      query.$or = [
+        { categoryName: { $regex: keyword, $options: "i" } },
+        { vietnameseName: { $regex: keyword, $options: "i" } },
+      ];
+    }
+
+    this.query = this.query.find(query);
+    return this;
+  }
+
   search() {
     const keyword = this.queryStr.keyword
       ? {

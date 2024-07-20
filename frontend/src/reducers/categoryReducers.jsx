@@ -16,22 +16,13 @@ import {
   UPDATE_CATEGORY_RESET,
 } from '../constants/categoryConstants';
 
-const initialState = {
-  loading: false,
-  categories: [],
-  totalCategories: 0,
-  category: null,
-  success: false,
-  error: null,
-};
 
-export const categoryReducer = (state = initialState, action) => {
+export const categoryReducer = (state = {categories: []}, action) => {
   switch (action.type) {
     case GET_CATEGORIES_REQUEST:
       return {
         ...state,
         loading: true,
-        categories: [],
       };
     case CREATE_CATEGORY_REQUEST:
     case UPDATE_CATEGORY_REQUEST:

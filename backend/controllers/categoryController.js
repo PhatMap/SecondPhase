@@ -17,21 +17,21 @@ exports.createCategory = catchAsyncErrors(async (req, res, next) => {
       category
   });
 });
-
-// Lấy tất cả danh mục
 exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
+  console.log("Request Query:", req.query); // Thêm log để kiểm tra query nhận được
   const apiFeatures = new APIFeatures(Category.find(), req.query)
-    .search()
-    .filter()
+    .filterCategory()
     .sort();
 
   let categories = await apiFeatures.query;
 
   const totalCategories = categories.length;
 
-  apiFeatures.adminPagination();
+  apiFeatures.pagination();
 
   categories = await apiFeatures.query.clone();
+
+  console.log("Categories fetched from DB:", categories); // Thêm log để kiểm tra dữ liệu trả về
 
   res.status(200).json({
     success: true,
@@ -39,7 +39,6 @@ exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
     totalCategories,
   });
 });
-
 // Controller function to update a category
 exports.updateCategory = catchAsyncErrors(async (req, res, next) => {
   const { categoryId } = req.params;

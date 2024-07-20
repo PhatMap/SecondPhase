@@ -15,17 +15,14 @@ import {
 } from '../constants/categoryConstants';
 
 export const getCategories = (
-  currentPage = 1,
-  keyword = "",
-  resPerPage = ""
+  currentPage = 1,keyword = "", resPerPage = 1,
 ) => async (dispatch) => {
   try {
     dispatch({ type: GET_CATEGORIES_REQUEST });
 
-    const { data } = await axios.get(
-      '/api/v1/admin/categories' );
+    const { data } = await axios.get(`/api/v1/admin/categories?page=${currentPage}&keyword=${keyword}&resPerPage=${resPerPage}`);
     
-    console.log("Data received:", data); // Kiểm tra dữ liệu nhận được từ backend
+    console.log("Data received:", data); 
 
     dispatch({
       type: GET_CATEGORIES_SUCCESS,
