@@ -30,22 +30,26 @@ export const newApplication = (formData) => async (dispatch) => {
   }
 };
 
-export const getApplications = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: GET_APPLICATIONS_REQUEST,
-    });
+export const getApplications =
+  (currentPage = 1, resPerPage = 5, keyword = "", status = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: GET_APPLICATIONS_REQUEST,
+      });
 
-    const { data } = await axios.get("/api/v1/admin/applications");
+      const { data } = await axios.get(
+        `/api/v1/admin/applications?keyword=${keyword}&status=${status}&page=${currentPage}&limit=${resPerPage}`
+      );
 
-    dispatch({
-      type: GET_APPLICATIONS_SUCCESS,
-      payload: data.applications,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_APPLICATIONS_FAIL,
-      payload: error.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_APPLICATIONS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_APPLICATIONS_FAIL,
+        payload: error.message,
+      });
+    }
+  };

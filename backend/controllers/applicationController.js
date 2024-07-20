@@ -76,8 +76,6 @@ exports.newApplication = catchAsyncErrors(async (req, res, next) => {
   //   identificationInfor: applicationFromData.identificationInfor,
   // };
 
-  console.log(applicationFromData);
-
   await Application.create(applicationFromData);
 
   res.status(200).json({
@@ -86,12 +84,20 @@ exports.newApplication = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getApplications = catchAsyncErrors(async (req, res, next) => {
-  const apiFeatures = new APIFeatures(Application.find(), req.query).sort();
+  const apiFeatures = new APIFeatures(Application.find(), req.query)
+    .filterApplication()
+    .sort();
+  let applications = await apiFeatures.query;
 
-  const applications = await apiFeatures.query;
+  const applicationCount = applications.length;
+
+  apiFeatures.adminPagination();
+
+  applications = await apiFeatures.query.clone();
 
   res.status(200).json({
     success: true,
     applications,
+    total: applicationCount,
   });
 });

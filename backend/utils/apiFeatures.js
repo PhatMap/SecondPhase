@@ -5,6 +5,28 @@ class APIFeatures {
   }
 
   filterUser() {
+    const { keyword, status } = this.queryStr;
+
+    let query = {};
+
+    if (keyword) {
+      query.$or = [
+        { shopName: { $regex: keyword, $options: "i" } },
+        { ownerName: { $regex: keyword, $options: "i" } },
+        { primaryPhone: { $regex: keyword, $options: "i" } },
+        { email: { $regex: keyword, $options: "i" } },
+      ];
+    }
+
+    if (status) {
+      query.status = status;
+    }
+
+    this.query = this.query.find(query);
+    return this;
+  }
+
+  filterApplication() {
     const { keyword, roles, status } = this.queryStr;
 
     let query = {};

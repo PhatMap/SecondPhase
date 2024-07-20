@@ -69,7 +69,6 @@ const ManageUsers = () => {
   }, []);
 
   useEffect(() => {
-    console.log("currentPage", currentPage);
     if (currentPage || filter || keyword || resPerPage || status) {
       dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
     }
@@ -78,6 +77,9 @@ const ManageUsers = () => {
   useEffect(() => {
     if (users) {
       setUsers();
+    }
+    if (users.length === 0 && currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
     }
   }, [users]);
 
@@ -149,12 +151,6 @@ const ManageUsers = () => {
       }
     }
   };
-
-  useEffect(() => {
-    if (users.length === 0 && currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
-  }, [users]);
 
   const setUsers = () => {
     const data = {
@@ -271,7 +267,7 @@ const ManageUsers = () => {
               onChange={() => handleSegmentedTab("all")}
               checked={status === ""}
             />
-            Tất cẩ trạng thái
+            Tất cả trạng thái
           </label>
 
           <label

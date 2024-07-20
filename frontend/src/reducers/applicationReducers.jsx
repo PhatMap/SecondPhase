@@ -59,7 +59,8 @@ export const applicationsReducer = (state = { applications: [] }, action) => {
     case GET_APPLICATIONS_SUCCESS:
       return {
         ...state,
-        applications: action.payload,
+        applications: action.payload.applications,
+        total: action.payload.total,
         loading: false,
       };
 
