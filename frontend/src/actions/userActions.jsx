@@ -337,7 +337,7 @@ export const allUsers = () => async (dispatch) => {
 };
 
 export const getUsers =
-  (currentPage = 1,keyword = "", resPerPage = 1, status = "") =>
+  (currentPage = 1, roles = [], keyword = "", resPerPage = 1, status = "") =>
   async (dispatch) => {
     try {
       dispatch({ type: GET_USERS_REQUEST });

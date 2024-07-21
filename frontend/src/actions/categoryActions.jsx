@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   GET_CATEGORIES_REQUEST,
   GET_CATEGORIES_SUCCESS,
@@ -15,30 +15,33 @@ import {
   GET_CATEGORY_REQUEST,
   GET_CATEGORY_SUCCESS,
   GET_CATEGORY_FAIL,
-} from '../constants/categoryConstants';
+} from "../constants/categoryConstants";
 
-export const getCategories = (
-  currentPage = 1,keyword = "", resPerPage = 10,
-) => async (dispatch) => {
-  try {
-    dispatch({ type: GET_CATEGORIES_REQUEST });
+export const getCategories =
+  (currentPage = 1, keyword = "", resPerPage = 10) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: GET_CATEGORIES_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/admin/categories?page=${currentPage}&keyword=${keyword}&resPerPage=${resPerPage}`);
-    
-    console.log("Data received:", data); 
+      const { data } = await axios.get(
+        `/api/v1/admin/categories?page=${currentPage}&keyword=${keyword}&resPerPage=${resPerPage}`
+      );
 
-    dispatch({
-      type: GET_CATEGORIES_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_CATEGORIES_FAIL,
-      payload: error.response ? error.response.data.message : error.message,
-    });
-    console.log("Error:", error.response ? error.response.data.message : error.message);
-  }
-};
+      dispatch({
+        type: GET_CATEGORIES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_CATEGORIES_FAIL,
+        payload: error.response ? error.response.data.message : error.message,
+      });
+      console.log(
+        "Error:",
+        error.response ? error.response.data.message : error.message
+      );
+    }
+  };
 // Create Category
 export const createCategory = (categoryData) => async (dispatch) => {
   try {
@@ -46,11 +49,15 @@ export const createCategory = (categoryData) => async (dispatch) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     };
 
-    const { data } = await axios.post('/api/v1/admin/category/new', categoryData, config);
+    const { data } = await axios.post(
+      "/api/v1/admin/category/new",
+      categoryData,
+      config
+    );
 
     dispatch({
       type: CREATE_CATEGORY_SUCCESS,
@@ -71,11 +78,15 @@ export const updateCategory = (categoryData) => async (dispatch) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     };
-console.log("categoryData",categoryData);
-    const { data } = await axios.put(`/api/v1/admin/category/update/${categoryData._id}`, categoryData, config);
+    console.log("categoryData", categoryData);
+    const { data } = await axios.put(
+      `/api/v1/admin/category/update/${categoryData._id}`,
+      categoryData,
+      config
+    );
 
     dispatch({
       type: UPDATE_CATEGORY_SUCCESS,
@@ -89,12 +100,11 @@ console.log("categoryData",categoryData);
   }
 };
 
-
 // Delete Category
 export const deleteCategory = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_CATEGORY_REQUEST });
-    console.log("id",id);
+    console.log("id", id);
 
     const { data } = await axios.delete(`/api/v1/admin/category/delete/${id}`);
 
@@ -112,9 +122,9 @@ export const deleteCategory = (id) => async (dispatch) => {
 export const getCategoryDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_CATEGORY_REQUEST });
-    console.log("id",id);
+    console.log("id", id);
     const { data } = await axios.get(`/api/v1/admin/category/${id}`);
-    console.log("data",data);
+    console.log("data", data);
     dispatch({
       type: GET_CATEGORY_SUCCESS,
       payload: data,

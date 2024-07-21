@@ -16,7 +16,9 @@ const ManageCategories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, categories, totalCategories, success } = useSelector((state) => state.category);
+  const { loading, error, categories, totalCategories, success } = useSelector(
+    (state) => state.category
+  );
 
   const [currentPage, setCurrentPage] = useState(1);
   const [keyword, setKeyword] = useState("");
@@ -80,10 +82,16 @@ const ManageCategories = () => {
           action: (
             <Fragment>
               <div className="flex-horizontal">
-                <Link to={`/admin/category/update/${category._id}`} className="btn btn-primary py-1 px-2">
+                <Link
+                  to={`/admin/category/update/${category._id}`}
+                  className="btn btn-primary py-1 px-2"
+                >
                   <i className="fa fa-pencil"></i>
                 </Link>
-                <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteHandler(category._id)}>
+                <button
+                  className="btn btn-danger py-1 px-2 ml-2"
+                  onClick={() => deleteHandler(category._id)}
+                >
                   <i className="fa fa-trash"></i>
                 </button>
               </div>
@@ -115,20 +123,37 @@ const ManageCategories = () => {
   return (
     <Fragment>
       <ToastContainer />
-      <h1 className="my-5" style={{ fontWeight: "bold", textAlign: "center", fontSize: "24px" }}>Quản lý Danh mục</h1>
+      <h1
+        className="my-5"
+        style={{ fontWeight: "bold", textAlign: "center", fontSize: "24px" }}
+      >
+        Quản lý Danh mục
+      </h1>
 
       <div className="mb-4" style={{ display: "flex", marginLeft: "5rem" }}>
         <Link to="/admin/category/new" className="btn btn-primary">
           Thêm danh mục mới
         </Link>
       </div>
-      <form onSubmit={handleSearch} style={{ display: "flex", marginLeft: "5rem", gap: "10px", marginBottom: "20px" }}>
+      <form
+        onSubmit={handleSearch}
+        style={{
+          display: "flex",
+          marginLeft: "5rem",
+          gap: "10px",
+          marginBottom: "20px",
+        }}
+      >
         <input
           type="text"
           placeholder="Tìm kiếm danh mục..."
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+          style={{
+            padding: "10px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+          }}
         />
         <button type="submit" className="btn btn-primary">
           Tìm kiếm
@@ -141,7 +166,14 @@ const ManageCategories = () => {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <DataTable data={setCategories()} />
           </div>
-          <div className="d-flex justify-content-center mt-5"style={{ display: "flex", justifyContent: "center",marginBottom:"2rem" }}>
+          <div
+            className="d-flex justify-content-center mt-5"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "2rem",
+            }}
+          >
             <Pagination
               activePage={currentPage}
               itemsCountPerPage={10}
@@ -158,14 +190,20 @@ const ManageCategories = () => {
         </Fragment>
       )}
       {show && (
-        <div className="delete-notify-container" >
-          <div className="delete-notify-form" >
+        <div className="delete-notify-container">
+          <div className="delete-notify-form">
             <h1 style={{ marginBottom: "20px" }}>Xóa Danh Mục Này?</h1>
             <div className="delete-notify-btn-container">
-              <button className="delete-notify-btn-container-yes" onClick={confirmDelete} >
+              <button
+                className="delete-notify-btn-container-yes"
+                onClick={confirmDelete}
+              >
                 Yes
               </button>
-              <button className="delete-notify-btn-container-no" onClick={cancelDelete} >
+              <button
+                className="delete-notify-btn-container-no"
+                onClick={cancelDelete}
+              >
                 No
               </button>
             </div>
