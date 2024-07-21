@@ -99,11 +99,9 @@ const Cart = () => {
   };
 
   const handlerQuantity = (e) => {
-    let inputValue = parseInt(e.target.value);
-    if (isNaN(inputValue) || inputValue < 1) {
-    }
-    setNewQuantity(inputValue);
+    setNewQuantity(e.target.value);
   };
+  
   
   const handleBlur = (e) => {
     const inputValue = e.target.value;
@@ -152,6 +150,11 @@ const Cart = () => {
   };
   const updateQuantity = async () => {
     if (currentItemIndex === null) return;
+    let inputValue = parseInt(newQuantity);
+    if (isNaN(inputValue) || inputValue < 1) {
+      toast.error('Vui lòng nhập lại số lượng hợp lệ');
+      return;
+    }
     const choosed = cartItems[currentItemIndex];
   
     const item = {
@@ -305,7 +308,7 @@ const Cart = () => {
                                     type="text"
                                     className=""
                                     value={item.quantity}
-                                    onChange={(e) => handlerQuantity(e)}
+                                    onClick={() => openModal(index)}
                                     onBlur={(e) => handleBlur(e)}
                                     readOnly
                                   />
@@ -321,14 +324,13 @@ const Cart = () => {
                                   >
                                     +
                                   </span>
-                                  <button onClick={() => openModal(index)}>Nhập số lượng</button>
                                 </div>
                               
                                 <div className="input-quantity-container" style={{ display: modalIsOpen ? 'flex' : 'none' }}>
                               <div className="input-quantity-form">
                                 <h1>Nhập số lượng</h1>
                                 <input
-                                  type="number"
+                                  type="text"
                                   value={newQuantity}
                                   onChange={(e) => handlerQuantity(e)}
                                   className="centered-input"

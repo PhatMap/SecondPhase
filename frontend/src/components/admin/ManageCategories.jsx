@@ -27,7 +27,7 @@ const ManageCategories = () => {
     dispatch(getCategories(currentPage, keyword));
 
     if (success) {
-      toast.success("Operation successful");
+      toast.success("Xóa Thành Công Danh Mục và Tất Cả Sản Phẩm Liên Quan");
       dispatch({ type: DELETE_CATEGORY_RESET });
       dispatch({ type: UPDATE_CATEGORY_RESET });
       dispatch({ type: CREATE_CATEGORY_RESET });
@@ -115,29 +115,33 @@ const ManageCategories = () => {
   return (
     <Fragment>
       <ToastContainer />
-      <h1 className="my-5">Quản lý Danh mục</h1>
-      <div className="mb-4">
+      <h1 className="my-5" style={{ fontWeight: "bold", textAlign: "center", fontSize: "24px" }}>Quản lý Danh mục</h1>
+
+      <div className="mb-4" style={{ display: "flex", marginLeft: "5rem" }}>
         <Link to="/admin/category/new" className="btn btn-primary">
           Thêm danh mục mới
         </Link>
       </div>
-      <form onSubmit={handleSearch}>
+      <form onSubmit={handleSearch} style={{ display: "flex", marginLeft: "5rem", gap: "10px", marginBottom: "20px" }}>
         <input
           type="text"
           placeholder="Tìm kiếm danh mục..."
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
+          style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
         />
         <button type="submit" className="btn btn-primary">
           Tìm kiếm
         </button>
       </form>
       {loading ? (
-        <h2>Đang tải...</h2>
+        <h2 style={{ textAlign: "center" }}>Đang tải...</h2>
       ) : (
         <Fragment>
-          <DataTable data={setCategories()} />
-          <div className="d-flex justify-content-center mt-5">
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <DataTable data={setCategories()} />
+          </div>
+          <div className="d-flex justify-content-center mt-5"style={{ display: "flex", justifyContent: "center",marginBottom:"2rem" }}>
             <Pagination
               activePage={currentPage}
               itemsCountPerPage={10}
@@ -154,14 +158,14 @@ const ManageCategories = () => {
         </Fragment>
       )}
       {show && (
-        <div className="delete-notify-container">
-          <div className="delete-notify-form">
-            <h1>Confirm delete?</h1>
+        <div className="delete-notify-container" >
+          <div className="delete-notify-form" >
+            <h1 style={{ marginBottom: "20px" }}>Xóa Danh Mục Này?</h1>
             <div className="delete-notify-btn-container">
-              <button className="delete-notify-btn-container-yes" onClick={confirmDelete}>
+              <button className="delete-notify-btn-container-yes" onClick={confirmDelete} >
                 Yes
               </button>
-              <button className="delete-notify-btn-container-no" onClick={cancelDelete}>
+              <button className="delete-notify-btn-container-no" onClick={cancelDelete} >
                 No
               </button>
             </div>

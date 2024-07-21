@@ -373,14 +373,15 @@ const ProductDetails = () => {
         </div>
       </div>
     
-      <div style={{ marginLeft: '10rem' }}>
-      {product.reviews && product.reviews.length > 0 && (
-        <ListReviews reviews={product.reviews} />
-      )}
-     <div style={{ marginTop: '-10rem', marginBottom: '0', paddingTop: '0', justifyContent: 'center' ,marginLeft:'30rem'}}>
-     <Review productId={id} user={user} hasPurchased={hasPurchased} />
-      </div>
-
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10rem' }}>
+  <div style={{ maxWidth: '50rem', width: '100%' }}>
+    <div style={{ marginTop: '-10rem', marginBottom: '2rem' }}>
+      <Review productId={id} user={user} hasPurchased={hasPurchased} />
+    </div>
+    {product.reviews && product.reviews.length > 0 && (
+      <ListReviews reviews={product.reviews} />
+    )}
+  </div>
 </div>
 
     </Fragment>

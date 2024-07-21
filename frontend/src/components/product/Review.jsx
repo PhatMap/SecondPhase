@@ -61,16 +61,34 @@ const Review = ({ productId, user, hasPurchased }) => {
         {user ? (
           hasPurchased ? (
             <div style={{ marginTop: '1rem' }}>
-              <div className="d-flex align-items-center">
+              <p>{user.name}</p> {/* Display the current user's name */}
+              <textarea
+                name="review"
+                id="review"
+                className="form-control mt-3"
+                style={{
+                  border: 'none',
+                  borderBottom: '1px solid #000',
+                  borderRadius: '0',
+                  height: '30px',
+                  padding: '0',
+                  outline: 'none',
+                  width: '100%',
+                  marginBottom: '5px'
+                }}
+                value={comment}
+                onChange={handleCommentChange}
+              ></textarea>
+              <div className="d-flex align-items-center" style={{ marginTop: '5px' }}>
                 <ul
                   className="stars"
-                  style={{ padding: 0, display: showStars ? 'flex' : 'none', gap: '0.5rem', listStyle: 'none', marginBottom: '1rem' }}
+                  style={{ padding: 0, display: showStars ? 'flex' : 'none', gap: '0.5rem', listStyle: 'none' }}
                 >
                   {[1, 2, 3, 4, 5].map((star) => (
                     <li
                       key={star}
                       className={`star ${star <= selectedStars ? 'orange' : ''}`}
-                      style={{ cursor: 'pointer', fontSize: '24px' }} // Điều chỉnh kích thước của ngôi sao
+                      style={{ cursor: 'pointer', fontSize: '24px' }}
                       onMouseOver={() => handleStarHover(star)}
                       onClick={() => handleStarClick(star)}
                     >
@@ -78,26 +96,16 @@ const Review = ({ productId, user, hasPurchased }) => {
                     </li>
                   ))}
                 </ul>
-
-                <textarea
-                  name="review"
-                  id="review"
-                  className="form-control mt-3 flex-grow-1"
-                  style={{ marginBottom: '1rem' }}
-                  value={comment}
-                  onChange={handleCommentChange}
-                ></textarea>
+                {comment && (
+                  <button
+                    className="btn review-btn text-white"
+                    onClick={reviewHandler}
+                    style={{ marginLeft: 'auto', padding: '5px 10px' }}
+                  >
+                    Submit
+                  </button>
+                )}
               </div>
-
-              {comment && (
-                <button
-                  className="btn my-3 ml-auto review-btn px-4 text-white"
-                  onClick={reviewHandler}
-                  style={{ marginBottom: '1rem' }}
-                >
-                  Submit
-                </button>
-              )}
             </div>
           ) : (
             <div
