@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "669cf99a006fedb96df12641"
+  },
+  "categoryName": " Shirt",
+  "vietnameseName": "Áo Nam Nữ",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "669cf9b5006fedb96df12647"
+  },
+  "categoryName": "Trousers",
+  "vietnameseName": "Quần Nam Nữ",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "669cf9c9006fedb96df1264d"
+  },
+  "categoryName": "Dress",
+  "vietnameseName": "Váy Nữ",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "669cf9d8006fedb96df12653"
+  },
+  "categoryName": "Shoe",
+  "vietnameseName": "Giày Nam Nữ",
+  "__v": 0
+}]

@@ -99,3 +99,19 @@ exports.getCategoryById = catchAsyncErrors(async (req, res, next) => {
     category,
   });
 });
+
+
+exports.getCategoryAll = async (req, res, next) => {
+  try {
+    const AllCategories = await Category.find();
+    res.status(200).json({
+      success: true,
+      data: AllCategories,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Server Error',
+    });
+  }
+};

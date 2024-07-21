@@ -111,11 +111,8 @@ const productSchema = new mongoose.Schema({
   },
   category: { 
     type: String,
-    required: [true, "please select category for this product"],
-    enum: {
-      values: ["Trousers", "Shirt", "Dress", "Shoe", "Belt"],
-      message: "Please select correct category for product",
-    },
+    required: true,
+    
   },
   numOfReviews: {
     type: Number,

@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar";
 
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { getCategoryAll } from "../../actions/categoryActions";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,6 +21,7 @@ import DeleteNotify from "../layout/DeleteNotify";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const ProductsList = () => {
+
   const history = useNavigate();
   const dispatch = useDispatch();
 
@@ -32,9 +34,10 @@ const ProductsList = () => {
     isDeleted,
     success,
   } = useSelector((state) => state.product);
-
+  const { categories: allCategories } = useSelector((state) => state.category);
   useEffect(() => {
     dispatch(getAdminProducts());
+    dispatch(getCategoryAll());
 
     if (error) {
       toast.error(error);
@@ -88,10 +91,13 @@ const ProductsList = () => {
       ],
       rows: [],
     };
-
+    const categoryMap = allCategories.reduce((acc, category) => {
+      acc[category._id] = category.vietnameseName;
+      return acc;
+    }, {});
     products.forEach((product) => {
       data.rows.push({
-        category: product.category,
+        category: categoryMap[product.category] || "Unknown",
         image: (
           <img
             src={product.images[0].url}

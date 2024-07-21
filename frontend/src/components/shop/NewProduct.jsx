@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import Back from "../layout/Back";
 import Variant from "./Variant";
 import AddVariant from "./AddVariant";
-
+import { getCategoryAll } from "../../actions/categoryActions";
 const NewProduct = () => {
   const history = useNavigate();
   const dispatch = useDispatch();
@@ -38,10 +38,26 @@ const NewProduct = () => {
   const [variantError, setVariantError] = useState(false);
   const [load, setLoad] = useState(false);
 
-  const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
+  // const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
   const { loading, error, success } = useSelector((state) => state.newProduct);
+  const { loading: categoryLoading, error: categoryError, categories } = useSelector((state) => state.category);
 
+  // Handle potential category errors
   useEffect(() => {
+    if (categoryError) {
+      toast.error(categoryError);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, categoryError]);
+  useEffect(() => {
+    if (categoryError) {
+      toast.error(categoryError);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, categoryError]);
+  
+  useEffect(() => {
+    dispatch(getCategoryAll());
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -281,40 +297,40 @@ const NewProduct = () => {
             </h1>
             <div className="new-product-column">
               <div className="new-product-row-one">
-                <div className="new-product-form-group">
-                  <label htmlFor="category_field">Danh mục</label>
-                  <select
-                    className={`form-control ${emptyCategory ? "invalid" : ""}`}
-                    id="category_field"
-                    value={category}
-                    onChange={(e) => {
-                      setEmptyCategory(false);
-                      if (e.target.value !== "") {
-                        setCategory(e.target.value);
-                      }
-                    }}
-                  >
-                    <option value="">Chọn một danh mục</option>
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                  {emptyCategory ? (
-                    <p
-                      style={{
-                        fontWeight: "normal",
-                        color: "red",
-                        fontSize: "13px",
-                      }}
-                    >
-                      Sản phẩm chưa chọn danh mục
-                    </p>
-                  ) : (
-                    ""
-                  )}
-                </div>
+              <div className="new-product-form-group">
+  <label htmlFor="category_field">Danh mục</label>
+  <select
+    className={`form-control ${emptyCategory ? "invalid" : ""}`}
+    id="category_field"
+    value={category}
+    onChange={(e) => {
+      setEmptyCategory(false);
+      if (e.target.value !== "") {
+        setCategory(e.target.value);
+      }
+    }}
+  >
+    <option value="">Chọn một danh mục</option>
+    {categories && categories.map((category) => (
+      <option key={category._id} value={category._id}>
+        {category.vietnameseName}
+      </option>
+    ))}
+  </select>
+  {emptyCategory ? (
+    <p
+      style={{
+        fontWeight: "normal",
+        color: "red",
+        fontSize: "13px",
+      }}
+    >
+      Sản phẩm chưa chọn danh mục
+    </p>
+  ) : (
+    ""
+  )}
+</div>
                 <div className="new-product-form-group">
                   <label htmlFor="name_field">Tên sản phẩm</label>
                   <input

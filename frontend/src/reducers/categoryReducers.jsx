@@ -17,6 +17,9 @@ import {
   GET_CATEGORY_REQUEST,
   GET_CATEGORY_SUCCESS,
   GET_CATEGORY_FAIL,
+  GET_ALLCATEGORIES_REQUEST,
+  GET_ALLCATEGORIES_SUCCESS,
+  GET_ALLCATEGORIES_FAIL,
 } from '../constants/categoryConstants';
 
 export const categoryReducer = (state = { categories: [], totalCategories: 0, category: null, loading: false, success: false, error: null }, action) => {
@@ -81,6 +84,23 @@ export const categoryReducer = (state = { categories: [], totalCategories: 0, ca
         success: false,
         category: null,
       };
+      case GET_ALLCATEGORIES_REQUEST:
+        return {
+          ...state,
+          loading: true,
+        };
+      case GET_ALLCATEGORIES_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          categories: action.payload.data, // Assuming the data structure returned by the server
+        };
+      case GET_ALLCATEGORIES_FAIL:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };
 
     default:
       return state;

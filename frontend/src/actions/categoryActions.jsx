@@ -15,7 +15,10 @@ import {
   GET_CATEGORY_REQUEST,
   GET_CATEGORY_SUCCESS,
   GET_CATEGORY_FAIL,
-} from "../constants/categoryConstants";
+  GET_ALLCATEGORIES_REQUEST,
+  GET_ALLCATEGORIES_SUCCESS,
+  GET_ALLCATEGORIES_FAIL,
+} from '../constants/categoryConstants';
 
 export const getCategories =
   (currentPage = 1, keyword = "", resPerPage = 10) =>
@@ -132,6 +135,24 @@ export const getCategoryDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_CATEGORY_FAIL,
+      payload: error.response ? error.response.data.message : error.message,
+    });
+  }
+};
+export const getCategoryAll = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALLCATEGORIES_REQUEST });
+
+    const { data } = await axios.get("/api/v1/CategoryAll");
+
+console.log("datads",data);
+    dispatch({
+      type: GET_ALLCATEGORIES_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALLCATEGORIES_FAIL,
       payload: error.response ? error.response.data.message : error.message,
     });
   }

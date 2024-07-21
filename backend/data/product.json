@@ -78,7 +78,7 @@
       }
     ],
     "totalStock": 42,
-    "category": "Shoe",
+    "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 2,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [
@@ -193,7 +193,7 @@
       }
     ],
     "totalStock": 100,
-    "category": "Shoe",
+    "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
 
@@ -253,7 +253,7 @@
       }
     ],
     "totalStock": 56,
-    "category": "Shoe",
+    "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -357,7 +357,7 @@
       }
     ],
     "totalStock": 156,
-    "category": "Shoe",
+    "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -430,7 +430,7 @@
       }
     ],
     "totalStock": 145,
-    "category": "Shoe",
+    "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -511,7 +511,7 @@
       }
     ],
     "totalStock": 186,
-    "category": "Shoe",
+    "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -617,7 +617,7 @@
       }
     ],
     "totalStock": 427,
-    "category": "Shoe",
+    "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -694,7 +694,7 @@
       }
     ],
     "totalStock": 518,
-    "category": "Shoe",
+    "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -754,7 +754,7 @@
       }
     ],
     "totalStock": 67,
-    "category": "Shoe",
+    "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -810,7 +810,7 @@
       }
     ],
     "totalStock": 81,
-    "category": "Shoe",
+    "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -862,7 +862,7 @@
       }
     ],
     "totalStock": 905,
-    "category": "Shoe",
+    "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 3,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [ {
@@ -959,7 +959,7 @@
       }
     ],
     "totalStock": 1387,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -1006,7 +1006,7 @@
       }
     ],
     "totalStock": 678,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -1062,7 +1062,7 @@
       }
     ],
     "totalStock": 1308,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -1140,7 +1140,7 @@
       }
     ],
     "totalStock": 2558,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 1,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [ {
@@ -1154,9 +1154,9 @@
     "__v": 0
   },
   {
-    "name": "AURORA DRESS - ĐẦM SUÔNG DỆT BURN OUT",
+    "name": "AURORA 669cf9c9006fedb96df1264d - ĐẦM SUÔNG DỆT BURN OUT",
     "price": 670000,
-    "description": "Đơn giản nhưng vẫn đủ khiến quý cô siêu lòng với Aurora Dress, thiết kế đầm sang trọng được điểm họa tiết dệt burn out đầy sức hút",
+    "description": "Đơn giản nhưng vẫn đủ khiến quý cô siêu lòng với Aurora 669cf9c9006fedb96df1264d, thiết kế đầm sang trọng được điểm họa tiết dệt burn out đầy sức hút",
     "ratings": 0,
     "images": [
       {
@@ -1220,7 +1220,7 @@
       }
     ],
     "totalStock": 2236,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -1297,7 +1297,7 @@
       }
     ],
     "totalStock": 1844,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -1374,7 +1374,7 @@
       }
     ],
     "totalStock": 1844,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 3,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [ {
@@ -1441,7 +1441,7 @@
       }
     ],
     "totalStock": 707,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -1523,7 +1523,7 @@
       }
     ],
     "totalStock": 2504,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -1601,7 +1601,7 @@
       }
     ],
     "totalStock": 2502,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -1653,7 +1653,7 @@
       }
     ],
     "totalStock": 1623,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 5,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [ {
@@ -1715,7 +1715,7 @@
       }
     ],
     "totalStock": 1680,
-    "category": "Dress",
+    "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 0,
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [],
@@ -1803,7 +1803,7 @@
       }
     ],
     "totalStock": 300,
-    "category": "Shirt",
+    "category": "669cf99a006fedb96df12641",
     "numOfReviews": 1,
     "user": "6627e33c55f5c45cedf90d21",
     "reviews": [
@@ -1975,7 +1975,7 @@
       }
     ],
     "totalStock": 520,
-    "category": "Shirt",
+    "category": "669cf99a006fedb96df12641",
     "numOfReviews": 0,
     "user": "6627e33c55f5c45cedf90d21",
     "reviews": [],
@@ -2047,7 +2047,7 @@
       }
     ],
     "totalStock": 187,
-    "category": "Shirt",
+    "category": "669cf99a006fedb96df12641",
     "numOfReviews": 0,
     "user": "6627e33c55f5c45cedf90d21",
     "reviews": [],
@@ -2149,7 +2149,7 @@
       }
     ],
     "totalStock": 319,
-    "category": "Shirt",
+    "category": "669cf99a006fedb96df12641",
     "numOfReviews": 0,
     "user": "6627e33c55f5c45cedf90d21",
     "reviews": [],
@@ -2200,7 +2200,7 @@
       }
     ],
     "totalStock": 99,
-    "category": "Trousers",
+    "category": "669cf9b5006fedb96df12647",
     "numOfReviews": 0,
     "user": "6627e33c55f5c45cedf90d21",
     "reviews": [],
@@ -2282,7 +2282,7 @@
       }
     ],
     "totalStock": 285,
-    "category": "Trousers",
+    "category": "669cf9b5006fedb96df12647",
     "numOfReviews": 5,
     "user": "6627e33c55f5c45cedf90d21",
     "reviews": [ {
@@ -2390,7 +2390,7 @@
       }
     ],
     "totalStock": 286,
-    "category": "Trousers",
+    "category": "669cf9b5006fedb96df12647",
     "numOfReviews": 2,
     "user": "6627e33c55f5c45cedf90d21",
     "reviews": [ {
@@ -2494,7 +2494,7 @@
       }
     ],
     "totalStock": 344,
-    "category": "Trousers",
+    "category": "669cf9b5006fedb96df12647",
     "numOfReviews": 2,
     "user": "6627e33c55f5c45cedf90d21",
     "reviews": [ {

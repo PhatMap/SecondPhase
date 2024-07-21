@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useCallback } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Pagination from "react-js-pagination";
 import MetaData from "./layout/MetaData";
 import Product from "./product/Product";
@@ -12,6 +12,7 @@ import Filter from "./layout/Filter";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import Loader from "./layout/Loader";
+import { getCategoryAll } from "../actions/categoryActions";
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Shop = () => {
   const { loading, products, error, productsCount, resPerPage } = useSelector(
     (state) => state.products
   );
-
+  const { categories } = useSelector((state) => state.category);
   const { keyword, category } = useParams();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +34,9 @@ const Shop = () => {
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
   }
-
+  useEffect(() => {
+    dispatch(getCategoryAll());
+  }, [dispatch]);
   useEffect(() => {
     if (category || keyword) {
       setSelectedCategory(category);
@@ -49,6 +52,7 @@ const Shop = () => {
       );
     }
   }, [category, keyword]);
+  const selectedCategoryName = categories.find(cat => cat._id === selectedCategory)?.vietnameseName || '';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -88,12 +92,9 @@ const Shop = () => {
           pauseOnHover
           theme="light"
         />
-       <h1
-                className="header-logo"
-                style={{ fontFamily: "Lobster, cursive" }}
-              >
-                VITASHOP
-              </h1>
+        <h1 className="header-logo" style={{ fontFamily: "Lobster, cursive", textAlign: "center", fontSize: "24px", fontWeight: "bold" }}>
+          {selectedCategoryName ? selectedCategoryName :category ? category : keyword ? `Tìm Kiếm "${keyword}"` : "VITASHOP"}
+        </h1>
         <div className="shop-products-filter-container">
           <Filter
             category={category}

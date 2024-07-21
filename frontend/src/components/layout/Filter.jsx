@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getProducts } from "../../actions/productActions";
 import { useNavigate } from "react-router-dom";
+import { getCategoryAll } from "../../actions/categoryActions";
 
 const Filter = ({
-  category,
   keyword,
   currentPage,
   setCurrentPage,
@@ -21,15 +21,19 @@ const Filter = ({
   const dispatch = useDispatch();
   const history = useNavigate();
 
-  const { loading, products } = useSelector((state) => state.products);
+  const { loading: productLoading, products } = useSelector((state) => state.products);
+  const { loading: categoryLoading, error: categoryError, categories } = useSelector((state) => state.category);
 
-  const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
-  const categoriesVietnamese = {
-    Trousers: "Quần Nam Nữ",
-    Shirt: "Áo Nam Nữ",
-    Dress: "Váy Nữ",
-    Shoe: "Giày Nam Nữ",
-  };
+  useEffect(() => {
+    dispatch(getCategoryAll());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (categoryError) {
+      toast.error(categoryError);
+      dispatch(clearErrors());
+    }
+  }, [categoryError, dispatch]);
 
   const handleMinPrice = useCallback((e) => {
     const inputValue = e.target.value.replace(/[^0-9]/g, "");
@@ -43,7 +47,7 @@ const Filter = ({
     } else {
       setMinPrice("");
     }
-  });
+  }, [setMinPrice]);
 
   const handleMaxPrice = useCallback((e) => {
     const inputValue = e.target.value.replace(/[^0-9]/g, "");
@@ -57,44 +61,36 @@ const Filter = ({
     } else {
       setMaxPrice("");
     }
-  });
+  }, [setMaxPrice]);
 
-  const hanldeSelectedCategory = useCallback((category) => {
-    if (selectedCategory === category) {
-      setSelectedCategory("");
-    } else {
-      setSelectedCategory(category);
-    }
-  });
+  const handleSelectedCategory = useCallback((e) => {
+    const categoryId = e.target.value;
+    setSelectedCategory(categoryId);
+  }, [setSelectedCategory]);
 
-  const hanldeSelectedStar = useCallback((star) => {
+  const handleSelectedStar = useCallback((star) => {
     if (selectedStar === star) {
       setSelectedStar(0);
     } else {
       setSelectedStar(star);
     }
-  });
+  }, [selectedStar, setSelectedStar]);
 
   const clearFilter = useCallback(() => {
     setSelectedCategory("");
     setSelectedStar(0);
     setMinPrice("");
     setMaxPrice("");
-  });
+  }, [setSelectedCategory, setSelectedStar, setMinPrice, setMaxPrice]);
 
   const handleFiltering = useCallback(() => {
-    if (maxPrice != "" && minPrice != "") {
+    if (maxPrice !== "" && minPrice !== "") {
       if (minPrice > maxPrice) {
         toast.error("Giá thấp nhất phải nhỏ hơn giá cao nhất");
         return;
       }
-      if (maxPrice < minPrice) {
-        toast.error("Giá cao nhất phải lớn hơn giá thấp nhất");
-        return;
-      }
     }
     setCurrentPage(1);
-
     history("/shop");
 
     dispatch(
@@ -106,7 +102,7 @@ const Filter = ({
         selectedStar ? selectedStar : 0
       )
     );
-  });
+  }, [dispatch, history, keyword, maxPrice, minPrice, selectedCategory, selectedStar, setCurrentPage]);
 
   return (
     <div className="shop-filter">
@@ -121,17 +117,9 @@ const Filter = ({
               className="filter-form-control"
               placeholder="Lowest"
               value={minPrice ? (minPrice / 1000).toLocaleString("vi-VN") : ""}
-              onChange={(e) => {
-                handleMinPrice(e);
-              }}
+              onChange={(e) => handleMinPrice(e)}
             />
-            <p
-              style={{
-                display: "flex",
-                alignItems: "center",
-                fontSize: "20px",
-              }}
-            >
+            <p style={{ display: "flex", alignItems: "center", fontSize: "20px" }}>
               .000 VNĐ
             </p>
           </div>
@@ -144,64 +132,73 @@ const Filter = ({
               className="filter-form-control"
               placeholder="Highest"
               value={maxPrice ? (maxPrice / 1000).toLocaleString("vi-VN") : ""}
-              onChange={(e) => {
-                handleMaxPrice(e);
-              }}
+              onChange={(e) => handleMaxPrice(e)}
             />
-            <p
-              style={{
-                display: "flex",
-                alignItems: "center",
-                fontSize: "20px",
-              }}
-            >
+            <p style={{ display: "flex", alignItems: "center", fontSize: "20px" }}>
               .000 VNĐ
             </p>
           </div>
         </div>
       </div>
-      <div className="shop-filter-categories">
+
+            <div className="shop-filter-categories">
+        <style>
+          {`
+            .shop-filter-categories {
+              margin-bottom: 20px;
+            }
+            .shop-filter-categories h4 {
+              margin-bottom: 10px;
+            }
+            .filter-form-control {
+              width: 100%; /* Adjust the width as needed */
+              padding: 10px; /* Adjust the padding as needed */
+              margin-left: 10px; /* Adjust the left margin as needed */
+              border: 1px solid #ccc;
+              border-radius: 4px;
+              font-size: 16px;
+            }
+          `}
+        </style>
         <h4>Danh Mục</h4>
-        <ul className="shop-filter-category">
-          {categories.map((category, index) => (
-            <li
-              className={
-                selectedCategory === category ? "filter-category" : "base-form"
-              }
-              key={index}
-              onClick={() => hanldeSelectedCategory(category)}
-            >
-              {categoriesVietnamese[category]}
-            </li>
+        <select
+          className="filter-form-control"
+          value={selectedCategory}
+          onChange={handleSelectedCategory}
+        >
+          <option value="">Chọn một danh mục</option>
+          {categories && categories.map((category) => (
+            <option key={category._id} value={category._id}>
+              {category.vietnameseName}
+            </option>
           ))}
-        </ul>
+        </select>
       </div>
+
+
       <div className="shop-filter-ratings">
         <h4>Xếp Hạng</h4>
         <ul className="shop-filter-rating">
           {[5, 4, 3, 2, 1].map((star, index) => (
-            <li key={index} onClick={() => hanldeSelectedStar(star)}>
+            <li key={index} onClick={() => handleSelectedStar(star)}>
               <div
-                className={`rating-outer ${
-                  star === selectedStar ? "selected-rating" : "base-form"
-                }`}
+                className={`rating-outer ${star === selectedStar ? "selected-rating" : "base-form"}`}
               >
                 <div
                   className="rating-inner"
-                  style={{
-                    width: `${star * 20}%`,
-                  }}
+                  style={{ width: `${star * 20}%` }}
                 ></div>
               </div>
             </li>
           ))}
         </ul>
       </div>
+
       <div className="shop-filter-btn-container">
-        <button className="shop-filter-btn" onClick={() => handleFiltering()}>
+        <button className="shop-filter-btn" onClick={handleFiltering}>
           Lọc
         </button>
-        <button className="shop-filter-btn" onClick={() => clearFilter()}>
+        <button className="shop-filter-btn" onClick={clearFilter}>
           Xóa bộ lọc
         </button>
       </div>
