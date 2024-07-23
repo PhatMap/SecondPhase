@@ -27,21 +27,16 @@ class APIFeatures {
   }
 
   filterApplication() {
-    const { keyword, roles, status } = this.queryStr;
+    const { keyword, status } = this.queryStr;
 
     let query = {};
 
     if (keyword) {
       query.$or = [
-        { name: { $regex: keyword, $options: "i" } },
-        { email: { $regex: keyword, $options: "i" } },
-        { role: { $regex: keyword, $options: "i" } },
+        { "shopInfor.shopName": { $regex: keyword, $options: "i" } },
+        { "shopInfor.ownerName": { $regex: keyword, $options: "i" } },
+        { "shopInfor.email": { $regex: keyword, $options: "i" } },
       ];
-    }
-
-    if (roles) {
-      const roleArray = roles.split(",").map((r) => r.trim());
-      query.role = { $in: roleArray };
     }
 
     if (status) {

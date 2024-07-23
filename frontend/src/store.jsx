@@ -30,6 +30,7 @@ import {
   momoReducer,
 } from "./reducers/orderReducers";
 import {
+  applicationReducer,
   applicationsReducer,
   newApplicationReducer,
 } from "./reducers/applicationReducers";
@@ -60,7 +61,7 @@ const reducer = combineReducers({
   newApplication: newApplicationReducer,
   category: categoryReducer,
   applications: applicationsReducer,
-  
+  application: applicationReducer,
 });
 
 const middlware = [thunk];

@@ -3779,7 +3779,6 @@ body {
   border-color: #007bff; /* Optional: change border color on focus */
 }
 
-
 .pickup-address-overlay {
   position: fixed;
   top: 0;
@@ -3903,7 +3902,6 @@ body {
   transition: background-color 0.3s;
 }
 
-
 .NewCategory-button:hover {
   background-color: #1882eb;
   color: black;
@@ -3996,4 +3994,77 @@ body {
   color: red;
   font-size: 0.875rem;
   margin-top: 0.25rem;
+}
+
+/* Application.jsx */
+.application-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.application-form {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  width: 700px;
+  height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+.application-form::-webkit-scrollbar {
+  width: 6px;
+}
+
+.application-form::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.application-form::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Tool-tip */
+.tooltip-content {
+  position: fixed;
+  z-index: 9999;
+  padding: 8px;
+  font-size: 14px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.tooltip-solid {
+  opacity: 1;
+}
+
+.tooltip-fade {
+  transition: opacity 0.3s;
+}
+
+.tooltip-top {
+  transform: translateY(-10px);
+}
+.tooltip-bottom {
+  transform: translateY(10px);
+}
+.tooltip-left {
+  transform: translateX(-10px);
+}
+.tooltip-right {
+  transform: translateX(10px);
 }

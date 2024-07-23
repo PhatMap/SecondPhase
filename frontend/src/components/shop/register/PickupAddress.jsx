@@ -12,7 +12,7 @@ const PickupAddress = ({ onClose, pickupAddress, setPickupAddress }) => {
         province: "",
         district: "",
         ward: "",
-        detailed: "",
+        detail: "",
       },
     }
   );
@@ -58,7 +58,7 @@ const PickupAddress = ({ onClose, pickupAddress, setPickupAddress }) => {
           ward: "",
         },
       }));
-    } else if (name === "ward" || name === "detailed") {
+    } else if (name === "ward" || name === "detail") {
       setFormData((prev) => ({
         ...prev,
         address: {
@@ -142,8 +142,8 @@ const PickupAddress = ({ onClose, pickupAddress, setPickupAddress }) => {
           <label>Số nhà/Số đường</label>
           <input
             type="text"
-            name="detailed"
-            value={formData.address.detailed || ""}
+            name="detail"
+            value={formData.address.detail || ""}
             onChange={(e) => handleChange(e)}
           />
           <button

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PickupAddress from "./PickupAddress";
 
 const ShopInfor = ({ shopInfor, setShopInfor }) => {
@@ -57,7 +57,7 @@ const ShopInfor = ({ shopInfor, setShopInfor }) => {
                 {shopInfor.pickupAddress.contactName} {" | "}
                 {shopInfor.pickupAddress.contactPhone}
               </label>
-              <label>{shopInfor.pickupAddress.address.detailed}</label>
+              <label>{shopInfor.pickupAddress.address.detail}</label>
               <label>{shopInfor.pickupAddress.address.province}</label>
               <label>{shopInfor.pickupAddress.address.district}</label>
               <label>{shopInfor.pickupAddress.address.ward}</label>

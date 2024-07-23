@@ -13,7 +13,7 @@ const BusinessAddress = ({
       province: "",
       district: "",
       ward: "",
-      detailed: "",
+      detail: "",
     }
   );
 
@@ -52,7 +52,7 @@ const BusinessAddress = ({
         district: value,
         ward: "",
       }));
-    } else if (name === "ward" || name === "detailed") {
+    } else if (name === "ward" || name === "detail") {
       setFormData((prev) => ({
         ...prev,
         [name]: value,
@@ -112,8 +112,8 @@ const BusinessAddress = ({
           <label>Số nhà/Số đường</label>
           <input
             type="text"
-            name="detailed"
-            value={formData.detailed}
+            name="detail"
+            value={formData.detail}
             onChange={(e) => handleChange(e)}
           />
           <button

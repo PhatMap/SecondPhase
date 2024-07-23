@@ -277,8 +277,6 @@ exports.allUsers = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getUsers = catchAsyncErrors(async (req, res, next) => {
-    console.log("users");
-
   const apiFeatures = new APIFeatures(User.find(), req.query)
     .filterUser()
     .sort();
@@ -290,9 +288,7 @@ exports.getUsers = catchAsyncErrors(async (req, res, next) => {
   apiFeatures.adminPagination();
 
   users = await apiFeatures.query.clone();
-
-  console.log(users);
-
+  
   res.status(200).json({
     success: true,
     users,

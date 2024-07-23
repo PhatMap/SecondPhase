@@ -39,7 +39,7 @@ const TaxInfor = ({ taxInfor, setTaxInfor }) => {
           <label>Địa chỉ đăng ký kinh doanh:</label>
           {taxInfor.businessAddress ? (
             <div className="pickup-address-form">
-              <label>{taxInfor.businessAddress.detailed}</label>
+              <label>{taxInfor.businessAddress.detail}</label>
               <label>{taxInfor.businessAddress.province}</label>
               <label>{taxInfor.businessAddress.district}</label>
               <label>{taxInfor.businessAddress.ward}</label>

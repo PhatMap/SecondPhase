@@ -6,7 +6,6 @@ const APIFeatures = require("../utils/apiFeatures");
 const Cart = require("../models/cart");
 
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
-  console.log("1");
   const {
     orderItems,
     shippingInfo,
@@ -17,7 +16,6 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     totalPrice,
     paymentInfo,
   } = req.body;
-  console.log("2");
   const order = await Order.create({
     userName,
     orderItems,
@@ -30,12 +28,10 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     paidAt: Date.now(),
     user: req.user._id,
   });
-  console.log("3");
   for (const item of orderItems) {
     await updateStock(item.product, item.variant, item.size, item.quantity);
     await updateCart(req.user._id, item.product, item.variant, item.size);
   }
-  console.log("4");
 
   res.status(200).json({
     success: true,
@@ -144,7 +140,6 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
 
 exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
-  console.log("huydon", req.body.status);
   if (req.body.status === "canceled") {
     for (const item of order.orderItems) {
       await cancelorder(item.product, item.variant, item.size, item.quantity);
@@ -282,12 +277,10 @@ exports.getOrderStats = catchAsyncErrors(async (req, res, next) => {
   orders.forEach((order) => {
     if (order.deliverAt) {
       // Kiểm tra nếu trường deliverAt tồn tại
-      console.log("order.deliverAt", order.deliverAt);
       const deliverDate = new Date(order.deliverAt);
       const month = deliverDate.getMonth() + 1; // Tháng từ 0-11
       const year = deliverDate.getFullYear();
       const key = `${year}-${month}`;
-      console.log("delived", deliverDate);
       if (!monthlyRevenue[key]) {
         monthlyRevenue[key] = 0;
         monthlyOrderCount[key] = 0;

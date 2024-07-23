@@ -18,7 +18,6 @@ exports.createCategory = catchAsyncErrors(async (req, res, next) => {
   });
 });
 exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
-  console.log("Request Query:", req.query); // Thêm log để kiểm tra query nhận được
   const apiFeatures = new APIFeatures(Category.find(), req.query)
     .filterCategory()
     .sort();
@@ -31,7 +30,6 @@ exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
 
   categories = await apiFeatures.query.clone();
 
-  console.log("Categories fetched from DB:", categories); // Thêm log để kiểm tra dữ liệu trả về
 
   res.status(200).json({
     success: true,

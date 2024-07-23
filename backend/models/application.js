@@ -37,7 +37,7 @@ const applicationSchema = new mongoose.Schema({
           type: String,
           required: true,
         },
-        detailed: {
+        detail: {
           type: String,
           required: true,
         },
@@ -87,7 +87,7 @@ const applicationSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      detailed: {
+      detail: {
         type: String,
         required: true,
       },

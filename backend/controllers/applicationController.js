@@ -42,40 +42,6 @@ exports.newApplication = catchAsyncErrors(async (req, res, next) => {
     url: selfieWithId.secure_url,
   };
 
-  // const final = {
-  //   user_id: req.user.id,
-  //   shopInfor: {
-  //     shopName: applicationFromData.shopInfor.shopName,
-  //     email: applicationFromData.shopInfor.email,
-  //     phoneNumber: applicationFromData.shopInfor.phoneNumber,
-  //     pickupAddress: {
-  //       fullName: applicationFromData.shopInfor.pickupAddress.fullName,
-  //       phoneNumber: applicationFromData.shopInfor.pickupAddress.phoneNumber,
-  //       address: {
-  //         province:
-  //           applicationFromData.shopInfor.pickupAddress.address.province,
-  //         district:
-  //           applicationFromData.shopInfor.pickupAddress.address.district,
-  //         ward: applicationFromData.shopInfor.pickupAddress.address.ward,
-  //         detailed:
-  //           applicationFromData.shopInfor.pickupAddress.address.detailed,
-  //       },
-  //     },
-  //   },
-  //   shippingMethod: applicationFromData.shippingMethod,
-  //   taxInfor: {
-  //     taxCode: applicationFromData.taxInfor.taxCode,
-  //     billingEmail: applicationFromData.taxInfor.billingEmail,
-  //     businessAddress: {
-  //       province: applicationFromData.taxInfor.businessAddress.province,
-  //       district: applicationFromData.taxInfor.businessAddress.district,
-  //       ward: applicationFromData.taxInfor.businessAddress.ward,
-  //       detailed: applicationFromData.taxInfor.businessAddress.detailed,
-  //     },
-  //   },
-  //   identificationInfor: applicationFromData.identificationInfor,
-  // };
-
   await Application.create(applicationFromData);
 
   res.status(200).json({
@@ -87,6 +53,7 @@ exports.getApplications = catchAsyncErrors(async (req, res, next) => {
   const apiFeatures = new APIFeatures(Application.find(), req.query)
     .filterApplication()
     .sort();
+
   let applications = await apiFeatures.query;
 
   const applicationCount = applications.length;
@@ -100,4 +67,29 @@ exports.getApplications = catchAsyncErrors(async (req, res, next) => {
     applications,
     total: applicationCount,
   });
+});
+
+exports.updateApplication = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const { status } = req.body;
+    console.log(req.params.id);
+
+    await Application.findByIdAndUpdate(
+      req.params.id,
+      { status: status },
+      {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      }
+    );
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: error.message,
+    });
+  }
 });

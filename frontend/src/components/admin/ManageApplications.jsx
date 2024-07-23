@@ -1,8 +1,18 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getApplications } from "../../actions/applicationActions";
+import {
+  getApplications,
+  updateApplication,
+} from "../../actions/applicationActions";
 import DataTable from "../layout/DataTable";
 import Pagination from "react-js-pagination";
+import Application from "./Application";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  CLEAR_UPDATE_APPLICATION_ERRORS,
+  UPDATE_APPLICATION_RESET,
+} from "../../constants/applicationConstants";
 
 const ManageApplications = () => {
   const dispatch = useDispatch();
@@ -11,10 +21,14 @@ const ManageApplications = () => {
     (state) => state.applications
   );
 
+  const { isUpdated, updatedError } = useSelector((state) => state.application);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [resPerPage, setResPerPage] = useState(5);
   const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("");
+  const [show, setShow] = useState(false);
+  const [detail, setDetail] = useState({});
 
   useEffect(() => {
     dispatch(getApplications(currentPage, resPerPage, keyword, status));
@@ -26,6 +40,19 @@ const ManageApplications = () => {
     }
   }, [currentPage, resPerPage, keyword, status]);
 
+  useEffect(() => {
+    if (isUpdated) {
+      toast.success("Cập nhật thành công");
+      dispatch({ type: UPDATE_APPLICATION_RESET });
+      dispatch(getApplications(currentPage, resPerPage, keyword, status));
+    }
+    if (updatedError) {
+      toast.error(updatedError);
+      dispatch({ type: CLEAR_UPDATE_APPLICATION_ERRORS });
+      dispatch(getApplications(currentPage, resPerPage, keyword, status));
+    }
+  }, [isUpdated, updatedError]);
+
   const setCurrentPageNo = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -36,11 +63,14 @@ const ManageApplications = () => {
       if (choose === "all") {
         setStatus("");
       }
-      if (choose === "active") {
-        setStatus("active");
+      if (choose === "approved") {
+        setStatus("approved");
       }
-      if (choose === "inactive") {
-        setStatus("inactive");
+      if (choose === "notApproved") {
+        setStatus("notApproved");
+      }
+      if (choose === "pending") {
+        setStatus("pending");
       }
     }
   };
@@ -50,6 +80,21 @@ const ManageApplications = () => {
       setResPerPage(amount);
       setCurrentPage(1);
     }
+  };
+
+  const handleApplicationDetail = (application) => {
+    setShow(true);
+    setDetail(application);
+  };
+
+  const handleSearch = (e) => {
+    const keyword = e.target.value;
+    setKeyword(keyword);
+    setCurrentPage(1);
+  };
+
+  const handleApprove = (id, status) => {
+    dispatch(updateApplication(id, status));
   };
 
   const setApplications = () => {
@@ -79,6 +124,10 @@ const ManageApplications = () => {
           label: "Trạng Thái",
           field: "status",
         },
+        {
+          label: "TácVụ",
+          field: "action",
+        },
       ],
       rows: [],
     };
@@ -99,7 +148,39 @@ const ManageApplications = () => {
               : "Từ Chối",
           action: (
             <Fragment>
-              <div className="flex-horizental"></div>
+              <div className="flex-horizental">
+                <button
+                  title="Xem chi tiết"
+                  className={`btn btn-primary`}
+                  onClick={() => handleApplicationDetail(application)}
+                >
+                  <i className="fa fa-eye"> </i>
+                </button>
+                <button
+                  className="btn btn-success"
+                  title="Duyệt"
+                  onClick={() => {
+                    if (application.status === "approved") {
+                      return;
+                    }
+                    handleApprove(application._id, "approved");
+                  }}
+                >
+                  <i className="fa fa-check-circle-o"> </i>
+                </button>
+                <button
+                  className="btn btn-danger"
+                  title="Từ Chối"
+                  onClick={() => {
+                    if (application.status === "notApproved") {
+                      return;
+                    }
+                    handleApprove(application._id, "notApproved");
+                  }}
+                >
+                  <i className="fa fa-window-close"> </i>
+                </button>
+              </div>
             </Fragment>
           ),
         });
@@ -120,6 +201,8 @@ const ManageApplications = () => {
 
   return (
     <Fragment>
+      <ToastContainer />
+      {show && <Application data={detail} onClose={() => setShow(false)} />}
       <div className="manage-application-container">
         <div>
           <h1 className="display-4 text-center">
@@ -140,55 +223,60 @@ const ManageApplications = () => {
             />
             Tất cả trạng thái
           </label>
-
           <label
-            htmlFor="active"
-            className={status === "active" ? "marked" : ""}
+            htmlFor="pending"
+            className={status === "pending" ? "marked" : ""}
           >
             <input
               type="radio"
-              id="active"
+              id="pending"
               name="status"
-              value="active"
-              onChange={() => handleSegmentedTab("active")}
-              checked={status === "active"}
+              value="pending"
+              onChange={() => handleSegmentedTab("pending")}
+              checked={status === "pending"}
             />
             Chờ Duyệt
           </label>
           <label
-            htmlFor="inactive"
-            className={status === "inactive" ? "marked" : ""}
+            htmlFor="approved"
+            className={status === "approved" ? "marked" : ""}
           >
             <input
               type="radio"
-              id="inactive"
+              id="approved"
               name="status"
-              value="inactive"
-              onChange={() => handleSegmentedTab("inactive")}
-              checked={status === "inactive"}
+              value="approved"
+              onChange={() => handleSegmentedTab("approved")}
+              checked={status === "approved"}
             />
             Đã Duyệt
           </label>
           <label
-            htmlFor="inactive"
-            className={status === "inactive" ? "marked" : ""}
+            htmlFor="notApproved"
+            className={status === "notApproved" ? "marked" : ""}
           >
             <input
               type="radio"
-              id="inactive"
+              id="notApproved"
               name="status"
-              value="inactive"
-              onChange={() => handleSegmentedTab("inactive")}
-              checked={status === "inactive"}
+              value="notApproved"
+              onChange={() => handleSegmentedTab("notApproved")}
+              checked={status === "notApproved"}
             />
             Từ Chối
           </label>
         </div>
         <div className="select-bar">
-          <button onClick={() => handleResPerPage(3)}>3</button>
+          <button onClick={() => handleResPerPage(5)}>5</button>
           <button onClick={() => handleResPerPage(10)}>10</button>
           <button onClick={() => handleResPerPage(100)}>100</button>
         </div>
+        <input
+          className="Search-input"
+          type="search"
+          placeholder="Search here..."
+          onChange={(e) => handleSearch(e)}
+        />
         <DataTable data={setApplications()} />
         <Pagination
           activePage={currentPage}

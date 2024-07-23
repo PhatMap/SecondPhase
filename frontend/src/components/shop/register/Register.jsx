@@ -86,7 +86,7 @@ const Register = () => {
                 province: "",
                 district: "",
                 ward: "",
-                detailed: "",
+                detail: "",
               },
             },
           },
@@ -102,7 +102,7 @@ const Register = () => {
               province: "",
               district: "",
               ward: "",
-              detailed: "",
+              detail: "",
             },
           },
           identificationInfor: {

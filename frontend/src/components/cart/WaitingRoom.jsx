@@ -30,9 +30,7 @@ const WaitingRoom = () => {
   }, [orderId, orderStatus]);
 
   useEffect(() => {
-    console.log("Here 2", momoOrder);
     if (callbackData !== null && callbackData !== undefined) {
-      console.log("Here Here", callbackData.resultCode);
       if (callbackData.resultCode === 0) {
         dispatch(createOrder(momoOrder));
         history("/success");
@@ -46,7 +44,6 @@ const WaitingRoom = () => {
   }, [callbackData]);
 
   useEffect(() => {
-    console.log("Here 1", momoOrder);
 
     const socket = io("http://localhost:4000", {
       withCredentials: true,

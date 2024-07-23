@@ -1,5 +1,6 @@
 import {
   CLEAR_ERRORS,
+  CLEAR_UPDATE_APPLICATION_ERRORS,
   GET_APPLICATIONS_FAIL,
   GET_APPLICATIONS_REQUEST,
   GET_APPLICATIONS_SUCCESS,
@@ -7,6 +8,9 @@ import {
   NEW_APPLICATION_REQUEST,
   NEW_APPLICATION_RESET,
   NEW_APPLICATION_SUCCESS,
+  UPDATE_APPLICATION_FAIL,
+  UPDATE_APPLICATION_RESET,
+  UPDATE_APPLICATION_SUCCESS,
 } from "../constants/applicationConstants";
 
 export const newApplicationReducer = (state = { success: false }, action) => {
@@ -75,6 +79,37 @@ export const applicationsReducer = (state = { applications: [] }, action) => {
       return {
         ...state,
         error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const applicationReducer = (state = { application: [] }, action) => {
+  switch (action.type) {
+    case UPDATE_APPLICATION_SUCCESS:
+      return {
+        ...state,
+        isUpdated: action.payload.success,
+      };
+
+    case UPDATE_APPLICATION_FAIL:
+      return {
+        ...state,
+        updatedError: action.payload,
+      };
+
+    case UPDATE_APPLICATION_RESET:
+      return {
+        ...state,
+        isUpdated: false,
+      };
+
+    case CLEAR_UPDATE_APPLICATION_ERRORS:
+      return {
+        ...state,
+        updatedError: null,
       };
 
     default:
