@@ -32,6 +32,8 @@ export const newApplication = (formData) => async (dispatch) => {
   }
 };
 
+
+
 export const updateApplication = (id, status) => async (dispatch) => {
   try {
     const { data } = await axios.put(`/api/v1/admin/application/${id}`, {

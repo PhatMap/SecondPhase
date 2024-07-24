@@ -1,9 +1,10 @@
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const Application = require("../models/application");
+const Notification = require("../models/notification");
 const cloudinary = require("cloudinary");
-const user = require("../models/user");
 const APIFeatures = require("../utils/apiFeatures");
+const notification = require("../models/notification");
 
 exports.newApplication = catchAsyncErrors(async (req, res, next) => {
   const { formData } = req.body;
@@ -72,7 +73,6 @@ exports.getApplications = catchAsyncErrors(async (req, res, next) => {
 exports.updateApplication = catchAsyncErrors(async (req, res, next) => {
   try {
     const { status } = req.body;
-    console.log(req.params.id);
 
     await Application.findByIdAndUpdate(
       req.params.id,
@@ -83,6 +83,16 @@ exports.updateApplication = catchAsyncErrors(async (req, res, next) => {
         useFindAndModify: false,
       }
     );
+
+    await notification.create({
+      message:
+        status === "approved"
+          ? "Đơn đăng ký của bạn đã được duyệt"
+          : "Đơn đăng ký của bạn đã bị từ chối",
+      type: status === "approved" ? "success" : "error",
+      userId: req.params.id,
+      category: "system",
+    });
 
     res.status(200).json({
       success: true,

@@ -41,8 +41,23 @@ cloudinary.config({
   api_secret: "0PalAWB6WXyk7srvsbPxNosjvp0",
 });
 
+const userSockets = new Map();
+
 io.on("connection", (socket) => {
   console.log("A client connected");
+
+  socket.on("login", (userId) => {
+    userSockets.set(userId, socket.id);
+    socket.userId = userId;
+    console.log(userSockets);
+  });
+
+  socket.on("disconnect", () => {
+    if (socket.userId) {
+      userSockets.delete(socket.userId);
+      console.log(userSockets);
+    }
+  });
 });
 
 const products = require("./routes/product");

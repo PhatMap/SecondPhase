@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Home from "./components/Home";
 import Shop from "./components/Shop";
@@ -43,6 +43,7 @@ import Sidebar from "./components/shop/Sidebar";
 import ScrollToTop from "./utils/ScrollToTop";
 import Centre from "./components/admin/Centre";
 import ShopRegister from "./components/shop/register/Register";
+import SocketManager from "./components/user/SocketManager";
 
 function App() {
   const history = useNavigate();
@@ -83,144 +84,154 @@ function App() {
   );
 
   return (
-    <div className={`${showSidebar ? "App-container" : ""}`}>
-      {showSidebar && (
-        <div style={{ width: "40px" }}>
-          <Sidebar />
+    <Fragment>
+      <SocketManager />
+      <div className={`${showSidebar ? "App-container" : ""}`}>
+        {showSidebar && (
+          <div style={{ width: "40px" }}>
+            <Sidebar />
+          </div>
+        )}
+        <div className="App-form">
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/search/:keyword" element={<Shop />} />
+            <Route path="/category/:category" element={<Shop />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
+
+            <Route
+              path="/shipping"
+              element={<ProtectedRoute component={Shipping} />}
+            />
+            <Route
+              path="/shipping/address"
+              element={<ProtectedRoute component={AddressShip} />}
+            />
+            <Route
+              path="/confirm"
+              element={<ProtectedRoute component={ConfirmOrder} />}
+            />
+            <Route
+              path="/Waiting"
+              element={<ProtectedRoute component={WaitingRoom} />}
+            />
+            <Route
+              path="/success"
+              element={<ProtectedRoute component={OrderSuccess} />}
+            />
+            <Route
+              path="/payment"
+              element={
+                stripeApiKey && (
+                  <Elements stripe={loadStripe(stripeApiKey)}>
+                    <ProtectedRoute component={Payment} />
+                  </Elements>
+                )
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/password/forgot" element={<ForgotPassword />} />
+            <Route path="/password/reset/:token" element={<NewPassword />} />
+            <Route
+              path="/me"
+              element={<ProtectedRoute component={Profile} />}
+            />
+            <Route
+              path="/me/update"
+              element={<ProtectedRoute component={UpdateProfile} />}
+            />
+            <Route
+              path="/me/user-address"
+              element={<ProtectedRoute component={UserAddress} />}
+            />
+            <Route exact path="/me/user-address/add" element={<AddAddress />} />
+            <Route
+              exact
+              path="/me/user-address/update/:id"
+              element={<UpdateAddress />}
+            />
+
+            <Route
+              path="/password/update"
+              element={<ProtectedRoute component={UpdatePassword} />}
+            />
+            <Route
+              path="/orders/me"
+              element={<ProtectedRoute component={ListOrders} />}
+            />
+            <Route
+              path="/order/:id"
+              element={<ProtectedRoute component={OrderDetails} />}
+            />
+          </Routes>
+
+          <Routes>
+            <Route
+              path="/dashboard"
+              element={<ProtectedRoute isAdmin={true} component={Dashboard} />}
+            />
+            <Route
+              path="/shop/products"
+              element={
+                <ProtectedRoute isAdmin={true} component={ProductsList} />
+              }
+            />
+            <Route
+              path="/shop/product"
+              element={<ProtectedRoute isAdmin={true} component={NewProduct} />}
+            />
+            <Route
+              path="/shop/product/:id"
+              element={
+                <ProtectedRoute isAdmin={true} component={UpdateProduct} />
+              }
+            />
+            <Route
+              path="/shop/orders"
+              element={<ProtectedRoute isAdmin={true} component={OrdersList} />}
+            />
+            <Route
+              path="/shop/order/:id"
+              element={
+                <ProtectedRoute isAdmin={true} component={ProcessOrder} />
+              }
+            />
+            <Route
+              path="/shop/users"
+              element={<ProtectedRoute isAdmin={true} component={UsersList} />}
+            />
+
+            <Route
+              path="/shop/user/:id"
+              element={<ProtectedRoute isAdmin={true} component={UpdateUser} />}
+            />
+            <Route
+              path="/shop/users/new"
+              element={<ProtectedRoute isAdmin={true} component={NewUser} />}
+            />
+            <Route
+              path="/shop/reviews"
+              element={
+                <ProtectedRoute isAdmin={true} component={ProductReviews} />
+              }
+            />
+            <Route
+              path="/shop/register"
+              element={
+                <ProtectedRoute isCustomer={true} component={ShopRegister} />
+              }
+            />
+          </Routes>
+          <Routes>
+            <Route path="/admin/*" element={<Centre />} />
+          </Routes>
         </div>
-      )}
-      <div className="App-form">
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/search/:keyword" element={<Shop />} />
-          <Route path="/category/:category" element={<Shop />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/cart" element={<Cart />} />
-
-          <Route
-            path="/shipping"
-            element={<ProtectedRoute component={Shipping} />}
-          />
-          <Route
-            path="/shipping/address"
-            element={<ProtectedRoute component={AddressShip} />}
-          />
-          <Route
-            path="/confirm"
-            element={<ProtectedRoute component={ConfirmOrder} />}
-          />
-          <Route
-            path="/Waiting"
-            element={<ProtectedRoute component={WaitingRoom} />}
-          />
-          <Route
-            path="/success"
-            element={<ProtectedRoute component={OrderSuccess} />}
-          />
-          <Route
-            path="/payment"
-            element={
-              stripeApiKey && (
-                <Elements stripe={loadStripe(stripeApiKey)}>
-                  <ProtectedRoute component={Payment} />
-                </Elements>
-              )
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/password/forgot" element={<ForgotPassword />} />
-          <Route path="/password/reset/:token" element={<NewPassword />} />
-          <Route path="/me" element={<ProtectedRoute component={Profile} />} />
-          <Route
-            path="/me/update"
-            element={<ProtectedRoute component={UpdateProfile} />}
-          />
-          <Route
-            path="/me/user-address"
-            element={<ProtectedRoute component={UserAddress} />}
-          />
-          <Route exact path="/me/user-address/add" element={<AddAddress />} />
-          <Route
-            exact
-            path="/me/user-address/update/:id"
-            element={<UpdateAddress />}
-          />
-
-          <Route
-            path="/password/update"
-            element={<ProtectedRoute component={UpdatePassword} />}
-          />
-          <Route
-            path="/orders/me"
-            element={<ProtectedRoute component={ListOrders} />}
-          />
-          <Route
-            path="/order/:id"
-            element={<ProtectedRoute component={OrderDetails} />}
-          />
-        </Routes>
-
-        <Routes>
-          <Route
-            path="/dashboard"
-            element={<ProtectedRoute isAdmin={true} component={Dashboard} />}
-          />
-          <Route
-            path="/shop/products"
-            element={<ProtectedRoute isAdmin={true} component={ProductsList} />}
-          />
-          <Route
-            path="/shop/product"
-            element={<ProtectedRoute isAdmin={true} component={NewProduct} />}
-          />
-          <Route
-            path="/shop/product/:id"
-            element={
-              <ProtectedRoute isAdmin={true} component={UpdateProduct} />
-            }
-          />
-          <Route
-            path="/shop/orders"
-            element={<ProtectedRoute isAdmin={true} component={OrdersList} />}
-          />
-          <Route
-            path="/shop/order/:id"
-            element={<ProtectedRoute isAdmin={true} component={ProcessOrder} />}
-          />
-          <Route
-            path="/shop/users"
-            element={<ProtectedRoute isAdmin={true} component={UsersList} />}
-          />
-
-          <Route
-            path="/shop/user/:id"
-            element={<ProtectedRoute isAdmin={true} component={UpdateUser} />}
-          />
-          <Route
-            path="/shop/users/new"
-            element={<ProtectedRoute isAdmin={true} component={NewUser} />}
-          />
-          <Route
-            path="/shop/reviews"
-            element={
-              <ProtectedRoute isAdmin={true} component={ProductReviews} />
-            }
-          />
-          <Route
-            path="/shop/register"
-            element={
-              <ProtectedRoute isCustomer={true} component={ShopRegister} />
-            }
-          />
-        </Routes>
-        <Routes>
-          <Route path="/admin/*" element={<Centre />} />
-        </Routes>
       </div>
-    </div>
+    </Fragment>
   );
 }
 
