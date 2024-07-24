@@ -9,9 +9,10 @@ const couponSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    idCreator: {
-        type: String,
-        required: true,
+    creatorId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true
     },
     description: {
         type: String,
