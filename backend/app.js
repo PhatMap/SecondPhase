@@ -52,6 +52,7 @@ const payment = require("./routes/payment");
 const cart = require("./routes/cart");
 const category = require("./routes/category");
 const application = require("./routes/application");
+const coupon = require("./routes/coupon")
 
 app.use("/api/v1", products);
 app.use("/api/v1", auth);
@@ -60,6 +61,7 @@ app.use("/api/v1", payment);
 app.use("/api/v1", cart);
 app.use("/api/v1", category);
 app.use("/api/v1", application);
+app.use("/api/v1", coupon);
 
 app.use(errorMiddlewares);
 
