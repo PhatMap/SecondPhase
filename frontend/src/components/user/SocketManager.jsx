@@ -3,8 +3,8 @@ import io from "socket.io-client";
 import { useSelector } from "react-redux";
 
 const SocketManager = () => {
-  const [socket, setSocket] = useState(null);
   const { user } = useSelector((state) => state.auth);
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     const newSocket = io("http://localhost:4000");

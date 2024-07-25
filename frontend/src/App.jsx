@@ -85,7 +85,7 @@ function App() {
 
   return (
     <Fragment>
-      <SocketManager />
+      <SocketManager  />
       <div className={`${showSidebar ? "App-container" : ""}`}>
         {showSidebar && (
           <div style={{ width: "40px" }}>

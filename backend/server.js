@@ -1,4 +1,4 @@
-const { app, server, io } = require("./app");
+const { app, server, io, userSockets } = require("./app");
 const connectDatabase = require("./config/database");
 
 process.on("uncaughtException", (err) => {
@@ -16,8 +16,10 @@ server.listen(PORT, () => {
 });
 
 const payment = require("./controllers/paymentController");
+const notify = require("./controllers/applicationController");
 
 payment.setIo(io);
+notify.setIo(io, userSockets);
 
 process.on("unhandledRejection", (err) => {
   console.log(`ERROR: ${err.message}`);

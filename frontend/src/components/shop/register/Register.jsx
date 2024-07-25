@@ -73,7 +73,7 @@ const Register = () => {
     return savedFormData
       ? JSON.parse(savedFormData)
       : {
-          user_id: "",
+          userId: "",
           shopInfor: {
             shopName: "",
             ownerName: "",

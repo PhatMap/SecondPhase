@@ -6,11 +6,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logout } from "../../actions/userActions";
 import Search from "./Search";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Popper } from "@mui/material";
 import { getUserCart } from "../../actions/cartActions";
-import { getProducts } from "../../actions/productActions";
 
 const Header = ({ color }) => {
   const location = useLocation();

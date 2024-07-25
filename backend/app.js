@@ -67,7 +67,7 @@ const payment = require("./routes/payment");
 const cart = require("./routes/cart");
 const category = require("./routes/category");
 const application = require("./routes/application");
-const coupon = require("./routes/coupon")
+const coupon = require("./routes/coupon");
 
 app.use("/api/v1", products);
 app.use("/api/v1", auth);
@@ -80,4 +80,4 @@ app.use("/api/v1", coupon);
 
 app.use(errorMiddlewares);
 
-module.exports = { app, server, io };
+module.exports = { app, server, io, userSockets };

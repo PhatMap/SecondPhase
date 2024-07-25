@@ -4,7 +4,6 @@ const Application = require("../models/application");
 const Notification = require("../models/notification");
 const cloudinary = require("cloudinary");
 const APIFeatures = require("../utils/apiFeatures");
-const notification = require("../models/notification");
 
 exports.newApplication = catchAsyncErrors(async (req, res, next) => {
   const { formData } = req.body;
@@ -31,7 +30,7 @@ exports.newApplication = catchAsyncErrors(async (req, res, next) => {
     }
   );
 
-  applicationFromData.user_id = req.user.id;
+  applicationFromData.userId = req.user.id;
 
   applicationFromData.identificationInfor.idCardImage = {
     public_id: idCardImage.public_id,
@@ -70,11 +69,18 @@ exports.getApplications = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+let io, userSockets;
+
+exports.setIo = (_io, _userSockets) => {
+  io = _io;
+  userSockets = _userSockets;
+};
+
 exports.updateApplication = catchAsyncErrors(async (req, res, next) => {
   try {
     const { status } = req.body;
 
-    await Application.findByIdAndUpdate(
+    const application = await Application.findByIdAndUpdate(
       req.params.id,
       { status: status },
       {
@@ -84,15 +90,33 @@ exports.updateApplication = catchAsyncErrors(async (req, res, next) => {
       }
     );
 
-    await notification.create({
+    await Notification.create({
       message:
         status === "approved"
           ? "Đơn đăng ký của bạn đã được duyệt"
           : "Đơn đăng ký của bạn đã bị từ chối",
       type: status === "approved" ? "success" : "error",
-      userId: req.params.id,
+      userId: application.userId.toString(),
       category: "system",
     });
+
+    console.log(
+      application.userId.toString(),
+      userSockets,
+      userSockets.has(application.userId.toString())
+    );
+
+    if (io && userSockets.has(application.userId.toString())) {
+      const socketId = userSockets.get(application.userId.toString());
+
+      const latestNotifications = await Notification.find({
+        userId: application.userId,
+      }).sort();
+
+      io.to(socketId).emit("newNotification", latestNotifications);
+
+      console.log(latestNotifications);
+    }
 
     res.status(200).json({
       success: true,
