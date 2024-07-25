@@ -100,22 +100,15 @@ exports.updateApplication = catchAsyncErrors(async (req, res, next) => {
       category: "system",
     });
 
-    console.log(
-      application.userId.toString(),
-      userSockets,
-      userSockets.has(application.userId.toString())
-    );
-
     if (io && userSockets.has(application.userId.toString())) {
       const socketId = userSockets.get(application.userId.toString());
 
       const latestNotifications = await Notification.find({
         userId: application.userId,
+        isRead: false,
       }).sort();
 
       io.to(socketId).emit("newNotification", latestNotifications);
-
-      console.log(latestNotifications);
     }
 
     res.status(200).json({

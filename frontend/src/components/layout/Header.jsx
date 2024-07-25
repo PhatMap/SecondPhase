@@ -17,6 +17,13 @@ const Header = ({ color }) => {
 
   const [menu, setMenu] = useState(false);
   const menuRef = useRef(null);
+
+  const { user, loading, isGoogleLoggedIn } = useSelector(
+    (state) => state.auth
+  );
+
+  const { latest } = useSelector((state) => state.notifications);
+
   const handleClick = () => {
     setMenu(true);
   };
@@ -45,9 +52,6 @@ const Header = ({ color }) => {
     setAnchorE2(null);
   };
 
-  const { user, loading, isGoogleLoggedIn } = useSelector(
-    (state) => state.auth
-  );
   const { cartItems } = useSelector((state) => state.cart);
   const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
 
@@ -83,6 +87,23 @@ const Header = ({ color }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    if (latest.length > 0) {
+      const count = latest.length;
+      updateNotificationCount(count);
+    }
+  }, [latest]);
+
+  function updateNotificationCount(count) {
+    const notificationCount = document.getElementById("notification-count");
+    if (count > 0) {
+      notificationCount.textContent = count;
+      notificationCount.style.display = "block";
+    } else {
+      notificationCount.style.display = "none";
+    }
+  }
 
   return (
     <Fragment>
@@ -149,7 +170,7 @@ const Header = ({ color }) => {
 
             <Popper
               anchorEl={anchorE2}
-              open={openCart && user} // Chỉ mở Popper khi openCart = true và user đã đăng nhập
+              open={openCart && user}
               className="Header-cart-items"
             >
               {cartItems.map((item, index) => (
@@ -168,6 +189,16 @@ const Header = ({ color }) => {
                 </MenuItem>
               ))}
             </Popper>
+
+            <div id="notification-bell">
+              <i
+                className={latest.length > 0 ? "fa fa-bell" : "fa fa-bell-o"}
+              ></i>
+              <span
+                id="notification-count"
+                className="notification-badge"
+              ></span>
+            </div>
 
             {user ? (
               <div className="ml-4 dropdown d-inline">

@@ -4068,3 +4068,26 @@ body {
 .tooltip-right {
   transform: translateX(10px);
 }
+
+/* Notification Bell */
+
+#notification-bell {
+  position: relative;
+  cursor: pointer;
+}
+
+#notification-bell i {
+  font-size: 20px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  padding: 3px 6px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  display: none;
+}

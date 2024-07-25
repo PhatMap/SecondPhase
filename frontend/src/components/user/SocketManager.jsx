@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getNotifications } from "../../actions/notificationActions";
 
 const SocketManager = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [socket, setSocket] = useState(null);
 
@@ -23,8 +25,9 @@ const SocketManager = () => {
 
       socket.emit("login", user._id);
 
-      socket.on("newNotification", (notification) => {
-        console.log("Received new notification:", notification);
+      socket.on("newNotification", (notifications) => {
+        console.log("Received new notification:", notifications);
+        dispatch(getNotifications(notifications));
       });
 
       return () => {

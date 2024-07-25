@@ -35,6 +35,7 @@ import {
   newApplicationReducer,
 } from "./reducers/applicationReducers";
 import { categoryReducer } from "./reducers/categoryReducers";
+import { notificationsReducer } from "./reducers/notificationsReducers";
 
 const reducer = combineReducers({
   momo: momoReducer,
@@ -62,6 +63,7 @@ const reducer = combineReducers({
   category: categoryReducer,
   applications: applicationsReducer,
   application: applicationReducer,
+  notifications: notificationsReducer,
 });
 
 const middlware = [thunk];
