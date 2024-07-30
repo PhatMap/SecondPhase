@@ -26,6 +26,7 @@ class APIFeatures {
     return this;
   }
 
+
   filterApplication() {
     const { keyword, status } = this.queryStr;
 

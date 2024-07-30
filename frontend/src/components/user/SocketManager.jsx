@@ -25,9 +25,8 @@ const SocketManager = () => {
 
       socket.emit("login", user._id);
 
-      socket.on("newNotification", (notifications) => {
-        console.log("Received new notification:", notifications);
-        dispatch(getNotifications(notifications));
+      socket.on("newNotification", () => {
+        dispatch(getNotifications());
       });
 
       return () => {

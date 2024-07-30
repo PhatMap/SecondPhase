@@ -9,30 +9,31 @@ import Search from "./Search";
 import MenuItem from "@mui/material/MenuItem";
 import { Popper } from "@mui/material";
 import { getUserCart } from "../../actions/cartActions";
+import {
+  getNotifications,
+  readNotifications,
+} from "../../actions/notificationActions";
 
 const Header = ({ color }) => {
   const location = useLocation();
   const history = useNavigate();
   const dispatch = useDispatch();
-
   const [menu, setMenu] = useState(false);
   const menuRef = useRef(null);
+  const [notify, setNotify] = useState(false);
+  const notifyRef = useRef(null);
+  const bellRef = useRef(null);
+  const [isSticky, setIsSticky] = useState(false);
+  const prevScrollY = useRef(0);
+  const [anchorE2, setAnchorE2] = useState(null);
+  const openCart = Boolean(anchorE2);
+  const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
 
   const { user, loading, isGoogleLoggedIn } = useSelector(
     (state) => state.auth
   );
-
-  const { latest } = useSelector((state) => state.notifications);
-
-  const handleClick = () => {
-    setMenu(true);
-  };
-
-  const handleClickOutside = (event) => {
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
-      setMenu(false);
-    }
-  };
+  const { latest, recent } = useSelector((state) => state.notifications);
+  const { cartItems } = useSelector((state) => state.cart);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -41,32 +42,15 @@ const Header = ({ color }) => {
     };
   }, []);
 
-  const [anchorE2, setAnchorE2] = React.useState(null);
+  useEffect(() => {
+    dispatch(getNotifications());
+  }, []);
 
-  const openCart = Boolean(anchorE2);
-
-  const handleCartOpen = (event) => {
-    setAnchorE2(event.currentTarget);
-  };
-  const handleCartClose = () => {
-    setAnchorE2(null);
-  };
-
-  const { cartItems } = useSelector((state) => state.cart);
-  const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
-
-  const logoutHandler = () => {
-    toast.error("Logged out successfully");
-    dispatch(logout());
-  };
   useEffect(() => {
     if (user) {
       dispatch(getUserCart());
     }
   }, [dispatch, user]);
-
-  const [isSticky, setIsSticky] = useState(false);
-  const prevScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -89,11 +73,43 @@ const Header = ({ color }) => {
   }, []);
 
   useEffect(() => {
-    if (latest.length > 0) {
+    if (latest.length > 0 && notify === false) {
       const count = latest.length;
       updateNotificationCount(count);
     }
   }, [latest]);
+
+  const handleClick = () => {
+    setMenu(true);
+  };
+
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setMenu(false);
+    }
+
+    if (
+      notifyRef.current &&
+      !notifyRef.current.contains(event.target) &&
+      bellRef.current &&
+      !bellRef.current.contains(event.target)
+    ) {
+      setNotify(false);
+      dispatch(readNotifications());
+    }
+  };
+
+  const handleCartOpen = (event) => {
+    setAnchorE2(event.currentTarget);
+  };
+  const handleCartClose = () => {
+    setAnchorE2(null);
+  };
+
+  const logoutHandler = () => {
+    toast.error("Logged out successfully");
+    dispatch(logout());
+  };
 
   function updateNotificationCount(count) {
     const notificationCount = document.getElementById("notification-count");
@@ -104,6 +120,18 @@ const Header = ({ color }) => {
       notificationCount.style.display = "none";
     }
   }
+
+  const hanldeNotify = (e) => {
+    e.stopPropagation();
+    setNotify(!notify);
+    updateNotificationCount(0);
+
+    if (!notify === true) {
+      dispatch(getNotifications());
+    } else {
+      dispatch(readNotifications());
+    }
+  };
 
   return (
     <Fragment>
@@ -192,12 +220,34 @@ const Header = ({ color }) => {
 
             <div id="notification-bell">
               <i
-                className={latest.length > 0 ? "fa fa-bell" : "fa fa-bell-o"}
+                ref={bellRef}
+                className={notify > 0 ? "fa fa-bell" : "fa fa-bell-o"}
+                onClick={hanldeNotify}
               ></i>
               <span
                 id="notification-count"
                 className="notification-badge"
               ></span>
+              {notify && (
+                <span ref={notifyRef} className="notification-container">
+                  <h2>Thông báo mới</h2>
+                  {latest.length > 0 ? (
+                    latest.map((item, index) => (
+                      <p key={index}>{item.message}</p>
+                    ))
+                  ) : (
+                    <p>Không có thông báo mới</p>
+                  )}
+                  <h2>Thông báo gần đây</h2>
+                  {recent.length > 0 ? (
+                    recent.map((item, index) => (
+                      <p key={index}>{item.message}</p>
+                    ))
+                  ) : (
+                    <p>Không có thông báo gần đây</p>
+                  )}
+                </span>
+              )}
             </div>
 
             {user ? (

@@ -68,6 +68,7 @@ const cart = require("./routes/cart");
 const category = require("./routes/category");
 const application = require("./routes/application");
 const coupon = require("./routes/coupon");
+const notification = require("./routes/notification");
 
 app.use("/api/v1", products);
 app.use("/api/v1", auth);
@@ -77,6 +78,7 @@ app.use("/api/v1", cart);
 app.use("/api/v1", category);
 app.use("/api/v1", application);
 app.use("/api/v1", coupon);
+app.use("/api/v1", notification);
 
 app.use(errorMiddlewares);
 
