@@ -1,5 +1,8 @@
 import axios from "axios";
-import { GET_NOTIFICATIONS } from "../constants/notificationConstants";
+import {
+  GET_MORE_NOTIFICATIONS,
+  GET_NOTIFICATIONS,
+} from "../constants/notificationConstants";
 
 export const getNotifications = () => async (dispatch) => {
   try {
@@ -22,5 +25,26 @@ export const readNotifications = () => async (dispatch) => {
     await axios.put(`/api/v1/notifications/me`);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getMoreNotifications = (page) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `/api/v1/notifications?page=${page}&limit=5`
+    );
+
+    if (data.more.length > 0) {
+      dispatch({
+        type: GET_MORE_NOTIFICATIONS,
+        payload: data.more,
+      });
+
+      return data.more.length;
+    } else {
+      return data.more.length;
+    }
+  } catch (error) {
+    console.error("Error fetching more notifications:", error);
   }
 };

@@ -13,8 +13,8 @@ exports.createCategory = catchAsyncErrors(async (req, res, next) => {
 
   // Respond with success message and created category
   res.status(201).json({
-      success: true,
-      category
+    success: true,
+    category,
   });
 });
 exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
@@ -26,10 +26,9 @@ exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
 
   const totalCategories = categories.length;
 
-  apiFeatures. adminPagination();
+  apiFeatures.adminPagination();
 
   categories = await apiFeatures.query.clone();
-
 
   res.status(200).json({
     success: true,
@@ -46,7 +45,7 @@ exports.updateCategory = catchAsyncErrors(async (req, res, next) => {
   let category = await Category.findById(categoryId);
 
   if (!category) {
-      return next(new ErrorHandler("Danh mục không tồn tại", 404));
+    return next(new ErrorHandler("Danh mục không tồn tại", 404));
   }
 
   // Cập nhật thông tin mới của danh mục
@@ -55,32 +54,32 @@ exports.updateCategory = catchAsyncErrors(async (req, res, next) => {
   await category.save();
 
   res.status(200).json({
-      success: true,
-      category,
+    success: true,
+    category,
   });
 });
 
 // Xóa danh mục và tất cả sản phẩm có cùng danh mục đó
 exports.deleteCategory = catchAsyncErrors(async (req, res, next) => {
-    const { categoryId } = req.params;
+  const { categoryId } = req.params;
 
-    // Tìm danh mục cần xóa
-    let category = await Category.findById(categoryId);
+  // Tìm danh mục cần xóa
+  let category = await Category.findById(categoryId);
 
-    if (!category) {
-        return next(new ErrorHandler("Danh mục không tồn tại", 404));
-    }
+  if (!category) {
+    return next(new ErrorHandler("Danh mục không tồn tại", 404));
+  }
 
-    // Xóa tất cả sản phẩm có cùng danh mục
-    const deleteResult = await Product.deleteMany({ category: categoryId });
+  // Xóa tất cả sản phẩm có cùng danh mục
+  const deleteResult = await Product.deleteMany({ category: categoryId });
 
-    // Xóa danh mục
-    await Category.findByIdAndDelete(categoryId);
+  // Xóa danh mục
+  await Category.findByIdAndDelete(categoryId);
 
-    res.status(200).json({
-        success: true,
-        message: `Đã xóa danh mục ${category.categoryName} và ${deleteResult.deletedCount} sản phẩm liên quan`,
-    });
+  res.status(200).json({
+    success: true,
+    message: `Đã xóa danh mục ${category.categoryName} và ${deleteResult.deletedCount} sản phẩm liên quan`,
+  });
 });
 exports.getCategoryById = catchAsyncErrors(async (req, res, next) => {
   const category = await Category.findById(req.params.id);
@@ -98,7 +97,6 @@ exports.getCategoryById = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 exports.getCategoryAll = async (req, res, next) => {
   try {
     const AllCategories = await Category.find();
@@ -109,7 +107,7 @@ exports.getCategoryAll = async (req, res, next) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message || 'Server Error',
+      message: error.message || "Server Error",
     });
   }
 };

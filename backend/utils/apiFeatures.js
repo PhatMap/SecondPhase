@@ -26,7 +26,6 @@ class APIFeatures {
     return this;
   }
 
-
   filterApplication() {
     const { keyword, status } = this.queryStr;
 
@@ -105,6 +104,15 @@ class APIFeatures {
     const skip = resPerPage * (currentPage - 1);
 
     this.query = this.query.limit(resPerPage).skip(skip);
+    return this;
+  }
+
+  notificationPagination() {
+    const page = Number(this.queryStr.page) || 1;
+    const limit = Number(this.queryStr.limit) || 5;
+    const skip = (page - 1) * limit;
+
+    this.query = this.query.skip(skip).limit(limit);
     return this;
   }
 

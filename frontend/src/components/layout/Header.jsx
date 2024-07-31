@@ -10,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Popper } from "@mui/material";
 import { getUserCart } from "../../actions/cartActions";
 import {
+  getMoreNotifications,
   getNotifications,
   readNotifications,
 } from "../../actions/notificationActions";
@@ -28,6 +29,8 @@ const Header = ({ color }) => {
   const [anchorE2, setAnchorE2] = useState(null);
   const openCart = Boolean(anchorE2);
   const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const { user, loading, isGoogleLoggedIn } = useSelector(
     (state) => state.auth
@@ -41,6 +44,40 @@ const Header = ({ color }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const loadMoreNotifications = async () => {
+    if (!hasMore) return;
+
+    try {
+      const result = await dispatch(getMoreNotifications(page));
+      if (result && result > 0) {
+        setPage((prev) => prev + 1);
+      } else {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Error loading more notifications:", error);
+    }
+  };
+
+  useEffect(() => {
+    const container = notifyRef.current;
+
+    const handleScroll = () => {
+      const scrollPercentage =
+        (container.scrollTop /
+          (container.scrollHeight - container.clientHeight)) *
+        100;
+      if (scrollPercentage > 90) {
+        loadMoreNotifications();
+      }
+    };
+
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+      return () => container.removeEventListener("scroll", handleScroll);
+    }
+  }, [hasMore, loadMoreNotifications]);
 
   useEffect(() => {
     dispatch(getNotifications());
@@ -131,6 +168,10 @@ const Header = ({ color }) => {
     } else {
       dispatch(readNotifications());
     }
+  };
+
+  const handleLoadMore = () => {
+    loadMoreNotifications();
   };
 
   return (
@@ -246,6 +287,9 @@ const Header = ({ color }) => {
                   ) : (
                     <p>Không có thông báo gần đây</p>
                   )}
+                  {hasMore && <p>Cuộn xuống để xem thêm thông báo</p>}
+                  {!hasMore && <p>Không còn thông báo nào khác</p>}
+                  <button onClick={handleLoadMore}>Thông báo trước đó</button>
                 </span>
               )}
             </div>

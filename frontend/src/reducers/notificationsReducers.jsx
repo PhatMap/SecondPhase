@@ -1,4 +1,5 @@
 import {
+  GET_MORE_NOTIFICATIONS,
   GET_NOTIFICATIONS,
   GET_NOTIFICATIONS_RESET,
 } from "../constants/notificationConstants";
@@ -13,6 +14,12 @@ export const notificationsReducer = (
         ...state,
         latest: action.payload.latestNotifications,
         recent: action.payload.recentNotifications,
+      };
+
+    case GET_MORE_NOTIFICATIONS:
+      return {
+        ...state,
+        recent: [...state.recent, ...action.payload],
       };
 
     case GET_NOTIFICATIONS_RESET:

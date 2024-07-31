@@ -4094,15 +4094,37 @@ body {
 
 .notification-container {
   width: 300px;
-  height: 600px;
+  height: fit-content;
+  max-height: 300px;
   position: absolute;
   left: 25px;
   z-index: 9999;
   border: gainsboro 1px solid;
   border-radius: 5px;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
 }
 
-.notification-container h2{
+.notification-container h2 {
   font-weight: bold;
-} 
+}
+
+.notification-container button {
+  background-color: #d1d1d1;
+  color: black;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.notification-container button:hover {
+  background-color: black;
+  color: #d1d1d1;
+}
