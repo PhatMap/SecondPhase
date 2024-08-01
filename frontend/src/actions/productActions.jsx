@@ -203,7 +203,7 @@ export const newReview = (reviewData) => async (dispatch) => {
   }
 };
 
-export const getAdminProducts = () => async (dispatch) => {
+export const getShopProducts = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCTS_REQUEST });
 
@@ -211,7 +211,7 @@ export const getAdminProducts = () => async (dispatch) => {
 
     dispatch({
       type: ADMIN_PRODUCTS_SUCCESS,
-      payload: data.products,
+      payload: { products: data.products },
     });
   } catch (error) {
     dispatch({
@@ -220,6 +220,26 @@ export const getAdminProducts = () => async (dispatch) => {
     });
   }
 };
+
+export const getAdminProducts =
+  (approved = "pending", keyword = "", currentPage = 1, resPerPage = 5) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ADMIN_PRODUCTS_REQUEST });
+      const { data } = await axios.get(
+        `/api/v1/admin/products?approved=${approved}&keyword=${keyword}&page=${currentPage}&resPerPage=${resPerPage}`
+      );
+      dispatch({
+        type: ADMIN_PRODUCTS_SUCCESS,
+        payload: { products: data.products, total: data.total },
+      });
+    } catch (error) {
+      dispatch({
+        type: ADMIN_PRODUCTS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const getProductReviews = (id) => async (dispatch) => {
   try {

@@ -83,27 +83,27 @@
     "user": "6654b2f605a0d7b79eeb7753",
     "reviews": [
       {
-        
         "user": "6654b2f605a0d7b79eeb7753",
         "name": "Lã Quý Quân",
         "rating": 4,
         "comment": "Ok sản phẩm tốt",
         "createAt": "2024-05-16T19:00:00.000+00:00"
-        
       },
       {
-       
         "user": "6654b45905a0d7b79eeb787b",
         "name": "Quân Lã",
         "rating": 5,
         "comment": "Giao hàng nhanh so với thời gian dự kiến",
         "createAt": "2024-06-16T20:00:00.000+00:00"
-      
       }
     ],
     "createAt": "2024-06-01T19:12:11.270Z",
 
-    "__v": 0
+    "__v": 0,
+    "status": "active",
+    "approved": true,
+    "approvedAt": "2024-06-01T19:12:11.270Z",
+    "approvedBy": "6654b2f605a0d7b79eeb7753"
   },
   {
     "name": "Giày cao gót MWC G063",
@@ -865,27 +865,29 @@
     "category": "669cf9d8006fedb96df12653",
     "numOfReviews": 3,
     "user": "6654b2f605a0d7b79eeb7753",
-    "reviews": [ {
-      "user": "6654b2f605a0d7b79eeb7753",
-      "name": "Lã Quý Quân",
-      "rating": 4,
-      "comment": "Giày rất đẹp và chất lượng!",
-      "createAt": "2024-05-16T19:00:00.000+00:00"
-    },
-    {
-      "user": "6654b45905a0d7b79eeb787b",
-      "name": "Quân Lã",
-      "rating": 5,
-      "comment": "Rất hài lòng với sản phẩm này!",
-      "createAt": "2024-06-16T20:00:00.000+00:00"
-    },
-    {
-      "user": "666859779635ca2e247537c1",
-      "name": "21424",
-      "rating": 5,
-      "comment": "Sản phẩm rất ấn tượng, phù hợp với phong cách của tôi!",
-      "createAt": "2024-06-16T20:30:00.000+00:00"
-    }],
+    "reviews": [
+      {
+        "user": "6654b2f605a0d7b79eeb7753",
+        "name": "Lã Quý Quân",
+        "rating": 4,
+        "comment": "Giày rất đẹp và chất lượng!",
+        "createAt": "2024-05-16T19:00:00.000+00:00"
+      },
+      {
+        "user": "6654b45905a0d7b79eeb787b",
+        "name": "Quân Lã",
+        "rating": 5,
+        "comment": "Rất hài lòng với sản phẩm này!",
+        "createAt": "2024-06-16T20:00:00.000+00:00"
+      },
+      {
+        "user": "666859779635ca2e247537c1",
+        "name": "21424",
+        "rating": 5,
+        "comment": "Sản phẩm rất ấn tượng, phù hợp với phong cách của tôi!",
+        "createAt": "2024-06-16T20:30:00.000+00:00"
+      }
+    ],
     "createAt": "2024-06-01T19:52:58.573Z",
     "__v": 0
   },
@@ -1143,13 +1145,15 @@
     "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 1,
     "user": "6654b2f605a0d7b79eeb7753",
-    "reviews": [ {
-      "user": "6654b2f605a0d7b79eeb7753",
-      "name": "Lã Quý Quân",
-      "rating": 5,
-      "comment": "Vải đẹp nha mấy xí, dày dặn ok lắm nha còn dài nửa săn sale còn nửa giá quá là oke",
-      "createAt": "2024-05-16T19:00:00.000+00:00"
-    }],
+    "reviews": [
+      {
+        "user": "6654b2f605a0d7b79eeb7753",
+        "name": "Lã Quý Quân",
+        "rating": 5,
+        "comment": "Vải đẹp nha mấy xí, dày dặn ok lắm nha còn dài nửa săn sale còn nửa giá quá là oke",
+        "createAt": "2024-05-16T19:00:00.000+00:00"
+      }
+    ],
     "createAt": "2024-06-01T20:01:55.390Z",
     "__v": 0
   },
@@ -1377,27 +1381,29 @@
     "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 3,
     "user": "6654b2f605a0d7b79eeb7753",
-    "reviews": [ {
-      "user": "6654b2f605a0d7b79eeb7753",
-      "name": "Lã Quý Quân",
-      "rating": 3,
-      "comment": "Sản phẩn giống hình. Mặc lên cũng khá tôn dáng. Nhưng chất thì không được ưng lắm",
-      "createAt": "2024-06-16T21:00:00.000+00:00"
-    },
-    {
-      "user": "6654b45905a0d7b79eeb787b",
-      "name": "Quân Lã",
-      "rating": 5,
-      "comment": "xinh nhé các b . Mà i như như mk thử ngoài shop dc cái mua trên này rẻ hơn dc 1/3 ",
-      "createAt": "2024-06-16T22:00:00.000+00:00"
-    },
-    {
-      "user": "666859779635ca2e247537c1",
-      "name": "21424",
-      "rating": 5,
-      "comment": "đẹp nha mọi người  đầm mặc lên nhìn okee lắm ạ.",
-      "createAt": "2024-06-16T23:00:00.000+00:00"
-    }],
+    "reviews": [
+      {
+        "user": "6654b2f605a0d7b79eeb7753",
+        "name": "Lã Quý Quân",
+        "rating": 3,
+        "comment": "Sản phẩn giống hình. Mặc lên cũng khá tôn dáng. Nhưng chất thì không được ưng lắm",
+        "createAt": "2024-06-16T21:00:00.000+00:00"
+      },
+      {
+        "user": "6654b45905a0d7b79eeb787b",
+        "name": "Quân Lã",
+        "rating": 5,
+        "comment": "xinh nhé các b . Mà i như như mk thử ngoài shop dc cái mua trên này rẻ hơn dc 1/3 ",
+        "createAt": "2024-06-16T22:00:00.000+00:00"
+      },
+      {
+        "user": "666859779635ca2e247537c1",
+        "name": "21424",
+        "rating": 5,
+        "comment": "đẹp nha mọi người  đầm mặc lên nhìn okee lắm ạ.",
+        "createAt": "2024-06-16T23:00:00.000+00:00"
+      }
+    ],
     "createAt": "2024-06-01T20:07:48.667Z",
     "__v": 0
   },
@@ -1656,13 +1662,15 @@
     "category": "669cf9c9006fedb96df1264d",
     "numOfReviews": 5,
     "user": "6654b2f605a0d7b79eeb7753",
-    "reviews": [ {
-      "user": "6654b2f605a0d7b79eeb7753",
-      "name": "Lã Quý Quân",
-      "rating": 5,
-      "comment": "Áo Rộng rãi thoáng mái ,",
-      "createAt": "2024-05-16T19:00:00.000+00:00"
-    }],
+    "reviews": [
+      {
+        "user": "6654b2f605a0d7b79eeb7753",
+        "name": "Lã Quý Quân",
+        "rating": 5,
+        "comment": "Áo Rộng rãi thoáng mái ,",
+        "createAt": "2024-05-16T19:00:00.000+00:00"
+      }
+    ],
     "createAt": "2024-06-01T20:23:40.740Z",
     "__v": 0
   },
@@ -2285,13 +2293,15 @@
     "category": "669cf9b5006fedb96df12647",
     "numOfReviews": 5,
     "user": "6627e33c55f5c45cedf90d21",
-    "reviews": [ {
-      "user": "6654b2f605a0d7b79eeb7753",
-      "name": "Lã Quý Quân",
-      "rating": 5,
-      "comment": "Quần Rộng rãi thoáng mái ,",
-      "createAt": "2024-05-16T19:00:00.000+00:00"
-    }],
+    "reviews": [
+      {
+        "user": "6654b2f605a0d7b79eeb7753",
+        "name": "Lã Quý Quân",
+        "rating": 5,
+        "comment": "Quần Rộng rãi thoáng mái ,",
+        "createAt": "2024-05-16T19:00:00.000+00:00"
+      }
+    ],
     "createAt": "2024-06-01T22:04:07.535Z",
     "__v": 0
   },
@@ -2393,20 +2403,22 @@
     "category": "669cf9b5006fedb96df12647",
     "numOfReviews": 2,
     "user": "6627e33c55f5c45cedf90d21",
-    "reviews": [ {
-      "user": "6654b2f605a0d7b79eeb7753",
-      "name": "Lã Quý Quân",
-      "rating": 4,
-      "comment": "Giày rất đẹp và chất lượng!",
-      "createAt": "2024-05-16T19:00:00.000+00:00"
-    },
-    {
-      "user": "6654b45905a0d7b79eeb787b",
-      "name": "Quân Lã",
-      "rating": 5,
-      "comment": "Rất hài lòng với sản phẩm này!",
-      "createAt": "2024-06-16T20:00:00.000+00:00"
-    }],
+    "reviews": [
+      {
+        "user": "6654b2f605a0d7b79eeb7753",
+        "name": "Lã Quý Quân",
+        "rating": 4,
+        "comment": "Giày rất đẹp và chất lượng!",
+        "createAt": "2024-05-16T19:00:00.000+00:00"
+      },
+      {
+        "user": "6654b45905a0d7b79eeb787b",
+        "name": "Quân Lã",
+        "rating": 5,
+        "comment": "Rất hài lòng với sản phẩm này!",
+        "createAt": "2024-06-16T20:00:00.000+00:00"
+      }
+    ],
     "createAt": "2024-06-01T22:07:43.391Z",
     "__v": 0
   },
@@ -2497,20 +2509,22 @@
     "category": "669cf9b5006fedb96df12647",
     "numOfReviews": 2,
     "user": "6627e33c55f5c45cedf90d21",
-    "reviews": [ {
-      "user": "6654b2f605a0d7b79eeb7753",
-      "name": "Lã Quý Quân",
-      "rating": 4,
-      "comment": "Đẹp mà hỏi nhỏ mk 50kg sz m vẫn hơi kích tý",
-      "createAt": "2024-05-16T19:00:00.000+00:00"
-    },
-    {
-      "user": "6654b45905a0d7b79eeb787b",
-      "name": "Quân Lã",
-      "rating": 4,
-      "comment": "Giao hàng nhanh.mặc lên fom khá đẹp.",
-      "createAt": "2024-06-16T20:00:00.000+00:00"
-    }],
+    "reviews": [
+      {
+        "user": "6654b2f605a0d7b79eeb7753",
+        "name": "Lã Quý Quân",
+        "rating": 4,
+        "comment": "Đẹp mà hỏi nhỏ mk 50kg sz m vẫn hơi kích tý",
+        "createAt": "2024-05-16T19:00:00.000+00:00"
+      },
+      {
+        "user": "6654b45905a0d7b79eeb787b",
+        "name": "Quân Lã",
+        "rating": 4,
+        "comment": "Giao hàng nhanh.mặc lên fom khá đẹp.",
+        "createAt": "2024-06-16T20:00:00.000+00:00"
+      }
+    ],
     "createAt": "2024-06-01T22:16:41.589Z",
     "__v": 0
   }

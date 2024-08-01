@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAdminProducts,
+  getShopProducts,
   getProductReviews,
   deleteReview,
   clearErrors,
@@ -28,7 +28,7 @@ const ProductReviews = () => {
   const [deleteReviewId, setDeleteReviewId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
-    dispatch(getAdminProducts());
+    dispatch(getShopProducts());
 
     if (error) {
       toast.error(error);

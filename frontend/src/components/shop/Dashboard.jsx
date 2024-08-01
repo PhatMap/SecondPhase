@@ -7,7 +7,7 @@ import Sidebar from "./Sidebar";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAdminProducts } from "../../actions/productActions";
+import { getShopProducts } from "../../actions/productActions";
 import { allOrders, fetchOrderStats } from "../../actions/orderActions";
 import { allUsers } from "../../actions/userActions";
 import ChartComponent from "../Chart";
@@ -38,7 +38,7 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    dispatch(getAdminProducts());
+    dispatch(getShopProducts());
     dispatch(fetchOrderStats());
     dispatch(allOrders());
     dispatch(allUsers());

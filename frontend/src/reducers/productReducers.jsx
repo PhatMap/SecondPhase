@@ -54,7 +54,8 @@ export const productsReducer = (state = { products: [] }, action) => {
     case ADMIN_PRODUCTS_SUCCESS:
       return {
         loading: false,
-        products: action.payload,
+        products: action.payload.products,
+        total: action.payload.total,
       };
 
     case ALL_PRODUCTS_FAIL:

@@ -197,7 +197,7 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+exports.getShopProducts = catchAsyncErrors(async (req, res, next) => {
   const apiFeatures = new APIFeatures(Product.find(), req.query).sort();
 
   const products = await apiFeatures.query;
@@ -205,5 +205,25 @@ exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     products,
+  });
+});
+
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const apiFeatures = new APIFeatures(Product.find(), req.query)
+    .filterAdminProducts()
+    .sort();
+
+  let products = await apiFeatures.query;
+
+  const total = products.length;
+
+  apiFeatures.adminPagination();
+
+  products = await apiFeatures.query.clone();
+
+  res.status(200).json({
+    success: true,
+    products,
+    total,
   });
 });

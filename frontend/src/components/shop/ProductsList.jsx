@@ -12,7 +12,7 @@ import { getCategoryAll } from "../../actions/categoryActions";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAdminProducts,
+  getShopProducts,
   deleteProduct,
   clearErrors,
 } from "../../actions/productActions";
@@ -21,7 +21,6 @@ import DeleteNotify from "../layout/DeleteNotify";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const ProductsList = () => {
-
   const history = useNavigate();
   const dispatch = useDispatch();
 
@@ -35,8 +34,9 @@ const ProductsList = () => {
     success,
   } = useSelector((state) => state.product);
   const { categories: allCategories } = useSelector((state) => state.category);
+  
   useEffect(() => {
-    dispatch(getAdminProducts());
+    dispatch(getShopProducts());
     dispatch(getCategoryAll());
 
     if (error) {
@@ -85,19 +85,31 @@ const ProductsList = () => {
           sort: "asc",
         },
         {
-          label: "Tác vụ",
+          label: "Duyệt",
+          field: "approved",
+          sort: "asc",
+        },
+        {
+          label: "Trạng Thái",
+          field: "status",
+          sort: "asc",
+        },
+        {
+          label: "Tác Vụ",
           field: "actions",
         },
       ],
       rows: [],
     };
+
     const categoryMap = allCategories.reduce((acc, category) => {
       acc[category._id] = category.vietnameseName;
       return acc;
     }, {});
+
     products.forEach((product) => {
       data.rows.push({
-        category: categoryMap[product.category] || "Unknown",
+        category: categoryMap[product.category] || "Trống",
         image: (
           <img
             src={product.images[0].url}
@@ -108,6 +120,13 @@ const ProductsList = () => {
         name: product.name,
         price: `${formatToVNDWithVND(product.price)}`,
         totalStock: product.totalStock,
+        approved:
+          product.approved === "approved"
+            ? "Đã Duyệt"
+            : product.approved === "notApproved"
+            ? "Chưa Duyệt"
+            : "Đang Chờ",
+        status: product.status === "active" ? "Hoạt Động" : "Bị Ngưng",
         actions: (
           <div style={{ display: "flex" }}>
             <Link

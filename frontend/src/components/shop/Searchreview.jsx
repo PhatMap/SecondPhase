@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAdminProducts,
+  getShopProducts,
   deleteProduct,
   clearErrors,
 } from "../../actions/productActions";
@@ -27,7 +27,7 @@ const ProductsList = () => {
   );
 
   useEffect(() => {
-    dispatch(getAdminProducts());
+    dispatch(getShopProducts());
 
     if (error) {
       toast.error(error);

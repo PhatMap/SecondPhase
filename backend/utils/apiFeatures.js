@@ -47,6 +47,39 @@ class APIFeatures {
     return this;
   }
 
+  filterApplication() {
+    const { keyword, status } = this.queryStr;
+
+    let query = {};
+
+    if (keyword) {
+      query.$or = [
+        { "shopInfor.shopName": { $regex: keyword, $options: "i" } },
+        { "shopInfor.ownerName": { $regex: keyword, $options: "i" } },
+        { "shopInfor.email": { $regex: keyword, $options: "i" } },
+      ];
+    }
+
+    if (status) {
+      query.status = status;
+    }
+
+    this.query = this.query.find(query);
+    return this;
+  }
+  filterAdminProducts() {
+    const { keyword, approved } = this.queryStr;
+
+    let query = {};
+
+    if (approved) {
+      query.approved = approved;
+    }
+
+    this.query = this.query.find(query);
+    return this;
+  }
+
   filterCategory() {
     const { keyword } = this.queryStr;
 

@@ -13,6 +13,12 @@ const Sidebar = React.memo(() => {
           </li>
 
           <li>
+            <Link to="/admin/products" className="sidebar-element">
+              <i className="fa fa-shopping-bag "></i> Quản lý sản phẩm
+            </Link>
+          </li>
+
+          <li>
             <Link to="/admin/applications" className="sidebar-element">
               <i className="fa fa-handshake-o"></i> Quản lý Đơn Đăng ký Bán Hàng
             </Link>
@@ -34,7 +40,6 @@ const Sidebar = React.memo(() => {
               <i className="fa fa-user"></i> Thoát
             </Link>
           </li>
-          
         </ul>
       </nav>
     </div>

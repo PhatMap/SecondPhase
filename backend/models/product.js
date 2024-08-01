@@ -109,10 +109,10 @@ const productSchema = new mongoose.Schema({
       message: "Product total stock cannot be negative",
     },
   },
-  category: { 
-    type: String,
+  category: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Category",
     required: true,
-    
   },
   numOfReviews: {
     type: Number,
@@ -147,6 +147,23 @@ const productSchema = new mongoose.Schema({
   createAt: {
     type: Date,
     default: Date.now,
+  },
+  status: {
+    type: String,
+    required: true,
+    default: "inactive",
+  },
+  approved: {
+    type: String,
+    required: true,
+    default: "pending",
+  },
+  approvedAt: {
+    type: Date,
+  },
+  approvedBy: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
   },
 });
 

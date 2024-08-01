@@ -18,7 +18,7 @@ import {
   GET_ALLCATEGORIES_REQUEST,
   GET_ALLCATEGORIES_SUCCESS,
   GET_ALLCATEGORIES_FAIL,
-} from '../constants/categoryConstants';
+} from "../constants/categoryConstants";
 
 export const getCategories =
   (currentPage = 1, keyword = "", resPerPage = 10) =>
@@ -84,7 +84,6 @@ export const updateCategory = (categoryData) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    console.log("categoryData", categoryData);
     const { data } = await axios.put(
       `/api/v1/admin/category/update/${categoryData._id}`,
       categoryData,
@@ -107,7 +106,6 @@ export const updateCategory = (categoryData) => async (dispatch) => {
 export const deleteCategory = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_CATEGORY_REQUEST });
-    console.log("id", id);
 
     const { data } = await axios.delete(`/api/v1/admin/category/delete/${id}`);
 
@@ -125,9 +123,7 @@ export const deleteCategory = (id) => async (dispatch) => {
 export const getCategoryDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_CATEGORY_REQUEST });
-    console.log("id", id);
     const { data } = await axios.get(`/api/v1/admin/category/${id}`);
-    console.log("data", data);
     dispatch({
       type: GET_CATEGORY_SUCCESS,
       payload: data,
@@ -145,7 +141,6 @@ export const getCategoryAll = () => async (dispatch) => {
 
     const { data } = await axios.get("/api/v1/CategoryAll");
 
-console.log("datads",data);
     dispatch({
       type: GET_ALLCATEGORIES_SUCCESS,
       payload: data,
