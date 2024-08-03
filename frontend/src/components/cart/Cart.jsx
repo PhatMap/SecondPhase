@@ -7,6 +7,7 @@ import {
   removeItemFromCart,
   getUserCart,
   getUserCartProduct,
+  checkCartQuantities,
 } from "../../actions/cartActions";
 import DeleteNotify from "../layout/DeleteNotify";
 import { ToastContainer, toast } from "react-toastify";
@@ -90,12 +91,18 @@ const Cart = () => {
     }
   };
 
-  const checkoutHandler = () => {
+  const checkoutHandler = async () => {
     const itemsToCheckout = cartItems.filter(
       (item, index) => selectedItems[index]
     );
-    localStorage.setItem("itemsToCheckout", JSON.stringify(itemsToCheckout));
-    history("/login?redirect=/shipping");
+  
+    try {
+      await dispatch(checkCartQuantities(itemsToCheckout));
+      localStorage.setItem("itemsToCheckout", JSON.stringify(itemsToCheckout));
+      history("/login?redirect=/shipping");
+    } catch (error) {
+      toast.error(error); // Display the error message from the action
+    }
   };
 
   const handlerQuantity = (e) => {

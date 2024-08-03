@@ -8,6 +8,7 @@ const {
   emptyTheCart,
   updateCartQuantity,
   getUserCartProduct,
+  checkCartQuantities,
 } = require("../controllers/cartController");
 
 const { isAuthenticatedUser } = require("../middlewares/auth");
@@ -17,6 +18,7 @@ router.route("/cart").post(isAuthenticatedUser, addToCart);
 router.route("/cart/me").get(isAuthenticatedUser, getUserCart);
 
 router.route("/cart/product").post(isAuthenticatedUser, getUserCartProduct);
+router.route("/cart/check-quantities").post(isAuthenticatedUser, checkCartQuantities);
 
 router
   .route("/cart/:id/:variant/:size")

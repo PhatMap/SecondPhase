@@ -8,6 +8,9 @@ import {
   LOAD_CART_ITEMS_SUCCESS,
   LOAD_CART_ITEMS_FAIL,
   UPDATE_QUANTITY_SUCCESS,
+  CHECK_CART_QUANTITIES_REQUEST,
+  CHECK_CART_QUANTITIES_SUCCESS,
+  CHECK_CART_QUANTITIES_FAIL,
 } from "../constants/cartConstants";
 
 export const getUserCart = () => async (dispatch, getState) => {
@@ -85,3 +88,37 @@ export const getUserCartProduct = (infor) => async (dispatch, getState) => {
     return false;
   }
 };
+
+
+export const checkCartQuantities = (selectedItems) => async (dispatch) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      dispatch({ type: CHECK_CART_QUANTITIES_REQUEST });
+
+      const { data } = await axios.post('/api/v1/cart/check-quantities', { selectedItems });
+
+      if (!data.success) {
+        dispatch({
+          type: CHECK_CART_QUANTITIES_FAIL,
+          payload: data.message,
+        });
+        return reject(data.message);
+      }
+
+      dispatch({
+        type: CHECK_CART_QUANTITIES_SUCCESS,
+        payload: data,
+      });
+      resolve();
+    } catch (error) {
+      dispatch({
+        type: CHECK_CART_QUANTITIES_FAIL,
+        payload: error.response.data.message,
+      });
+      reject(error.response.data.message);
+    }
+  });
+};
+
+
+

@@ -9,10 +9,13 @@ import {
   EMPTY_CART_SUCCESS,
   EMPTY_CART_FAIL,
   UPDATE_QUANTITY_SUCCESS,
+  CHECK_CART_QUANTITIES_REQUEST,
+  CHECK_CART_QUANTITIES_SUCCESS,
+  CHECK_CART_QUANTITIES_FAIL,
 } from "../constants/cartConstants";
 
 export const cartReducer = (
-  state = { cartItems: [], shippingInfo: {} },
+  state = { cartItems: [], shippingInfo: {}, loading: false },
   action
 ) => {
   switch (action.type) {
@@ -59,7 +62,7 @@ export const cartReducer = (
     case LOAD_CART_ITEMS_FAIL:
       return {
         ...state,
-        error: action.payload, // Structure error payload as an object
+        error: action.payload,
       };
 
     case EMPTY_CART_SUCCESS:
@@ -81,6 +84,26 @@ export const cartReducer = (
         ...state,
         success: action.payload.data.success,
         error: action.payload.data.error,
+      };
+
+    case CHECK_CART_QUANTITIES_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+      
+    case CHECK_CART_QUANTITIES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload.success,
+      };
+
+    case CHECK_CART_QUANTITIES_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
 
     default:

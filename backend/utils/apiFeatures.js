@@ -95,7 +95,18 @@ class APIFeatures {
     this.query = this.query.find(query);
     return this;
   }
+  filterCoupon() {
+    const { role, creatorId } = this.queryStr;
 
+    let query = {};
+
+    if (role && role === 'shopkeeper' && creatorId) {
+      query.creatorId = creatorId;
+    }
+
+    this.query = this.query.find(query);
+    return this;
+  }
   search() {
     const keyword = this.queryStr.keyword
       ? {

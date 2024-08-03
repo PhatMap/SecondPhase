@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 import MetaData from "../layout/MetaData";
 import CheckoutSteps from "./CheckoutSteps";
-
+import { checkCartQuantities } from "../../actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createOrder,
   clearErrors,
   momoPayment,
+  temporaryReduceQuantity,
+  restoreQuantity,
 } from "../../actions/orderActions";
 
 import { toast } from "react-toastify";
@@ -34,17 +36,16 @@ const ConfirmOrder = () => {
   const taxPrice = Number((0.05 * itemsPrice).toFixed(2));
   const totalPrice = (itemsPrice + shippingPrice + taxPrice).toFixed(2);
 
-  const processToPayment = () => {
-    const data = {
-      itemsPrice: itemsPrice.toFixed(2),
-      shippingPrice,
-      taxPrice,
-      totalPrice,
-    };
-
-    sessionStorage.setItem("orderInfo", JSON.stringify(data));
-    history("/payment");
+  const checkQuantitiesBeforePayment = async () => {
+    try {
+      await dispatch(checkCartQuantities(items));
+      return true;
+    } catch (error) {
+      toast.error(error.message || "Có lỗi xảy ra khi kiểm tra số lượng sản phẩm");
+      return false;
+    }
   };
+
 
   function generateRandomId() {
     const timestamp = new Date().getTime();
@@ -54,49 +55,66 @@ const ConfirmOrder = () => {
   }
 
   const momoPay = async () => {
-    const integerTotalPrice = Math.floor(totalPrice);
-    const data = {
-      totalPrice: integerTotalPrice,
-    };
-    const order = {
-      itemsPrice: itemsPrice,
-      shippingPrice,
-      taxPrice,
-      totalPrice,
-      userName: user.name,
-      orderItems: items,
-      shippingInfo: infor,
-    };
-
-    order.paymentInfo = {
-      id: generateRandomId(),
-      status: "Progress",
-    };
-
-    await dispatch(momoPayment(data));
-    sessionStorage.setItem("momoOrder", JSON.stringify(order));
-    history("/waiting");
+    if (await checkQuantitiesBeforePayment()) {
+      const integerTotalPrice = Math.floor(totalPrice);
+      const data = {
+        totalPrice: integerTotalPrice,
+      };
+      const order = {
+        itemsPrice: itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+        userName: user.name,
+        orderItems: items,
+        shippingInfo: infor,
+      };
+  
+      order.paymentInfo = {
+        id: generateRandomId(),
+        status: "Progress",
+      };
+  
+      await dispatch(momoPayment(data));
+      sessionStorage.setItem("momoOrder", JSON.stringify(order));
+      history("/waiting");
+    }
   };
-
-  const processToCashPayment = () => {
-    const order = {
-      itemsPrice: itemsPrice,
-      shippingPrice,
-      taxPrice,
-      totalPrice,
-      userName: user.name,
-      orderItems: items,
-      shippingInfo: infor,
-    };
-
-    order.paymentInfo = {
-      id: generateRandomId(),
-      status: "Progress",
-    };
-
-    dispatch(createOrder(order));
-
-    history("/success");
+  
+  const processToCashPayment = async () => {
+    if (await checkQuantitiesBeforePayment()) {
+      const order = {
+        itemsPrice: itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+        userName: user.name,
+        orderItems: items,
+        shippingInfo: infor,
+      };
+  
+      order.paymentInfo = {
+        id: generateRandomId(),
+        status: "Progress",
+      };
+  
+      dispatch(createOrder(order));
+      history("/success");
+    }
+  };
+  
+  const processToPayment = async () => {
+    if (await checkQuantitiesBeforePayment()) {
+      const data = {
+        itemsPrice: itemsPrice.toFixed(2),
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+      };
+  
+      sessionStorage.setItem("orderInfo", JSON.stringify(data));
+      history("/payment");
+    }
   };
   useEffect(() => {
     if (error) {

@@ -194,3 +194,34 @@ exports.updateCartQuantity = catchAsyncErrors(async (req, res, next) => {
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 });
+
+exports.checkCartQuantities = catchAsyncErrors(async (req, res, next) => {
+  console.log(req.body); // Log the request body to debug
+  const { selectedItems } = req.body;
+
+  for (let selectedItem of selectedItems) {
+    const product = await Product.findById(selectedItem.product);
+    if (!product) {
+      return res.status(404).json({ success: false, message: `Sản phẩm ${selectedItem.product} không tìm thấy` });
+    }
+
+    const variant = product.variants.find(v => v.id.toString() === selectedItem.variant.toString());
+    if (!variant) {
+      return res.status(404).json({ success: false, message: `Biến thể ${selectedItem.variant} không tìm thấy` });
+    }
+
+    const sizeInventory = variant.inventory.find(inv => inv.size === selectedItem.size);
+    if (!sizeInventory) {
+      return res.status(404).json({ success: false, message: `Kích thước ${selectedItem.size} không tìm thấy` });
+    }
+
+    if (selectedItem.quantity > sizeInventory.stock) {
+      return res.status(400).json({ 
+        success: false, 
+        message: `Sản phẩm ${product.name} chỉ còn ${sizeInventory.stock} sản phẩm trong kho` 
+      });
+    }
+  }
+
+  res.status(200).json({ success: true, message: "Tất cả các sản phẩm đều có đủ hàng" });
+});
