@@ -9,8 +9,6 @@ import {
   createOrder,
   clearErrors,
   momoPayment,
-  temporaryReduceQuantity,
-  restoreQuantity,
 } from "../../actions/orderActions";
 
 import { toast } from "react-toastify";
