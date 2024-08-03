@@ -13,6 +13,7 @@ const {
   getShopProducts,
   uploadImages,
   getAdminProducts,
+  updateProductBasic,
 } = require("../controllers/productController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
 
@@ -28,6 +29,10 @@ router
   .route("/shop/product/:id")
   .put(isAuthenticatedUser, authorizeRoles("admin"), updateProduct)
   .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProduct);
+
+router
+  .route("/shop/product/update/:id")
+  .put(isAuthenticatedUser, authorizeRoles("admin"), updateProductBasic);
 
 router.route("/products").get(getProducts);
 router.route("/product/:id").get(getSingleProduct);

@@ -64,7 +64,16 @@ const ManageProducts = () => {
     dispatch(getAdminProducts(approved, keyword, currentPage, resPerPage));
   }, [dispatch, keyword, approved, currentPage, resPerPage]);
 
-  const setApplications = () => {
+  useEffect(() => {
+    if (products) {
+      setProducts();
+    }
+    if (products.length === 0 && currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  }, [products]);
+
+  const setProducts = () => {
     const data = {
       columns: [
         {
@@ -108,47 +117,60 @@ const ManageProducts = () => {
       return acc;
     }, {});
 
-    products.forEach((product) => {
-      data.rows.push({
-        category: categoryMap[product.category] || "Trống",
-        image: (
-          <img
-            src={product.images[0].url}
-            alt={product.name}
-            style={{ width: "50px", height: "50px" }}
-          />
-        ),
-        name: product.name,
-        price: `${formatToVNDWithVND(product.price)}`,
-        totalStock: product.totalStock,
-        approved:
-          product.approved === "approved"
-            ? "Đã Duyệt"
-            : product.approved === "notApproved"
-            ? "Chưa Duyệt"
-            : "Đang Chờ",
-        status: product.status === "active" ? "Hoạt Động" : "Bị Ngưng",
-        actions: (
-          <div style={{ display: "flex" }}>
-            <Link
-              to={`/shop/product/${product._id}`}
-              className="btn btn-primary py-1 px-2"
-            >
-              <i className="fa fa-pencil"></i>
-            </Link>
-            <button
-              className="btn btn-danger py-1 px-2 ml-2"
-              onClick={() => {
-                setShow(true);
-                setId(product._id);
-              }}
-            >
-              <i className="fa fa-trash"></i>
-            </button>
-          </div>
-        ),
+    if (products.length > 0) {
+      products.forEach((product) => {
+        data.rows.push({
+          category: categoryMap[product.category] || "Trống",
+          image: (
+            <img
+              src={product.images[0].url}
+              alt={product.name}
+              style={{ width: "50px", height: "50px" }}
+            />
+          ),
+          name: product.name,
+          price: `${formatToVNDWithVND(product.price)}`,
+          totalStock: product.totalStock,
+          approved:
+            product.approved === "approved"
+              ? "Đã Duyệt"
+              : product.approved === "notApproved"
+              ? "Chưa Duyệt"
+              : "Đang Chờ",
+          status: product.status === "active" ? "Hoạt Động" : "Bị Ngưng",
+          actions: (
+            <div style={{ display: "flex" }}>
+              <Link
+                to={`/shop/product/${product._id}`}
+                className="btn btn-primary py-1 px-2"
+              >
+                <i className="fa fa-pencil"></i>
+              </Link>
+              <button
+                className="btn btn-danger py-1 px-2 ml-2"
+                onClick={() => {
+                  setShow(true);
+                  setId(product._id);
+                }}
+              >
+                <i className="fa fa-trash"></i>
+              </button>
+            </div>
+          ),
+        });
       });
-    });
+    } else {
+      data.rows.push({
+        category: "Trống",
+        image: "Trống",
+        name: "Trống",
+        price: "Trống",
+        totalStock: "Trống",
+        approved: "Trống",
+        status: "Trống",
+        actions: "Trống",
+      });
+    }
 
     return data;
   };
@@ -218,7 +240,7 @@ const ManageProducts = () => {
           placeholder="Search here..."
           onChange={(e) => handleSearch(e)}
         />
-        <DataTable data={setApplications()} />
+        <DataTable data={setProducts()} />
         <Pagination
           activePage={currentPage}
           itemsCountPerPage={total > resPerPage ? resPerPage : total}

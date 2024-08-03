@@ -15,8 +15,13 @@ import {
   getShopProducts,
   deleteProduct,
   clearErrors,
+  updateProduct,
+  updateProductBasic,
 } from "../../actions/productActions";
-import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
+import {
+  DELETE_PRODUCT_RESET,
+  UPDATE_PRODUCT_RESET,
+} from "../../constants/productConstants";
 import DeleteNotify from "../layout/DeleteNotify";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
 
@@ -31,10 +36,10 @@ const ProductsList = () => {
   const {
     error: deleteError,
     isDeleted,
-    success,
+    isUpdated,
   } = useSelector((state) => state.product);
   const { categories: allCategories } = useSelector((state) => state.category);
-  
+
   useEffect(() => {
     dispatch(getShopProducts());
     dispatch(getCategoryAll());
@@ -54,7 +59,12 @@ const ProductsList = () => {
       history("/shop/products");
       dispatch({ type: DELETE_PRODUCT_RESET });
     }
-  }, [dispatch, error, deleteError, isDeleted, history]);
+
+    if (isUpdated) {
+      toast.success("Đã gửi sản phẩm để duyệt");
+      dispatch({ type: UPDATE_PRODUCT_RESET });
+    }
+  }, [dispatch, error, deleteError, isDeleted, isUpdated, history]);
 
   const setProducts = () => {
     const data = {
@@ -125,7 +135,9 @@ const ProductsList = () => {
             ? "Đã Duyệt"
             : product.approved === "notApproved"
             ? "Chưa Duyệt"
-            : "Đang Chờ",
+            : product.approved === "pending"
+            ? "Đang Xử Lý"
+            : "Chưa Gửi",
         status: product.status === "active" ? "Hoạt Động" : "Bị Ngưng",
         actions: (
           <div style={{ display: "flex" }}>
@@ -144,12 +156,31 @@ const ProductsList = () => {
             >
               <i className="fa fa-trash"></i>
             </button>
+            <button
+              className="btn btn-info py-1 px-2 ml-2"
+              onClick={() => {
+                if (
+                  product.approved === "waiting" ||
+                  product.approved === "notApproved"
+                ) {
+                  handleSend(product._id);
+                }
+              }}
+            >
+              <i className="fa fa-send"></i>
+            </button>
           </div>
         ),
       });
     });
 
     return data;
+  };
+
+  const handleSend = (id) => {
+    const productData = new FormData();
+    productData.set("approved", "pending");
+    dispatch(updateProductBasic(id, productData));
   };
 
   const deleteProductHandler = (id) => {

@@ -227,3 +227,20 @@ exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
     total,
   });
 });
+
+exports.updateProductBasic = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404));
+  } else {
+    await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+    res.status(200).json({
+      success: true,
+    });
+  }
+});

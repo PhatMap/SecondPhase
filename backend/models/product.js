@@ -156,7 +156,7 @@ const productSchema = new mongoose.Schema({
   approved: {
     type: String,
     required: true,
-    default: "pending",
+    default: "waiting",
   },
   approvedAt: {
     type: Date,

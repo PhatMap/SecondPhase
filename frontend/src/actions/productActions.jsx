@@ -160,6 +160,35 @@ export const updateProduct = (id, productData) => async (dispatch) => {
   }
 };
 
+export const updateProductBasic = (id, productData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_PRODUCT_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/v1/shop/product/update/${id}`,
+      productData,
+      config
+    );
+    dispatch({
+      type: UPDATE_PRODUCT_SUCCESS,
+      payload: {
+        success: data.success,
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
