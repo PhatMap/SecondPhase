@@ -8,6 +8,8 @@ import { getAdminProducts } from "../../actions/productActions";
 import { getCategoryAll } from "../../actions/categoryActions";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
 import { Link } from "react-router-dom";
+import ProductDetails from "./ProductDetails";
+import { set } from "mongoose";
 
 const ManageProducts = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ const ManageProducts = () => {
   const [keyword, setKeyword] = useState("");
   const [approved, setApproved] = useState("pending");
   const [show, setShow] = useState(false);
+  const [detail, setDetail] = useState({});
 
   const { products, total } = useSelector((state) => state.products);
   const { categories: allCategories } = useSelector((state) => state.category);
@@ -25,19 +28,16 @@ const ManageProducts = () => {
   };
 
   const handleSegmentedTab = (choose) => {
-    if (choose !== status) {
+    if (choose !== approved) {
       setCurrentPage(1);
-      if (choose === "all") {
-        setStatus("");
-      }
       if (choose === "approved") {
-        setStatus("approved");
+        setApproved("approved");
       }
       if (choose === "notApproved") {
-        setStatus("notApproved");
+        setApproved("notApproved");
       }
       if (choose === "pending") {
-        setStatus("pending");
+        setApproved("pending");
       }
     }
   };
@@ -62,16 +62,14 @@ const ManageProducts = () => {
 
   useEffect(() => {
     dispatch(getAdminProducts(approved, keyword, currentPage, resPerPage));
+    dispatch(getCategoryAll());
   }, [dispatch, keyword, approved, currentPage, resPerPage]);
 
   useEffect(() => {
-    if (products) {
-      setProducts();
-    }
     if (products.length === 0 && currentPage > 1) {
       setCurrentPage((prevPage) => prevPage - 1);
     }
-  }, [products]);
+  }, [currentPage]);
 
   const setProducts = () => {
     const data = {
@@ -139,23 +137,15 @@ const ManageProducts = () => {
               : "Đang Chờ",
           status: product.status === "active" ? "Hoạt Động" : "Bị Ngưng",
           actions: (
-            <div style={{ display: "flex" }}>
-              <Link
-                to={`/shop/product/${product._id}`}
-                className="btn btn-primary py-1 px-2"
-              >
-                <i className="fa fa-pencil"></i>
-              </Link>
-              <button
-                className="btn btn-danger py-1 px-2 ml-2"
-                onClick={() => {
-                  setShow(true);
-                  setId(product._id);
-                }}
-              >
-                <i className="fa fa-trash"></i>
-              </button>
-            </div>
+            <button
+              className="btn btn-info py-1 px-2 ml-2"
+              onClick={() => {
+                setShow(true);
+                setDetail(product);
+              }}
+            >
+              <i className="fa fa-eye"></i>
+            </button>
           ),
         });
       });
@@ -178,7 +168,7 @@ const ManageProducts = () => {
   return (
     <Fragment>
       <ToastContainer />
-      {show && <Application data={detail} onClose={() => setShow(false)} />}
+      {show && <ProductDetails data={detail} onClose={() => setShow(false)} />}
       <div className="manage-application-container">
         <div>
           <h1 className="display-4 text-center">Quản Lý Sản Phẩm</h1>
@@ -188,7 +178,7 @@ const ManageProducts = () => {
         <div className="tabs">
           <label
             htmlFor="pending"
-            className={status === "pending" ? "marked" : ""}
+            className={approved === "pending" ? "marked" : ""}
           >
             <input
               type="radio"
@@ -196,13 +186,13 @@ const ManageProducts = () => {
               name="status"
               value="pending"
               onChange={() => handleSegmentedTab("pending")}
-              checked={status === "pending"}
+              checked={approved === "pending"}
             />
             Chờ Duyệt
           </label>
           <label
             htmlFor="approved"
-            className={status === "approved" ? "marked" : ""}
+            className={approved === "approved" ? "marked" : ""}
           >
             <input
               type="radio"
@@ -210,13 +200,13 @@ const ManageProducts = () => {
               name="status"
               value="approved"
               onChange={() => handleSegmentedTab("approved")}
-              checked={status === "approved"}
+              checked={approved === "approved"}
             />
             Đã Duyệt
           </label>
           <label
             htmlFor="notApproved"
-            className={status === "notApproved" ? "marked" : ""}
+            className={approved === "notApproved" ? "marked" : ""}
           >
             <input
               type="radio"
@@ -224,7 +214,7 @@ const ManageProducts = () => {
               name="status"
               value="notApproved"
               onChange={() => handleSegmentedTab("notApproved")}
-              checked={status === "notApproved"}
+              checked={approved === "notApproved"}
             />
             Từ Chối
           </label>
