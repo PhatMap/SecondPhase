@@ -279,7 +279,7 @@ const ProductDetails = () => {
                     setInventory={setInventory}
                     setVariant={setVariant}
                     setSize={setSize}
-                  />
+                  />  
                 ))
               ) : (
                 <h1>Không có mẫu</h1>

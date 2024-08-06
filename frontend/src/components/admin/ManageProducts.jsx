@@ -9,7 +9,10 @@ import { getCategoryAll } from "../../actions/categoryActions";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
 import { Link } from "react-router-dom";
 import ProductDetails from "./ProductDetails";
-import { set } from "mongoose";
+import {
+  UPDATE_PRODUCT_RESET,
+  CLEAR_ERRORS,
+} from "../../constants/productConstants";
 
 const ManageProducts = () => {
   const dispatch = useDispatch();
@@ -19,9 +22,11 @@ const ManageProducts = () => {
   const [approved, setApproved] = useState("pending");
   const [show, setShow] = useState(false);
   const [detail, setDetail] = useState({});
+  const [decide, setDecide] = useState("");
 
   const { products, total } = useSelector((state) => state.products);
   const { categories: allCategories } = useSelector((state) => state.category);
+  const { error, isUpdated } = useSelector((state) => state.product);
 
   const setCurrentPageNo = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -55,14 +60,19 @@ const ManageProducts = () => {
     setCurrentPage(1);
   };
 
-  useEffect(() => {
+  const loadData = () => {
     dispatch(getAdminProducts(approved, keyword, currentPage, resPerPage));
     dispatch(getCategoryAll());
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   useEffect(() => {
-    dispatch(getAdminProducts(approved, keyword, currentPage, resPerPage));
-    dispatch(getCategoryAll());
+    if (keyword || approved || currentPage || resPerPage) {
+      loadData();
+    }
   }, [dispatch, keyword, approved, currentPage, resPerPage]);
 
   useEffect(() => {
@@ -70,6 +80,21 @@ const ManageProducts = () => {
       setCurrentPage((prevPage) => prevPage - 1);
     }
   }, [currentPage]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: CLEAR_ERRORS });
+    }
+
+    if (isUpdated) {
+      decide === "approved"
+        ? toast.success("Đã duyệt sản phẩm")
+        : toast.warn("Đã từ chối sản phẩm");
+      dispatch({ type: UPDATE_PRODUCT_RESET });
+    }
+    loadData();
+  }, [error, isUpdated]);
 
   const setProducts = () => {
     const data = {
@@ -167,8 +192,14 @@ const ManageProducts = () => {
 
   return (
     <Fragment>
-      <ToastContainer />
-      {show && <ProductDetails data={detail} onClose={() => setShow(false)} />}
+      <ToastContainer position="top-center" />
+      {show && (
+        <ProductDetails
+          data={detail}
+          onClose={() => setShow(false)}
+          setDecide={setDecide}
+        />
+      )}
       <div className="manage-application-container">
         <div>
           <h1 className="display-4 text-center">Quản Lý Sản Phẩm</h1>

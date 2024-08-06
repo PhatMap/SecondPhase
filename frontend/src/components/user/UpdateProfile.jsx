@@ -153,7 +153,7 @@ const UpdateProfile = () => {
                   <input
                     type="file"
                     name="avatar"
-                    className="custom-file-input"
+                    className="custo  m-file-input"
                     id="customFile"
                     accept="image/*"
                     onChange={onChange}

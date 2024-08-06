@@ -2121,6 +2121,16 @@ body {
   gap: 20px;
 }
 
+.admin-detail-image-container {
+  display: flex;
+  min-width: 500px;
+  gap: 20px;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+}
+
 .detail-images {
   display: flex;
   flex-direction: column;
@@ -3402,6 +3412,22 @@ body {
   color: white !important;
 }
 
+.btn-three {
+  background-color: rgb(0, 214, 0);
+  color: white !important;
+  border: rgb(0, 214, 0) 1px solid;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-three:hover {
+  text-decoration: none;
+  background-color: green !important;
+  color: white !important;
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -4034,6 +4060,65 @@ body {
 
 .application-form::-webkit-scrollbar-thumb {
   background: #888;
+}
+
+/* ProductDetails.jsx (Admin) */
+.product-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.product-details-form {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  width: fit-content;
+  height: 90vh;
+  overflow: hidden;
+  display: flex;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+.product-details-form::-webkit-scrollbar {
+  width: 6px;
+}
+
+.product-details-form::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.product-details-form::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.product-details-out {
+  position: absolute;
+  right: 30px;
+  top: 35px;
+  color: red;
+  font-size: 30px;
+}
+
+.product-details-out:hover {
+  font-size: 40px;
+}
+
+.product-details-action {
+  position: absolute;
+  right: 100px;
+  top: 45px;
+  display: flex;
+  gap: 20px;
 }
 
 /* Tool-tip */
