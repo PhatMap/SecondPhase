@@ -34,6 +34,11 @@ const Sidebar = React.memo(() => {
               <i className="fa fa-user"></i> Quản Lý Danh Mục
             </Link>
           </li>
+          <li>
+            <Link to="/admin/coupons" className="sidebar-element">
+              <i className="fa fa-user"></i> Quản Lý Khuyễn Mãi
+            </Link>
+          </li>
 
           <li>
             <Link to="/" className="sidebar-element" style={{ color: "red" }}>

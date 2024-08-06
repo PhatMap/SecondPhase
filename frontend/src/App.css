@@ -1150,7 +1150,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: flex-start; /* Di chuyển các phần tử về bên trái */
+  margin-left: -100px; /* Đặt lề trái để cách biệt với cạnh trái của container cha */
 }
+
 
 .rating {
   margin-top: 10rem;
@@ -4213,3 +4216,197 @@ body {
   background-color: black;
   color: #d1d1d1;
 }
+
+
+
+
+.coupon-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coupon-modal {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.coupon-modal-content {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Các phần CSS khác giữ nguyên */
+
+.coupon-table {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.coupon-modal-content {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.coupon-table {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.coupon-row {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+
+.coupon-row:last-child {
+  border-bottom: none;
+}
+
+.coupon-row.selected {
+  background-color: #f5f5f5;
+}
+
+.coupon-content {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.coupon-percentage {
+  font-size: 36px;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-right: 20px;
+}
+
+.coupon-description {
+  flex-grow: 1;
+}
+
+.coupon-description p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.coupon-description p:first-child {
+  font-weight: bold;
+  color: #333;
+}
+
+.coupon-code {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 2px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.confirm-coupon-button, .close-coupon-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.confirm-coupon-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.close-coupon-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.coupon-row {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+
+.coupon-row:last-child {
+  border-bottom: none;
+}
+
+.coupon-row.selected {
+  background-color: #f5f5f5;
+}
+
+.coupon-content {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.coupon-percentage {
+  font-size: 36px;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-right: 20px;
+}
+
+.coupon-details {
+  flex-grow: 1;
+}
+
+.coupon-details p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.coupon-description {
+  font-weight: bold;
+  color: #333;
+}
+
+.coupon-type, .coupon-quantity {
+  color: #666;
+}
+
+.coupon-code {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 2px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+.coupon-row.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+/* Các phần CSS khác giữ nguyên */

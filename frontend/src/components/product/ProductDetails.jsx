@@ -378,9 +378,8 @@ const ProductDetails = () => {
     <div style={{ marginTop: '-10rem', marginBottom: '2rem' }}>
       <Review productId={id} user={user} hasPurchased={hasPurchased} />
     </div>
-    {product.reviews && product.reviews.length > 0 && (
-      <ListReviews reviews={product.reviews} />
-    )}
+    <ListReviews productId={id} />
+
   </div>
 </div>
 

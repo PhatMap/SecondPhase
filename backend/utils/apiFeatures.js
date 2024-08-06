@@ -95,6 +95,18 @@ class APIFeatures {
     this.query = this.query.find(query);
     return this;
   }
+  filterReviews() {
+    const { keyword } = this.queryStr;
+
+    let query = {};
+
+    if (keyword) {
+      query['reviews.comment'] = { $regex: keyword, $options: "i" };
+    }
+
+    this.query = this.query.find(query);
+    return this;
+  }
   filterCoupon() {
     const { role, creatorId } = this.queryStr;
 

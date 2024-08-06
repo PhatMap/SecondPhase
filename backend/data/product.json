@@ -2509,22 +2509,92 @@
     "category": "669cf9b5006fedb96df12647",
     "numOfReviews": 2,
     "user": "6627e33c55f5c45cedf90d21",
-    "reviews": [
-      {
+   "reviews": [
+    {
         "user": "6654b2f605a0d7b79eeb7753",
         "name": "Lã Quý Quân",
         "rating": 4,
         "comment": "Đẹp mà hỏi nhỏ mk 50kg sz m vẫn hơi kích tý",
         "createAt": "2024-05-16T19:00:00.000+00:00"
-      },
-      {
+    },
+    {
         "user": "6654b45905a0d7b79eeb787b",
         "name": "Quân Lã",
         "rating": 4,
         "comment": "Giao hàng nhanh.mặc lên fom khá đẹp.",
         "createAt": "2024-06-16T20:00:00.000+00:00"
-      }
-    ],
+    },
+    {
+        "user": "6654b7d805a0d7b79eeb7a9c",
+        "name": "Nguyễn Thị Minh",
+        "rating": 5,
+        "comment": "Chất liệu tốt, rất hài lòng!",
+        "createAt": "2024-08-03T09:10:00.000+00:00"
+    },
+    {
+        "user": "6654b8d905a0d7b79eeb7bbd",
+        "name": "Trần Văn Hải",
+        "rating": 3,
+        "comment": "Sản phẩm ổn nhưng giao hàng chậm.",
+        "createAt": "2024-08-03T09:20:00.000+00:00"
+    },
+    {
+        "user": "6654b9fa05a0d7b79eeb7cce",
+        "name": "Lê Thị Hồng",
+        "rating": 4,
+        "comment": "Đẹp, vừa vặn, sẽ ủng hộ tiếp.",
+        "createAt": "2024-08-03T09:30:00.000+00:00"
+    },
+    {
+        "user": "6654bacb05a0d7b79eeb7ddf",
+        "name": "Phạm Quốc Bảo",
+        "rating": 5,
+        "comment": "Rất thích, đúng như mong đợi.",
+        "createAt": "2024-08-03T09:40:00.000+00:00"
+    },
+    {
+        "user": "6654bbac05a0d7b79eeb7eef",
+        "name": "Hoàng Thị Lan",
+        "rating": 4,
+        "comment": "Giao hàng nhanh, sản phẩm đẹp.",
+        "createAt": "2024-08-03T09:50:00.000+00:00"
+    },
+    {
+        "user": "6654bcad05a0d7b79eeb7fff",
+        "name": "Đỗ Văn Long",
+        "rating": 3,
+        "comment": "Màu sắc hơi khác so với hình ảnh.",
+        "createAt": "2024-08-03T09:55:00.000+00:00"
+    },
+    {
+        "user": "6654bdbf05a0d7b79eeb8100",
+        "name": "Ngô Thị Thảo",
+        "rating": 5,
+        "comment": "Chất lượng tuyệt vời, giá hợp lý.",
+        "createAt": "2024-08-03T10:00:00.000+00:00"
+    },
+    {
+        "user": "6654bece05a0d7b79eeb8211",
+        "name": "Lý Văn An",
+        "rating": 4,
+        "comment": "Hài lòng với sản phẩm, sẽ mua lại.",
+        "createAt": "2024-08-03T10:05:00.000+00:00"
+    },
+    {
+        "user": "6654bfdf05a0d7b79eeb8322",
+        "name": "Phùng Thị Tuyết",
+        "rating": 4,
+        "comment": "Mặc lên rất thoải mái, sẽ giới thiệu bạn bè.",
+        "createAt": "2024-08-03T10:10:00.000+00:00"
+    },
+    {
+        "user": "6654b0e005a0d7b79eeb8433",
+        "name": "Bùi Văn Phúc",
+        "rating": 5,
+        "comment": "Sản phẩm đáng tiền, giao hàng nhanh.",
+        "createAt": "2024-08-03T10:15:00.000+00:00"
+    }
+],
     "createAt": "2024-06-01T22:16:41.589Z",
     "__v": 0
   }

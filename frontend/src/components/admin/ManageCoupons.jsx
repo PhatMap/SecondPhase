@@ -2,69 +2,96 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DataTable from "../layout/DataTable";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories, deleteCategory } from "../../actions/categoryActions";
+import { getAllCoupons, deleteCoupon,toggleStatus  } from "../../actions/couponActions";
 import Pagination from "react-js-pagination";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
-  DELETE_CATEGORY_RESET,
-  UPDATE_CATEGORY_RESET,
-  CREATE_CATEGORY_RESET,
-} from "../../constants/categoryConstants";
+  DELETE_COUPON_RESET,
+  UPDATE_COUPON_RESET,
+  TOGGLE_STATUS_RESET,
+  CREATE_COUPON_RESET,
+  CLEAR_ERRORS
+} from "../../constants/couponConstants";
 
-const ManageCategories = () => {
+const ManageCoupons = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, categories, totalCategories, success } = useSelector(
-    (state) => state.category
+  const { loading, error, coupons, totalCoupons, success,isStatusUpdated } = useSelector(
+    (state) => state.coupon // Ensure this matches the slice name in your root reducer
   );
 
   const [currentPage, setCurrentPage] = useState(1);
   const [keyword, setKeyword] = useState("");
   const [show, setShow] = useState(false);
-  const [categoryToDelete, setCategoryToDelete] = useState(null);
+  const [couponToDelete, setCouponToDelete] = useState(null);
+  useEffect(() => {
+    if (isStatusUpdated) {
+      toast.success("Cập nhật trạng thái thành công");
+      dispatch({ type: TOGGLE_STATUS_RESET });
+      dispatch(getAllCoupons(currentPage, keyword));
+    }
+  }, [dispatch, isStatusUpdated, currentPage, keyword]);
 
   useEffect(() => {
-    dispatch(getCategories(currentPage, keyword));
+    dispatch(getAllCoupons(currentPage, keyword));
 
     if (success) {
-      toast.success("Xóa Thành Công Danh Mục và Tất Cả Sản Phẩm Liên Quan");
-      dispatch({ type: DELETE_CATEGORY_RESET });
-      dispatch({ type: UPDATE_CATEGORY_RESET });
-      dispatch({ type: CREATE_CATEGORY_RESET });
+      toast.success("Xóa Thành Công Phiếu Giảm Giá");
+      dispatch({ type: DELETE_COUPON_RESET });
+      dispatch({ type: UPDATE_COUPON_RESET });
+      dispatch({ type: CREATE_COUPON_RESET });
     }
 
     if (error) {
       toast.error(error);
+      dispatch({ type: CLEAR_ERRORS });
     }
   }, [dispatch, success, error, currentPage, keyword]);
 
   const deleteHandler = (id) => {
     setShow(true);
-    setCategoryToDelete(id);
+    setCouponToDelete(id);
   };
 
   const confirmDelete = () => {
-    dispatch(deleteCategory(categoryToDelete));
+    dispatch(deleteCoupon(couponToDelete));
+    dispatch(getAllCoupons(currentPage, keyword));
     setShow(false);
+
   };
 
   const cancelDelete = () => {
     setShow(false);
-    setCategoryToDelete(null);
+    setCouponToDelete(null);
+  };
+  const handleBanCoupon = (id) => {
+    dispatch(toggleStatus(id));
   };
 
-  const setCategories = () => {
+  const setCoupons = () => {
     const data = {
       columns: [
         {
-          label: "Tên danh mục (EN)",
-          field: "categoryName",
+          label: "Phần trăm giảm",
+          field: "percentage",
         },
         {
-          label: "Tên danh mục (VI)",
-          field: "vietnameseName",
+          label: "Vai trò",
+          field: "role",
+        },
+        {
+          label: "Mô tả",
+          field: "description",
+        },
+        {
+          label: "Số lượng",
+          field: "quantity",
+        },
+        {
+          label: "Hạn sử dụng",
+          field: "expiry",
         },
         {
           label: "Tác vụ",
@@ -74,25 +101,38 @@ const ManageCategories = () => {
       rows: [],
     };
 
-    if (categories && categories.length > 0) {
-      categories.forEach((category) => {
+    if (coupons && coupons.length > 0) {
+      coupons.forEach((coupon) => {
         data.rows.push({
-          categoryName: category.categoryName,
-          vietnameseName: category.vietnameseName,
+          percentage: `${coupon.percentage}%`,
+          role: coupon.role,
+          description: coupon.description,
+          quantity: coupon.quantity,
+          expiry: new Date(coupon.expiry).toLocaleDateString(),
           action: (
             <Fragment>
               <div className="flex-horizontal">
                 <Link
-                  to={`/admin/category/update/${category._id}`}
+                  to={`/admin/coupon/update/${coupon._id}`}
                   className="btn btn-primary py-1 px-2"
                 >
                   <i className="fa fa-pencil"></i>
                 </Link>
                 <button
                   className="btn btn-danger py-1 px-2 ml-2"
-                  onClick={() => deleteHandler(category._id)}
+                  onClick={() => deleteHandler(coupon._id)}
                 >
                   <i className="fa fa-trash"></i>
+                </button>
+                <button
+                  className="btn btn-warning py-1 ml-2"
+                  onClick={() => handleBanCoupon (coupon._id)}
+                >
+                  <i
+                    className={`fa ${
+                      coupon.status === "active" ? "fa fa-unlock" : "fa fa-lock"
+                    }`}
+                  ></i>
                 </button>
               </div>
             </Fragment>
@@ -101,8 +141,11 @@ const ManageCategories = () => {
       });
     } else {
       data.rows.push({
-        categoryName: "Trống",
-        vietnameseName: "Trống",
+        percentage: "Trống",
+        role: "Trống",
+        description: "Trống",
+        quantity: "Trống",
+        expiry: "Trống",
         action: "Trống",
       });
     }
@@ -117,7 +160,7 @@ const ManageCategories = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     setCurrentPage(1);
-    dispatch(getCategories(1, keyword));
+    dispatch(getCoupons(1, keyword));
   };
 
   return (
@@ -127,12 +170,12 @@ const ManageCategories = () => {
         className="my-5"
         style={{ fontWeight: "bold", textAlign: "center", fontSize: "24px" }}
       >
-        Quản lý Danh mục
+        Quản lý Phiếu Giảm Giá
       </h1>
 
       <div className="mb-4" style={{ display: "flex", marginLeft: "5rem" }}>
-        <Link to="/admin/category/new" className="btn btn-primary">
-          Thêm danh mục mới
+        <Link to="/admin/coupon/new" className="btn btn-primary">
+          Thêm phiếu giảm giá mới
         </Link>
       </div>
       <form
@@ -146,7 +189,7 @@ const ManageCategories = () => {
       >
         <input
           type="text"
-          placeholder="Tìm kiếm danh mục..."
+          placeholder="Tìm kiếm phiếu giảm giá..."
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           style={{
@@ -155,13 +198,16 @@ const ManageCategories = () => {
             border: "1px solid #ccc",
           }}
         />
+        <button type="submit" className="btn btn-primary">
+          Tìm kiếm
+        </button>
       </form>
       {loading ? (
         <h2 style={{ textAlign: "center" }}>Đang tải...</h2>
       ) : (
         <Fragment>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <DataTable data={setCategories()} />
+            <DataTable data={setCoupons()} />
           </div>
           <div
             className="d-flex justify-content-center mt-5"
@@ -174,7 +220,7 @@ const ManageCategories = () => {
             <Pagination
               activePage={currentPage}
               itemsCountPerPage={10}
-              totalItemsCount={totalCategories}
+              totalItemsCount={totalCoupons}
               onChange={handlePageChange}
               nextPageText={"Next"}
               prevPageText={"Prev"}
@@ -189,7 +235,7 @@ const ManageCategories = () => {
       {show && (
         <div className="delete-notify-container">
           <div className="delete-notify-form">
-            <h1 style={{ marginBottom: "20px" }}>Xóa Danh Mục Này?</h1>
+            <h1 style={{ marginBottom: "20px" }}>Xóa Phiếu Giảm Giá Này?</h1>
             <div className="delete-notify-btn-container">
               <button
                 className="delete-notify-btn-container-yes"
@@ -211,4 +257,4 @@ const ManageCategories = () => {
   );
 };
 
-export default ManageCategories;
+export default ManageCoupons;

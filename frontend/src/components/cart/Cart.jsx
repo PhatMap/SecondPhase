@@ -14,6 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
 import Header from "../layout/Header";
+import DisplayCoupons from './DisplayCoupons';
 
 const Cart = () => {
   const history = useNavigate();
@@ -25,6 +26,50 @@ const Cart = () => {
 
   const { cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
+
+  const [showCoupons, setShowCoupons] = useState(false);
+
+  // const handleCouponsClick = () => {
+  //   // Save selected items to localStorage before opening coupons
+  //   const itemsToCheckout = cartItems.filter(
+  //     (item, index) => selectedItems[index]
+  //   );
+  //   localStorage.setItem("itemsToCheckout", JSON.stringify(itemsToCheckout));
+  //   console.log("itemsToCheckoutcart",itemsToCheckout);
+  //   setShowCoupons(!showCoupons);
+  // };
+
+
+  const handleCouponsClick = async () => {
+    const itemsToCoupon = cartItems.filter(
+      (item, index) => selectedItems[index]
+    );
+  
+    try {
+      await dispatch(checkCartQuantities(itemsToCoupon));
+      localStorage.setItem("itemsToCoupon", JSON.stringify(itemsToCoupon));
+      console.log("itemsToCouponcart",itemsToCoupon);
+      setShowCoupons(!showCoupons);
+     
+    } catch (error) {
+      toast.error(error); // Display the error message from the action
+    }
+  };
+
+
+  const handleCloseCoupons = () => {
+    setShowCoupons(false);
+};
+
+
+
+
+
+
+
+
+
+
 
   const removeCartItemHandler = async (id, variant, size) => {
     for (const item of selected) {
@@ -99,6 +144,7 @@ const Cart = () => {
     try {
       await dispatch(checkCartQuantities(itemsToCheckout));
       localStorage.setItem("itemsToCheckout", JSON.stringify(itemsToCheckout));
+      console.log("itemsToCheckoutcart",itemsToCheckout);
       history("/login?redirect=/shipping");
     } catch (error) {
       toast.error(error); // Display the error message from the action
@@ -424,6 +470,18 @@ const Cart = () => {
                   </p>
 
                   <hr />
+
+                  <button 
+                  className={`cart-checkout-btn ${
+                    selected.length === 0 && "disabled"
+                  }`}
+                  onClick={handleCouponsClick}>
+                      Phiếu giảm giá
+                  </button>
+
+                  {showCoupons && <DisplayCoupons onClose={handleCloseCoupons} />}
+
+
                   <button
                     className={`cart-checkout-btn ${
                       selected.length === 0 && "disabled"

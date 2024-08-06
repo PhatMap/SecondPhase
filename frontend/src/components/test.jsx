@@ -1,88 +1,93 @@
-import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from React Router Dom
-import { countries } from "countries-list";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getActiveCoupons } from '../../actions/couponActions';
 
-import MetaData from "../layout/MetaData";
-import CheckoutSteps from "./CheckoutSteps";
+const DisplayCoupons = ({ onClose }) => {
+    const dispatch = useDispatch();
+  const { coupons, loading, error } = useSelector(state => state.coupon);
+  const [selectedCoupon, setSelectedCoupon] = useState('');
+  const [filteredCoupons, setFilteredCoupons] = useState([])
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Tháng bắt đầu từ 0
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
 
-import { useDispatch, useSelector } from "react-redux";
-import { saveShippingInfo } from "../../actions/cartActions";
-import { useNavigate } from "react-router-dom";
-import Address from '../user/Address';
-import { getUserAddress } from "../../actions/userActions";
+    useEffect(() => {
+        dispatch(getActiveCoupons());
+    }, [dispatch]);
 
-const Shipping = () => {
-  const history = useNavigate();
-  const countriesList = Object.values(countries);
-  const dispatch = useDispatch();
-  const { shippingInfo } = useSelector((state) => state.cart);
+    const handleApplyCoupon = () => {
+        if (selectedCoupon) {
+            console.log(`Coupon applied: ${selectedCoupon}`);
+            onClose();
+        }
+    };
 
-  const [province, setProvince] = useState(shippingInfo.province || "");
-  const [district, setDistrict] = useState(shippingInfo.district || "");
-  const [town, setTown] = useState(shippingInfo.town || "");
-  const [location, setLocation] = useState(shippingInfo.location || "");
-  const [phoneNo, setPhoneNo] = useState(shippingInfo.phone || "");
 
-  const handleAddressChange = (field, value) => {
-    switch (field) {
-      case 'province':
-        setProvince(value);
-        break;
-      case 'district':
-        setDistrict(value);
-        break;
-      case 'town':
-        setTown(value);
-        break;
-      case 'location':
-        setLocation(value);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log({ province, district, town, location, phone: phoneNo });
-    dispatch(saveShippingInfo({ province, district, town, location, phone: phoneNo }));
-    history("/confirm");
-  };
-
-  return (
-    <Fragment>
-      <MetaData title={"Shipping Info"} />
-
-      <CheckoutSteps shipping />
-
-      <div className="shipping-wrapper">
-        <form className="shipping-form-container" onSubmit={submitHandler}>
-          <h1 className="shipping-heading">Địa Chỉ Giao Hàng </h1>
-
-          <Address handleAddressChange={handleAddressChange} />
-
-          <div className="shipping-form-group">
-            <label htmlFor="phone_field">Số Điện Thoại</label>
-            <input
-              type="tel"
-              id="phone_field"
-              className="shipping-form-control"
-              value={phoneNo}
-              onChange={(e) => setPhoneNo(e.target.value)}
-              required
-            />
-          </div>
-
-          <button id="shipping_btn" type="submit" className="shipping-btn">
-            Tiếp Tục
-          </button>
-
-          {/* Create a Link to redirect to /shipping/address */}
-          <Link to="/shipping/address"className="shipping-link ">Đã Có Địa Chỉ? Tới Xem </Link>
-        </form>
-      </div>
-    </Fragment>
-  );
+    useEffect(() => {
+        const itemsToCheckout = JSON.parse(localStorage.getItem("itemsToCheckout")) || [];
+        
+        // Filter coupons based on selected items
+        const filtered = coupons.filter(coupon => {
+          if (coupon.target.type === "category") {
+            return itemsToCheckout.some(item => 
+              coupon.target.ids.includes(item.category)
+            );
+          }
+          // Add more conditions for other types if needed
+          return true;
+        });
+    
+        setFilteredCoupons(filtered);
+      }, [coupons]);
+      return (
+        <div className="coupon-modal-overlay">
+            <div className="coupon-modal">
+                <div className="coupon-modal-content">
+                    <h1>Chọn Phiếu Giảm Giá</h1>
+                    <div className="coupon-table">
+                        {filteredCoupons.length > 0 ? (
+                            filteredCoupons.map(coupon => (
+                                <div 
+                                    key={coupon._id} 
+                                    className={`coupon-row ${selectedCoupon === coupon._id ? 'selected' : ''}`}
+                                    onClick={() => setSelectedCoupon(coupon._id)}
+                                >
+                                    <div className="coupon-content">
+                                        <div className="coupon-percentage">{coupon.percentage}%</div>
+                                        <div className="coupon-details">
+                                            <p className="coupon-description">{coupon.description}</p>
+                                            <p className="coupon-type">Loại: {coupon.target.type}</p>
+                                            <p className="coupon-quantity">Số lượng: {coupon.quantity}</p>
+                                            <p className="coupon-expiry">Hạn sử dụng: {formatDate(coupon.expiry)}</p>
+                                        </div>
+                                    </div>
+                                    <div className="coupon-code">COUPON</div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="no-coupons-message">
+                                Không có phiếu giảm giá nào phù hợp với các sản phẩm đã chọn.
+                            </div>
+                        )}
+                    </div>
+                    <div className="button-group">
+                        <button className="confirm-coupon-button" onClick={handleApplyCoupon}>
+                            Áp dụng
+                        </button>
+                        <button className="close-coupon-button" onClick={onClose}>
+                            Đóng
+                        </button>
+                    </div>
+                    {loading && <p>Đang tải...</p>}
+                    {error && <p>{error}</p>}
+                </div>
+            </div>
+        </div>
+    );
 };
 
-export default Shipping;
+export default DisplayCoupons;

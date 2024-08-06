@@ -31,6 +31,12 @@ import {
   DELETE_REVIEW_SUCCESS,
   DELETE_REVIEW_RESET,
   DELETE_REVIEW_FAIL,
+  GET_REVIEWS_IN_PRODUCT_REQUEST,
+  GET_REVIEWS_IN_PRODUCT_SUCCESS,
+  GET_REVIEWS_IN_PRODUCT_FAIL,
+  GET_PRODUCT_CATEGORIES_REQUEST,
+  GET_PRODUCT_CATEGORIES_SUCCESS,
+  GET_PRODUCT_CATEGORIES_FAIL,
   CLEAR_ERRORS,
 } from "../constants/productConstants";
 
@@ -236,32 +242,30 @@ export const newReviewReducer = (state = {}, action) => {
   }
 };
 
-export const productReviewsReducer = (state = { review: [] }, action) => {
+export const productReviewsReducer = (state = { reviews: [] }, action) => {
   switch (action.type) {
     case GET_REVIEWS_REQUEST:
       return {
         ...state,
         loading: true,
       };
-
     case GET_REVIEWS_SUCCESS:
       return {
         loading: false,
-        reviews: action.payload,
+        reviews: action.payload.reviews,
+        reviewsCount: action.payload.reviewsCount,
       };
-
     case GET_REVIEWS_FAIL:
       return {
         ...state,
+        loading: false,
         error: action.payload,
       };
-
     case CLEAR_ERRORS:
       return {
         ...state,
         error: null,
       };
-
     default:
       return state;
   }
@@ -302,5 +306,53 @@ export const reviewReducer = (state = {}, action) => {
 
     default:
       return state;
+  }
+};
+export const reviewsInProductReducer = (state = { reviews: [], totalReviews: 0, currentPage: 1, totalPages: 1 }, action) => {
+  switch (action.type) {
+    case GET_REVIEWS_IN_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_REVIEWS_IN_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        reviews: action.payload.reviews,
+        totalReviews: action.payload.totalReviews,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case GET_REVIEWS_IN_PRODUCT_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const productCategoriesReducer = (state = { categories: [] }, action) => {
+  switch (action.type) {
+      case GET_PRODUCT_CATEGORIES_REQUEST:
+          return {
+              loading: true,
+              categories: []
+          };
+      case GET_PRODUCT_CATEGORIES_SUCCESS:
+          return {
+              loading: false,
+              categories: action.payload
+          };
+      case GET_PRODUCT_CATEGORIES_FAIL:
+          return {
+              loading: false,
+              error: action.payload
+          };
+      default:
+          return state;
   }
 };

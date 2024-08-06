@@ -11,6 +11,8 @@ import ManageCategories from "./ManageCategories";
 import NewCategory from "./NewCategory";
 import UpdateCategory from "./UpdateCategory";
 import ManageProducts from "./ManageProducts";
+import ManageCoupons from "./ManageCoupons";
+import NewCoupon from "./NewCoupon";
 
 const Centre = () => {
   const location = useLocation();
@@ -22,6 +24,7 @@ const Centre = () => {
       "/admin/applications",
       "/admin/categories",
       "/admin/products",
+      "/admin/coupons",
     ];
     return sidebarPaths.some((path) => location.pathname.startsWith(path));
   }, [location.pathname]);
@@ -45,6 +48,8 @@ const Centre = () => {
           <Route path="category/new" element={<NewCategory />} />
           <Route path="category/update/:id" element={<UpdateCategory />} />
           <Route path="products" element={<ManageProducts />} />
+          <Route path="coupons" element={<ManageCoupons />} />
+          <Route path="/coupon/new" element={<NewCoupon />} />
         </Routes>
       </div>
     </div>

@@ -91,3 +91,37 @@ exports.getAllCoupons = catchAsyncErrors(async (req, res, next) => {
     totalCoupons,
   });
 });
+exports.toggleStatus = catchAsyncErrors(async (req, res, next) => {
+  const { couponId } = req.params;
+
+  // Find the coupon by ID
+  const coupon = await Coupon.findById(couponId);
+  if (!coupon) {
+    return next(new ErrorHandler('Coupon not found', 404));
+  }
+
+  // Toggle the status
+  coupon.status = coupon.status === "active" ? "inactive" : "active";
+
+  await coupon.save();
+
+  res.status(200).json({
+    success: true,
+    status: coupon.status,
+    message: `Coupon is now ${coupon.status}`,
+  });
+});
+
+
+exports.getActiveCoupons = catchAsyncErrors(async (req, res, next) => {
+  const coupons = await Coupon.find({ status: 'active' });
+
+  if (!coupons) {
+      return next(new ErrorHandler('No active coupons found', 404));
+  }
+
+  res.status(200).json({
+      success: true,
+      coupons
+  });
+});

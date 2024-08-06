@@ -10,6 +10,8 @@ import {
   newReviewReducer,
   productReviewsReducer,
   reviewReducer,
+  reviewsInProductReducer,
+  productCategoriesReducer
 } from "./reducers/productReducers";
 import {
   authReducer,
@@ -36,6 +38,7 @@ import {
 } from "./reducers/applicationReducers";
 import { categoryReducer } from "./reducers/categoryReducers";
 import { notificationsReducer } from "./reducers/notificationsReducers";
+import { couponReducer } from "./reducers/couponReducer";
 
 const reducer = combineReducers({
   momo: momoReducer,
@@ -64,6 +67,10 @@ const reducer = combineReducers({
   applications: applicationsReducer,
   application: applicationReducer,
   notifications: notificationsReducer,
+  reviewsInProduct: reviewsInProductReducer,
+  coupon: couponReducer,
+  productCategories:productCategoriesReducer
+  
 });
 
 const middlware = [thunk];
