@@ -41,7 +41,7 @@ const OrdersList = () => {
 
     if (isDeleted) {
       toast.success("Xóa Đơn Hàng Thành Công");
-      history("/shop/orders");
+      history("/shopkeeper/orders");
       dispatch({ type: DELETE_ORDER_RESET });
     }
   }, [dispatch, error, isDeleted, history]);

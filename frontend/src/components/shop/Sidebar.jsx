@@ -7,31 +7,25 @@ const Sidebar = () => {
       <nav className="sidebar-form">
         <ul className="sidebar-element-container">
           <li>
-            <Link to="/dashboard" className="sidebar-element">
+            <Link to="/shopkeeper/dashboard" className="sidebar-element">
               <i className="fa fa-tachometer"></i> Thống kê
             </Link>
           </li>
 
           <li>
-            <Link to="/shop/products" className="sidebar-element">
+            <Link to="/shopkeeper/products" className="sidebar-element">
               <i className="fa fa-product-hunt"></i> Quản lý Sản Phẩm
             </Link>
           </li>
 
           <li>
-            <Link to="/shop/orders" className="sidebar-element">
+            <Link to="/shopkeeper/orders" className="sidebar-element">
               <i className="fa fa-shopping-basket"></i> Quản lý Đơn Hàng
             </Link>
           </li>
 
           <li>
-            <Link to="/shop/users" className="sidebar-element">
-              <i className="fa fa-users"></i> Quản lý Người Dùng
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/shop/reviews" className="sidebar-element">
+            <Link to="/shopkeeper/reviews" className="sidebar-element">
               <i className="fa fa-star"></i> Quản lý Đánh Giá
             </Link>
           </li>
