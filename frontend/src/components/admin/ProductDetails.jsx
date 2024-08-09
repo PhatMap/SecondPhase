@@ -79,7 +79,7 @@ const ProductDetails = ({ data, onClose, setDecide }) => {
             </button>
             <button
               className="btn-one"
-              onClick={() => handleApproved(data._id, "notApproved")}
+              onClick={() => handleApproved(data._id, "rejected")}
             >
               Từ Chối
             </button>

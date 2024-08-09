@@ -66,8 +66,8 @@ const ManageApplications = () => {
       if (choose === "approved") {
         setStatus("approved");
       }
-      if (choose === "notApproved") {
-        setStatus("notApproved");
+      if (choose === "rejected") {
+        setStatus("rejected");
       }
       if (choose === "pending") {
         setStatus("pending");
@@ -172,10 +172,10 @@ const ManageApplications = () => {
                   className="btn btn-danger"
                   title="Từ Chối"
                   onClick={() => {
-                    if (application.status === "notApproved") {
+                    if (application.status === "rejected") {
                       return;
                     }
-                    handleApprove(application._id, "notApproved");
+                    handleApprove(application._id, "rejected");
                   }}
                 >
                   <i className="fa fa-window-close"> </i>
@@ -252,16 +252,16 @@ const ManageApplications = () => {
             Đã Duyệt
           </label>
           <label
-            htmlFor="notApproved"
-            className={status === "notApproved" ? "marked" : ""}
+            htmlFor="rejected"
+            className={status === "rejected" ? "marked" : ""}
           >
             <input
               type="radio"
-              id="notApproved"
+              id="rejected"
               name="status"
-              value="notApproved"
-              onChange={() => handleSegmentedTab("notApproved")}
-              checked={status === "notApproved"}
+              value="rejected"
+              onChange={() => handleSegmentedTab("rejected")}
+              checked={status === "rejected"}
             />
             Từ Chối
           </label>

@@ -265,7 +265,7 @@ const Header = ({ color }) => {
                 className={notify > 0 ? "fa fa-bell" : "fa fa-bell-o"}
                 onClick={hanldeNotify}
               ></i>
-              <span
+                  <span
                 id="notification-count"
                 className="notification-badge"
               ></span>

@@ -38,7 +38,7 @@ const Centre = () => {
       )}
       <div className="Centre">
         <Routes>
-          <Route path="login" element={<AdminLogin />} />
+          <Route path="login" element={<AdminLogin />} />      
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="users" element={<ManageUsers />} />
           <Route path="addUser" element={<AddUser />} />

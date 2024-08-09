@@ -133,7 +133,7 @@ const ProductsList = () => {
         approved:
           product.approved === "approved"
             ? "Đã Duyệt"
-            : product.approved === "notApproved"
+            : product.approved === "rejected"
             ? "Chưa Duyệt"
             : product.approved === "pending"
             ? "Đang Xử Lý"
@@ -161,7 +161,7 @@ const ProductsList = () => {
               onClick={() => {
                 if (
                   product.approved === "waiting" ||
-                  product.approved === "notApproved"
+                  product.approved === "rejected"
                 ) {
                   handleSend(product._id);
                 }

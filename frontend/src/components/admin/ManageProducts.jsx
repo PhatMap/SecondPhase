@@ -38,8 +38,8 @@ const ManageProducts = () => {
       if (choose === "approved") {
         setApproved("approved");
       }
-      if (choose === "notApproved") {
-        setApproved("notApproved");
+      if (choose === "rejected") {
+        setApproved("rejected");
       }
       if (choose === "pending") {
         setApproved("pending");
@@ -157,7 +157,7 @@ const ManageProducts = () => {
           approved:
             product.approved === "approved"
               ? "Đã Duyệt"
-              : product.approved === "notApproved"
+              : product.approved === "rejected"
               ? "Chưa Duyệt"
               : "Đang Chờ",
           status: product.status === "active" ? "Hoạt Động" : "Bị Ngưng",
@@ -236,16 +236,16 @@ const ManageProducts = () => {
             Đã Duyệt
           </label>
           <label
-            htmlFor="notApproved"
-            className={approved === "notApproved" ? "marked" : ""}
+            htmlFor="rejected"
+            className={approved === "rejected" ? "marked" : ""}
           >
             <input
               type="radio"
-              id="notApproved"
+              id="rejected"
               name="status"
-              value="notApproved"
-              onChange={() => handleSegmentedTab("notApproved")}
-              checked={approved === "notApproved"}
+              value="rejected"
+              onChange={() => handleSegmentedTab("rejected")}
+              checked={approved === "rejected"}
             />
             Từ Chối
           </label>
