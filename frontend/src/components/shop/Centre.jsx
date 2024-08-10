@@ -8,7 +8,7 @@ import UpdateProduct from "./UpdateProduct";
 import OrdersList from "./OrdersList";
 import ProcessOrder from "./ProcessOrder";
 import ProductReviews from "./ProductReviews";
-import ProtectedRoute from "../route/ProtectedRoute";
+import ShopSetup from "./ShopSetup";
 
 const Centre = () => {
   const location = useLocation();
@@ -42,6 +42,7 @@ const Centre = () => {
           <Route path="orders" element={<OrdersList />} />
           <Route path="order/:id" element={<ProcessOrder />} />
           <Route path="reviews" element={<ProductReviews />} />
+          <Route path="shop" element={<ShopSetup />} />
         </Routes>
       </div>
     </div>

@@ -38,7 +38,9 @@ router
 
 router.route("/products").get(getProducts);
 router.route("/product/:id").get(getSingleProduct);
-router.route("/shop/products").get(getShopProducts);
+router
+  .route("/shop/products")
+  .get(isAuthenticatedUser, authorizeRoles("shopkeeper"), getShopProducts);
 
 router.route("/review").put(isAuthenticatedUser, createProductReview);
 router.route("/reviews").get(isAuthenticatedUser, getProductReviews);

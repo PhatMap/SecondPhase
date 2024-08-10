@@ -38,6 +38,8 @@ import {
   GET_PRODUCT_CATEGORIES_SUCCESS,
   GET_PRODUCT_CATEGORIES_FAIL,
   CLEAR_ERRORS,
+  GET_SHOP_PRODUCTS_SUCCESS,
+  GET_SHOP_PRODUCTS_FAIL,
 } from "../constants/productConstants";
 
 export const productsReducer = (state = { products: [] }, action) => {
@@ -308,7 +310,10 @@ export const reviewReducer = (state = {}, action) => {
       return state;
   }
 };
-export const reviewsInProductReducer = (state = { reviews: [], totalReviews: 0, currentPage: 1, totalPages: 1 }, action) => {
+export const reviewsInProductReducer = (
+  state = { reviews: [], totalReviews: 0, currentPage: 1, totalPages: 1 },
+  action
+) => {
   switch (action.type) {
     case GET_REVIEWS_IN_PRODUCT_REQUEST:
       return {
@@ -335,24 +340,52 @@ export const reviewsInProductReducer = (state = { reviews: [], totalReviews: 0, 
   }
 };
 
-export const productCategoriesReducer = (state = { categories: [] }, action) => {
+export const productCategoriesReducer = (
+  state = { categories: [] },
+  action
+) => {
   switch (action.type) {
-      case GET_PRODUCT_CATEGORIES_REQUEST:
-          return {
-              loading: true,
-              categories: []
-          };
-      case GET_PRODUCT_CATEGORIES_SUCCESS:
-          return {
-              loading: false,
-              categories: action.payload
-          };
-      case GET_PRODUCT_CATEGORIES_FAIL:
-          return {
-              loading: false,
-              error: action.payload
-          };
-      default:
-          return state;
+    case GET_PRODUCT_CATEGORIES_REQUEST:
+      return {
+        loading: true,
+        categories: [],
+      };
+    case GET_PRODUCT_CATEGORIES_SUCCESS:
+      return {
+        loading: false,
+        categories: action.payload,
+      };
+    case GET_PRODUCT_CATEGORIES_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const shopProductsReducer = (state = { products: [] }, action) => {
+  switch (action.type) {
+    case GET_SHOP_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        products: action.payload.products,
+      };
+
+    case GET_SHOP_PRODUCTS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
   }
 };

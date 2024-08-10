@@ -36,6 +36,8 @@ import {
   GET_PRODUCT_CATEGORIES_SUCCESS,
   GET_PRODUCT_CATEGORIES_FAIL,
   CLEAR_ERRORS,
+  GET_SHOP_PRODUCTS_SUCCESS,
+  GET_SHOP_PRODUCTS_FAIL,
 } from "../constants/productConstants";
 
 export const getProducts =
@@ -238,19 +240,17 @@ export const newReview = (reviewData) => async (dispatch) => {
   }
 };
 
-export const getShopProducts = () => async (dispatch) => {
+export const getShopProducts = (shopId) => async (dispatch) => {
   try {
-    dispatch({ type: ADMIN_PRODUCTS_REQUEST });
-
-    const { data } = await axios.get(`/api/v1/shop/products`);
+    const { data } = await axios.get(`/api/v1/shop/products?shopId=${shopId}`);
 
     dispatch({
-      type: ADMIN_PRODUCTS_SUCCESS,
+      type: GET_SHOP_PRODUCTS_SUCCESS,
       payload: { products: data.products },
     });
   } catch (error) {
     dispatch({
-      type: ADMIN_PRODUCTS_FAIL,
+      type: GET_SHOP_PRODUCTS_FAIL,
       payload: error.response.data.message,
     });
   }
@@ -315,28 +315,32 @@ export const deleteReview = (id, productId) => async (dispatch) => {
     });
   }
 };
-export const getReviewsInProduct = (productId, page = 1, limit = 10) => async (dispatch) => {
-  try {
-    dispatch({ type: GET_REVIEWS_IN_PRODUCT_REQUEST });
+export const getReviewsInProduct =
+  (productId, page = 1, limit = 10) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: GET_REVIEWS_IN_PRODUCT_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/ReviewsInProduct?id=${productId}&page=${page}&limit=${limit}`);
+      const { data } = await axios.get(
+        `/api/v1/ReviewsInProduct?id=${productId}&page=${page}&limit=${limit}`
+      );
 
-    dispatch({
-      type: GET_REVIEWS_IN_PRODUCT_SUCCESS,
-      payload: {
-        reviews: data.reviews,
-        totalReviews: data.totalReviews,
-        currentPage: data.currentPage,
-        totalPages: data.totalPages,
-      },
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_REVIEWS_IN_PRODUCT_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_REVIEWS_IN_PRODUCT_SUCCESS,
+        payload: {
+          reviews: data.reviews,
+          totalReviews: data.totalReviews,
+          currentPage: data.currentPage,
+          totalPages: data.totalPages,
+        },
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_REVIEWS_IN_PRODUCT_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({
@@ -346,24 +350,27 @@ export const clearErrors = () => async (dispatch) => {
 
 export const getProductCategories = (productIds) => async (dispatch) => {
   try {
-      dispatch({ type: GET_PRODUCT_CATEGORIES_REQUEST });
+    dispatch({ type: GET_PRODUCT_CATEGORIES_REQUEST });
 
-      const config = {
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-      const { data } = await axios.post('/api/v1/product/coupon/categories', { productIds }, config);
-      dispatch({
-          type: GET_PRODUCT_CATEGORIES_SUCCESS,
-          payload: data.categories
-      });
-
+    const { data } = await axios.post(
+      "/api/v1/product/coupon/categories",
+      { productIds },
+      config
+    );
+    dispatch({
+      type: GET_PRODUCT_CATEGORIES_SUCCESS,
+      payload: data.categories,
+    });
   } catch (error) {
-      dispatch({
-          type: GET_PRODUCT_CATEGORIES_FAIL,
-          payload: error.response.data.message
-      });
+    dispatch({
+      type: GET_PRODUCT_CATEGORIES_FAIL,
+      payload: error.response.data.message,
+    });
   }
 };

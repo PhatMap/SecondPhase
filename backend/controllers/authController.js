@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Shop = require("../models/shop");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
@@ -201,10 +202,14 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
 exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-
+  let shop = null;
+  if (user.role === "shopkeeper") {
+    shop = await Shop.findOne({ ownerId: req.user.id });
+  }
   res.status(200).json({
     success: true,
     user,
+    shop,
   });
 });
 
@@ -288,7 +293,7 @@ exports.getUsers = catchAsyncErrors(async (req, res, next) => {
   apiFeatures.adminPagination();
 
   users = await apiFeatures.query.clone();
-  
+
   res.status(200).json({
     success: true,
     users,

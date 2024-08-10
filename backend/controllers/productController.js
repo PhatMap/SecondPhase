@@ -165,9 +165,6 @@ exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
-
-
 exports.getReviewsInProduct = catchAsyncErrors(async (req, res, next) => {
   const productId = req.query.id;
   const page = Number(req.query.page) || 1;
@@ -175,19 +172,21 @@ exports.getReviewsInProduct = catchAsyncErrors(async (req, res, next) => {
   const skip = (page - 1) * limit;
 
   if (!productId) {
-    return next(new ErrorHandler('Product ID is required', 400));
+    return next(new ErrorHandler("Product ID is required", 400));
   }
 
   const product = await Product.findById(productId);
 
   if (!product) {
-    return next(new ErrorHandler('Product not found', 404));
+    return next(new ErrorHandler("Product not found", 404));
   }
 
   const totalReviews = product.reviews.length;
 
   // Sắp xếp reviews (ví dụ: theo thời gian tạo giảm dần)
-  const sortedReviews = product.reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const sortedReviews = product.reviews.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   // Thực hiện phân trang thủ công
   const paginatedReviews = sortedReviews.slice(skip, skip + limit);
@@ -197,10 +196,9 @@ exports.getReviewsInProduct = catchAsyncErrors(async (req, res, next) => {
     reviews: paginatedReviews,
     totalReviews,
     currentPage: page,
-    totalPages: Math.ceil(totalReviews / limit)
+    totalPages: Math.ceil(totalReviews / limit),
   });
 });
-
 
 exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.query.productId);
@@ -235,7 +233,13 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getShopProducts = catchAsyncErrors(async (req, res, next) => {
-  const apiFeatures = new APIFeatures(Product.find(), req.query).sort();
+  const { shopId } = req.query;
+  console.log(shopId);
+
+  const apiFeatures = new APIFeatures(
+    Product.find({ shopId }),
+    req.query
+  ).sort();
 
   const products = await apiFeatures.query;
 
@@ -282,18 +286,17 @@ exports.updateProductBasic = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-
-
-
 exports.getProductCategories = catchAsyncErrors(async (req, res, next) => {
   let productIds = req.body.productIds;
   productIds = [...new Set(productIds)];
-  const products = await Product.find({ '_id': { $in: productIds } }).select('category');
-  const uniqueCategories = [...new Set(products.map(product => product.category.toString()))];
+  const products = await Product.find({ _id: { $in: productIds } }).select(
+    "category"
+  );
+  const uniqueCategories = [
+    ...new Set(products.map((product) => product.category.toString())),
+  ];
   res.status(200).json({
-      success: true,
-      categories: uniqueCategories
+    success: true,
+    categories: uniqueCategories,
   });
 });
-
-

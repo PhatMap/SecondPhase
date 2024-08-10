@@ -11,7 +11,8 @@ import {
   productReviewsReducer,
   reviewReducer,
   reviewsInProductReducer,
-  productCategoriesReducer
+  productCategoriesReducer,
+  shopProductsReducer,
 } from "./reducers/productReducers";
 import {
   authReducer,
@@ -69,8 +70,8 @@ const reducer = combineReducers({
   notifications: notificationsReducer,
   reviewsInProduct: reviewsInProductReducer,
   coupon: couponReducer,
-  productCategories:productCategoriesReducer
-  
+  productCategories: productCategoriesReducer,
+  shopProducts: shopProductsReducer,
 });
 
 const middlware = [thunk];

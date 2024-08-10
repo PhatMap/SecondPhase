@@ -163,7 +163,7 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({
       type: LOAD_USER_SUCCESS,
-      payload: data.user,
+      payload: { user: data.user, shop: data.shop },
     });
   } catch (error) {
     dispatch({

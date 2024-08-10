@@ -1154,7 +1154,6 @@ body {
   margin-left: -100px; /* Đặt lề trái để cách biệt với cạnh trái của container cha */
 }
 
-
 .rating {
   margin-top: 10rem;
 }
@@ -4108,7 +4107,7 @@ body {
   position: absolute;
   right: 30px;
   top: 35px;
-  color: red;   
+  color: red;
   font-size: 30px;
 }
 
@@ -4217,9 +4216,6 @@ body {
   color: #d1d1d1;
 }
 
-
-
-
 .coupon-modal-overlay {
   position: fixed;
   top: 0;
@@ -4254,7 +4250,7 @@ body {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 }
 
@@ -4268,7 +4264,7 @@ body {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .coupon-row {
@@ -4296,7 +4292,7 @@ body {
 .coupon-percentage {
   font-size: 36px;
   font-weight: bold;
-  color: #4CAF50;
+  color: #4caf50;
   margin-right: 20px;
 }
 
@@ -4318,7 +4314,7 @@ body {
 .coupon-code {
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 5px 2px;
   font-size: 12px;
@@ -4331,7 +4327,8 @@ body {
   justify-content: flex-end;
 }
 
-.confirm-coupon-button, .close-coupon-button {
+.confirm-coupon-button,
+.close-coupon-button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -4340,7 +4337,7 @@ body {
 }
 
 .confirm-coupon-button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
@@ -4374,7 +4371,7 @@ body {
 .coupon-percentage {
   font-size: 36px;
   font-weight: bold;
-  color: #4CAF50;
+  color: #4caf50;
   margin-right: 20px;
 }
 
@@ -4392,14 +4389,15 @@ body {
   color: #333;
 }
 
-.coupon-type, .coupon-quantity {
+.coupon-type,
+.coupon-quantity {
   color: #666;
 }
 
 .coupon-code {
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 5px 2px;
   font-size: 12px;
@@ -4409,4 +4407,35 @@ body {
   opacity: 0.5;
   pointer-events: none;
 }
-/* Các phần CSS khác giữ nguyên */
+
+/* ShopSetup.jsx */
+.shop-setup-container {
+  background-color: #88c4ff;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.shop-setup-head-container {
+  background-color: #f4ff80;
+  width: 100%;
+  height: 300px;
+}
+
+.shop-setup-body-container {
+  background-color: #e595ff;
+  width: 100%;
+  height: 100%;
+}
+
+.shop-setup-section-containershop-setup-section-container {
+  height: fit-content;
+}
+
+.shop-setup-products-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}

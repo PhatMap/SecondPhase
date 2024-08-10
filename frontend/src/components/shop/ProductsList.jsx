@@ -6,8 +6,6 @@ import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import Sidebar from "./Sidebar";
 
-import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
 import { getCategoryAll } from "../../actions/categoryActions";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -32,7 +30,12 @@ const ProductsList = () => {
   const [show, setShow] = useState(false);
   const [id, setId] = useState("");
 
-  const { loading, error, products } = useSelector((state) => state.products);
+  const { loading, error, products } = useSelector(
+    (state) => state.shopProducts
+  );
+
+  const { shop } = useSelector((state) => state.auth);
+
   const {
     error: deleteError,
     isDeleted,
@@ -41,7 +44,7 @@ const ProductsList = () => {
   const { categories: allCategories } = useSelector((state) => state.category);
 
   useEffect(() => {
-    dispatch(getShopProducts());
+    dispatch(getShopProducts(shop._id));
     dispatch(getCategoryAll());
 
     if (error) {

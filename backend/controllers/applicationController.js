@@ -5,6 +5,7 @@ const Notification = require("../models/notification");
 const cloudinary = require("cloudinary");
 const APIFeatures = require("../utils/apiFeatures");
 const Shop = require("../models/shop");
+const User = require("../models/user");
 
 exports.newApplication = catchAsyncErrors(async (req, res, next) => {
   const { formData } = req.body;
@@ -104,6 +105,25 @@ const createShop = async (applicationId, ownerId, status) => {
   );
 };
 
+const updateUser = async (userId, status) => {
+  try {
+    if (status === "approved") {
+      return User.findByIdAndUpdate(
+        userId,
+        { $set: { role: "shopkeeper" } },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error updating user:", error);
+  }
+};
+
 const createNotification = async (status, userId) => {
   return Notification.create({
     message:
@@ -130,6 +150,7 @@ exports.updateApplication = catchAsyncErrors(async (req, res, next) => {
   );
 
   await createShop(application._id, application.userId, status);
+  await updateUser(application.userId, status);
   await createNotification(status, application.userId);
 
   if (io && userSockets.has(application.userId.toString())) {
