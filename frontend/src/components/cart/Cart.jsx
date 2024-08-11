@@ -23,28 +23,61 @@ const Cart = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [selected, setSelected] = useState([]);
   const [all, setAll] = useState(false);
+  const [appliedCoupons, setAppliedCoupons] = useState([]);
 
   const { cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
 
   const [showCoupons, setShowCoupons] = useState(false);
 
-  // const handleCouponsClick = () => {
-  //   // Save selected items to localStorage before opening coupons
-  //   const itemsToCheckout = cartItems.filter(
-  //     (item, index) => selectedItems[index]
-  //   );
-  //   localStorage.setItem("itemsToCheckout", JSON.stringify(itemsToCheckout));
-  //   console.log("itemsToCheckoutcart",itemsToCheckout);
-  //   setShowCoupons(!showCoupons);
-  // };
+
+
+  const handleCloseCoupons = (selectedCoupons) => {
+    setShowCoupons(false);
+    if (selectedCoupons && selectedCoupons.length > 0) {
+      setAppliedCoupons(selectedCoupons);
+      
+      // Tính toán giá đã giảm
+      localStorage.setItem('appliedCoupons', JSON.stringify(selectedCoupons));
+    }
+  };
+  
+  const calculateDiscountedPrice = (item) => {
+    let discountedPrice = item.price;
+    appliedCoupons.forEach(coupon => {
+      if (coupon.target.ids.includes(item.category)) {
+        discountedPrice -= (discountedPrice * coupon.percentage / 100);
+      }
+    });
+    return discountedPrice;
+  };
+
+  const calculateTotalPrice = () => {
+    const total = selected.reduce((acc, item) => {
+      const discountedPrice = calculateDiscountedPrice(item);
+      return acc + (discountedPrice * item.quantity);
+    }, 0);
+    return total;
+  };
+
+  
+  const calculateTotalDiscount = () => {
+    return selected.reduce((acc, item) => {
+      const originalPrice = item.price * item.quantity;
+      const discountedPrice = calculateDiscountedPrice(item) * item.quantity;
+      return acc + (originalPrice - discountedPrice);
+    }, 0);
+  };
+  
 
 
   const handleCouponsClick = async () => {
     const itemsToCoupon = cartItems.filter(
       (item, index) => selectedItems[index]
-    );
-  
+    ).map(item => ({
+      ...item,
+      category: item.category // Ensure category is included
+    }));
     try {
       await dispatch(checkCartQuantities(itemsToCoupon));
       localStorage.setItem("itemsToCoupon", JSON.stringify(itemsToCoupon));
@@ -56,10 +89,6 @@ const Cart = () => {
     }
   };
 
-
-  const handleCloseCoupons = () => {
-    setShowCoupons(false);
-};
 
 
 
@@ -136,20 +165,28 @@ const Cart = () => {
     }
   };
 
-  const checkoutHandler = async () => {
-    const itemsToCheckout = cartItems.filter(
-      (item, index) => selectedItems[index]
-    );
-  
-    try {
-      await dispatch(checkCartQuantities(itemsToCheckout));
-      localStorage.setItem("itemsToCheckout", JSON.stringify(itemsToCheckout));
-      console.log("itemsToCheckoutcart",itemsToCheckout);
-      history("/login?redirect=/shipping");
-    } catch (error) {
-      toast.error(error); // Display the error message from the action
-    }
-  };
+ const checkoutHandler = async () => {
+  const discountedTotalPrice = calculateTotalPrice();
+  localStorage.setItem('discountedTotalPrice', discountedTotalPrice);
+  console.log("discountedTotalPrice",discountedTotalPrice);
+  const itemsToCheckout = cartItems.filter(
+    (item, index) => selectedItems[index]
+  );
+
+  try {
+    await dispatch(checkCartQuantities(itemsToCheckout));
+    localStorage.setItem("itemsToCheckout", JSON.stringify(itemsToCheckout));
+    const discountedTotalPrice = calculateTotalPrice(); 
+    history("/login?redirect=/shipping", { 
+      state: { 
+        totalPrice: discountedTotalPrice,
+        appliedCoupons: appliedCoupons 
+      } 
+    });
+  } catch (error) {
+    toast.error(error);
+  }
+};
 
   const handlerQuantity = (e) => {
     setNewQuantity(e.target.value);
@@ -458,16 +495,23 @@ const Cart = () => {
                     </span>
                   </p>
                   <p>
-                    Tổng Thanh Toán:
-                    <span className="order-summary-values">
-                      {formatToVNDWithVND(
-                        selected.reduce(
-                          (acc, item) => acc + item.quantity * item.price,
-                          0
-                        )
-                      )}
-                    </span>
-                  </p>
+                  Tổng giá:
+                  <span className="order-summary-values">
+                    {formatToVNDWithVND(selected.reduce((acc, item) => acc + (item.price * item.quantity), 0))}
+                  </span>
+                </p>
+                <p>
+                  Tổng giảm giá:
+                  <span className="order-summary-values">
+                    {formatToVNDWithVND(calculateTotalDiscount())}
+                  </span>
+                </p>
+                <p>
+                  Thanh Toán:
+                  <span className="order-summary-values">
+                    {formatToVNDWithVND(calculateTotalPrice())}
+                  </span>
+                </p>
 
                   <hr />
 
@@ -491,6 +535,7 @@ const Cart = () => {
                     Thanh Toán
                   </button>
                 </div>
+
               </div>
             </Fragment>
           )

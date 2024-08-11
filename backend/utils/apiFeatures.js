@@ -108,15 +108,23 @@ class APIFeatures {
     return this;
   }
   filterCoupon() {
-    const { role, creatorId } = this.queryStr;
-
-    let query = {};
-
-    if (role && role === 'shopkeeper' && creatorId) {
-      query.creatorId = creatorId;
+    const queryCopy = { ...this.queryStr };
+    const removeFields = ['keyword', 'limit', 'page'];
+    removeFields.forEach(el => delete queryCopy[el]);
+  
+    let queryStr = JSON.stringify(queryCopy);
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, match => `$${match}`);
+  
+    this.query = this.query.find(JSON.parse(queryStr));
+  
+    // Add filtering by status and role
+    if (this.queryStr.status) {
+      this.query = this.query.find({ status: this.queryStr.status });
     }
-
-    this.query = this.query.find(query);
+    if (this.queryStr.role) {
+      this.query = this.query.find({ role: this.queryStr.role });
+    }
+  
     return this;
   }
   search() {
@@ -129,12 +137,9 @@ class APIFeatures {
         }
       : {};
 
-    const category = this.queryStr.category
+      const category = this.queryStr.category
       ? {
-          category: {
-            $regex: this.queryStr.category,
-            $options: "i",
-          },
+          category: this.queryStr.category
         }
       : {};
 

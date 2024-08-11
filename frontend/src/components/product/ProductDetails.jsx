@@ -109,11 +109,13 @@ const ProductDetails = () => {
       variant: variant._id,
       inventory: variant.inventory[inventoryIndex]._id,
       name: product.name,
+      category: product.category, 
       variantName: variant.name,
       price: price,
       image: variant.images[0].url,
       quantity: quantity,
       size: size,
+      
     };
 
     if (cartItems.length > 0) {

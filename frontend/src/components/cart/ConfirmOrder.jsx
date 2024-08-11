@@ -32,7 +32,9 @@ const ConfirmOrder = () => {
   );
   const shippingPrice = itemsPrice > 200 ? 0 : 25;
   const taxPrice = Number((0.05 * itemsPrice).toFixed(2));
-  const totalPrice = (itemsPrice + shippingPrice + taxPrice).toFixed(2);
+  const discountedTotalPrice = localStorage.getItem('discountedTotalPrice');
+  const totalPrice = discountedTotalPrice ? parseFloat(discountedTotalPrice) : (itemsPrice + shippingPrice + taxPrice).toFixed(2);
+  const discountAmount = itemsPrice - totalPrice;
 
   const checkQuantitiesBeforePayment = async () => {
     try {
@@ -202,6 +204,12 @@ const ConfirmOrder = () => {
             Tổng giá trị sản phẩm:
             <span className="order-summary-values">
               {formatToVNDWithVND(itemsPrice)}
+            </span>
+          </p>
+          <p>
+          Số tiền khuyến mãi:
+            <span className="order-summary-values">
+              {formatToVNDWithVND(discountAmount)}
             </span>
           </p>
           <p>

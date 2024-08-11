@@ -1,0 +1,478 @@
+[{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a15397"
+  },
+  "name": "Trần Trung Phát",
+  "email": "phatmap234@gmail.com",
+  "password": "zzzzzzzz",
+  "address": [
+    {
+      "town": "Xã Khâu Vai",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0367562350",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a15398"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/vw6dfdd0rvg4xidmucdc",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1717330848/avatars/vw6dfdd0rvg4xidmucdc.jpg"
+  },
+  "role": "admin",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.850Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a15399"
+  },
+  "name": "User 1",
+  "email": "user1@example.com",
+  "password": "password123",
+  "address": [
+    {
+      "town": "Phường Bến Nghé",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0901234567",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a1539a"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/gasdwimx2cu8duhssi5g",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1716711407/avatars/gasdwimx2cu8duhssi5g.jpg"
+  },
+  "role": "customer",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.850Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a1539b"
+  },
+  "name": "User 2",
+  "email": "user2@example.com",
+  "password": "securepass456",
+  "address": [
+    {
+      "town": "Phường 6",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0912345678",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a1539c"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "103691857358975475224",
+    "url": "https://lh3.googleusercontent.com/a/ACg8ocIyq2aXjC6x0oB9NtvpPvkdgP6kkQfZa2Q19J9OTahH0ji9qw=s96-c"
+  },
+  "role": "customer",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.851Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a1539d"
+  },
+  "name": "User 3",
+  "email": "user3@example.com",
+  "password": "userpass789",
+  "address": [
+    {
+      "town": "Phường 7",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0923456789",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a1539e"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "customer",
+  "status": "inactive",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.851Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a1539f"
+  },
+  "name": "User 4",
+  "email": "user4@example.com",
+  "password": "pass1234",
+  "address": [
+    {
+      "town": "Phường 9",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0934567890",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153a0"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "customer",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.852Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a153a1"
+  },
+  "name": "User 5",
+  "email": "user5@example.com",
+  "password": "userpassword5",
+  "address": [
+    {
+      "town": "Phường 5",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0945678901",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153a2"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "customer",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.852Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a153a3"
+  },
+  "name": "User 6",
+  "email": "user6@example.com",
+  "password": "pass6789",
+  "address": [
+    {
+      "town": "Phường 15",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0956789012",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153a4"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "customer",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.853Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a153a5"
+  },
+  "name": "User 7",
+  "email": "user7@example.com",
+  "password": "userpass7",
+  "address": [
+    {
+      "town": "Phường 12",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0967890123",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153a6"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "customer",
+  "status": "inactive",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.853Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a153a7"
+  },
+  "name": "User 8",
+  "email": "user8@example.com",
+  "password": "pass8user",
+  "address": [
+    {
+      "town": "Phường 3",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0978901234",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153a8"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "customer",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.854Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a153a9"
+  },
+  "name": "User 9",
+  "email": "user9@example.com",
+  "password": "user9pass",
+  "address": [
+    {
+      "town": "Phường Bến Thành",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0989012345",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153aa"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "customer",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.854Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a153ab"
+  },
+  "name": "User 10",
+  "email": "user10@example.com",
+  "password": "pass10user",
+  "address": [
+    {
+      "town": "Phường Bến Nghé",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0990123456",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153ac"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "customer",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.854Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a153ad"
+  },
+  "name": "Shopkeeper 1",
+  "email": "shop1@example.com",
+  "password": "shoppass1",
+  "address": [
+    {
+      "town": "Phường Phạm Ngũ Lão",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0901112233",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153ae"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "shopkeeper",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.855Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a153af"
+  },
+  "name": "Shopkeeper 2",
+  "email": "shop2@example.com",
+  "password": "shop2pass",
+  "address": [
+    {
+      "town": "Phường Bến Nghé",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0912223344",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153b0"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "shopkeeper",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.855Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a153b1"
+  },
+  "name": "Shopkeeper 3",
+  "email": "shop3@example.com",
+  "password": "pass3shop",
+  "address": [
+    {
+      "town": "Phường Tân Định",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0923334455",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153b2"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "shopkeeper",
+  "status": "inactive",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.856Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a153b3"
+  },
+  "name": "Shopkeeper 4",
+  "email": "shop4@example.com",
+  "password": "shopkeeper4",
+  "address": [
+    {
+      "town": "Phường Nguyễn Thái Bình",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0934445566",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153b4"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "shopkeeper",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.856Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f5ff0b013bc9d7a153b5"
+  },
+  "name": "Shopkeeper 5",
+  "email": "shop5@example.com",
+  "password": "pass5shop",
+  "address": [
+    {
+      "town": "Phường 15",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0945556677",
+      "_id": {
+        "$oid": "66b1f5ff0b013bc9d7a153b6"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/kbgez12eqbrrr2fic6qv",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1720522977/avatars/kbgez12eqbrrr2fic6qv.jpg"
+  },
+  "role": "shopkeeper",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:07:59.857Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b1f636878121c57e08dad1"
+  },
+  "name": "Lã Quý Quân",
+  "email": "quan00@gmail.com",
+  "password": "$2a$10$QlvJEm2ENE7Oolb6WH804.1NmIgerngBMD7ounL8L4wG0Sk90160u",
+  "address": [
+    {
+      "province": "Tỉnh Hà Giang",
+      "district": "Thành phố Hà Giang",
+      "town": "Phường Trần Phú",
+      "location": "6363",
+      "phone": "0397144780",
+      "_id": {
+        "$oid": "66b1f636878121c57e08dad2"
+      }
+    }
+  ],
+  "avatar": {
+    "public_id": "avatars/silgkdjurigoso9hrtqc",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1722938934/avatars/silgkdjurigoso9hrtqc.png"
+  },
+  "role": "admin",
+  "status": "active",
+  "createAt": {
+    "$date": "2024-08-06T10:08:54.984Z"
+  },
+  "__v": 0
+}]

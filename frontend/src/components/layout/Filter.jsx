@@ -92,7 +92,7 @@ const Filter = ({
     }
     setCurrentPage(1);
     history("/shop");
-
+console.log("selectedCategory in handleFiltering",selectedCategory);
     dispatch(
       getProducts(
         keyword ? keyword : "",

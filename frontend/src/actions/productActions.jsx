@@ -50,10 +50,11 @@ export const getProducts =
   ) =>
   async (dispatch) => {
     try {
+      console.log("getProducts được gọi với:", { keyword, currentPage, price, category, rating });
       dispatch({ type: ALL_PRODUCTS_REQUEST });
 
-      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`;
-
+      let link = 
+      `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`;
       const config = {
         headers: {
           "Content-Type": "application/json",

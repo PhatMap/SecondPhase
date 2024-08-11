@@ -5,7 +5,7 @@ const Product = require("../models/product");
 
 exports.addToCart = catchAsyncErrors(async (req, res, next) => {
   const { cartItems } = req.body;
-  const { product, variant, inventory, size, quantity } = cartItems[0];
+  const { product, variant, inventory, size, quantity, category } = cartItems[0];
 
   let cart = await Cart.findOne({ user: req.user.id });
 
@@ -26,7 +26,7 @@ exports.addToCart = catchAsyncErrors(async (req, res, next) => {
         parseFloat(quantity) +
         parseFloat(cart.cartItems[existingItemIndex].quantity);
     } else {
-      cart.cartItems.push(...cartItems);
+      cart.cartItems.push({...cartItems[0], category});
     }
 
     await cart.save();

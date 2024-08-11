@@ -71,24 +71,41 @@ exports.deleteCoupon = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 exports.getAllCoupons = catchAsyncErrors(async (req, res, next) => {
-  const apiFeatures = new APIFeatures(Coupon.find(), req.query)
-    .filterCoupon()
-    .sort();
+  const resPerPage = Number(req.query.resPerPage) || 10;
+  const currentPage = Number(req.query.page) || 1;
+  const skip = resPerPage * (currentPage - 1);
 
-  let coupons = await apiFeatures.query;
+  let query = Coupon.find();
 
-  const totalCoupons = coupons.length;
+  // Apply filters
+  if (req.query.keyword) {
+      query = query.or([
+          { description: { $regex: req.query.keyword, $options: 'i' } },
+          { target: { $regex: req.query.keyword, $options: 'i' } }
+      ]);
+  }
 
-  apiFeatures.pagination();
+  if (req.query.status && req.query.status !== 'all') {
+      query = query.where('status').equals(req.query.status);
+  }
 
-  coupons = await apiFeatures.query.clone();
+  if (req.query.role && req.query.role !== 'all') {
+      query = query.where('role').equals(req.query.role);
+  }
+
+  // Get total number of documents
+  const totalCoupons = await Coupon.countDocuments(query);
+
+  // Execute query with pagination
+  const coupons = await query.skip(skip).limit(resPerPage);
 
   res.status(200).json({
-    success: true,
-    coupons,
-    totalCoupons,
+      success: true,
+      coupons,
+      totalCoupons,
+      resPerPage,
+      currentPage
   });
 });
 exports.toggleStatus = catchAsyncErrors(async (req, res, next) => {

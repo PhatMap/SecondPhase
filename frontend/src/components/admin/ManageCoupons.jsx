@@ -26,30 +26,33 @@ const ManageCoupons = () => {
   const [keyword, setKeyword] = useState("");
   const [show, setShow] = useState(false);
   const [couponToDelete, setCouponToDelete] = useState(null);
-  useEffect(() => {
-    if (isStatusUpdated) {
-      toast.success("Cập nhật trạng thái thành công");
-      dispatch({ type: TOGGLE_STATUS_RESET });
-      dispatch(getAllCoupons(currentPage, keyword));
-    }
-  }, [dispatch, isStatusUpdated, currentPage, keyword]);
 
-  useEffect(() => {
-    dispatch(getAllCoupons(currentPage, keyword));
+  const [status, setStatus] = useState("all");
+  const [role, setRole] = useState("all");
+  
+    useEffect(() => {
+      if (isStatusUpdated) {
+        toast.success("Cập nhật trạng thái thành công");
+        dispatch({ type: TOGGLE_STATUS_RESET });
+        dispatch(getAllCoupons(currentPage, keyword, status, role));
+      }
+    }, [dispatch, isStatusUpdated, currentPage, keyword, status, role]);
 
-    if (success) {
-      toast.success("Xóa Thành Công Phiếu Giảm Giá");
-      dispatch({ type: DELETE_COUPON_RESET });
-      dispatch({ type: UPDATE_COUPON_RESET });
-      dispatch({ type: CREATE_COUPON_RESET });
-    }
+    useEffect(() => {
+      dispatch(getAllCoupons(currentPage, keyword, status, role));
 
-    if (error) {
-      toast.error(error);
-      dispatch({ type: CLEAR_ERRORS });
-    }
-  }, [dispatch, success, error, currentPage, keyword]);
+      if (success) {
+        toast.success("Xóa Thành Công Phiếu Giảm Giá");
+        dispatch({ type: DELETE_COUPON_RESET });
+        dispatch({ type: UPDATE_COUPON_RESET });
+        dispatch({ type: CREATE_COUPON_RESET });
+      }
 
+      if (error) {
+        toast.error(error);
+        dispatch({ type: CLEAR_ERRORS });
+      }
+    }, [dispatch, success, error, currentPage, keyword, status, role]);
   const deleteHandler = (id) => {
     setShow(true);
     setCouponToDelete(id);
@@ -60,6 +63,24 @@ const ManageCoupons = () => {
     dispatch(getAllCoupons(currentPage, keyword));
     setShow(false);
 
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(getAllCoupons(1, keyword, status, role));
+  };
+
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value);
+    setCurrentPage(1);
+    dispatch(getAllCoupons(1, keyword, e.target.value, role));
+  };
+
+  const handleRoleChange = (e) => {
+    setRole(e.target.value);
+    setCurrentPage(1);
+    dispatch(getAllCoupons(1, keyword, status, e.target.value));
   };
 
   const cancelDelete = () => {
@@ -157,11 +178,7 @@ const ManageCoupons = () => {
     setCurrentPage(pageNumber);
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setCurrentPage(1);
-    dispatch(getCoupons(1, keyword));
-  };
+
 
   return (
     <Fragment>
@@ -198,9 +215,17 @@ const ManageCoupons = () => {
             border: "1px solid #ccc",
           }}
         />
-        <button type="submit" className="btn btn-primary">
-          Tìm kiếm
-        </button>
+         <select value={status} onChange={handleStatusChange} style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}>
+          <option value="all">Tất cả trạng thái</option>
+          <option value="active">Đang hoạt động</option>
+          <option value="inactive">Ngưng hoạt động</option>
+        </select>
+        <select value={role} onChange={handleRoleChange} style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}>
+          <option value="all">Tất cả vai trò</option>
+          <option value="admin">Admin</option>
+          <option value="shopkeeper">Shopkeeper</option>
+        </select>
+       
       </form>
       {loading ? (
         <h2 style={{ textAlign: "center" }}>Đang tải...</h2>

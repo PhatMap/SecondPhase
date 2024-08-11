@@ -83,31 +83,29 @@ export const deleteCoupon = (id) => async (dispatch) => {
 };
 
 // Get All Coupons
- export const getAllCoupons =
-    (currentPage = 1, keyword = "", resPerPage = 10) =>
-    async (dispatch) => {
-      try {
-        dispatch({ type: GET_ALL_COUPONS_REQUEST });
-  
-        const { data } = await axios.get(
-          `/api/v1/admin/coupons?page=${currentPage}&keyword=${keyword}&resPerPage=${resPerPage}`
-        );
-  
-        dispatch({
+export const getAllCoupons = (currentPage = 1, keyword = "", status = "all", role = "all", resPerPage = 10) => async (dispatch) => {
+  try {
+      dispatch({ type: GET_ALL_COUPONS_REQUEST });
+
+      const { data } = await axios.get(
+          `/api/v1/admin/coupons?page=${currentPage}&keyword=${keyword}&status=${status}&role=${role}&resPerPage=${resPerPage}`
+      );
+
+      dispatch({
           type: GET_ALL_COUPONS_SUCCESS,
           payload: data,
-        });
-      } catch (error) {
-        dispatch({
-          type:GET_ALL_COUPONS_FAIL,
+      });
+  } catch (error) {
+      dispatch({
+          type: GET_ALL_COUPONS_FAIL,
           payload: error.response ? error.response.data.message : error.message,
-        });
-        console.log(
+      });
+      console.log(
           "Error:",
           error.response ? error.response.data.message : error.message
-        );
-      }
-    };
+      );
+  }
+};
 
 
     export const toggleStatus = (id) => async (dispatch) => {
