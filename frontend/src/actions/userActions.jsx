@@ -87,7 +87,7 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: data.user,
+      payload: { user: data.user, shop: data.shop },
     });
   } catch (error) {
     console.log("Error from server:", error.response.data.message);
@@ -117,7 +117,7 @@ export const googleLogin =
 
       dispatch({
         type: GOOGLE_LOGIN_SUCCESS,
-        payload: data.user,
+        payload: { user: data.user, shop: data.shop },
       });
     } catch (error) {
       dispatch({
@@ -163,7 +163,7 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({
       type: LOAD_USER_SUCCESS,
-      payload: { user: data.user, shop: data.shop },
+      payload: { user: data.user },
     });
   } catch (error) {
     dispatch({

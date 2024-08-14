@@ -74,13 +74,6 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
       message: "Tài Khoản Không Chính Xác",
     });
   }
-  if (user.role === "banned") {
-    return res.status(403).json({
-      success: false,
-      message:
-        "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên để biết thêm thông tin.",
-    });
-  }
 
   const isPasswordMatched = await user.comparePassword(password);
 
@@ -91,7 +84,12 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
     });
   }
 
-  sendToken(user, 200, res);
+  let shop = null;
+  if (user.role === "shopkeeper") {
+    shop = await Shop.findOne({ ownerId: req.user.id });
+  }
+
+  sendToken(user, 200, res, shop);
 });
 
 const generateRandomPassword = () => {
@@ -127,7 +125,12 @@ exports.googleLoginUser = catchAsyncErrors(async (req, res, next) => {
     });
   }
 
-  sendToken(user, 200, res);
+  let shop = null;
+  if (user.role === "shopkeeper") {
+    shop = await Shop.findOne({ ownerId: user._id });
+  }
+
+  sendToken(user, 200, res, shop);
 });
 
 exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
@@ -202,14 +205,10 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
 exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  let shop = null;
-  if (user.role === "shopkeeper") {
-    shop = await Shop.findOne({ ownerId: req.user.id });
-  }
+
   res.status(200).json({
     success: true,
     user,
-    shop,
   });
 });
 

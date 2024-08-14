@@ -25,7 +25,7 @@ router
 
 router
   .route("/shop/uploadImages")
-  .post(isAuthenticatedUser, authorizeRoles("admin"), uploadImages);
+  .post(isAuthenticatedUser, authorizeRoles("shopkeeper"), uploadImages);
 
 router
   .route("/shop/product/:id")

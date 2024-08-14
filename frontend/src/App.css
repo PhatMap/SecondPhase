@@ -4433,9 +4433,79 @@ body {
   height: fit-content;
 }
 
-.shop-setup-products-container{
+.shop-setup-products-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+}
+
+/* Section.jsx */
+.section-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.section-form {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  width: 700px;
+  height: fit-content;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+.section-form::-webkit-scrollbar {
+  width: 6px;
+}
+
+.section-form::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.section-form::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.section-btns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.section-btns button {
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+}
+
+.section-btns .cancel {
+  background-color: gainsboro;
+}
+
+.section-btns .confirm {
+  background-color: rgb(10, 207, 10);
+}
+
+.section-btns .cancel:hover {
+  background-color: rgb(103, 103, 103);
+}
+
+.section-btns .confirm:hover {
+  background-color: green;
 }

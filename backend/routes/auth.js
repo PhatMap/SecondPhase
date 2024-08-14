@@ -51,9 +51,6 @@ router.get("/me/address", isAuthenticatedUser, getUserAddress);
 router.route("/admin/users/new").post(NewUser);
 
 router
-  .route("/shop/users")
-  .get(isAuthenticatedUser, authorizeRoles("admin"), allUsers);
-router
   .route("/admin/users")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getUsers);
 router

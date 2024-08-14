@@ -196,7 +196,6 @@ exports.updateCartQuantity = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.checkCartQuantities = catchAsyncErrors(async (req, res, next) => {
-  console.log(req.body); // Log the request body to debug
   const { selectedItems } = req.body;
 
   for (let selectedItem of selectedItems) {

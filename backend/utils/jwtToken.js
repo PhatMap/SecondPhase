@@ -1,4 +1,4 @@
-const sendToken = (user, statusCode, res) => {
+const sendToken = (user, statusCode, res, shop) => {
   const token = user.getJwtToken();
 
   const options = {
@@ -12,6 +12,7 @@ const sendToken = (user, statusCode, res) => {
     success: true,
     token,
     user,
+    shop,
   });
 };
 

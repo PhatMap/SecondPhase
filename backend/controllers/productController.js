@@ -13,7 +13,7 @@ exports.uploadImages = catchAsyncErrors(async (req, res, next) => {
 
   for (let i = 0; i < images.length; i++) {
     const result = await cloudinary.v2.uploader.upload(images[i], {
-      folder: "products",
+      folder: "test",
     });
 
     imagesLinks.push({
@@ -58,7 +58,6 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 
   apiFeatures.pagination(resPerPage);
   products = await apiFeatures.query.clone();
-  console.log(req.query);
   res.status(200).json({
     success: true,
     productsCount,
@@ -234,7 +233,6 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
 
 exports.getShopProducts = catchAsyncErrors(async (req, res, next) => {
   const { shopId } = req.query;
-  console.log(shopId);
 
   const apiFeatures = new APIFeatures(
     Product.find({ shopId }),
