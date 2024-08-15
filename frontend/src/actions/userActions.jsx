@@ -150,7 +150,6 @@ export const register = (userData) => async (dispatch) => {
       type: REGISTER_USER_FAIL,
       payload: error.response.data.message,
     });
-    console.log("asdasd", error.response.data.message);
   }
 };
 

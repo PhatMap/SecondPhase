@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCategoryAll } from "../../actions/categoryActions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { uploadImages } from "../../actions/productActions";
+import {
+  uploadImages,
+  uploadSectionImages,
+} from "../../actions/productActions";
+import { updateShop } from "../../actions/shopActions";
+import { UPDATE_SHOP_RESET } from "../../constants/shopConstants";
 
 const Section = ({ data, onClose }) => {
   const handleOverlayClick = (event) => {
@@ -13,6 +18,7 @@ const Section = ({ data, onClose }) => {
   };
 
   const { categories } = useSelector((state) => state.category);
+  const { isUpdated } = useSelector((state) => state.shop);
 
   const [form, setForm] = useState({
     name: "",
@@ -24,6 +30,14 @@ const Section = ({ data, onClose }) => {
   useEffect(() => {
     dispatch(getCategoryAll());
   }, []);
+
+  useEffect(() => {
+    if (isUpdated) {
+      toast.success("Đã thêm mục mới");
+      onClose();
+      dispatch({ type: UPDATE_SHOP_RESET });
+    }
+  }, [isUpdated]);
 
   const onChange = (e) => {
     const files = Array.from(e.target.files);
@@ -75,7 +89,7 @@ const Section = ({ data, onClose }) => {
         if (!image.public_id) {
           const upload = new FormData();
           upload.append("images", image.url);
-          const result = await dispatch(uploadImages(upload));
+          const result = await dispatch(uploadSectionImages(upload));
           waitImges.push({
             id: index,
             res: result,
@@ -97,7 +111,7 @@ const Section = ({ data, onClose }) => {
       categoryId: form.categoryId,
     };
 
-    console.log(sectionData);
+    dispatch(updateShop(sectionData, "sections"));
   };
 
   return (

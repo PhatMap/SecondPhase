@@ -40,6 +40,7 @@ import {
 import { categoryReducer } from "./reducers/categoryReducers";
 import { notificationsReducer } from "./reducers/notificationsReducers";
 import { couponReducer } from "./reducers/couponReducer";
+import { shopReducer } from "./reducers/shopReducers";
 
 const reducer = combineReducers({
   momo: momoReducer,
@@ -72,6 +73,7 @@ const reducer = combineReducers({
   coupon: couponReducer,
   productCategories: productCategoriesReducer,
   shopProducts: shopProductsReducer,
+  shop: shopReducer,
 });
 
 const middlware = [thunk];
