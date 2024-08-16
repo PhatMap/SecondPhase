@@ -4426,10 +4426,10 @@ body {
 .shop-setup-body-container {
   background-color: #e595ff;
   width: 100%;
-  height: 100%;
+  height: fit-content;
 }
 
-.shop-setup-section-containershop-setup-section-container {
+.shop-setup-section-container {
   height: fit-content;
 }
 
@@ -4438,6 +4438,9 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+  width: 100%;
+  height: 200px;
+  background-color: #007bff;
 }
 
 /* Section.jsx */
@@ -4508,4 +4511,25 @@ body {
 
 .section-btns .confirm:hover {
   background-color: green;
+}
+
+.shop-setup-profile-container {
+  display: flex;
+  gap: 20px;
+}
+
+.shop-setup-sections {
+  display: flex;
+  flex-direction: column;
+}
+
+.shop-setup-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shop-setup-section img {
+  width: 150px;
+  height: 200px;
 }

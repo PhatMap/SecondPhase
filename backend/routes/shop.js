@@ -1,5 +1,9 @@
 const express = require("express");
-const { uploadImages, updateShop } = require("../controllers/shopController");
+const {
+  uploadImages,
+  updateShop,
+  getShop,
+} = require("../controllers/shopController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
 const router = express.Router();
 
@@ -9,6 +13,7 @@ router
 
 router
   .route("/shop/me")
-  .put(isAuthenticatedUser, authorizeRoles("shopkeeper"), updateShop);
+  .put(isAuthenticatedUser, authorizeRoles("shopkeeper"), updateShop)
+  .get(isAuthenticatedUser, authorizeRoles("shopkeeper"), getShop);
 
 module.exports = router;

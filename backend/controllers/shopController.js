@@ -3,6 +3,7 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const APIFeatures = require("../utils/apiFeatures");
 const cloudinary = require("cloudinary");
 const Shop = require("../models/shop");
+const Application = require("../models/application");
 
 exports.uploadImages = catchAsyncErrors(async (req, res, next) => {
   let images = Array.isArray(req.body.images)
@@ -34,8 +35,6 @@ exports.uploadImages = catchAsyncErrors(async (req, res, next) => {
 exports.updateShop = catchAsyncErrors(async (req, res, next) => {
   const { newData, field } = req.body;
 
-  console.log(newData, field);
-
   await Shop.findOneAndUpdate(
     { ownerId: req.user.id },
     { [field]: newData },
@@ -48,5 +47,17 @@ exports.updateShop = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+  });
+});
+
+exports.getShop = catchAsyncErrors(async (req, res, next) => {
+  const shop = await Shop.findOne({ ownerId: req.user.id });
+
+  const shopData = await Application.findOne({ userId: req.user.id });
+
+  res.status(200).json({
+    success: true,
+    shop,
+    shopData,
   });
 });

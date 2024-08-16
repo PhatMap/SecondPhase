@@ -1,5 +1,7 @@
 import axios from "axios";
 import {
+  GET_SHOP_FAIL,
+  GET_SHOP_SUCCESS,
   UPDATE_SHOP_FAIL,
   UPDATE_SHOP_SUCCESS,
 } from "../constants/shopConstants";
@@ -20,6 +22,22 @@ export const updateShop = (newData, field) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_SHOP_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getShop = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(`/api/v1/shop/me`);
+
+    dispatch({
+      type: GET_SHOP_SUCCESS,
+      payload: { shop: data.shop, shopData: data.shopData },
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SHOP_FAIL,
       payload: error.response.data.message,
     });
   }

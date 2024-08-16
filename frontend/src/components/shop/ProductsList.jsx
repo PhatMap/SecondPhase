@@ -22,6 +22,7 @@ import {
 } from "../../constants/productConstants";
 import DeleteNotify from "../layout/DeleteNotify";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
+import { getShop } from "../../actions/shopActions";
 
 const ProductsList = () => {
   const history = useNavigate();
@@ -34,7 +35,7 @@ const ProductsList = () => {
     (state) => state.shopProducts
   );
 
-  const { shop } = useSelector((state) => state.auth);
+  const { shop } = useSelector((state) => state.shop);
 
   const {
     error: deleteError,
@@ -42,6 +43,17 @@ const ProductsList = () => {
     isUpdated,
   } = useSelector((state) => state.product);
   const { categories: allCategories } = useSelector((state) => state.category);
+
+  useEffect(() => {
+    dispatch(getShop());
+  }, []);
+
+  useEffect(() => {
+    if (shop) {
+      dispatch(getShopProducts(shop._id));
+      dispatch(getCategoryAll());
+    }
+  }, [shop]);
 
   useEffect(() => {
     dispatch(getShopProducts(shop._id));
