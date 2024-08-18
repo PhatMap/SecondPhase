@@ -79,7 +79,25 @@ class APIFeatures {
     this.query = this.query.find(query);
     return this;
   }
+  filterShopProducts() {
+    const { keyword, approved } = this.queryStr;
 
+    let query = {};
+
+    if (approved && approved !== "") {
+        query.approved = approved;
+    }
+
+    if (keyword) {
+        query.name = {
+            $regex: keyword,
+            $options: 'i'
+        };
+    }
+
+    this.query = this.query.find(query);
+    return this;
+}
   filterCategory() {
     const { keyword } = this.queryStr;
 
@@ -124,8 +142,19 @@ class APIFeatures {
     if (this.queryStr.role) {
       this.query = this.query.find({ role: this.queryStr.role });
     }
-  
     return this;
+  }
+  filterOrder() {
+    const { keyword, orderStatus } = this.queryStr;
+
+    let query = {};
+    if (orderStatus) {
+      query.orderStatus = orderStatus;
+    }
+
+    this.query = this.query.find(query);
+    return this;
+  
   }
   search() {
     const keyword = this.queryStr.keyword

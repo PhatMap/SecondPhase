@@ -302,5 +302,24 @@
       "phone": "0945556677"
     },
     "status": "active"
+  },
+  {
+    "name": "Lã Quý Quân",
+   "email": "quan00@gmail.com",
+    "password": "$2a$10$QlvJEm2ENE7Oolb6WH804.1NmIgerngBMD7ounL8L4wG0Sk90160u",
+    "avatar": {
+    "public_id": "avatars/silgkdjurigoso9hrtqc",
+    "url": "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1722938934/avatars/silgkdjurigoso9hrtqc.png"
+    },
+    "role": "shopkeeper",
+    "createdAt": "2023-12-15T10:10:00.000Z",
+    "address": {
+      "street": "1212 Lý Thánh Tông",
+      "city": "Quận 10",
+      "town": "Phường 15",
+      "location": "Ho Chi Minh City, VNM",
+      "phone": "0945556677"
+    },
+    "status": "active"
   }
 ]

@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MDBDataTable } from "mdbreact";
+import DataTable from "../layout/DataTable";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
-import Sidebar from "./Sidebar";
+import Pagination from "react-js-pagination";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,12 +16,17 @@ import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
 
 const OrdersList = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const { loading, error, orders } = useSelector((state) => state.allOrders);
-  const { isDeleted } = useSelector((state) => state.order);
   const [deleteOrderId, setDeleteOrderId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [keyword, setKeyword] = useState("");
+  const [status, setStatus] = useState("");
+  const [resPerPage] = useState(10);
+
+  const { loading, error, orders, totalOrders, filteredOrdersCount } = useSelector((state) => state.allOrders);
+  const { isDeleted } = useSelector((state) => state.order);
 
   const statusTranslations = {
     Processing: "Xử Lý",
@@ -32,7 +37,8 @@ const OrdersList = () => {
   };
 
   useEffect(() => {
-    dispatch(allOrders());
+    console.log("Fetching orders with:", { currentPage, keyword, status, resPerPage });
+    dispatch(allOrders(currentPage, keyword, status, resPerPage));
 
     if (error) {
       toast.error(error);
@@ -41,10 +47,10 @@ const OrdersList = () => {
 
     if (isDeleted) {
       toast.success("Xóa Đơn Hàng Thành Công");
-      history("/shopkeeper/orders");
+      navigate("/shopkeeper/orders");
       dispatch({ type: DELETE_ORDER_RESET });
     }
-  }, [dispatch, error, isDeleted, history]);
+  }, [dispatch, error, isDeleted, navigate, currentPage, keyword, status]);
 
   const deleteOrderHandler = (id, orderStatus) => {
     if (orderStatus === "Delivered") {
@@ -54,6 +60,7 @@ const OrdersList = () => {
     setDeleteOrderId(id);
     setShowModal(true);
   };
+
   const handleDeleteConfirmed = (id) => {
     dispatch(deleteOrder(id));
     setShowModal(false);
@@ -126,6 +133,22 @@ const OrdersList = () => {
     return data;
   };
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(allOrders(1, keyword, status, resPerPage));
+  };
+
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value);
+    setCurrentPage(1);
+    dispatch(allOrders(1, keyword, e.target.value, resPerPage));
+  };
+
   return (
     <Fragment>
       <MetaData title={"All Orders"} />
@@ -144,16 +167,73 @@ const OrdersList = () => {
               Tất Cả Đơn Hàng
             </h1>
 
+            <form
+              onSubmit={handleSearch}
+              style={{
+                display: "flex",
+                marginLeft: "5rem",
+                gap: "10px",
+                marginBottom: "20px",
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Tìm kiếm đơn hàng..."
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                style={{
+                  padding: "10px",
+                  borderRadius: "5px",
+                  border: "1px solid #ccc",
+                }}
+              />
+              <select
+                value={status}
+                onChange={handleStatusChange}
+                style={{
+                  padding: "10px",
+                  borderRadius: "5px",
+                  border: "1px solid #ccc",
+                }}
+              >
+                <option value="">Tất cả trạng thái</option>
+                <option value="Processing">Xử Lý</option>
+                <option value="canceled">Đơn đã Hủy</option>
+                <option value="Order Confirmed">Xác Nhận</option>
+                <option value="Shipping">Giao Hàng</option>
+                <option value="Delivered">Hoàn Thành</option>
+              </select>
+              
+            </form>
+
             {loading ? (
               <Loader />
             ) : (
-              <MDBDataTable
-                data={setOrders()}
-                bordered
-                striped
-                hover
-                noBottomColumns
-              />
+              <Fragment>
+                <DataTable data={setOrders()} />
+                <div
+                  className="d-flex justify-content-center mt-5"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  <Pagination
+                    activePage={currentPage}
+                    itemsCountPerPage={resPerPage}
+                    totalItemsCount={filteredOrdersCount}
+                    onChange={handlePageChange}
+                    nextPageText={"Next"}
+                    prevPageText={"Prev"}
+                    firstPageText={"First"}
+                    lastPageText={"Last"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    pageRangeDisplayed={5}
+                  />
+                </div>
+              </Fragment>
             )}
           </Fragment>
         </div>

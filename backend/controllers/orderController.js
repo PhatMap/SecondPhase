@@ -4,6 +4,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const APIFeatures = require("../utils/apiFeatures");
 const Cart = require("../models/cart");
+const order = require("../models/order");
 
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const {
@@ -108,33 +109,42 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.allOrders = catchAsyncErrors(async (req, res, next) => {
-  const apiFeatures = new APIFeatures(Order.find(), req.query).sort();
+ 
+  const apiFeatures = new APIFeatures(Order.find(), req.query)
+  .filterOrder()
+  .sort();
 
-  const orders = await apiFeatures.query;
-
+  let orders = await apiFeatures.query;
+  const totalOrders =order.length;
+  apiFeatures.adminPagination();
+  orders= await  apiFeatures.query.clone();
+  console.log("orders",orders);
   let totalAmount = 0;
   let totalPaidAmount = 0;
   let totalPendingAmount = 0;
 
-  orders.forEach((order) => {
-    if (order.orderStatus === "canceled") {
-      return;
-    }
-    totalAmount += order.totalPrice;
+  // Calculate totals for all orders (not just the current page)
+  // const all = await Order.find();
+  // all.forEach((order) => {
+  //   if (order.orderStatus === "canceled") {
+  //     return;
+  //   }
+  //   totalAmount += order.totalPrice;
 
-    if (order.paymentInfo && order.paymentInfo.status === "succeeded") {
-      totalPaidAmount += order.totalPrice;
-    } else {
-      totalPendingAmount += order.totalPrice;
-    }
-  });
+  //   if (order.paymentInfo && order.paymentInfo.status === "succeeded") {
+  //     totalPaidAmount += order.totalPrice;
+  //   } else {
+  //     totalPendingAmount += order.totalPrice;
+  //   }
+  // });
 
   res.status(200).json({
     success: true,
-    totalAmount,
-    totalPaidAmount,
-    totalPendingAmount,
+    // totalAmount,
+    // totalPaidAmount,
+    // totalPendingAmount,
     orders,
+    totalOrders,
   });
 });
 
@@ -184,23 +194,7 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
-//   const order = await Order.findById(req.params.id);
 
-//   if (!order) {
-//     return next(new ErrorHandler("No order found with this ID", 404));
-//   }
-
-//   for (const item of order.orderItems) {
-//     await updateStock(item.product, item.variant, item.size, -item.quantity);
-//   }
-
-//   await Order.findByIdAndRemove(req.params.id);
-
-//   res.status(200).json({
-//     success: true,
-//   });
-// });
 
 async function cancelorder(id, variantId, size, quantity) {
   const product = await Product.findById(id);

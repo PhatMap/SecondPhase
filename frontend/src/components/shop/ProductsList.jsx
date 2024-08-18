@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
-
+import Pagination from "react-js-pagination";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import Sidebar from "./Sidebar";
@@ -31,11 +31,18 @@ const ProductsList = () => {
   const [show, setShow] = useState(false);
   const [id, setId] = useState("");
 
-  const { loading, error, products } = useSelector(
+  const { loading, error, products ,productsCount} = useSelector(
     (state) => state.shopProducts
   );
 
+<<<<<<< Updated upstream
   const { shop } = useSelector((state) => state.shop);
+=======
+  const { shop } = useSelector((state) => state.auth);
+  const [approved, setApproved] = useState("");
+  const [keyword, setKeyword] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+>>>>>>> Stashed changes
 
   const {
     error: deleteError,
@@ -45,6 +52,7 @@ const ProductsList = () => {
   const { categories: allCategories } = useSelector((state) => state.category);
 
   useEffect(() => {
+<<<<<<< Updated upstream
     dispatch(getShop());
   }, []);
 
@@ -57,6 +65,9 @@ const ProductsList = () => {
 
   useEffect(() => {
     dispatch(getShopProducts(shop._id));
+=======
+    dispatch(getShopProducts(shop._id, approved, keyword, currentPage));
+>>>>>>> Stashed changes
     dispatch(getCategoryAll());
 
     if (error) {
@@ -79,45 +90,53 @@ const ProductsList = () => {
       toast.success("Đã gửi sản phẩm để duyệt");
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
-  }, [dispatch, error, deleteError, isDeleted, isUpdated, history]);
+  }, [dispatch, error, deleteError, isDeleted, isUpdated, history,approved, keyword, currentPage]);
+ 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(getShopProducts(shop._id, approved, keyword, 1));
+  };
 
+  const handleApprovedChange = (e) => {
+    setApproved(e.target.value);
+    setCurrentPage(1);
+    dispatch(getShopProducts(shop._id, e.target.value, keyword, 1));
+  };
   const setProducts = () => {
     const data = {
       columns: [
         {
           label: "Danh Mục",
           field: "category",
-          sort: "asc",
         },
         {
           label: "Ảnh Sản Phẩm",
           field: "image",
-          sort: "asc",
         },
         {
           label: "Tên Sản Phẩm",
           field: "name",
-          sort: "asc",
         },
         {
           label: "Giá",
           field: "price",
-          sort: "asc",
         },
         {
           label: "Tổng Số Lượng",
           field: "totalStock",
-          sort: "asc",
         },
         {
           label: "Duyệt",
           field: "approved",
-          sort: "asc",
         },
         {
           label: "Trạng Thái",
           field: "status",
-          sort: "asc",
         },
         {
           label: "Tác Vụ",
@@ -126,82 +145,82 @@ const ProductsList = () => {
       ],
       rows: [],
     };
-
     const categoryMap = allCategories.reduce((acc, category) => {
       acc[category._id] = category.vietnameseName;
       return acc;
     }, {});
-
-    products.forEach((product) => {
-      data.rows.push({
-        category: categoryMap[product.category] || "Trống",
-        image: (
-          <img
-            src={product.images[0].url}
-            alt={product.name}
-            style={{ width: "50px", height: "50px" }}
-          />
-        ),
-        name: product.name,
-        price: `${formatToVNDWithVND(product.price)}`,
-        totalStock: product.totalStock,
-        approved:
-          product.approved === "approved"
-            ? "Đã Duyệt"
-            : product.approved === "rejected"
-            ? "Chưa Duyệt"
-            : product.approved === "pending"
-            ? "Đang Xử Lý"
-            : "Chưa Gửi",
-        status: product.status === "active" ? "Hoạt Động" : "Bị Ngưng",
-        actions: (
-          <div style={{ display: "flex" }}>
-            <Link
-              to={`/shop/product/${product._id}`}
-              className="btn btn-primary py-1 px-2"
-            >
-              <i className="fa fa-pencil"></i>
-            </Link>
-            <button
-              className="btn btn-danger py-1 px-2 ml-2"
-              onClick={() => {
-                setShow(true);
-                setId(product._id);
-              }}
-            >
-              <i className="fa fa-trash"></i>
-            </button>
-            <button
-              className="btn btn-info py-1 px-2 ml-2"
-              onClick={() => {
-                if (
-                  product.approved === "waiting" ||
-                  product.approved === "rejected"
-                ) {
-                  handleSend(product._id);
-                }
-              }}
-            >
-              <i className="fa fa-send"></i>
-            </button>
-          </div>
-        ),
+    if (products && products.length > 0) {
+      products.forEach((product) => {
+        data.rows.push({
+          category: categoryMap[product.category] || "Trống",
+          image: (
+            <img
+              src={product.images[0].url}
+              alt={product.name}
+              style={{ width: "50px", height: "50px" }}
+            />
+          ),
+          name: product.name,
+          price: `${formatToVNDWithVND(product.price)}`,
+          totalStock: product.totalStock,
+          approved:
+            product.approved === "approved"
+              ? "Đã Duyệt"
+              : product.approved === "rejected"
+              ? "Chưa Duyệt"
+              : product.approved === "pending"
+              ? "Đang Xử Lý"
+              : "Chưa Gửi",
+          status: product.status === "active" ? "Hoạt Động" : "Bị Ngưng",
+          actions: (
+            <Fragment>
+              <div className="flex-horizontal">
+                <Link
+                  to={`/shop/product/${product._id}`}
+                  className="btn btn-primary py-1 px-2"
+                >
+                  <i className="fa fa-pencil"></i>
+                </Link>
+                <button
+                  className="btn btn-danger py-1 px-2 ml-2"
+                  onClick={() => {
+                    setShow(true);
+                    setId(product._id);
+                  }}
+                >
+                  <i className="fa fa-trash"></i>
+                </button>
+                <button
+                  className="btn btn-info py-1 px-2 ml-2"
+                  onClick={() => {
+                    if (
+                      product.approved === "waiting" ||
+                      product.approved === "rejected"
+                    ) {
+                      handleSend(product._id);
+                    }
+                  }}
+                >
+                  <i className="fa fa-send"></i>
+                </button>
+              </div>
+            </Fragment>
+          ),
+        });
       });
-    });
-
+    }
+  
     return data;
   };
-
   const handleSend = (id) => {
     const productData = new FormData();
     productData.set("approved", "pending");
     dispatch(updateProductBasic(id, productData));
   };
-
+console.log("productsCount" ,productsCount);
   const deleteProductHandler = (id) => {
     dispatch(deleteProduct(id));
   };
-
   return (
     <Fragment>
       <MetaData title={"All Products"} />
@@ -217,20 +236,70 @@ const ProductsList = () => {
           >
             Tất Cả Sản Phẩm{" "}
           </h1>
-          <Link to="/shop/product" className="product-add-btn-container">
-            <i className="fa fa-plus product-add-btn"></i>
-            <p>Thêm Sản Phẩm </p>
-          </Link>
+          <div>
+            <Link to="/shop/product" className="product-add-btn-container">
+              <i className="fa fa-plus product-add-btn"></i>
+              <p>Thêm Sản Phẩm </p>
+            </Link>
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="Tìm kiếm sản phẩm..."
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc", marginRight: "10px" }}
+            />
+            <select
+              value={approved}
+              onChange={handleApprovedChange}
+              style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+            > <option value="">Tất cả vai trò</option>
+              <option value="waiting">Chưa Gửi</option>
+              <option value="pending">Đang Xử Lý</option>
+              <option value="approved">Đã Duyệt</option>
+              <option value="rejected">Chưa Duyệt</option>
+            </select>
+          </div>
           {loading ? (
             <Loader />
           ) : (
-            <MDBDataTable
-              data={setProducts()}
-              bordered
-              striped
-              hover
-              noBottomColumns
-            />
+            <Fragment>
+              <div className="table-responsive">
+                <table className="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      {setProducts().columns.map((column, index) => (
+                        <th key={index}>{column.label}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {setProducts().rows.map((row, index) => (
+                      <tr key={index}>
+                        {Object.values(row).map((value, idx) => (
+                          <td key={idx}>{value}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="d-flex justify-content-center mt-5" style={{ marginBottom: "2rem" }}>
+                <Pagination
+                  activePage={currentPage}
+                  itemsCountPerPage={3}
+                  totalItemsCount={productsCount}
+                  onChange={handlePageChange}
+                  nextPageText={"Next"}
+                  prevPageText={"Prev"}
+                  firstPageText={"First"}
+                  lastPageText={"Last"}
+                  itemClass="page-item"
+                  linkClass="page-link"
+                />
+              </div>
+            </Fragment>
           )}
         </div>
         {show && (

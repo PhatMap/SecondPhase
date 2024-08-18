@@ -232,18 +232,34 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getShopProducts = catchAsyncErrors(async (req, res, next) => {
+<<<<<<< Updated upstream
   const { shopId } = req.query;
+=======
+  const shopId = req.query.shopId;
+  
+  if (!shopId) {
+    return next(new ErrorHandler('Shop ID is required', 400));
+  }
+>>>>>>> Stashed changes
 
-  const apiFeatures = new APIFeatures(
-    Product.find({ shopId }),
-    req.query
-  ).sort();
 
-  const products = await apiFeatures.query;
+  const apiFeatures = new APIFeatures(Product.find({ shopId }), req.query)
+    .filterShopProducts()
+    .sort();
+
+  let products = await apiFeatures.query;
+
+  const productsCount  = products.length;
+
+  apiFeatures.adminPagination();
+
+  products = await apiFeatures.query.clone();
+  console.log("productsCount ",productsCount );
 
   res.status(200).json({
     success: true,
     products,
+    productsCount,
   });
 });
 

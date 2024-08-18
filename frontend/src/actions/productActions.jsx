@@ -36,6 +36,7 @@ import {
   GET_PRODUCT_CATEGORIES_SUCCESS,
   GET_PRODUCT_CATEGORIES_FAIL,
   CLEAR_ERRORS,
+  GET_SHOP_PRODUCTS_REQUEST,
   GET_SHOP_PRODUCTS_SUCCESS,
   GET_SHOP_PRODUCTS_FAIL,
 } from "../constants/productConstants";
@@ -265,13 +266,17 @@ export const newReview = (reviewData) => async (dispatch) => {
   }
 };
 
-export const getShopProducts = (shopId) => async (dispatch) => {
+export const getShopProducts = (
+  shopId, approved = "", keyword = "", currentPage = 1, resPerPage = 10) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/v1/shop/products?shopId=${shopId}`);
+    dispatch({ type: GET_SHOP_PRODUCTS_REQUEST });
+
+    let url = `/api/v1/shop/products?shopId=${shopId}&approved=${approved}&keyword=${keyword}&page=${currentPage}&resPerPage=${resPerPage}`
+    const { data } = await axios.get(url);
 
     dispatch({
       type: GET_SHOP_PRODUCTS_SUCCESS,
-      payload: { products: data.products },
+      payload: { products: data.products, productsCount: data.productsCount },
     });
   } catch (error) {
     dispatch({

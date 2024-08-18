@@ -40,6 +40,7 @@ import {
   CLEAR_ERRORS,
   GET_SHOP_PRODUCTS_SUCCESS,
   GET_SHOP_PRODUCTS_FAIL,
+  GET_SHOP_PRODUCTS_REQUEST ,
 } from "../constants/productConstants";
 
 export const productsReducer = (state = { products: [] }, action) => {
@@ -367,15 +368,21 @@ export const productCategoriesReducer = (
 
 export const shopProductsReducer = (state = { products: [] }, action) => {
   switch (action.type) {
+    case GET_SHOP_PRODUCTS_REQUEST :
+      return {
+        loading: true,
+        products: [],
+      };
     case GET_SHOP_PRODUCTS_SUCCESS:
       return {
-        ...state,
+        loading: false,
         products: action.payload.products,
+        productsCount: action.payload.productsCount,
+        resPerPage: action.payload.resPerPage,
       };
-
     case GET_SHOP_PRODUCTS_FAIL:
       return {
-        ...state,
+        loading: false,
         error: action.payload,
       };
 

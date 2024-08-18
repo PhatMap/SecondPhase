@@ -150,20 +150,22 @@ export const getOrderDetails = (id) => async (dispatch) => {
     });
   }
 };
-
-export const allOrders = () => async (dispatch) => {
+export const allOrders = (currentPage = 1, keyword = "", status = "all", resPerPage = 10) => async (dispatch) => {
   try {
     dispatch({ type: ALL_ORDERS_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/shop/orders`);
+    const { data } = await axios.get(`/api/v1/shop/orders?page=${currentPage}&keyword=${keyword}&orderStatus=${status}&resPerPage=${resPerPage}`);
 
     dispatch({
       type: ALL_ORDERS_SUCCESS,
       payload: {
         orders: data.orders,
+        totalOrders: data.totalOrders,
         totalAmount: data.totalAmount,
         totalPaidAmount: data.totalPaidAmount,
         totalPendingAmount: data.totalPendingAmount,
+        resPerPage: data.resPerPage,
+        filteredOrdersCount: data.filteredOrdersCount,
       },
     });
   } catch (error) {
