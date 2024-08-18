@@ -232,15 +232,11 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getShopProducts = catchAsyncErrors(async (req, res, next) => {
-<<<<<<< Updated upstream
-  const { shopId } = req.query;
-=======
   const shopId = req.query.shopId;
   
   if (!shopId) {
     return next(new ErrorHandler('Shop ID is required', 400));
   }
->>>>>>> Stashed changes
 
 
   const apiFeatures = new APIFeatures(Product.find({ shopId }), req.query)

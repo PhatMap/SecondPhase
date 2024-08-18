@@ -50,10 +50,6 @@ router.get("/me/address", isAuthenticatedUser, getUserAddress);
 
 router.route("/admin/users/new").post(NewUser);
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 router
   .route("/admin/users")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getUsers);

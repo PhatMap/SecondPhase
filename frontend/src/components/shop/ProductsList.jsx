@@ -35,14 +35,10 @@ const ProductsList = () => {
     (state) => state.shopProducts
   );
 
-<<<<<<< Updated upstream
   const { shop } = useSelector((state) => state.shop);
-=======
-  const { shop } = useSelector((state) => state.auth);
   const [approved, setApproved] = useState("");
   const [keyword, setKeyword] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
->>>>>>> Stashed changes
 
   const {
     error: deleteError,
@@ -52,22 +48,8 @@ const ProductsList = () => {
   const { categories: allCategories } = useSelector((state) => state.category);
 
   useEffect(() => {
-<<<<<<< Updated upstream
-    dispatch(getShop());
-  }, []);
-
-  useEffect(() => {
-    if (shop) {
-      dispatch(getShopProducts(shop._id));
-      dispatch(getCategoryAll());
-    }
-  }, [shop]);
-
-  useEffect(() => {
-    dispatch(getShopProducts(shop._id));
-=======
+    console.log("shop._id",shop.id);
     dispatch(getShopProducts(shop._id, approved, keyword, currentPage));
->>>>>>> Stashed changes
     dispatch(getCategoryAll());
 
     if (error) {

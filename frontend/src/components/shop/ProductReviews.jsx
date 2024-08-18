@@ -24,8 +24,8 @@ const ProductReviews = () => {
   const { error, reviews } = useSelector((state) => state.productReviews);
   const { isDeleted, error: deleteError } = useSelector((state) => state.review);
   const { categories: allCategories } = useSelector((state) => state.category);
-  const { shop } = useSelector((state) => state.auth);
-
+  
+  const { shop } = useSelector((state) => state.shop);
   const [approved, setApproved] = useState("");
   const [keyword, setKeyword] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,6 +35,7 @@ const ProductReviews = () => {
   const [itemsPerPage] = useState(3);
 
   useEffect(() => {
+    console.log("shop._id",shop._id);
     dispatch(getShopProducts(shop._id, approved, keyword, currentPage, itemsPerPage));
     if (error) {
       toast.error(error);
