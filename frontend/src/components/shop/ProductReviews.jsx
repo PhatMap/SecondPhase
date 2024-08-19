@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getShopProducts,
-  getProductReviews,
+  getReviewsInProduct,
   deleteReview,
   clearErrors,
 } from "../../actions/productActions";
@@ -20,8 +20,10 @@ const ProductReviews = () => {
   const history = useNavigate();
   const [currentProduct, setCurrentProduct] = useState(null);
   const dispatch = useDispatch();
-  const { loading, products, productsCount } = useSelector((state) => state.shopProducts);
-  const { error, reviews } = useSelector((state) => state.productReviews);
+  const {products, productsCount } = useSelector((state) => state.shopProducts);
+
+  const { reviews, totalReviews, loading, error } = useSelector((state) => state.reviewsInProduct);
+ 
   const { isDeleted, error: deleteError } = useSelector((state) => state.review);
   const { categories: allCategories } = useSelector((state) => state.category);
   
@@ -33,16 +35,20 @@ const ProductReviews = () => {
   const [showModal, setShowModal] = useState(false);
 
   const [itemsPerPage] = useState(3);
-
+  const [currentPageReviews, setcurrentPageReviews] = useState(1);
+  const resPerPage = 10; // Số lượng kết quả mỗi trang
   useEffect(() => {
-    console.log("shop._id",shop._id);
-    dispatch(getShopProducts(shop._id, approved, keyword, currentPage, itemsPerPage));
+    console.log("shop._id", shop._id);
+    dispatch(getShopProducts("SHOP_1723385468288_gf585", approved, keyword, currentPage, itemsPerPage));
+    if (productId) {
+      dispatch(getReviewsInProduct(productId, currentPageReviews, resPerPage));
+    }
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
       history("/shop/products");
     }
-  }, [dispatch, error, deleteError, isDeleted, history, approved, keyword, currentPage]);
+  }, [dispatch, error, deleteError, isDeleted, history, approved, keyword, currentPageReviews, currentPage, productId]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -119,9 +125,11 @@ const ProductReviews = () => {
             <button
               className="btn btn-primary py-1 px-2"
               onClick={() => {
+                console.log("product._id",product._id);
                 setProductId(product._id);
                 setCurrentProduct(product);
-                dispatch(getProductReviews(product._id));
+                dispatch(getReviewsInProduct(product._id,"1","10"));
+                
               }}
             >
               Xem Đánh Giá
@@ -133,61 +141,68 @@ const ProductReviews = () => {
 
     return data;
   };
+  console.log("productId",productId);
 
   const setReviews = () => {
-    const data = {
-      columns: [
-        {
-          label: "Tên Sản Phẩm",
-          field: "name",
-          sort: "asc",
-        },
-        {
-          label: "Đánh Giá",
-          field: "rating",
-          sort: "asc",
-        },
-        {
-          label: "Bình Luận",
-          field: "comment",
-          sort: "asc",
-        },
-        {
-          label: "Khách Hàng",
-          field: "user",
-          sort: "asc",
-        },
-        {
-          label: "Tác vụ",
-          field: "actions",
-        },
-      ],
-      rows: [],
-    };
-
-    reviews.forEach((review) => {
-      data.rows.push({
-        name: currentProduct ? currentProduct.name : "Unknown Product",
-        rating: review.rating,
-        comment: review.comment,
-        user: review.name,
-        actions: (
-          <button
-            className="btn btn-danger py-1 px-2 ml-2"
-            onClick={() => deleteReviewHandler(review._id)}
-          >
-            <i className="fa fa-trash"></i>
-          </button>
-        ),
-      });
-    });
-
-    return data;
+    return (
+      <div className="ProductReview_container">
+      <h2 className="ProductReview_title">Đánh giá sản phẩm</h2>
+      <div className="ProductReview_list">
+        {reviews && reviews.length > 0 ? (
+          reviews.map((review) => (
+            <div key={review._id} className="ProductReview_item">
+              <div className="ProductReview_user">
+                <div className="ProductReview_userInfo">
+                  <span className="ProductReview_username">{review.name}</span>
+                  <span className="ProductReview_stars">
+                    {Array(5).fill().map((_, index) => (
+                      <span key={index}>
+                        {index < review.rating ? '★' : '☆'}
+                      </span>
+                    ))}
+                    ({review.rating})
+                  </span>
+                </div>
+                <button
+                  className="ProductReview_deleteBtn"
+                  onClick={() => deleteReviewHandler(review._id)}
+                >
+                  Xóa
+                </button>
+              </div>
+              <p className="ProductReview_comment">{review.comment}</p>
+            </div>
+          ))
+        ) : (
+          <p>Không có đánh giá</p>
+        )}
+      </div>
+      <div className="ProductReview_pagination">
+        <Pagination
+          activePage={currentPageReviews}
+          itemsCountPerPage={resPerPage}
+          totalItemsCount={totalReviews || 0}
+          onChange={handleReviewPageChange}
+          nextPageText={"Tiếp"}
+          prevPageText={"Trước"}
+          firstPageText={"Đầu"}
+          lastPageText={"Cuối"}
+          itemClass="page-item"
+          linkClass="page-link"
+          pageRangeDisplayed={3}
+        />
+      </div>
+    </div>
+    );
   };
-
+  const handleReviewPageChange = (pageNumber) => {
+    setCurrentPageReviews(pageNumber);
+    dispatch(getReviewsInProduct(productId, pageNumber, resPerPage));
+  };
   const deleteReviewHandler = (id) => {
     setDeleteReviewId(id);
     setShowModal(true);
+    dispatch(getReviewsInProduct(productId, pageNumber, resPerPage));
   };
 
   const handleDeleteConfirmed = () => {
@@ -265,33 +280,15 @@ const ProductReviews = () => {
             </Fragment>
           )}
 
-          {reviews && reviews.length > 0 ? (
-            <div className="mt-5">
-              <h2>Đánh giá sản phẩm</h2>
-              <table className="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    {setReviews().columns.map((column, index) => (
-                      <th key={index}>{column.label}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {setReviews().rows.map((row, index) => (
-                    <tr key={index}>
-                      {Object.values(row).map((value, idx) => (
-                        <td key={idx}>{value}</td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <p className="mt-5 text-center" style={{ fontSize: "24px" }}>
-              Không có đánh giá
-            </p>
-          )}
+        {reviews && reviews.length > 0 ? (
+          <div className="mt-5">
+            {setReviews()}
+          </div>
+        ) : (
+          <p className="mt-5 text-center" style={{ fontSize: "24px" }}>
+            Không có đánh giá
+          </p>
+        )}
         </div>
       </div>
       {showModal && (

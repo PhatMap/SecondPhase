@@ -4533,3 +4533,82 @@ body {
   width: 150px;
   height: 200px;
 }
+
+.ProductReview_container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.ProductReview_title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.ProductReview_list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ProductReview_item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.ProductReview_user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ProductReview_userInfo {
+  display: flex;
+  align-items: center;
+}
+
+.ProductReview_username {
+  font-weight: bold;
+  color: #007bff;
+  margin-right: 10px;
+}
+
+.ProductReview_stars {
+  color: #ffc107;
+  font-size: 14px;
+}
+
+.ProductReview_deleteBtn {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.ProductReview_deleteBtn:hover {
+  background-color: #c82333;
+}
+
+.ProductReview_comment {
+  color: #555;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+.ProductReview_pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

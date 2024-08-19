@@ -54,6 +54,7 @@ exports.getShop = catchAsyncErrors(async (req, res, next) => {
   const shop = await Shop.findOne({ ownerId: req.user.id });
 
   const shopData = await Application.findOne({ userId: req.user.id });
+  console.log("shopData",shopData);
 
   res.status(200).json({
     success: true,

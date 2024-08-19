@@ -348,12 +348,14 @@ export const deleteReview = (id, productId) => async (dispatch) => {
 export const getReviewsInProduct =
   (productId, page = 1, limit = 10) =>
   async (dispatch) => {
+    console.log("productId",productId,page,limit);
     try {
       dispatch({ type: GET_REVIEWS_IN_PRODUCT_REQUEST });
 
       const { data } = await axios.get(
         `/api/v1/ReviewsInProduct?id=${productId}&page=${page}&limit=${limit}`
       );
+      console.log("data",data);
 
       dispatch({
         type: GET_REVIEWS_IN_PRODUCT_SUCCESS,

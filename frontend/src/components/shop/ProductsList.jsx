@@ -49,7 +49,7 @@ const ProductsList = () => {
 
   useEffect(() => {
     console.log("shop._id",shop.id);
-    dispatch(getShopProducts(shop._id, approved, keyword, currentPage));
+    dispatch(getShopProducts("SHOP_1723385468288_gf585", approved, keyword, currentPage));
     dispatch(getCategoryAll());
 
     if (error) {
@@ -87,7 +87,7 @@ const ProductsList = () => {
   const handleApprovedChange = (e) => {
     setApproved(e.target.value);
     setCurrentPage(1);
-    dispatch(getShopProducts(shop._id, e.target.value, keyword, 1));
+    dispatch(getShopProducts(SHOP_1723385468288_gf585, e.target.value, keyword, 1));
   };
   const setProducts = () => {
     const data = {
@@ -270,7 +270,7 @@ console.log("productsCount" ,productsCount);
               <div className="d-flex justify-content-center mt-5" style={{ marginBottom: "2rem" }}>
                 <Pagination
                   activePage={currentPage}
-                  itemsCountPerPage={3}
+                  itemsCountPerPage={10}
                   totalItemsCount={productsCount}
                   onChange={handlePageChange}
                   nextPageText={"Next"}
