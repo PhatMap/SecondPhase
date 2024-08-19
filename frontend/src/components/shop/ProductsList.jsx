@@ -31,7 +31,7 @@ const ProductsList = () => {
   const [show, setShow] = useState(false);
   const [id, setId] = useState("");
 
-  const { loading, error, products ,productsCount} = useSelector(
+  const { loading, error, products, productsCount } = useSelector(
     (state) => state.shopProducts
   );
 
@@ -48,8 +48,18 @@ const ProductsList = () => {
   const { categories: allCategories } = useSelector((state) => state.category);
 
   useEffect(() => {
-    console.log("shop._id",shop.id);
-    dispatch(getShopProducts("SHOP_1723385468288_gf585", approved, keyword, currentPage));
+    dispatch(getShop());
+  }, []);
+
+  useEffect(() => {
+    if (shop) {
+      dispatch(getShopProducts(shop._id, approved, keyword, currentPage));
+      dispatch(getCategoryAll());
+    }
+  }, [shop]);
+
+  useEffect(() => {
+    dispatch(getShopProducts(shop._id, approved, keyword, currentPage));
     dispatch(getCategoryAll());
 
     if (error) {
@@ -72,12 +82,22 @@ const ProductsList = () => {
       toast.success("Đã gửi sản phẩm để duyệt");
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
-  }, [dispatch, error, deleteError, isDeleted, isUpdated, history,approved, keyword, currentPage]);
- 
+  }, [
+    dispatch,
+    error,
+    deleteError,
+    isDeleted,
+    isUpdated,
+    history,
+    approved,
+    keyword,
+    currentPage,
+  ]);
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  
+
   const handleSearch = (e) => {
     e.preventDefault();
     setCurrentPage(1);
@@ -87,7 +107,9 @@ const ProductsList = () => {
   const handleApprovedChange = (e) => {
     setApproved(e.target.value);
     setCurrentPage(1);
-    dispatch(getShopProducts(SHOP_1723385468288_gf585, e.target.value, keyword, 1));
+    dispatch(
+      getShopProducts(SHOP_1723385468288_gf585, e.target.value, keyword, 1)
+    );
   };
   const setProducts = () => {
     const data = {
@@ -191,7 +213,7 @@ const ProductsList = () => {
         });
       });
     }
-  
+
     return data;
   };
   const handleSend = (id) => {
@@ -199,7 +221,7 @@ const ProductsList = () => {
     productData.set("approved", "pending");
     dispatch(updateProductBasic(id, productData));
   };
-console.log("productsCount" ,productsCount);
+  console.log("productsCount", productsCount);
   const deleteProductHandler = (id) => {
     dispatch(deleteProduct(id));
   };
@@ -219,7 +241,10 @@ console.log("productsCount" ,productsCount);
             Tất Cả Sản Phẩm{" "}
           </h1>
           <div>
-            <Link to="/shop/product" className="product-add-btn-container">
+            <Link
+              to="/shopkeeper/product"
+              className="product-add-btn-container"
+            >
               <i className="fa fa-plus product-add-btn"></i>
               <p>Thêm Sản Phẩm </p>
             </Link>
@@ -230,13 +255,24 @@ console.log("productsCount" ,productsCount);
               placeholder="Tìm kiếm sản phẩm..."
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
-              style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc", marginRight: "10px" }}
+              style={{
+                padding: "10px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+                marginRight: "10px",
+              }}
             />
             <select
               value={approved}
               onChange={handleApprovedChange}
-              style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
-            > <option value="">Tất cả vai trò</option>
+              style={{
+                padding: "10px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+              }}
+            >
+              {" "}
+              <option value="">Tất cả vai trò</option>
               <option value="waiting">Chưa Gửi</option>
               <option value="pending">Đang Xử Lý</option>
               <option value="approved">Đã Duyệt</option>
@@ -267,7 +303,10 @@ console.log("productsCount" ,productsCount);
                   </tbody>
                 </table>
               </div>
-              <div className="d-flex justify-content-center mt-5" style={{ marginBottom: "2rem" }}>
+              <div
+                className="d-flex justify-content-center mt-5"
+                style={{ marginBottom: "2rem" }}
+              >
                 <Pagination
                   activePage={currentPage}
                   itemsCountPerPage={10}

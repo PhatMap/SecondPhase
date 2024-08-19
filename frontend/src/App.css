@@ -4528,7 +4528,6 @@ body {
   height: 100%;
 }
 
-<<<<<<< Updated upstream
 .ProductReview_container {
   max-width: 800px;
   margin: 0 auto;
@@ -4606,14 +4605,4 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-=======
-.shop-setup-section h1 {
-  font-size: 20px;
-  font-weight: bold;
-  align-self: flex-start;
-}
-
-#section-name{
-  margin-left: 50px;
->>>>>>> Stashed changes
 }
