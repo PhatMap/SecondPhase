@@ -5,6 +5,7 @@ import Section from "./Section";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getShop } from "../../actions/shopActions";
+import Product from "../product/Product";
 
 const ShopSetup = () => {
   const { products } = useSelector((state) => state.shopProducts);
@@ -15,15 +16,14 @@ const ShopSetup = () => {
 
   useEffect(() => {
     dispatch(getShop());
+    dispatch(getShopProducts(shop._id));
   }, []);
 
   useEffect(() => {
-    if (shopData) {
-      console.log(shop);
-
-      console.log(shopData);
+    if (shop) {
+      console.log(shop.sections);
     }
-  }, [shopData]);
+  }, [shop]);
 
   return (
     <>
@@ -38,19 +38,18 @@ const ShopSetup = () => {
           </div>
         </div>
         <div className="shop-setup-body-container">
-          <div className="shop-setup-section-container">
-            <button className="fa fa-plus" onClick={() => setShow(true)}>
-              Thêm mục
-            </button>
-            <div className="shop-setup-sections">
-              {shop &&
-                shop.sections &&
-                shop.sections.map((section, sectionIndex) => (
-                  <div
-                    key={`section-${sectionIndex}`}
-                    className="shop-setup-section"
-                  >
-                    <h1>{section.name}</h1>
+          <button className="fa fa-plus" onClick={() => setShow(true)}>
+            Thêm mục
+          </button>
+          <div className="shop-setup-sections">
+            {shop &&
+              shop.sections &&
+              shop.sections.map((section, sectionIndex) => (
+                <div
+                  key={`section-${sectionIndex}`}
+                  className="shop-setup-section"
+                >
+                  <div>
                     {section.images &&
                       section.images.map((image, imageIndex) => (
                         <img
@@ -59,12 +58,19 @@ const ShopSetup = () => {
                           alt={`Section ${sectionIndex} Image ${imageIndex}`}
                         />
                       ))}
-                    <h1>{section.categoryId}</h1>
                   </div>
-                ))}
-            </div>
+                  <div className="home-component">
+                    <h1>{section.name}</h1>
+                    <div className="home-new-products">
+                      {section.products.slice(0, 4).map((product) => (
+                        <Product key={product._id} product={product} />
+                      ))}
+                    </div>
+                    <button className="more-text-btn">Xem Thêm</button>
+                  </div>
+                </div>
+              ))}
           </div>
-          <div className="shop-setup-products-container"></div>
         </div>
       </div>
     </>

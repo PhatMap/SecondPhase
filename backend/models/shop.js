@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const product = require("./product");
 
 const shopSchema = new mongoose.Schema({
   _id: {
@@ -36,6 +37,7 @@ const shopSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
       },
+      products: [],
     },
   ],
   createdAt: {

@@ -7,7 +7,7 @@ import {
   uploadImages,
   uploadSectionImages,
 } from "../../actions/productActions";
-import { updateShop } from "../../actions/shopActions";
+import { getShop, updateShop } from "../../actions/shopActions";
 import { UPDATE_SHOP_RESET } from "../../constants/shopConstants";
 
 const Section = ({ data, onClose }) => {
@@ -34,6 +34,7 @@ const Section = ({ data, onClose }) => {
   useEffect(() => {
     if (isUpdated) {
       toast.success("Đã thêm mục mới");
+      dispatch(getShop());
       onClose();
       dispatch({ type: UPDATE_SHOP_RESET });
     }

@@ -1845,8 +1845,8 @@ body {
 }
 
 .more-text-btn:hover {
-  background-color: #b1d3f5;
-  color: #0531f4;
+  background-color: black;
+  color: white;
 }
 
 .hero-text-btn:hover {
@@ -4410,7 +4410,6 @@ body {
 
 /* ShopSetup.jsx */
 .shop-setup-container {
-  background-color: #88c4ff;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -4424,13 +4423,8 @@ body {
 }
 
 .shop-setup-body-container {
-  background-color: #e595ff;
   width: 100%;
-  height: fit-content;
-}
-
-.shop-setup-section-container {
-  height: fit-content;
+  height: 100vh;
 }
 
 .shop-setup-products-container {
@@ -4530,10 +4524,11 @@ body {
 }
 
 .shop-setup-section img {
-  width: 150px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
 }
 
+<<<<<<< Updated upstream
 .ProductReview_container {
   max-width: 800px;
   margin: 0 auto;
@@ -4611,4 +4606,14 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+=======
+.shop-setup-section h1 {
+  font-size: 20px;
+  font-weight: bold;
+  align-self: flex-start;
+}
+
+#section-name{
+  margin-left: 50px;
+>>>>>>> Stashed changes
 }

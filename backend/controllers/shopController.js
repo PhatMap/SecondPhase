@@ -4,6 +4,7 @@ const APIFeatures = require("../utils/apiFeatures");
 const cloudinary = require("cloudinary");
 const Shop = require("../models/shop");
 const Application = require("../models/application");
+const Product = require("../models/product");
 
 exports.uploadImages = catchAsyncErrors(async (req, res, next) => {
   let images = Array.isArray(req.body.images)
@@ -35,15 +36,16 @@ exports.uploadImages = catchAsyncErrors(async (req, res, next) => {
 exports.updateShop = catchAsyncErrors(async (req, res, next) => {
   const { newData, field } = req.body;
 
-  await Shop.findOneAndUpdate(
-    { ownerId: req.user.id },
-    { [field]: newData },
-    {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    }
-  );
+  const updateData =
+    field === "sections"
+      ? { $push: { sections: newData } }
+      : { [field]: newData };
+
+  await Shop.findOneAndUpdate({ ownerId: req.user.id }, updateData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
 
   res.status(200).json({
     success: true,
@@ -51,7 +53,19 @@ exports.updateShop = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getShop = catchAsyncErrors(async (req, res, next) => {
-  const shop = await Shop.findOne({ ownerId: req.user.id });
+  let shop = await Shop.findOne({ ownerId: req.user.id });
+
+  for (let section of shop.sections) {
+    const products = await Product.find({
+      shopId: shop._id,
+      category: section.categoryId,
+    })
+      .limit(5)
+      .lean();
+    section.products = products;
+  }
+
+  shop.save();
 
   const shopData = await Application.findOne({ userId: req.user.id });
   console.log("shopData",shopData);
