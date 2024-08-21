@@ -5,6 +5,7 @@ const cloudinary = require("cloudinary");
 const Shop = require("../models/shop");
 const Application = require("../models/application");
 const Product = require("../models/product");
+const { statsRecord } = require("../utils/statsHandler");
 
 exports.uploadImages = catchAsyncErrors(async (req, res, next) => {
   let images = Array.isArray(req.body.images)
@@ -68,7 +69,10 @@ exports.getShop = catchAsyncErrors(async (req, res, next) => {
   shop.save();
 
   const shopData = await Application.findOne({ userId: req.user.id });
-  console.log("shopData",shopData);
+
+  const stats = await statsRecord(shop._id, "shopkeeper");
+
+  console.log("Stats: ", stats);
 
   res.status(200).json({
     success: true,

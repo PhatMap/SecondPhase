@@ -13,7 +13,6 @@ import { allUsers } from "../../actions/userActions";
 import ChartComponent from "../Chart";
 import OrderChart from "../OrderChart";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
-import Header from "../layout/Header";
 
 const Dashboard = () => {
   const dispatch = useDispatch();

@@ -112,6 +112,10 @@ const orderSchema = new mongoose.Schema({
   deliverAt: {
     type: Date,
   },
+  shopId: {
+    type: String,
+    ref: "Shop",
+  },
   createAt: {
     type: Date,
     default: Date.now,
