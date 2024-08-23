@@ -118,7 +118,7 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
   const totalOrders =order.length;
   apiFeatures.adminPagination();
   orders= await  apiFeatures.query.clone();
-  console.log("orders",orders);
+  
   let totalAmount = 0;
   let totalPaidAmount = 0;
   let totalPendingAmount = 0;

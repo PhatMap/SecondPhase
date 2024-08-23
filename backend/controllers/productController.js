@@ -250,7 +250,6 @@ exports.getShopProducts = catchAsyncErrors(async (req, res, next) => {
   apiFeatures.adminPagination();
 
   products = await apiFeatures.query.clone();
-  console.log("productsCount ",productsCount );
 
   res.status(200).json({
     success: true,

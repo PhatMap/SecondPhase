@@ -4606,3 +4606,43 @@ body {
   justify-content: center;
   margin-top: 20px;
 }
+
+/* Option.jsx */
+.option-form {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  width: 300px;
+  height: fit-content;
+}
+
+.option-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.option-btns button {
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+}
+
+.option-btns .cancel {
+  background-color: gainsboro;
+}
+
+.option-btns .confirm {
+  background-color: rgb(10, 207, 10);
+}
+
+.option-btns .cancel:hover {
+  background-color: rgb(103, 103, 103);
+}
+
+.option-btns .confirm:hover {
+  background-color: green;
+}

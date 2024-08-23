@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getShopProducts } from "../../actions/productActions";
-import Section from "./Section";
+import Section from "./section/Section";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getShop } from "../../actions/shopActions";
 import Product from "../product/Product";
+import ManageSection from "./section/ManageSection";
 
 const ShopSetup = () => {
   const { products } = useSelector((state) => state.shopProducts);
@@ -28,7 +29,7 @@ const ShopSetup = () => {
   return (
     <>
       <ToastContainer />
-      {show && <Section onClose={() => setShow(false)} />}
+      {show && <ManageSection onClose={() => setShow(false)} />}
       <div className="shop-setup-container">
         <div className="shop-setup-head-container">
           <div className="shop-setup-profile-container">
@@ -38,8 +39,8 @@ const ShopSetup = () => {
           </div>
         </div>
         <div className="shop-setup-body-container">
-          <button className="fa fa-plus" onClick={() => setShow(true)}>
-            Thêm mục
+          <button className="fa fa-gear" onClick={() => setShow(true)}>
+            Điều chỉnh danh mục
           </button>
           <div className="shop-setup-sections">
             {shop &&

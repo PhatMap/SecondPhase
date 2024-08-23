@@ -86,7 +86,7 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
 
   let shop = null;
   if (user.role === "shopkeeper") {
-    shop = await Shop.findOne({ ownerId: req.user.id });
+    shop = await Shop.findOne({ ownerId: user.id });
   }
 
   sendToken(user, 200, res, shop);

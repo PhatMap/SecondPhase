@@ -26,8 +26,6 @@ exports.uploadImages = catchAsyncErrors(async (req, res, next) => {
   }
   const image = imagesLinks[0];
 
-  console.log("Uploading image to cloudinary: ");
-
   res.status(201).json({
     success: true,
     image,
@@ -71,8 +69,6 @@ exports.getShop = catchAsyncErrors(async (req, res, next) => {
   const shopData = await Application.findOne({ userId: req.user.id });
 
   const stats = await statsRecord(shop._id, "shopkeeper");
-
-  console.log("Stats: ", stats);
 
   res.status(200).json({
     success: true,
