@@ -2780,6 +2780,7 @@ body {
   border: 2px dashed #007bff;
   color: #007bff;
 }
+
 .new-product-column {
   display: flex;
   gap: 20px;
@@ -4612,8 +4613,10 @@ body {
   background-color: white;
   border-radius: 5px;
   padding: 20px;
-  width: 300px;
+  width: fit-content;
   height: fit-content;
+  max-height: 600px;
+  overflow: auto;
 }
 
 .option-btns {
@@ -4645,4 +4648,61 @@ body {
 
 .option-btns .confirm:hover {
   background-color: green;
+}
+
+.option-add-btn {
+  border: 2px dashed #c0bdbd;
+  border-radius: 5px;
+  min-height: 50px;
+  min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: normal;
+  padding: 5px;
+}
+
+.option-add-btn:hover {
+  border: 2px dashed green;
+  color: green;
+}
+
+.option-add-btn i {
+  font-size: 30px;
+}
+
+.option-section {
+  background-color: aliceblue;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  min-height: 50px;
+  min-width: 700px;
+  font-weight: normal;
+  padding: 5px;
+  display: grid;
+  grid-template-columns: auto 300px 300px auto;
+  align-items: center;
+}
+
+.option-section img {
+  margin-right: 20px;
+}
+
+.option-section p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.option-section i {
+  font-size: 25px;
+  cursor: pointer;
+  justify-self: flex-end;
+  margin-right: 10px;
+}
+
+.option-section i:hover {
+  color: #007bff;
+  animation: lds-dual-ring 1.2s linear infinite;
 }

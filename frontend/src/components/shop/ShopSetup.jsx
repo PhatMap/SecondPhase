@@ -7,10 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { getShop } from "../../actions/shopActions";
 import Product from "../product/Product";
 import ManageSection from "./section/ManageSection";
+import { getCategoryAll } from "../../actions/categoryActions";
 
 const ShopSetup = () => {
   const { products } = useSelector((state) => state.shopProducts);
   const { shop, shopData } = useSelector((state) => state.shop);
+  const { categories } = useSelector((state) => state.category);
 
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -18,6 +20,7 @@ const ShopSetup = () => {
   useEffect(() => {
     dispatch(getShop());
     dispatch(getShopProducts(shop._id));
+    dispatch(getCategoryAll());
   }, []);
 
   useEffect(() => {
@@ -29,7 +32,13 @@ const ShopSetup = () => {
   return (
     <>
       <ToastContainer />
-      {show && <ManageSection onClose={() => setShow(false)} />}
+      {show && (
+        <ManageSection
+          onClose={() => setShow(false)}
+          shop={shop}
+          categories={categories}
+        />
+      )}
       <div className="shop-setup-container">
         <div className="shop-setup-head-container">
           <div className="shop-setup-profile-container">

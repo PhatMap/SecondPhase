@@ -10,8 +10,7 @@ import {
 import { getShop, updateShop } from "./../../../actions/shopActions";
 import { UPDATE_SHOP_RESET } from "./../../../constants/shopConstants";
 
-const Section = ({ setOption }) => {
-  const { categories } = useSelector((state) => state.category);
+const Section = ({ setOption, categories }) => {
   const { isUpdated } = useSelector((state) => state.shop);
 
   const [form, setForm] = useState({
@@ -20,10 +19,6 @@ const Section = ({ setOption }) => {
     categoryId: "",
   });
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getCategoryAll());
-  }, []);
 
   useEffect(() => {
     if (isUpdated) {

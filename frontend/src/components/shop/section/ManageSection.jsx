@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Section from "./Section";
 import SectionOption from "./SectionOption";
 
-const ManageSection = ({ onClose }) => {
+const ManageSection = ({ onClose, shop, categories }) => {
   const [option, setOption] = useState("choose");
 
   const handleOverlayClick = (event) => {
@@ -17,9 +17,15 @@ const ManageSection = ({ onClose }) => {
   const renderStep = () => {
     switch (option) {
       case "choose":
-        return <SectionOption setOption={setOption} />;
+        return (
+          <SectionOption
+            setOption={setOption}
+            shop={shop}
+            categories={categories}
+          />
+        );
       case "add":
-        return <Section setOption={setOption} />;
+        return <Section setOption={setOption} categories={categories} />;
       default:
         return null;
     }
