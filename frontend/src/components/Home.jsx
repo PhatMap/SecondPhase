@@ -118,19 +118,29 @@ const Home = () => {
   return (
     <Fragment>
       <MetaData title={"Home"} />
+
       <div className="home-container background-1">
+        
         <Header />
+        <img 
+        src={'../images/masage.png'} 
+        alt="massage"
+        className="fixed-image"
+        onClick={toggleChatBox}
+      />
+      
+      {/* Chat box */}
+      {isChatOpen && (
+        <div className="chat-box">
+          <BoxChat />
+        </div>
+      )}
+ 
+
+
+
+
         <div className="home-form">
-        <FaEnvelope 
-          className="header-icon" 
-          onClick={toggleChatBox} 
-          style={{ cursor: 'pointer' }}
-        />
-        {isChatOpen && (
-          <div className="chat-box">
-            <BoxChat />
-          </div>
-        )}
           <HeroSection />
           <div className="home-component">
             <h1>Sản Phẩm Mới Nhất</h1>

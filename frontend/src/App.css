@@ -4755,6 +4755,7 @@ body {
   width: 30%;
   border-right: 1px solid #ccc;
   overflow-y: auto;
+  border-right: 2px solid #ccc;
 }
 
 .chat-item {
@@ -4764,8 +4765,9 @@ body {
   cursor: pointer;
 }
 
-.chat-item:hover, .chat-item.selected {
-  background-color: #f1f1f1;
+.chat-item.selected {
+  background-color: #f0ba69;
+  font-weight: bold;
 }
 
 .chat-item img {
@@ -4884,8 +4886,12 @@ body {
   border: 2px solid #ccc; /* Viền nhẹ xung quanh avatar */
 }
 
+.chat-item:hover {
+  background-color: #e0e0e0; /* Màu nền khi hover */
+}
+
 .chat-item.selected {
-  background-color: #f0f0f0; /* Màu nền khi chọn */
+  background-color: #f0ba69; /* Màu nền khi người dùng được chọn */
 }
 
 
@@ -4985,4 +4991,17 @@ body {
 
 .message-content {
   word-wrap: break-word;
+}
+
+
+.fixed-image {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000; /* Hiển thị nổi */
+  width: 80px; /* Tùy chỉnh kích thước ảnh */
+  height: 80px;
+  cursor: pointer;
+  border-radius: 20%
+
 }

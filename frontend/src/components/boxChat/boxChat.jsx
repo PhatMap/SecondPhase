@@ -68,33 +68,41 @@ console.log("message",message);
 
   return (
     <div className="chat-popup">
-      <div className="chat-header">
-        <h3>Tin nhắn</h3>
-        <button className="close-btn" onClick={onClose}>×</button>
-      </div>
-      <div className="chat-body">
-        <div className="chat-list">
+       <div className="chat-header">
+    <h3>Tin nhắn</h3>
+          {currentChatParticipant && (
+                <div className="chat-header-participant">
+                  <img src={currentChatParticipant.avatar.url} alt="Avatar" className="header-avatar" />
+                  <span className="header-name">{currentChatParticipant.name}</span>
+                </div>
+              )}
+        </div>
+
+            <div className="chat-body">
+            <div className="chat-list">
         {usersInChats.map(chatUser => (
-        <div 
-          key={chatUser._id} 
-          className={`chat-item ${selectedChat === chatUser.chatId ? 'selected' : ''}`}
-          onClick={() => handleChatSelect(chatUser.chatId)}
-        >
-          <img src={chatUser.avatar.url} alt="Avatar" className="chat-avatar" />
-          <div className="chat-info">
-            <p className="chat-name">{chatUser.name}</p>
+          <div 
+            key={chatUser._id} 
+            className={`chat-item ${selectedChat === chatUser.chatId ? 'selected' : ''}`}
+            onClick={() => handleChatSelect(chatUser.chatId)}
+          >
+            <img src={chatUser.avatar.url} alt="Avatar" className="chat-avatar" />
+            <div className="chat-info">
+              <p className="chat-name">{chatUser.name}</p>
+            </div>
           </div>
-        </div>
-      ))}
-        </div>
+        ))}
+      </div>
+
+      
         <div className="chat-messages">
             
         {currentChatParticipant && (
-            <div className="chat-header-participant">
-              <img src={currentChatParticipant.avatar.url} alt="Avatar" className="header-avatar" />
-              <span className="header-name">{currentChatParticipant.name}</span>
-            </div>
-          )}
+          <div className="chat-header-participant">
+            <img src={currentChatParticipant.avatar.url} alt="Avatar" className="header-avatar" />
+            <span className="header-name">{currentChatParticipant.name}</span>
+          </div>
+        )}
           {selectedChat ? (
             <>
              <div className="chat-participants">
@@ -136,7 +144,7 @@ console.log("message",message);
                 </div>
               ))
             ) : (
-              <p>No messages to display.</p>
+              <p>Không có tin nhắn nào.</p>
             )}
             <div ref={messagesEndRef} />
           </div>
