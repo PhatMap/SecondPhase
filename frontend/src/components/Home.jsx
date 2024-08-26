@@ -11,6 +11,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import HeroSection from "./layout/HeroSection";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
+import BoxChat from "./boxChat/boxChat";
+import { FaBell, FaEnvelope } from 'react-icons/fa';
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,6 +26,10 @@ const Home = () => {
   const { loading, products, error } = useSelector((state) => state.products);
 
   const { keyword } = useParams();
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const toggleChatBox = () => {
+    setIsChatOpen(!isChatOpen);
+  };
 
   useEffect(() => {
     dispatch(getProducts(keyword, currentPage));
@@ -115,6 +121,16 @@ const Home = () => {
       <div className="home-container background-1">
         <Header />
         <div className="home-form">
+        <FaEnvelope 
+          className="header-icon" 
+          onClick={toggleChatBox} 
+          style={{ cursor: 'pointer' }}
+        />
+        {isChatOpen && (
+          <div className="chat-box">
+            <BoxChat />
+          </div>
+        )}
           <HeroSection />
           <div className="home-component">
             <h1>Sản Phẩm Mới Nhất</h1>

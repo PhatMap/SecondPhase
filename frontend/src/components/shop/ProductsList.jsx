@@ -39,7 +39,7 @@ const ProductsList = () => {
   const [approved, setApproved] = useState("");
   const [keyword, setKeyword] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-
+console.log("shop",shop);
   const {
     error: deleteError,
     isDeleted,
@@ -50,10 +50,13 @@ const ProductsList = () => {
   useEffect(() => {
     dispatch(getShop());
   }, []);
+ 
 
   useEffect(() => {
+    console.log("shop._id",shop._id);
     if (shop) {
       dispatch(getShopProducts(shop._id, approved, keyword, currentPage));
+      
       dispatch(getCategoryAll());
     }
   }, [shop]);
@@ -74,7 +77,7 @@ const ProductsList = () => {
 
     if (isDeleted) {
       toast.error("Product deleted successfully");
-      history("/shop/products");
+      history("/shopkeeper/product");
       dispatch({ type: DELETE_PRODUCT_RESET });
     }
 

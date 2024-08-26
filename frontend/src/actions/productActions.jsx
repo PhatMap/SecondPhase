@@ -114,6 +114,7 @@ export const uploadSectionImages = (image) => async (dispatch) => {
 
 export const newProduct = (productData) => async (dispatch) => {
   try {
+    console.log("productData",productData);
     dispatch({ type: NEW_PRODUCT_REQUEST });
 
     const config = {

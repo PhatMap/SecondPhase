@@ -67,7 +67,7 @@ const NewProduct = () => {
     }
 
     if (success) {
-      history("/shop/products");
+      history("/shopkeeper/products");
       toast.success("Product created successfully");
       dispatch({ type: NEW_PRODUCT_RESET });
     }
