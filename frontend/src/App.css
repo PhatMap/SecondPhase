@@ -4500,8 +4500,13 @@ body {
   background-color: rgb(10, 207, 10);
 }
 
+.section-btns .delete {
+  width: 150px;
+  background-color: rgb(207, 49, 10);
+}
+
 .section-btns .cancel:hover {
-  background-color: rgb(103, 103, 103);
+  background-color: #676767;
 }
 
 .section-btns .confirm:hover {
@@ -4613,7 +4618,8 @@ body {
   background-color: white;
   border-radius: 5px;
   padding: 20px;
-  width: fit-content;
+  padding-bottom: 70px;
+  width: 1200px;
   height: fit-content;
   max-height: 600px;
   overflow: auto;
@@ -4683,6 +4689,7 @@ body {
   display: grid;
   grid-template-columns: auto 300px 300px auto;
   align-items: center;
+  position: relative;
 }
 
 .option-section img {
@@ -4705,6 +4712,30 @@ body {
 .option-section i:hover {
   color: #007bff;
   animation: lds-dual-ring 1.2s linear infinite;
+}
+
+.gear-icon-container {
+  position: relative;
+}
+
+.option-menu {
+  position: absolute;
+  width: fit-content;
+  background-color: white;
+  border-radius: 5px;
+  color: black;
+  padding: 10px;
+  z-index: 100;
+  top: 0;
+  right: -90px;
+  border: #050305 1px solid;
+}
+.option-menu p {
+  margin: 5px 0;
+  cursor: pointer;
+}
+.option-menu p:hover {
+  background-color: #f0f0f0;
 }
 
 .chat-popup {
@@ -4783,7 +4814,6 @@ body {
   flex-direction: column;
 }
 
-
 .message-input {
   display: flex;
   padding: 10px;
@@ -4833,7 +4863,7 @@ body {
 .messages-container {
   max-height: 400px;
   overflow-y: auto;
-  max-height: calc(100% - 120px)
+  max-height: calc(100% - 120px);
 }
 
 .message {
@@ -4866,7 +4896,6 @@ body {
   margin-right: 10px;
 }
 
-
 .chat-participants {
   display: flex;
   align-items: center;
@@ -4894,13 +4923,10 @@ body {
   background-color: #f0ba69; /* Màu nền khi người dùng được chọn */
 }
 
-
-
 .message.sent .message-content {
   background-color: #4caf50; /* Màu khác cho tin nhắn của người dùng hiện tại */
   color: white;
 }
-
 
 .chat-header-participant {
   display: flex;
@@ -4943,7 +4969,6 @@ body {
 .message.received {
   align-self: flex-start;
 }
-
 
 .message-content {
   word-wrap: break-word;
@@ -4993,7 +5018,6 @@ body {
   word-wrap: break-word;
 }
 
-
 .fixed-image {
   position: fixed;
   bottom: 20px;
@@ -5002,6 +5026,5 @@ body {
   width: 80px; /* Tùy chỉnh kích thước ảnh */
   height: 80px;
   cursor: pointer;
-  border-radius: 20%
-
+  border-radius: 20%;
 }

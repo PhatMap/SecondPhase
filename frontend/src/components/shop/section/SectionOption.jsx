@@ -1,14 +1,17 @@
+import { set } from "mongoose";
 import React, { Fragment, useEffect, useState } from "react";
 
-const SectionOption = ({ setOption, shop, categories }) => {
-  useEffect(() => {
-    console.log(categories);
-  });
+const SectionOption = ({ setOption, shop, categories, setIndex }) => {
+  const [activeSection, setActiveSection] = useState(null);
 
   const categoryMap = categories.reduce((acc, category) => {
     acc[category._id] = category.vietnameseName;
     return acc;
   }, {});
+
+  const toggleSection = (index) => {
+    setActiveSection(activeSection === index ? null : index);
+  };
 
   return (
     <Fragment>
@@ -34,7 +37,33 @@ const SectionOption = ({ setOption, shop, categories }) => {
                   <strong>Danh mục liên kết:</strong>{" "}
                   {categoryMap[section.categoryId]}
                 </p>
-                <i className="fa fa-gear" aria-hidden="true"></i>
+                <div className="gear-icon-container">
+                  <i
+                    className="fa fa-gear"
+                    aria-hidden="true"
+                    onClick={() => toggleSection(index)}
+                  ></i>
+                  {activeSection === index && (
+                    <div className="option-menu">
+                      <p
+                        onClick={() => {
+                          setIndex(index);
+                          setOption("fix");
+                        }}
+                      >
+                        Chỉnh sửa
+                      </p>
+                      <p
+                        onClick={() => {
+                          setIndex(index);
+                          setOption("delete");
+                        }}
+                      >
+                        Xóa
+                      </p>
+                    </div>
+                  )}
+                </div>
               </label>
             ))}
         </div>

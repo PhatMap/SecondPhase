@@ -7,10 +7,14 @@ import {
   uploadImages,
   uploadSectionImages,
 } from "./../../../actions/productActions";
-import { getShop, updateShop } from "./../../../actions/shopActions";
+import {
+  getShop,
+  updateShop,
+  updateShopSection,
+} from "./../../../actions/shopActions";
 import { UPDATE_SHOP_RESET } from "./../../../constants/shopConstants";
 
-const Section = ({ setOption, categories }) => {
+const UpdateSection = ({ setOption, categories, section, index }) => {
   const { isUpdated } = useSelector((state) => state.shop);
 
   const [form, setForm] = useState({
@@ -21,8 +25,12 @@ const Section = ({ setOption, categories }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setForm({ ...section });
+  }, []);
+
+  useEffect(() => {
     if (isUpdated) {
-      toast.success("Đã thêm mục mới");
+      toast.success("Đã cập nhật mục thành công");
       dispatch(getShop());
       dispatch({ type: UPDATE_SHOP_RESET });
       setOption("choose");
@@ -71,7 +79,7 @@ const Section = ({ setOption, categories }) => {
     setForm({ ...form, images: newImagesFiles });
   };
 
-  const handlerAddSection = async () => {
+  const handlerUpdateSection = async () => {
     let waitImges = [];
 
     await Promise.all(
@@ -101,7 +109,7 @@ const Section = ({ setOption, categories }) => {
       categoryId: form.categoryId,
     };
 
-    dispatch(updateShop(sectionData, "sections"));
+    dispatch(updateShopSection(index, sectionData));
   };
 
   return (
@@ -201,8 +209,8 @@ const Section = ({ setOption, categories }) => {
           >
             Hủy
           </button>
-          <button className="confirm" onClick={handlerAddSection}>
-            Xác Nhận
+          <button className="confirm" onClick={handlerUpdateSection}>
+            Cập Nhật
           </button>
         </div>
       </div>
@@ -210,4 +218,4 @@ const Section = ({ setOption, categories }) => {
   );
 };
 
-export default Section;
+export default UpdateSection;

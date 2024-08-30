@@ -76,3 +76,35 @@ exports.getShop = catchAsyncErrors(async (req, res, next) => {
     shopData,
   });
 });
+
+exports.updateShopSection = catchAsyncErrors(async (req, res, next) => {
+  const { newData, index } = req.body;
+
+  await Shop.findOneAndUpdate(
+    { ownerId: req.user.id },
+    { $set: { [`sections.${index}`]: newData } },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+exports.deleteShopSection = catchAsyncErrors(async (req, res, next) => {
+  const { index } = req.body;
+
+  const shop = await Shop.findOne({ ownerId: req.user.id });
+
+  shop.sections.splice(index, 1);
+
+  await shop.save();
+
+  res.status(200).json({
+    success: true,
+  });
+});

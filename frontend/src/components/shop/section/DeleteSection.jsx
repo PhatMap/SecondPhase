@@ -7,10 +7,15 @@ import {
   uploadImages,
   uploadSectionImages,
 } from "./../../../actions/productActions";
-import { getShop, updateShop } from "./../../../actions/shopActions";
+import {
+  deleteShopSection,
+  getShop,
+  updateShop,
+  updateShopSection,
+} from "./../../../actions/shopActions";
 import { UPDATE_SHOP_RESET } from "./../../../constants/shopConstants";
 
-const Section = ({ setOption, categories }) => {
+const DeleteSection = ({ setOption, categories, section, index }) => {
   const { isUpdated } = useSelector((state) => state.shop);
 
   const [form, setForm] = useState({
@@ -21,8 +26,12 @@ const Section = ({ setOption, categories }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setForm({ ...section });
+  }, []);
+
+  useEffect(() => {
     if (isUpdated) {
-      toast.success("Đã thêm mục mới");
+      toast.success("Đã xóa mục thành công");
       dispatch(getShop());
       dispatch({ type: UPDATE_SHOP_RESET });
       setOption("choose");
@@ -71,37 +80,8 @@ const Section = ({ setOption, categories }) => {
     setForm({ ...form, images: newImagesFiles });
   };
 
-  const handlerAddSection = async () => {
-    let waitImges = [];
-
-    await Promise.all(
-      form.images.map(async (image, index) => {
-        if (!image.public_id) {
-          const upload = new FormData();
-          upload.append("images", image.url);
-          const result = await dispatch(uploadSectionImages(upload));
-          waitImges.push({
-            id: index,
-            res: result,
-          });
-        }
-      })
-    );
-
-    const finalResult = await Promise.all(waitImges);
-
-    finalResult.forEach((result) => {
-      form.images[result.id].public_id = result.res.image.public_id;
-      form.images[result.id].url = result.res.image.url;
-    });
-
-    const sectionData = {
-      name: form.name,
-      images: form.images,
-      categoryId: form.categoryId,
-    };
-
-    dispatch(updateShop(sectionData, "sections"));
+  const handlerDeleteSection = async () => {
+    dispatch(deleteShopSection(index));
   };
 
   return (
@@ -201,8 +181,8 @@ const Section = ({ setOption, categories }) => {
           >
             Hủy
           </button>
-          <button className="confirm" onClick={handlerAddSection}>
-            Xác Nhận
+          <button className="delete" onClick={handlerDeleteSection}>
+            Xác Nhận Xóa
           </button>
         </div>
       </div>
@@ -210,4 +190,4 @@ const Section = ({ setOption, categories }) => {
   );
 };
 
-export default Section;
+export default DeleteSection;
