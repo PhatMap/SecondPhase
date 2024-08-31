@@ -34,11 +34,28 @@ exports.uploadImages = catchAsyncErrors(async (req, res, next) => {
 
 exports.updateShop = catchAsyncErrors(async (req, res, next) => {
   const { newData, field } = req.body;
+  let updateData = {};
 
-  const updateData =
-    field === "sections"
-      ? { $push: { sections: newData } }
-      : { [field]: newData };
+  switch (field) {
+    case "avatar":
+      const result = await cloudinary.v2.uploader.upload(newData.url, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+      });
+      updateData = {
+        [field]: {
+          public_id: result.public_id,
+          url: result.secure_url,
+        },
+      };
+      break;
+    case "sections":
+      updateData = { $push: { sections: newData } };
+      break;
+    default:
+      updateData = { [field]: newData };
+  }
 
   await Shop.findOneAndUpdate({ ownerId: req.user.id }, updateData, {
     new: true,

@@ -8,6 +8,7 @@ import { getShop } from "../../actions/shopActions";
 import Product from "../product/Product";
 import ManageSection from "./section/ManageSection";
 import { getCategoryAll } from "../../actions/categoryActions";
+import ChangeAvatar from "./ChangeAvatar";
 
 const ShopSetup = () => {
   const { products } = useSelector((state) => state.shopProducts);
@@ -16,6 +17,7 @@ const ShopSetup = () => {
 
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [changeAvatar, setChangeAvatar] = useState(false);
 
   useEffect(() => {
     dispatch(getShop());
@@ -25,7 +27,7 @@ const ShopSetup = () => {
 
   useEffect(() => {
     if (shop) {
-      console.log(shop.sections);
+      console.log(shop);
     }
   }, [shop]);
 
@@ -39,12 +41,28 @@ const ShopSetup = () => {
           categories={categories}
         />
       )}
+      {changeAvatar && (
+        <ChangeAvatar
+          onClose={() => setChangeAvatar(false)}
+          avatar={shop.avatar}
+        />
+      )}
       <div className="shop-setup-container">
         <div className="shop-setup-head-container">
           <div className="shop-setup-profile-container">
+            <figure className="avatar">
+              {shop && shop.avatar && (
+                <img
+                  className="rounded-circle img-fluid"
+                  src={shop.avatar.url}
+                  alt="Ảnh Đại Diện"
+                />
+              )}
+              <i className="fa fa-edit" onClick={() => setChangeAvatar(true)} />
+            </figure>
             {shopData && shopData.shopInfor && (
               <h1 key="shop-name">{shopData.shopInfor.ownerName}</h1>
-            )}{" "}
+            )}
           </div>
         </div>
         <div className="shop-setup-body-container">

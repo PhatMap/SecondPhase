@@ -10,6 +10,17 @@ const shopSchema = new mongoose.Schema({
       );
     },
   },
+  avatar: {
+    url: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dfbo1ecn9/image/upload/v1725099578/avatars/default_ttizso.png",
+    },
+    public_id: {
+      type: String,
+      default: "default_ttizso",
+    },
+  },
   applicationId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Application",
@@ -19,10 +30,6 @@ const shopSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
-  },
-  stats: {
-    joined: Number,
-    totalProduct: Number,
   },
   sections: [
     {
