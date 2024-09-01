@@ -1,17 +1,28 @@
 const Category = require("../models/category");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
-const cloudinary = require("cloudinary").v2;
+const cloudinary = require("cloudinary");
 const Product = require("../models/product");
 const APIFeatures = require("../utils/apiFeatures");
 
-// Controller function to create a new category
 exports.createCategory = catchAsyncErrors(async (req, res, next) => {
-  const { categoryName, vietnameseName } = req.body;
+  const { categoryName, vietnameseName, image } = req.body;
 
-  // Create a new category with categoryName and vietnameseName
-  const category = await Category.create({ categoryName, vietnameseName });
+  if (image.public_id === "") {
+    const result = await cloudinary.v2.uploader.upload(image.url, {
+      folder: "categories",
+      width: 150,
+      crop: "scale",
+    });
+    image.public_id = result.public_id;
+    image.url = result.secure_url;
+  }
 
-  // Respond with success message and created category
+  const category = await Category.create({
+    image,
+    categoryName,
+    vietnameseName,
+  });
+
   res.status(201).json({
     success: true,
     category,

@@ -8,7 +8,6 @@ import AddUser from "./AddUser";
 import UpdateUser from "./UpdateUser";
 import ManageApplications from "./ManageApplications";
 import ManageCategories from "./ManageCategories";
-import NewCategory from "./NewCategory";
 import UpdateCategory from "./UpdateCategory";
 import ManageProducts from "./ManageProducts";
 import ManageCoupons from "./ManageCoupons";
@@ -45,7 +44,6 @@ const Centre = () => {
           <Route path="user/:id" element={<UpdateUser />} />
           <Route path="applications" element={<ManageApplications />} />
           <Route path="categories" element={<ManageCategories />} />
-          <Route path="category/new" element={<NewCategory />} />
           <Route path="category/update/:id" element={<UpdateCategory />} />
           <Route path="products" element={<ManageProducts />} />
           <Route path="coupons" element={<ManageCoupons />} />

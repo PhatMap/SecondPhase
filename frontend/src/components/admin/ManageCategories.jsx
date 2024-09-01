@@ -11,34 +11,32 @@ import {
   UPDATE_CATEGORY_RESET,
   CREATE_CATEGORY_RESET,
 } from "../../constants/categoryConstants";
+import NewCategory from "./NewCategory";
 
 const ManageCategories = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { loading, error, categories, totalCategories, success } = useSelector(
+  const { loading, error, categories, totalCategories, deleted } = useSelector(
     (state) => state.category
   );
 
   const [currentPage, setCurrentPage] = useState(1);
   const [keyword, setKeyword] = useState("");
   const [show, setShow] = useState(false);
+  const [addCategory, setAddCategory] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState(null);
 
   useEffect(() => {
     dispatch(getCategories(currentPage, keyword));
 
-    if (success) {
-      toast.success("Xóa Thành Công Danh Mục và Tất Cả Sản Phẩm Liên Quan");
+    if (deleted) {
+      toast.success("Xóa Thành Công Danh Mục");
       dispatch({ type: DELETE_CATEGORY_RESET });
-      dispatch({ type: UPDATE_CATEGORY_RESET });
-      dispatch({ type: CREATE_CATEGORY_RESET });
     }
 
     if (error) {
       toast.error(error);
     }
-  }, [dispatch, success, error, currentPage, keyword]);
+  }, [dispatch, deleted, error, currentPage, keyword]);
 
   const deleteHandler = (id) => {
     setShow(true);
@@ -81,7 +79,7 @@ const ManageCategories = () => {
           vietnameseName: category.vietnameseName,
           action: (
             <Fragment>
-              <div className="flex-horizontal">
+              <div className="manage-category-table-btns">
                 <Link
                   to={`/admin/category/update/${category._id}`}
                   className="btn btn-primary py-1 px-2"
@@ -123,90 +121,62 @@ const ManageCategories = () => {
   return (
     <Fragment>
       <ToastContainer />
-      <h1
-        className="my-5"
-        style={{ fontWeight: "bold", textAlign: "center", fontSize: "24px" }}
-      >
-        Quản lý Danh mục
-      </h1>
-
-      <div className="mb-4" style={{ display: "flex", marginLeft: "5rem" }}>
-        <Link to="/admin/category/new" className="btn btn-primary">
-          Thêm danh mục mới
-        </Link>
-      </div>
-      <form
-        onSubmit={handleSearch}
-        style={{
-          display: "flex",
-          marginLeft: "5rem",
-          gap: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Tìm kiếm danh mục..."
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          style={{
-            padding: "10px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-          }}
-        />
-      </form>
-      {loading ? (
-        <h2 style={{ textAlign: "center" }}>Đang tải...</h2>
-      ) : (
-        <Fragment>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <DataTable data={setCategories()} />
-          </div>
-          <div
-            className="d-flex justify-content-center mt-5"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginBottom: "2rem",
-            }}
-          >
-            <Pagination
-              activePage={currentPage}
-              itemsCountPerPage={10}
-              totalItemsCount={totalCategories}
-              onChange={handlePageChange}
-              nextPageText={"Next"}
-              prevPageText={"Prev"}
-              firstPageText={"First"}
-              lastPageText={"Last"}
-              itemClass="page-item"
-              linkClass="page-link"
+      <div className="manage-category-container">
+        <div className="manage-category-head">
+          <h1>Quản Lý Danh Mục</h1>
+          <p className="lead text-center">Manage Category</p>
+          <hr />
+        </div>
+        <div className="manage-category-form">
+          <button className="add-btn" onClick={() => setAddCategory(true)}>
+            <i className="fa fa-plus" />
+            <p>Tạo Danh Mục</p>
+          </button>
+          <form onSubmit={handleSearch} className="search-container">
+            <input
+              type="text"
+              placeholder="Tìm kiếm danh mục..."
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
             />
-          </div>
-        </Fragment>
-      )}
-      {show && (
-        <div className="delete-notify-container">
-          <div className="delete-notify-form">
-            <h1 style={{ marginBottom: "20px" }}>Xóa Danh Mục Này?</h1>
-            <div className="delete-notify-btn-container">
-              <button
-                className="delete-notify-btn-container-yes"
-                onClick={confirmDelete}
-              >
-                Yes
-              </button>
-              <button
-                className="delete-notify-btn-container-no"
-                onClick={cancelDelete}
-              >
-                No
-              </button>
+          </form>
+          <DataTable data={setCategories()} />
+        </div>
+        <Pagination
+          activePage={currentPage}
+          itemsCountPerPage={10}
+          totalItemsCount={totalCategories}
+          onChange={handlePageChange}
+          nextPageText={"Next"}
+          prevPageText={"Prev"}
+          firstPageText={"First"}
+          lastPageText={"Last"}
+          itemClass="page-item"
+          linkClass="page-link"
+        />
+        {show && (
+          <div className="delete-notify-container">
+            <div className="delete-notify-form">
+              <h1 style={{ marginBottom: "20px" }}>Xóa Danh Mục Này?</h1>
+              <div className="delete-notify-btn-container">
+                <button
+                  className="delete-notify-btn-container-yes"
+                  onClick={confirmDelete}
+                >
+                  Yes
+                </button>
+                <button
+                  className="delete-notify-btn-container-no"
+                  onClick={cancelDelete}
+                >
+                  No
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+      {addCategory && <NewCategory onClose={() => setAddCategory(false)} />}
     </Fragment>
   );
 };

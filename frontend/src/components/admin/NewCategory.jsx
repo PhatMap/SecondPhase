@@ -1,33 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createCategory } from "../../actions/categoryActions";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CREATE_CATEGORY_RESET } from "../../constants/categoryConstants";
 import { useNavigate } from "react-router-dom";
-import Back from "../layout/Back";
 
-const NewCategory = () => {
+const NewCategory = ({ onClose }) => {
   const history = useNavigate();
+  const [image, setImage] = useState(null);
   const [categoryName, setCategoryName] = useState("");
   const [vietnameseName, setVietnameseName] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [wait, setWait] = useState(false); // State to handle the wait time
 
   const dispatch = useDispatch();
   const { loading, error, success } = useSelector((state) => state.category);
 
   useEffect(() => {
     if (success) {
-      toast.success("Category created successfully");
+      toast.success("Tạo Danh Mục Thành Công");
+      setSubmitted(false);
       dispatch({ type: CREATE_CATEGORY_RESET });
-      setSubmitted(false); // Reset the submitted state
-      setWait(true); // Start the wait state
-
-      // Delay the navigation by 3 seconds
-      setTimeout(() => {
-        history("/admin/categories");
-      }, 3000);
+      onClose();
     }
 
     if (error) {
@@ -38,50 +32,120 @@ const NewCategory = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setSubmitted(true);
+
     if (categoryName.trim() === "" || vietnameseName.trim() === "") {
       toast.error("Please fill in all fields");
       return;
     }
-    dispatch(createCategory({ categoryName, vietnameseName }));
-    setSubmitted(true);
+    dispatch(createCategory({ categoryName, vietnameseName, image }));
+  };
+
+  const handlerOverlayClick = (e) => {
+    if (e.target.className === "new-category-overlay" && !submitted) {
+      onClose();
+    }
+  };
+
+  const onChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImage((prev) => ({
+            ...prev,
+            public_id: "",
+            url: reader.result,
+          }));
+        }
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
+    const files = e.dataTransfer.files;
+    onChange({ target: { files } });
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.add("hover");
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove("hover");
   };
 
   return (
-    
-    
-    <div className="NewCategory-container">
-      
-      <ToastContainer />
-      <form onSubmit={submitHandler} className="NewCategory-form-box">
-        <h1 className="NewCategory-heading">Danh Mục mới</h1>
-        <div className="NewCategory-form-group">
-          <label htmlFor="categoryName" className="NewCategory-label">Tên danh mục (EN)</label>
-          <input
-            type="text"
-            id="categoryName"
-            className="NewCategory-form-control"
-            value={categoryName}
-            onChange={(e) => setCategoryName(e.target.value)}
-          />
-        </div>
-        <div className="NewCategory-form-group">
-          <label htmlFor="vietnameseName" className="NewCategory-label">Tên danh mục (VI)</label>
-          <input
-            type="text"
-            id="vietnameseName"
-            className="NewCategory-form-control"
-            value={vietnameseName}
-            onChange={(e) => setVietnameseName(e.target.value)}
-          />
-        </div>
-        <div className="button-container">
-      <button type="submit" className="NewCategory-button" disabled={loading || submitted || wait}>
-        Thêm danh mục
-      </button>
-      <Back />
-    </div>
-      </form>
-    </div>
+    <Fragment>
+      <div
+        className="new-category-overlay"
+        onClick={(e) => handlerOverlayClick(e)}
+      >
+        <form onSubmit={submitHandler} className="NewCategory-form-box">
+          <h1 className="NewCategory-heading">Tạo Danh Mục</h1>
+          <div className="NewCategory-form-group">
+            <label
+              className={`upload-form `}
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+            >
+              <input type="file" name="images" onChange={onChange} hidden />
+              <i
+                className="fa fa-cloud-upload"
+                aria-hidden="true"
+                style={{ fontSize: "30px" }}
+              ></i>
+              <p>
+                <strong>Kéo Thả </strong>hoặc <strong>Nhấn </strong>
+                để đưa ảnh lên
+              </p>
+            </label>
+            {image && (
+              <img src={image.url} alt="Category" width={50} height={50} />
+            )}
+            <label htmlFor="categoryName" className="NewCategory-label">
+              Tên danh mục (EN)
+            </label>
+            <input
+              type="text"
+              id="categoryName"
+              className="NewCategory-form-control"
+              value={categoryName}
+              onChange={(e) => setCategoryName(e.target.value)}
+            />
+          </div>
+          <div className="NewCategory-form-group">
+            <label htmlFor="vietnameseName" className="NewCategory-label">
+              Tên danh mục (VI)
+            </label>
+            <input
+              type="text"
+              id="vietnameseName"
+              className="NewCategory-form-control"
+              value={vietnameseName}
+              onChange={(e) => setVietnameseName(e.target.value)}
+            />
+          </div>
+          <button
+            type="submit"
+            className={`add-btn ${submitted ? "disabled" : ""}`}
+          >
+            Tạo
+          </button>
+        </form>
+      </div>
+    </Fragment>
   );
 };
 
