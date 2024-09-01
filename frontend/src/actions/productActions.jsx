@@ -42,18 +42,19 @@ import {
 } from "../constants/productConstants";
 
 export const getProducts =
-  (
+  ({
     keyword = "",
     currentPage = 1,
+    resPerPage = 9,
     price = [0, 1000000000],
     category = "",
-    rating = 0
-  ) =>
+    rating = 0,
+  }) =>
   async (dispatch) => {
     try {
       dispatch({ type: ALL_PRODUCTS_REQUEST });
 
-      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`;
+      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&limit=${resPerPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`;
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -114,7 +115,7 @@ export const uploadSectionImages = (image) => async (dispatch) => {
 
 export const newProduct = (productData) => async (dispatch) => {
   try {
-    console.log("productData",productData);
+    console.log("productData", productData);
     dispatch({ type: NEW_PRODUCT_REQUEST });
 
     const config = {
@@ -260,25 +261,26 @@ export const newReview = (reviewData) => async (dispatch) => {
   }
 };
 
-export const getShopProducts = (
-  shopId, approved = "", keyword = "", currentPage = 1, resPerPage = 10) => async (dispatch) => {
-  try {
-    dispatch({ type: GET_SHOP_PRODUCTS_REQUEST });
+export const getShopProducts =
+  (shopId, approved = "", keyword = "", currentPage = 1, resPerPage = 10) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: GET_SHOP_PRODUCTS_REQUEST });
 
-    let url = `/api/v1/shop/products?shopId=${shopId}&approved=${approved}&keyword=${keyword}&page=${currentPage}&resPerPage=${resPerPage}`
-    const { data } = await axios.get(url);
+      let url = `/api/v1/shop/products?shopId=${shopId}&approved=${approved}&keyword=${keyword}&page=${currentPage}&resPerPage=${resPerPage}`;
+      const { data } = await axios.get(url);
 
-    dispatch({
-      type: GET_SHOP_PRODUCTS_SUCCESS,
-      payload: { products: data.products, productsCount: data.productsCount },
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_SHOP_PRODUCTS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: GET_SHOP_PRODUCTS_SUCCESS,
+        payload: { products: data.products, productsCount: data.productsCount },
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_SHOP_PRODUCTS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const getAdminProducts =
   (approved = "pending", keyword = "", currentPage = 1, resPerPage = 5) =>
@@ -342,14 +344,14 @@ export const deleteReview = (id, productId) => async (dispatch) => {
 export const getReviewsInProduct =
   (productId, page = 1, limit = 10) =>
   async (dispatch) => {
-    console.log("productId",productId,page,limit);
+    console.log("productId", productId, page, limit);
     try {
       dispatch({ type: GET_REVIEWS_IN_PRODUCT_REQUEST });
 
       const { data } = await axios.get(
         `/api/v1/ReviewsInProduct?id=${productId}&page=${page}&limit=${limit}`
       );
-      console.log("data",data);
+      console.log("data", data);
 
       dispatch({
         type: GET_REVIEWS_IN_PRODUCT_SUCCESS,

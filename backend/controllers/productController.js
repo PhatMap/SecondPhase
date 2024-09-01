@@ -46,7 +46,6 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-  const resPerPage = 9;
   const apiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
     .filter()
@@ -56,12 +55,12 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 
   const productsCount = products.length;
 
-  apiFeatures.pagination(resPerPage);
+  apiFeatures.pagination();
   products = await apiFeatures.query.clone();
   res.status(200).json({
     success: true,
     productsCount,
-    resPerPage,
+    resPerPage: req.query.limit,
     products,
   });
 });
@@ -233,11 +232,10 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
 
 exports.getShopProducts = catchAsyncErrors(async (req, res, next) => {
   const shopId = req.query.shopId;
-  
-  if (!shopId) {
-    return next(new ErrorHandler('Shop ID is required', 400));
-  }
 
+  if (!shopId) {
+    return next(new ErrorHandler("Shop ID is required", 400));
+  }
 
   const apiFeatures = new APIFeatures(Product.find({ shopId }), req.query)
     .filterShopProducts()
@@ -245,7 +243,7 @@ exports.getShopProducts = catchAsyncErrors(async (req, res, next) => {
 
   let products = await apiFeatures.query;
 
-  const productsCount  = products.length;
+  const productsCount = products.length;
 
   apiFeatures.adminPagination();
 

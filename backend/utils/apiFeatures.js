@@ -85,19 +85,19 @@ class APIFeatures {
     let query = {};
 
     if (approved && approved !== "") {
-        query.approved = approved;
+      query.approved = approved;
     }
 
     if (keyword) {
-        query.name = {
-            $regex: keyword,
-            $options: 'i'
-        };
+      query.name = {
+        $regex: keyword,
+        $options: "i",
+      };
     }
 
     this.query = this.query.find(query);
     return this;
-}
+  }
   filterCategory() {
     const { keyword } = this.queryStr;
 
@@ -119,7 +119,7 @@ class APIFeatures {
     let query = {};
 
     if (keyword) {
-      query['reviews.comment'] = { $regex: keyword, $options: "i" };
+      query["reviews.comment"] = { $regex: keyword, $options: "i" };
     }
 
     this.query = this.query.find(query);
@@ -127,14 +127,14 @@ class APIFeatures {
   }
   filterCoupon() {
     const queryCopy = { ...this.queryStr };
-    const removeFields = ['keyword', 'limit', 'page'];
-    removeFields.forEach(el => delete queryCopy[el]);
-  
+    const removeFields = ["keyword", "limit", "page"];
+    removeFields.forEach((el) => delete queryCopy[el]);
+
     let queryStr = JSON.stringify(queryCopy);
-    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, match => `$${match}`);
-  
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
+
     this.query = this.query.find(JSON.parse(queryStr));
-  
+
     // Add filtering by status and role
     if (this.queryStr.status) {
       this.query = this.query.find({ status: this.queryStr.status });
@@ -154,7 +154,6 @@ class APIFeatures {
 
     this.query = this.query.find(query);
     return this;
-  
   }
   search() {
     const keyword = this.queryStr.keyword
@@ -166,9 +165,9 @@ class APIFeatures {
         }
       : {};
 
-      const category = this.queryStr.category
+    const category = this.queryStr.category
       ? {
-          category: this.queryStr.category
+          category: this.queryStr.category,
         }
       : {};
 
@@ -189,8 +188,9 @@ class APIFeatures {
     return this;
   }
 
-  pagination(resPerPage) {
+  pagination() {
     const currentPage = Number(this.queryStr.page) || 1;
+    const resPerPage = Number(this.queryStr.limit) || 10;
     const skip = resPerPage * (currentPage - 1);
 
     this.query = this.query.limit(resPerPage).skip(skip);
