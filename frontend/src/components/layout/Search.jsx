@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Search = () => {
   const history = useNavigate();
   const [keyword, setKeyword] = useState("");
+  const [isActive, setIsActive] = useState(false);
 
   const searchHandler = (e) => {
     e.preventDefault();
@@ -17,6 +18,7 @@ const Search = () => {
 
   return (
     <form className="Search-form" onSubmit={searchHandler}>
+      <i className="fa fa-search Search-icon"></i>
       <input
         className="Search-input"
         type="search"
@@ -29,8 +31,15 @@ const Search = () => {
           }
         }}
       />
-      <button onClick={searchHandler}>
-        <i className="fa fa-search Search-icon"></i>
+      <button
+        onClick={() => {
+          searchHandler(e);
+        }}
+        onMouseDown={() => setIsActive(true)}
+        onMouseUp={() => setIsActive(false)}
+        className={isActive ? "active" : ""}
+      >
+        Tìm Kiếm
       </button>
     </form>
   );

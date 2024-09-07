@@ -1,30 +1,31 @@
 import React, { Fragment, useState, useEffect } from "react";
 import MetaData from "./layout/MetaData";
 import Product from "./product/Product";
-import Loader from "./layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getProducts } from "../actions/productActions";
+import { getCategoryAll } from "../actions/categoryActions";
 import "rc-slider/assets/index.css";
-import { useParams, useNavigate } from "react-router-dom";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import BoxChat from "./boxChat/boxChat";
+import Category from "../category/Category";
 
 const Home = () => {
-  const navigate = useNavigate();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [resPerPage, setResPerPage] = useState(12);
   const dispatch = useDispatch();
 
   const { products, error } = useSelector((state) => state.products);
+  const { categories } = useSelector((state) => state.category);
 
   const toggleChatBox = () => {
     setIsChatOpen(!isChatOpen);
   };
 
   useEffect(() => {
+    dispatch(getCategoryAll());
     dispatch(getProducts({ resPerPage }));
   }, []);
 
@@ -38,7 +39,7 @@ const Home = () => {
     <Fragment>
       <MetaData title={"Home"} />
 
-      <div className="home-container background-1">
+      <div className="home-container background-2">
         <Header />
         <img
           src={"../images/masage.png"}
@@ -54,7 +55,11 @@ const Home = () => {
         <div className="home-form">
           <div className="home-component">
             <h1>Danh Mục Sản Phẩm</h1>
-            <div className="home-new-products"></div>
+            <div className="home-category">
+              {categories.map((category) => (
+                <Category key={category._id} category={category} />
+              ))}
+            </div>
           </div>
           <div className="home-component">
             <h1>Sản Phẩm Mới Nhất</h1>

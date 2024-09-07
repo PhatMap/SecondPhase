@@ -31,6 +31,9 @@ const Header = ({ color }) => {
   const categories = ["Trousers", "Shirt", "Dress", "Shoe"];
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [homeClick, setHomeClick] = useState(false);
+  const [cartClick, setCartClick] = useState(false);
+  const [loginClick, setLoginClick] = useState(false);
 
   const { user, loading, isGoogleLoggedIn } = useSelector(
     (state) => state.auth
@@ -176,188 +179,233 @@ const Header = ({ color }) => {
 
   return (
     <Fragment>
-      <nav className={`Header ${color ? color : ""}`}>
-        <div className="Header-container">
-          <div className="Header-container-right">
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <h1
-                className="header-logo"
-                style={{ fontFamily: "Lobster, cursive" }}
-              >
-                VITASHOP
-              </h1>
-            </Link>
-          </div>
-          <div className="Header-container-center">
-            <Search />
-          </div>
-          <div className="Header-container-left">
-            <div className="Header-category" ref={menuRef}>
-              <i className="fa fa-bars burger-menu" onClick={handleClick}></i>
-              {menu ? (
-                <div className="header-menu">
-                  {categories.map((cate, index) => (
-                    <div key={index} className="header-menu-items">
-                      <Link
-                        to={`/category/${cate}`}
-                        className="header-menu-item"
-                      >
-                        {cate}
-                      </Link>
-                    </div>
-                  ))}
+      <header className="header-container">
+        <nav className={`Header ${color ? color : ""}`}>
+          <div className="Header-container">
+            <div className="Header-container-right">
+              <Link to="/" style={{ textDecoration: "none" }}>
+                <div className="header-logo-container">
+                  <h1 className="header-logo-begin">SHOP</h1>
+                  <h1 className="header-logo-end">DEE</h1>
                 </div>
-              ) : (
-                <></>
-              )}
-            </div>
-            <button
-              onClick={() => {
-                window.location.href = "/shop";
-              }}
-              className={
-                location.pathname === "/shop"
-                  ? "Header-shop-link active"
-                  : "Header-shop-link"
-              }
-            >
-              Shop
-            </button>
-
-            <div className="Header-cart-count">
-              <Link to="/cart" className="Header-cart">
-                <FaShoppingCart
-                  className="Header-cart-icon"
-                  onMouseEnter={handleCartOpen}
-                  onMouseLeave={handleCartClose}
-                />
               </Link>
-              <span className="Header-count">
-                {user ? cartItems.length : 0}
-              </span>
             </div>
+            <div className="Header-container-center">
+              <Search />
+            </div>
+            <div className="Header-container-left">
+              <div id="notification-bell">
+                <i
+                  ref={bellRef}
+                  className={notify > 0 ? "fa fa-bell" : "fa fa-bell-o"}
+                  onClick={hanldeNotify}
+                ></i>
+                <span
+                  id="notification-count"
+                  className="notification-badge"
+                ></span>
+                {notify && (
+                  <span ref={notifyRef} className="notification-container">
+                    <h2>Thông báo mới</h2>
+                    {latest.length > 0 ? (
+                      latest.map((item, index) => (
+                        <p key={index}>{item.message}</p>
+                      ))
+                    ) : (
+                      <p>Không có thông báo mới</p>
+                    )}
+                    <h2>Thông báo gần đây</h2>
+                    {recent.length > 0 ? (
+                      recent.map((item, index) => (
+                        <p key={index}>{item.message}</p>
+                      ))
+                    ) : (
+                      <p>Không có thông báo gần đây</p>
+                    )}
+                    {hasMore && <p>Cuộn xuống để xem thêm thông báo</p>}
+                    {!hasMore && <p>Không còn thông báo nào khác</p>}
+                    <button onClick={handleLoadMore}>Thông báo trước đó</button>
+                  </span>
+                )}
+              </div>
 
-            <Popper
-              anchorEl={anchorE2}
-              open={openCart && user}
-              className="Header-cart-items"
-            >
-              {cartItems.map((item, index) => (
-                <MenuItem key={index}>
-                  <div className="cart-MenuItem">
-                    <img src={item.image} height="40" width="40" />
-                    <div className="cart-MenuItem-container">
-                      <p>Tên sản phẩm: {item.name.substring(0, 20)}...</p>
-                      <p>Số lượng mua: {item.quantity}</p>
-                      <div className="cart-summary-color">
-                        <p>kích cỡ:</p>
-                        <p>{item.size}</p>
+              <button
+                className={`Header-cart-count  ${cartClick ? "clicked" : ""}`}
+                onMouseDown={() => setCartClick(true)}
+                onMouseUp={() => setCartClick(false)}
+                onMouseEnter={handleCartOpen}
+                onMouseLeave={handleCartClose}
+                onClick={() => history("/cart")}
+              >
+                <i className="fa fa-shopping-cart" />
+                <span className="Header-count">
+                  {user ? cartItems.length : 0}
+                </span>
+              </button>
+
+              <Popper
+                anchorEl={anchorE2}
+                open={openCart && user}
+                className="Header-cart-items"
+              >
+                {cartItems.map((item, index) => (
+                  <MenuItem key={index}>
+                    <div className="cart-MenuItem">
+                      <img src={item.image} height="40" width="40" />
+                      <div className="cart-MenuItem-container">
+                        <p>Tên sản phẩm: {item.name.substring(0, 20)}...</p>
+                        <p>Số lượng mua: {item.quantity}</p>
+                        <div className="cart-summary-color">
+                          <p>kích cỡ:</p>
+                          <p>{item.size}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </MenuItem>
-              ))}
-            </Popper>
+                  </MenuItem>
+                ))}
+              </Popper>
 
-            <div id="notification-bell">
-              <i
-                ref={bellRef}
-                className={notify > 0 ? "fa fa-bell" : "fa fa-bell-o"}
-                onClick={hanldeNotify}
-              ></i>
-                  <span
-                id="notification-count"
-                className="notification-badge"
-              ></span>
-              {notify && (
-                <span ref={notifyRef} className="notification-container">
-                  <h2>Thông báo mới</h2>
-                  {latest.length > 0 ? (
-                    latest.map((item, index) => (
-                      <p key={index}>{item.message}</p>
-                    ))
-                  ) : (
-                    <p>Không có thông báo mới</p>
-                  )}
-                  <h2>Thông báo gần đây</h2>
-                  {recent.length > 0 ? (
-                    recent.map((item, index) => (
-                      <p key={index}>{item.message}</p>
-                    ))
-                  ) : (
-                    <p>Không có thông báo gần đây</p>
-                  )}
-                  {hasMore && <p>Cuộn xuống để xem thêm thông báo</p>}
-                  {!hasMore && <p>Không còn thông báo nào khác</p>}
-                  <button onClick={handleLoadMore}>Thông báo trước đó</button>
-                </span>
+              <button
+                onClick={() => {
+                  window.location.href = "/";
+                }}
+                className={`                
+                ${
+                  location.pathname === "/"
+                    ? "Header-shop-link active"
+                    : "Header-shop-link"
+                }
+                ${homeClick ? "clicked" : ""} `}
+                onMouseDown={() => setHomeClick(true)}
+                onMouseUp={() => setHomeClick(false)}
+              >
+                <i className="fa fa-home"></i>
+                <p>Trang Chủ</p>
+              </button>
+
+              {user ? (
+                <div className="ml-4 dropdown d-inline">
+                  <Link
+                    to="#!"
+                    className="btn dropdown-toggle text-white mr-4"
+                    type="button"
+                    id="dropDownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <figure
+                      className="avatar avatar-nav"
+                      style={{ background: "white" }}
+                    >
+                      <img
+                        src={user.avatar && user.avatar.url}
+                        alt={user && user.name}
+                        className="rounded-circle"
+                      />
+                    </figure>
+                    <span>{user && user.name}</span>
+                  </Link>
+
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="dropDownMenuButton"
+                  >
+                    {user && user.role === "shopkeeper" && (
+                      <Link
+                        className="dropdown-item"
+                        to="/shopkeeper/dashboard"
+                      >
+                        Quản Lí
+                      </Link>
+                    )}
+                    <Link className="dropdown-item" to="/orders/me">
+                      Đơn Hàng
+                    </Link>
+                    <Link className="dropdown-item" to="/me">
+                      Thông Tin Cá Nhân
+                    </Link>
+                    {user && user.role === "customer" && (
+                      <Link className="dropdown-item" to="/shop/register">
+                        Đăng ký bán hàng
+                      </Link>
+                    )}
+
+                    <Link
+                      className="dropdown-item text-danger"
+                      to="/"
+                      onClick={logoutHandler}
+                    >
+                      Thoát
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                !loading && (
+                  <button
+                    className={`Header-login ${loginClick ? "clicked" : ""}`}
+                    onClick={() => history("/login")}
+                    onMouseDown={() => setLoginClick(true)}
+                    onMouseUp={() => setLoginClick(false)}
+                  >
+                    <i
+                      className="fa  fa-user-circle-o
+"
+                    ></i>
+                    <p>Tài Khoản</p>
+                  </button>
+                )
               )}
             </div>
-
-            {user ? (
-              <div className="ml-4 dropdown d-inline">
-                <Link
-                  to="#!"
-                  className="btn dropdown-toggle text-white mr-4"
-                  type="button"
-                  id="dropDownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <figure
-                    className="avatar avatar-nav"
-                    style={{ background: "white" }}
-                  >
-                    <img
-                      src={user.avatar && user.avatar.url}
-                      alt={user && user.name}
-                      className="rounded-circle"
-                    />
-                  </figure>
-                  <span>{user && user.name}</span>
-                </Link>
-
-                <div
-                  className="dropdown-menu"
-                  aria-labelledby="dropDownMenuButton"
-                >
-                  {user && user.role === "shopkeeper" && (
-                    <Link className="dropdown-item" to="/shopkeeper/dashboard">
-                      Quản Lí
-                    </Link>
-                  )}
-                  <Link className="dropdown-item" to="/orders/me">
-                    Đơn Hàng
-                  </Link>
-                  <Link className="dropdown-item" to="/me">
-                    Thông Tin Cá Nhân
-                  </Link>
-                  {user && user.role === "customer" && (
-                    <Link className="dropdown-item" to="/shop/register">
-                      Đăng ký bán hàng
-                    </Link>
-                  )}
-
-                  <Link
-                    className="dropdown-item text-danger"
-                    to="/"
-                    onClick={logoutHandler}
-                  >
-                    Thoát
-                  </Link>
-                </div>
-              </div>
-            ) : (
-              !loading && (
-                <Link to="/login" className="Header-login">
-                  Login
-                </Link>
-              )
-            )}
           </div>
-        </div>
-      </nav>
+        </nav>
+        <nav className="header-separator"></nav>
+        <nav className="sub-header-container">
+          <p>Cam Kết</p>
+          <div className="sub-header">
+            <p>
+              <img
+                width={25}
+                height={25}
+                src="https://salt.tikicdn.com/ts/upload/96/76/a3/16324a16c76ee4f507d5777608dab831.png"
+              />
+              100% Chất lượng
+            </p>
+            <p>
+              <img
+                width={25}
+                height={25}
+                src="https://salt.tikicdn.com/ts/upload/3a/f4/7d/86ca29927e9b360dcec43dccb85d2061.png"
+              />
+              7 ngày Đổi trả
+            </p>
+            <p>
+              <img
+                width={25}
+                height={25}
+                src="https://salt.tikicdn.com/ts/upload/87/98/77/fc33e3d472fc4ce4bae8c835784b707a.png"
+              />
+              Giao nhanh đúng hẹn
+            </p>
+            <p>
+              <img
+                width={25}
+                height={25}
+                src="https://salt.tikicdn.com/ts/upload/6a/81/06/0675ef5512c275a594d5ec1d58c37861.png"
+              />
+              Giá siêu hợp lý
+            </p>
+            <p>
+              <img
+                width={25}
+                height={25}
+                src="https://salt.tikicdn.com/ts/upload/11/09/ec/456a2a8c308c2de089a34bbfef1c757b.png"
+              />
+              Freeship mọi đơn
+            </p>
+          </div>
+        </nav>
+      </header>
     </Fragment>
   );
 };
