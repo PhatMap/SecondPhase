@@ -78,7 +78,7 @@ const Shop = () => {
   return (
     <Fragment>
       <MetaData title={"Shop"} />
-      <div className="shop-container background-1">
+      <div className="shop-container background-2">
         <Header />
         <ToastContainer
           position="top-right"
@@ -92,7 +92,7 @@ const Shop = () => {
           pauseOnHover
           theme="light"
         />
-        <h1 className="header-logo" style={{ fontFamily: "Lobster, cursive", textAlign: "center", fontSize: "24px", fontWeight: "bold" }}>
+        <h1 className="header-logo" >
           {selectedCategoryName ? selectedCategoryName :category ? category : keyword ? `Tìm Kiếm "${keyword}"` : "VITASHOP"}
         </h1>
         <div className="shop-products-filter-container">

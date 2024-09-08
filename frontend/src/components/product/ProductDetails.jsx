@@ -109,13 +109,12 @@ const ProductDetails = () => {
       variant: variant._id,
       inventory: variant.inventory[inventoryIndex]._id,
       name: product.name,
-      category: product.category, 
+      category: product.category,
       variantName: variant.name,
       price: price,
       image: variant.images[0].url,
       quantity: quantity,
       size: size,
-      
     };
 
     if (cartItems.length > 0) {
@@ -180,7 +179,6 @@ const ProductDetails = () => {
     }
   };
 
-
   const reviewHandler = () => {
     const formData = new FormData();
 
@@ -193,9 +191,9 @@ const ProductDetails = () => {
 
   return (
     <Fragment>
-      <Header color={"black"} />
+      <Header />
       <MetaData title={product.name} />
-      <div className="detail-container">
+      <div className="detail-container background-2">
         <ToastContainer />
         <div style={{ height: "100%" }}>
           <div className="detail-image-container">
@@ -250,7 +248,7 @@ const ProductDetails = () => {
             style={{ whiteSpace: "pre-wrap" }}
           >
             <p>
-              <strong style={{fontSize:"20px"}}>Mô tả: </strong>
+              <strong style={{ fontSize: "20px" }}>Mô tả: </strong>
               {product.description}
             </p>
           </div>
@@ -281,7 +279,7 @@ const ProductDetails = () => {
                     setInventory={setInventory}
                     setVariant={setVariant}
                     setSize={setSize}
-                  />  
+                  />
                 ))
               ) : (
                 <h1>Không có mẫu</h1>
@@ -368,23 +366,24 @@ const ProductDetails = () => {
               Add to Cart
             </button>
           </div>
-          <div className="review-container">        
-        </div>
- 
-
+          <div className="review-container"></div>
         </div>
       </div>
-    
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10rem' }}>
-  <div style={{ maxWidth: '50rem', width: '100%' }}>
-    <div style={{ marginTop: '-10rem', marginBottom: '2rem' }}>
-      <Review productId={id} user={user} hasPurchased={hasPurchased} />
-    </div>
-    <ListReviews productId={id} />
 
-  </div>
-</div>
-
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "10rem",
+        }}
+      >
+        <div style={{ maxWidth: "50rem", width: "100%" }}>
+          <div style={{ marginTop: "-10rem", marginBottom: "2rem" }}>
+            <Review productId={id} user={user} hasPurchased={hasPurchased} />
+          </div>
+          <ListReviews productId={id} />
+        </div>
+      </div>
     </Fragment>
   );
 };

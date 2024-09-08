@@ -6,10 +6,10 @@ import Header from "../layout/Header";
 const OrderSuccess = () => {
   return (
     <Fragment>
-      <Header color={"black"}/>
+      <Header />
       <MetaData title={"Order Success"} />
 
-      <div className="order-sucess-container">
+      <div className="order-sucess-container background-2">
         <img
           className="my-5 img-fluid d-block mx-auto"
           src="/images/order_success.png"

@@ -15,7 +15,7 @@ import {
   readNotifications,
 } from "../../actions/notificationActions";
 
-const Header = ({ color }) => {
+const Header = () => {
   const location = useLocation();
   const history = useNavigate();
   const dispatch = useDispatch();
@@ -180,7 +180,7 @@ const Header = ({ color }) => {
   return (
     <Fragment>
       <header className="header-container">
-        <nav className={`Header ${color ? color : ""}`}>
+        <nav className={`Header `}>
           <div className="Header-container">
             <div className="Header-container-right">
               <Link to="/" style={{ textDecoration: "none" }}>

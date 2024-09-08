@@ -14,7 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { formatToVNDWithVND } from "../../utils/formatHelper";
 import Header from "../layout/Header";
-import DisplayCoupons from './DisplayCoupons';
+import DisplayCoupons from "./DisplayCoupons";
 
 const Cart = () => {
   const history = useNavigate();
@@ -30,23 +30,21 @@ const Cart = () => {
 
   const [showCoupons, setShowCoupons] = useState(false);
 
-
-
   const handleCloseCoupons = (selectedCoupons) => {
     setShowCoupons(false);
     if (selectedCoupons && selectedCoupons.length > 0) {
       setAppliedCoupons(selectedCoupons);
-      
+
       // Tính toán giá đã giảm
-      localStorage.setItem('appliedCoupons', JSON.stringify(selectedCoupons));
+      localStorage.setItem("appliedCoupons", JSON.stringify(selectedCoupons));
     }
   };
-  
+
   const calculateDiscountedPrice = (item) => {
     let discountedPrice = item.price;
-    appliedCoupons.forEach(coupon => {
+    appliedCoupons.forEach((coupon) => {
       if (coupon.target.ids.includes(item.category)) {
-        discountedPrice -= (discountedPrice * coupon.percentage / 100);
+        discountedPrice -= (discountedPrice * coupon.percentage) / 100;
       }
     });
     return discountedPrice;
@@ -55,12 +53,11 @@ const Cart = () => {
   const calculateTotalPrice = () => {
     const total = selected.reduce((acc, item) => {
       const discountedPrice = calculateDiscountedPrice(item);
-      return acc + (discountedPrice * item.quantity);
+      return acc + discountedPrice * item.quantity;
     }, 0);
     return total;
   };
 
-  
   const calculateTotalDiscount = () => {
     return selected.reduce((acc, item) => {
       const originalPrice = item.price * item.quantity;
@@ -68,37 +65,23 @@ const Cart = () => {
       return acc + (originalPrice - discountedPrice);
     }, 0);
   };
-  
-
 
   const handleCouponsClick = async () => {
-    const itemsToCoupon = cartItems.filter(
-      (item, index) => selectedItems[index]
-    ).map(item => ({
-      ...item,
-      category: item.category // Ensure category is included
-    }));
+    const itemsToCoupon = cartItems
+      .filter((item, index) => selectedItems[index])
+      .map((item) => ({
+        ...item,
+        category: item.category, // Ensure category is included
+      }));
     try {
       await dispatch(checkCartQuantities(itemsToCoupon));
       localStorage.setItem("itemsToCoupon", JSON.stringify(itemsToCoupon));
-      console.log("itemsToCouponcart",itemsToCoupon);
+      console.log("itemsToCouponcart", itemsToCoupon);
       setShowCoupons(!showCoupons);
-     
     } catch (error) {
       toast.error(error); // Display the error message from the action
     }
   };
-
-
-
-
-
-
-
-
-
-
-
 
   const removeCartItemHandler = async (id, variant, size) => {
     for (const item of selected) {
@@ -165,34 +148,33 @@ const Cart = () => {
     }
   };
 
- const checkoutHandler = async () => {
-  const discountedTotalPrice = calculateTotalPrice();
-  localStorage.setItem('discountedTotalPrice', discountedTotalPrice);
-  console.log("discountedTotalPrice",discountedTotalPrice);
-  const itemsToCheckout = cartItems.filter(
-    (item, index) => selectedItems[index]
-  );
+  const checkoutHandler = async () => {
+    const discountedTotalPrice = calculateTotalPrice();
+    localStorage.setItem("discountedTotalPrice", discountedTotalPrice);
+    console.log("discountedTotalPrice", discountedTotalPrice);
+    const itemsToCheckout = cartItems.filter(
+      (item, index) => selectedItems[index]
+    );
 
-  try {
-    await dispatch(checkCartQuantities(itemsToCheckout));
-    localStorage.setItem("itemsToCheckout", JSON.stringify(itemsToCheckout));
-    const discountedTotalPrice = calculateTotalPrice(); 
-    history("/login?redirect=/shipping", { 
-      state: { 
-        totalPrice: discountedTotalPrice,
-        appliedCoupons: appliedCoupons 
-      } 
-    });
-  } catch (error) {
-    toast.error(error);
-  }
-};
+    try {
+      await dispatch(checkCartQuantities(itemsToCheckout));
+      localStorage.setItem("itemsToCheckout", JSON.stringify(itemsToCheckout));
+      const discountedTotalPrice = calculateTotalPrice();
+      history("/login?redirect=/shipping", {
+        state: {
+          totalPrice: discountedTotalPrice,
+          appliedCoupons: appliedCoupons,
+        },
+      });
+    } catch (error) {
+      toast.error(error);
+    }
+  };
 
   const handlerQuantity = (e) => {
     setNewQuantity(e.target.value);
   };
-  
-  
+
   const handleBlur = (e) => {
     const inputValue = e.target.value;
     if (inputValue === "") {
@@ -224,7 +206,6 @@ const Cart = () => {
     setSelectedItems(new Array(cartItems.length).fill(false));
   }, [cartItems]);
 
-
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentItemIndex, setCurrentItemIndex] = useState(null);
   const [newQuantity, setNewQuantity] = useState();
@@ -233,7 +214,7 @@ const Cart = () => {
     setNewQuantity(cartItems[index].quantity);
     setModalIsOpen(true);
   };
-  
+
   const closeModal = () => {
     setModalIsOpen(false);
     setCurrentItemIndex(null);
@@ -242,11 +223,11 @@ const Cart = () => {
     if (currentItemIndex === null) return;
     let inputValue = parseInt(newQuantity);
     if (isNaN(inputValue) || inputValue < 1) {
-      toast.error('Vui lòng nhập lại số lượng hợp lệ');
+      toast.error("Vui lòng nhập lại số lượng hợp lệ");
       return;
     }
     const choosed = cartItems[currentItemIndex];
-  
+
     const item = {
       product: choosed.product,
       variant: choosed.variant,
@@ -258,9 +239,9 @@ const Cart = () => {
       quantity: newQuantity - choosed.quantity,
       size: choosed.size,
     };
-  
+
     const check = await dispatch(getUserCartProduct(item));
-  
+
     if (check) {
       await dispatch(addItemToCart(item));
       dispatch(getUserCart());
@@ -270,13 +251,12 @@ const Cart = () => {
       toast.error("Số lượng vượt quá số lượng hiện hữu của sản phẩm");
     }
   };
-      
-
 
   return (
     <Fragment>
-      <Header color={"black"}/>
+      <Header />
       <MetaData title={"Your Cart"} />
+      <div className="cart-container background-2">
         {user ? (
           cartItems.length === 0 ? (
             <h1 className="cart-not-login">Giỏ Hàng Trống </h1>
@@ -296,13 +276,13 @@ const Cart = () => {
                       {all ? "Bỏ Chọn Tất Cả" : "Chọn Tất Cả"}
                     </button>
                     {selected.length > 0 && (
-                  <button
-                  className={`cart-select-all-btn ${all && "active"}`}
-                    onClick={() => setShow(true)}
-                  >
-                    Xóa Đã Chọn
-                  </button>
-                )}
+                      <button
+                        className={`cart-select-all-btn ${all && "active"}`}
+                        onClick={() => setShow(true)}
+                      >
+                        Xóa Đã Chọn
+                      </button>
+                    )}
                   </div>
                   {cartItems.map((item, index) => (
                     <div key={index}>
@@ -415,30 +395,38 @@ const Cart = () => {
                                     +
                                   </span>
                                 </div>
-                              
-                                <div className="input-quantity-container" style={{ display: modalIsOpen ? 'flex' : 'none' }}>
-                              <div className="input-quantity-form">
-                                <h1>Nhập số lượng</h1>
-                                <input
-                                  type="text"
-                                  value={newQuantity}
-                                  onChange={(e) => handlerQuantity(e)}
-                                  className="centered-input"
-                                />
 
-                                <div className="input-quantity-btn-container">
-                                <button className="input-quantity-btn-container-yes" onClick={updateQuantity}>
-                                    Câp Nhật
-                                  </button>
-                                  <button className="input-quantity-btn-container-no" onClick={closeModal}>
-                                    Thoát
-                                  </button>
+                                <div
+                                  className="input-quantity-container"
+                                  style={{
+                                    display: modalIsOpen ? "flex" : "none",
+                                  }}
+                                >
+                                  <div className="input-quantity-form">
+                                    <h1>Nhập số lượng</h1>
+                                    <input
+                                      type="text"
+                                      value={newQuantity}
+                                      onChange={(e) => handlerQuantity(e)}
+                                      className="centered-input"
+                                    />
 
+                                    <div className="input-quantity-btn-container">
+                                      <button
+                                        className="input-quantity-btn-container-yes"
+                                        onClick={updateQuantity}
+                                      >
+                                        Câp Nhật
+                                      </button>
+                                      <button
+                                        className="input-quantity-btn-container-no"
+                                        onClick={closeModal}
+                                      >
+                                        Thoát
+                                      </button>
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </div>
-
-
                               </div>
                               <div
                                 style={{
@@ -495,36 +483,43 @@ const Cart = () => {
                     </span>
                   </p>
                   <p>
-                  Tổng giá:
-                  <span className="order-summary-values">
-                    {formatToVNDWithVND(selected.reduce((acc, item) => acc + (item.price * item.quantity), 0))}
-                  </span>
-                </p>
-                <p>
-                  Tổng giảm giá:
-                  <span className="order-summary-values">
-                    {formatToVNDWithVND(calculateTotalDiscount())}
-                  </span>
-                </p>
-                <p>
-                  Thanh Toán:
-                  <span className="order-summary-values">
-                    {formatToVNDWithVND(calculateTotalPrice())}
-                  </span>
-                </p>
+                    Tổng giá:
+                    <span className="order-summary-values">
+                      {formatToVNDWithVND(
+                        selected.reduce(
+                          (acc, item) => acc + item.price * item.quantity,
+                          0
+                        )
+                      )}
+                    </span>
+                  </p>
+                  <p>
+                    Tổng giảm giá:
+                    <span className="order-summary-values">
+                      {formatToVNDWithVND(calculateTotalDiscount())}
+                    </span>
+                  </p>
+                  <p>
+                    Thanh Toán:
+                    <span className="order-summary-values">
+                      {formatToVNDWithVND(calculateTotalPrice())}
+                    </span>
+                  </p>
 
                   <hr />
 
-                  <button 
-                  className={`cart-checkout-btn ${
-                    selected.length === 0 && "disabled"
-                  }`}
-                  onClick={handleCouponsClick}>
-                      Phiếu giảm giá
+                  <button
+                    className={`cart-checkout-btn ${
+                      selected.length === 0 && "disabled"
+                    }`}
+                    onClick={handleCouponsClick}
+                  >
+                    Phiếu giảm giá
                   </button>
 
-                  {showCoupons && <DisplayCoupons onClose={handleCloseCoupons} />}
-
+                  {showCoupons && (
+                    <DisplayCoupons onClose={handleCloseCoupons} />
+                  )}
 
                   <button
                     className={`cart-checkout-btn ${
@@ -535,13 +530,13 @@ const Cart = () => {
                     Thanh Toán
                   </button>
                 </div>
-
               </div>
             </Fragment>
           )
         ) : (
           <h2 className="cart-not-login">Login to see your cart</h2>
         )}
+      </div>
     </Fragment>
   );
 };

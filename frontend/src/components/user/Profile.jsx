@@ -11,13 +11,13 @@ const Profile = () => {
 
   return (
     <Fragment>
-      <Header color={"black"} />
+      <Header  />
       {loading ? (
         <Loader />
       ) : (
         <Fragment>
           <MetaData title={"Your Profile"} />
-          <div className="profile-container">
+          <div className="profile-container background-2">
             <h2
               style={{
                 fontFamily: "sans-serif",

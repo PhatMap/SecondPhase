@@ -54,10 +54,10 @@ const Login = () => {
   return (
     <Fragment>
       <ToastContainer />
-      <Header color={"black"} />
+      <Header />
       <MetaData title={"Login"} />
 
-      <div className="login-container">
+      <div className="login-container background-2">
         <div style={{ height: "650px", display: "flex", alignItems: "center" }}>
           <form className="login-form" onSubmit={submitHandler}>
             <h1 className="login-heading">Đăng Nhập </h1>

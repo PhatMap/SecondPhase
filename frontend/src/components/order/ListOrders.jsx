@@ -91,9 +91,9 @@ const ListOrders = () => {
 
   return (
     <Fragment>
-      <Header color={"black"} />
+      <Header />
       <MetaData title={"My Orders"} />
-      <div className="user-order-container">
+      <div className="user-order-container background-2">
         <h1>Đơn Hàng Của tôi</h1>
         {loading ? (
           <Loader />

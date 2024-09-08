@@ -231,7 +231,7 @@ const Register = () => {
 
   return (
     <Fragment>
-      <Header color={"black"} />
+      <Header />
       <MetaData title={"Register User"} />
       <div className="register-wrapper">
         <form

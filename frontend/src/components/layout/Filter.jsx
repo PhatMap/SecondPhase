@@ -21,8 +21,14 @@ const Filter = ({
   const dispatch = useDispatch();
   const history = useNavigate();
 
-  const { loading: productLoading, products } = useSelector((state) => state.products);
-  const { loading: categoryLoading, error: categoryError, categories } = useSelector((state) => state.category);
+  const { loading: productLoading, products } = useSelector(
+    (state) => state.products
+  );
+  const {
+    loading: categoryLoading,
+    error: categoryError,
+    categories,
+  } = useSelector((state) => state.category);
 
   useEffect(() => {
     dispatch(getCategoryAll());
@@ -35,46 +41,58 @@ const Filter = ({
     }
   }, [categoryError, dispatch]);
 
-  const handleMinPrice = useCallback((e) => {
-    const inputValue = e.target.value.replace(/[^0-9]/g, "");
+  const handleMinPrice = useCallback(
+    (e) => {
+      const inputValue = e.target.value.replace(/[^0-9]/g, "");
 
-    if (inputValue !== "") {
-      const numericValue = parseInt(inputValue, 10);
-      if (!isNaN(numericValue)) {
-        const actualValue = Math.max(numericValue, 1) * 1000;
-        setMinPrice(actualValue);
+      if (inputValue !== "") {
+        const numericValue = parseInt(inputValue, 10);
+        if (!isNaN(numericValue)) {
+          const actualValue = Math.max(numericValue, 1) * 1000;
+          setMinPrice(actualValue);
+        }
+      } else {
+        setMinPrice("");
       }
-    } else {
-      setMinPrice("");
-    }
-  }, [setMinPrice]);
+    },
+    [setMinPrice]
+  );
 
-  const handleMaxPrice = useCallback((e) => {
-    const inputValue = e.target.value.replace(/[^0-9]/g, "");
+  const handleMaxPrice = useCallback(
+    (e) => {
+      const inputValue = e.target.value.replace(/[^0-9]/g, "");
 
-    if (inputValue !== "") {
-      const numericValue = parseInt(inputValue, 10);
-      if (!isNaN(numericValue)) {
-        const actualValue = Math.max(numericValue, 1) * 1000;
-        setMaxPrice(actualValue);
+      if (inputValue !== "") {
+        const numericValue = parseInt(inputValue, 10);
+        if (!isNaN(numericValue)) {
+          const actualValue = Math.max(numericValue, 1) * 1000;
+          setMaxPrice(actualValue);
+        }
+      } else {
+        setMaxPrice("");
       }
-    } else {
-      setMaxPrice("");
-    }
-  }, [setMaxPrice]);
+    },
+    [setMaxPrice]
+  );
 
-  const handleSelectedCategory = useCallback((e) => {
-    const categoryId = e.target.value;
-    setSelectedCategory(categoryId);
-  }, [setSelectedCategory]);
+  const handleSelectedCategory = useCallback(
+    (e) => {
+      const categoryId = e.target.value;
+      setSelectedCategory(categoryId);
+    },
+    [setSelectedCategory]
+  );
 
-  const handleSelectedStar = useCallback((star) => {
-    if (selectedStar === star) {
-      setSelectedStar(0);
-    } else {
-      setSelectedStar(star);
-    }
-  }, [selectedStar, setSelectedStar]);
+  const handleSelectedStar = useCallback(
+    (star) => {
+      if (selectedStar === star) {
+        setSelectedStar(0);
+      } else {
+        setSelectedStar(star);
+      }
+    },
+    [selectedStar, setSelectedStar]
+  );
 
   const clearFilter = useCallback(() => {
     setSelectedCategory("");
@@ -92,7 +110,6 @@ const Filter = ({
     }
     setCurrentPage(1);
     history("/shop");
-console.log("selectedCategory in handleFiltering",selectedCategory);
     dispatch(
       getProducts(
         keyword ? keyword : "",
@@ -102,7 +119,16 @@ console.log("selectedCategory in handleFiltering",selectedCategory);
         selectedStar ? selectedStar : 0
       )
     );
-  }, [dispatch, history, keyword, maxPrice, minPrice, selectedCategory, selectedStar, setCurrentPage]);
+  }, [
+    dispatch,
+    history,
+    keyword,
+    maxPrice,
+    minPrice,
+    selectedCategory,
+    selectedStar,
+    setCurrentPage,
+  ]);
 
   return (
     <div className="shop-filter">
@@ -119,7 +145,13 @@ console.log("selectedCategory in handleFiltering",selectedCategory);
               value={minPrice ? (minPrice / 1000).toLocaleString("vi-VN") : ""}
               onChange={(e) => handleMinPrice(e)}
             />
-            <p style={{ display: "flex", alignItems: "center", fontSize: "20px" }}>
+            <p
+              style={{
+                display: "flex",
+                alignItems: "center",
+                fontSize: "20px",
+              }}
+            >
               .000 VNĐ
             </p>
           </div>
@@ -134,14 +166,20 @@ console.log("selectedCategory in handleFiltering",selectedCategory);
               value={maxPrice ? (maxPrice / 1000).toLocaleString("vi-VN") : ""}
               onChange={(e) => handleMaxPrice(e)}
             />
-            <p style={{ display: "flex", alignItems: "center", fontSize: "20px" }}>
+            <p
+              style={{
+                display: "flex",
+                alignItems: "center",
+                fontSize: "20px",
+              }}
+            >
               .000 VNĐ
             </p>
           </div>
         </div>
       </div>
 
-            <div className="shop-filter-categories">
+      <div className="shop-filter-categories">
         <style>
           {`
             .shop-filter-categories {
@@ -167,14 +205,14 @@ console.log("selectedCategory in handleFiltering",selectedCategory);
           onChange={handleSelectedCategory}
         >
           <option value="">Chọn một danh mục</option>
-          {categories && categories.map((category) => (
-            <option key={category._id} value={category._id}>
-              {category.vietnameseName}
-            </option>
-          ))}
+          {categories &&
+            categories.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.vietnameseName}
+              </option>
+            ))}
         </select>
       </div>
-
 
       <div className="shop-filter-ratings">
         <h4>Xếp Hạng</h4>
@@ -182,7 +220,9 @@ console.log("selectedCategory in handleFiltering",selectedCategory);
           {[5, 4, 3, 2, 1].map((star, index) => (
             <li key={index} onClick={() => handleSelectedStar(star)}>
               <div
-                className={`rating-outer ${star === selectedStar ? "selected-rating" : "base-form"}`}
+                className={`rating-outer ${
+                  star === selectedStar ? "selected-rating" : "base-form"
+                }`}
               >
                 <div
                   className="rating-inner"
