@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaShoppingCart, FaBars } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -35,18 +34,9 @@ const Header = () => {
   const [cartClick, setCartClick] = useState(false);
   const [loginClick, setLoginClick] = useState(false);
 
-  const { user, loading, isGoogleLoggedIn } = useSelector(
-    (state) => state.auth
-  );
+  const { user, loading } = useSelector((state) => state.auth);
   const { latest, recent } = useSelector((state) => state.notifications);
   const { cartItems } = useSelector((state) => state.cart);
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const loadMoreNotifications = async () => {
     if (!hasMore) return;
@@ -62,62 +52,6 @@ const Header = () => {
       console.error("Error loading more notifications:", error);
     }
   };
-
-  useEffect(() => {
-    const container = notifyRef.current;
-
-    const handleScroll = () => {
-      const scrollPercentage =
-        (container.scrollTop /
-          (container.scrollHeight - container.clientHeight)) *
-        100;
-      if (scrollPercentage > 90) {
-        loadMoreNotifications();
-      }
-    };
-
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
-      return () => container.removeEventListener("scroll", handleScroll);
-    }
-  }, [hasMore, loadMoreNotifications]);
-
-  useEffect(() => {
-    dispatch(getNotifications());
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      dispatch(getUserCart());
-    }
-  }, [dispatch, user]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY < prevScrollY.current) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-
-      prevScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (latest.length > 0 && notify === false) {
-      const count = latest.length;
-      updateNotificationCount(count);
-    }
-  }, [latest]);
 
   const handleClick = () => {
     setMenu(true);
@@ -176,6 +110,69 @@ const Header = () => {
   const handleLoadMore = () => {
     loadMoreNotifications();
   };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const container = notifyRef.current;
+
+    const handleScroll = () => {
+      const scrollPercentage =
+        (container.scrollTop /
+          (container.scrollHeight - container.clientHeight)) *
+        100;
+      if (scrollPercentage > 90) {
+        loadMoreNotifications();
+      }
+    };
+
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+      return () => container.removeEventListener("scroll", handleScroll);
+    }
+  }, [hasMore, loadMoreNotifications]);
+
+  useEffect(() => {
+    dispatch(getNotifications());
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getUserCart());
+    }
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < prevScrollY.current) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+
+      prevScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (latest.length > 0 && notify === false) {
+      const count = latest.length;
+      updateNotificationCount(count);
+    }
+  }, [latest]);
 
   return (
     <Fragment>
@@ -284,33 +281,31 @@ const Header = () => {
               </button>
 
               {user ? (
-                <div className="ml-4 dropdown d-inline">
+                <div>
                   <Link
                     to="#!"
-                    className="btn dropdown-toggle text-white mr-4"
+                    className="avatar-container"
                     type="button"
                     id="dropDownMenuButton"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    <figure
-                      className="avatar avatar-nav"
-                      style={{ background: "white" }}
-                    >
-                      <img
-                        src={user.avatar && user.avatar.url}
-                        alt={user && user.name}
-                        className="rounded-circle"
-                      />
-                    </figure>
-                    <span>{user && user.name}</span>
+                    <img
+                      src={user.avatar && user.avatar.url}
+                      className="rounded-circle"
+                      width={40}
+                      height={40}
+                    />
                   </Link>
 
                   <div
-                    className="dropdown-menu"
+                    className="dropdown-menu avatar-dropdown"
                     aria-labelledby="dropDownMenuButton"
                   >
+                    <p>{user && user.name}</p>
+                    <p>{user && user.email}</p>
+                    <hr />
                     {user && user.role === "shopkeeper" && (
                       <Link
                         className="dropdown-item"

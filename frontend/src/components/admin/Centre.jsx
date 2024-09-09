@@ -29,15 +29,11 @@ const Centre = () => {
   }, [location.pathname]);
 
   return (
-    <div className={`Centre-container`}>
-      {showSidebar && (
-        <div style={{ width: "40px" }}>
-          <Sidebar />
-        </div>
-      )}
+    <div className={`Centre-container background-2`}>
+      {showSidebar && <Sidebar path={location.pathname} />}
       <div className="Centre">
         <Routes>
-          <Route path="login" element={<AdminLogin />} />      
+          <Route path="login" element={<AdminLogin />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="users" element={<ManageUsers />} />
           <Route path="addUser" element={<AddUser />} />
