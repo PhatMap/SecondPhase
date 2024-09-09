@@ -13,9 +13,15 @@ const boxChatSchema = new mongoose.Schema({
             required: true
         },
         content: {
-            type: String,
-            required: true
+            type: String
         },
+        icon: {
+            type: String
+        },
+        images: [{
+            public_id: String,
+            url: String
+        }],
         timestamp: {
             type: Date,
             default: Date.now

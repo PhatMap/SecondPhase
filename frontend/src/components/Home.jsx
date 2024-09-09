@@ -11,6 +11,8 @@ import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import BoxChat from "./boxChat/boxChat";
 import Category from "../category/Category";
+import Chatbox from "./Chatbox/Chatbox";
+import { FaBell, FaEnvelope } from 'react-icons/fa';
 
 const Home = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -52,6 +54,24 @@ const Home = () => {
             <BoxChat />
           </div>
         )}
+        <img 
+        src={'../images/masage.png'} 
+        alt="massage"
+        className="fixed-image"
+        onClick={toggleChatBox}
+      />
+      
+      {/* Chat box */}
+      {isChatOpen && (
+        <div className="chat-box">
+          <Chatbox />
+        </div>
+      )}
+ 
+
+
+
+
         <div className="home-form">
           <div className="home-component">
             <h1>Danh Mục Sản Phẩm</h1>

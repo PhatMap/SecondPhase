@@ -41,7 +41,7 @@ import { categoryReducer } from "./reducers/categoryReducers";
 import { notificationsReducer } from "./reducers/notificationsReducers";
 import { couponReducer } from "./reducers/couponReducer";
 import { shopReducer } from "./reducers/shopReducers";
-import { chatsReducer, } from "./reducers/boxChatReducers";
+import { chatsReducer, } from "./reducers/chatBoxReducers";
 
 const reducer = combineReducers({
   momo: momoReducer,
