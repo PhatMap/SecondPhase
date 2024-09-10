@@ -26,18 +26,24 @@ const NewCategory = ({ onClose }) => {
 
     if (error) {
       toast.error(error);
-      setSubmitted(false); // Allow retrying submission on error
+      setSubmitted(false);
     }
   }, [dispatch, success, error, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setSubmitted(true);
 
-    if (categoryName.trim() === "" || vietnameseName.trim() === "") {
-      toast.error("Please fill in all fields");
+    if (
+      categoryName.trim() === "" ||
+      vietnameseName.trim() === "" ||
+      image === null
+    ) {
+      toast.error("Hãy điền đầy đủ thông tin");
+      setSubmitted(false);
       return;
     }
+    setSubmitted(true);
+
     dispatch(createCategory({ categoryName, vietnameseName, image }));
   };
 

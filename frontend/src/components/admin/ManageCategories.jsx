@@ -121,61 +121,64 @@ const ManageCategories = () => {
   return (
     <Fragment>
       <ToastContainer />
-      <div className="manage-category-container">
-        <div className="manage-category-body">
-          <div className="manage-category-head">
-            <h1>Quản Lý Danh Mục</h1>
-            <p className="lead text-center">Manage Category</p>
-            <hr />
-          </div>
-          <div className="manage-category-form">
-            <button className="add-btn" onClick={() => setAddCategory(true)}>
-              <i className="fa fa-plus" />
-              <p>Tạo Danh Mục</p>
-            </button>
-            <form onSubmit={handleSearch} className="search-container">
-              <input
-                type="text"
-                placeholder="Tìm kiếm danh mục..."
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
-              />
-            </form>
-            <DataTable data={setCategories()} />
-          </div>
-          <Pagination
-            activePage={currentPage}
-            itemsCountPerPage={10}
-            totalItemsCount={totalCategories}
-            onChange={handlePageChange}
-            nextPageText={"Next"}
-            prevPageText={"Prev"}
-            firstPageText={"First"}
-            lastPageText={"Last"}
-            itemClass="page-item"
-            linkClass="page-link"
-          />
-          {show && (
-            <div className="delete-notify-container">
-              <div className="delete-notify-form">
-                <h1 style={{ marginBottom: "20px" }}>Xóa Danh Mục Này?</h1>
-                <div className="delete-notify-btn-container">
-                  <button
-                    className="delete-notify-btn-container-yes"
-                    onClick={confirmDelete}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    className="delete-notify-btn-container-no"
-                    onClick={cancelDelete}
-                  >
-                    No
-                  </button>
+      <div className="admin-layout">
+        <div className="admin-container">
+          <div className="manage-category-body">
+            <div className="manage-category-head">
+              <h1>Quản Lý Danh Mục</h1>
+            </div>
+            <div className="manage-category-form">
+              <div className="horizontal-1 size-1 manage-category-form-btns">
+                <button onClick={() => setAddCategory(true)}>
+                  <i className="fa fa-plus" />
+                  <p>Tạo Danh Mục</p>
+                </button>
+                <form onSubmit={handleSearch}>
+                  <input
+                    type="text"
+                    placeholder="Tìm kiếm danh mục..."
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
+                  />
+                </form>
+              </div>
+              <DataTable data={setCategories()} />
+            </div>
+            <Pagination
+              className="pagination"
+              activePage={currentPage}
+              itemsCountPerPage={10}
+              totalItemsCount={totalCategories}
+              onChange={handlePageChange}
+              nextPageText={"Next"}
+              prevPageText={"Prev"}
+              firstPageText={"First"}
+              lastPageText={"Last"}
+              itemClass="page-item"
+              linkClass="page-link"
+            />
+            {show && (
+              <div className="delete-notify-container">
+                <div className="delete-notify-form">
+                  <h1 style={{ marginBottom: "20px" }}>Xóa Danh Mục Này?</h1>
+                  <div className="delete-notify-btn-container">
+                    <button
+                      className="delete-notify-btn-container-yes"
+                      onClick={confirmDelete}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      className="delete-notify-btn-container-no"
+                      onClick={cancelDelete}
+                    >
+                      No
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
       {addCategory && <NewCategory onClose={() => setAddCategory(false)} />}

@@ -2,7 +2,7 @@ import React from "react";
 
 const DataTable = ({ data }) => {
   return (
-    <table className="my-table">
+    <table className="my-table ">
       <thead>
         <tr>
           {data.columns.map((column, columnIndex) => (
