@@ -1,20 +1,29 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createCategory } from "../../actions/categoryActions";
+import { createCategory, updateCategory } from "../../actions/categoryActions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CREATE_CATEGORY_RESET } from "../../constants/categoryConstants";
+import {
+  CREATE_CATEGORY_RESET,
+  UPDATE_CATEGORY_RESET,
+} from "../../constants/categoryConstants";
 import { useNavigate } from "react-router-dom";
 
-const NewCategory = ({ onClose }) => {
+const CategoryForm = ({ onClose, data }) => {
+  const { error, success, updated } = useSelector((state) => state.category);
+
   const history = useNavigate();
-  const [image, setImage] = useState(null);
-  const [categoryName, setCategoryName] = useState("");
-  const [vietnameseName, setVietnameseName] = useState("");
+  const [formData, setFormData] = useState(
+    data || {
+      image: null,
+      categoryName: "",
+      vietnameseName: "",
+    }
+  );
   const [submitted, setSubmitted] = useState(false);
+  const [update, setUpdate] = useState(false);
 
   const dispatch = useDispatch();
-  const { loading, error, success } = useSelector((state) => state.category);
 
   useEffect(() => {
     if (success) {
@@ -24,31 +33,46 @@ const NewCategory = ({ onClose }) => {
       onClose();
     }
 
+    if (updated) {
+      toast.success("Cập Nhật Danh Mục Thành Công");
+      setUpdate(false);
+      dispatch({ type: UPDATE_CATEGORY_RESET });
+    }
+
     if (error) {
       toast.error(error);
       setSubmitted(false);
     }
-  }, [dispatch, success, error, history]);
+  }, [dispatch, success, error, updated]);
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     if (
-      categoryName.trim() === "" ||
-      vietnameseName.trim() === "" ||
-      image === null
+      formData.categoryName.trim() === "" ||
+      formData.vietnameseName.trim() === "" ||
+      formData.image === null
     ) {
       toast.error("Hãy điền đầy đủ thông tin");
       setSubmitted(false);
+      setUpdate(false);
       return;
     }
-    setSubmitted(true);
 
-    dispatch(createCategory({ categoryName, vietnameseName, image }));
+    if (!data) {
+      setSubmitted(true);
+      dispatch(createCategory(formData));
+    } else {
+      setUpdate(true);
+      dispatch(updateCategory(formData));
+    }
   };
 
   const handlerOverlayClick = (e) => {
-    if (e.target.className === "new-category-overlay" && !submitted) {
+    if (
+      e.target.className === "new-category-overlay" &&
+      (!submitted || !update)
+    ) {
       onClose();
     }
   };
@@ -60,14 +84,13 @@ const NewCategory = ({ onClose }) => {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setImage((prev) => ({
-            ...prev,
-            public_id: "",
-            url: reader.result,
-          }));
+          setFormData({
+            ...formData,
+            image: { public_id: "", url: reader.result },
+          });
         }
       };
-
+      formData;
       reader.readAsDataURL(file);
     });
   };
@@ -117,8 +140,13 @@ const NewCategory = ({ onClose }) => {
                 để đưa ảnh lên
               </p>
             </label>
-            {image && (
-              <img src={image.url} alt="Category" width={50} height={50} />
+            {formData.image && (
+              <img
+                src={formData.image.url}
+                alt="Category"
+                width={50}
+                height={50}
+              />
             )}
             <label htmlFor="categoryName" className="NewCategory-label">
               Tên danh mục (EN)
@@ -126,9 +154,11 @@ const NewCategory = ({ onClose }) => {
             <input
               type="text"
               id="categoryName"
-              className="NewCategory-form-control"
-              value={categoryName}
-              onChange={(e) => setCategoryName(e.target.value)}
+              className="NewCategory-form-control input-style-1"
+              value={formData.categoryName}
+              onChange={(e) =>
+                setFormData({ ...formData, categoryName: e.target.value })
+              }
             />
           </div>
           <div className="NewCategory-form-group">
@@ -138,21 +168,33 @@ const NewCategory = ({ onClose }) => {
             <input
               type="text"
               id="vietnameseName"
-              className="NewCategory-form-control"
-              value={vietnameseName}
-              onChange={(e) => setVietnameseName(e.target.value)}
+              className="NewCategory-form-control input-style-1"
+              value={formData.vietnameseName}
+              onChange={(e) =>
+                setFormData({ ...formData, vietnameseName: e.target.value })
+              }
             />
           </div>
-          <button
-            type="submit"
-            className={`add-btn ${submitted ? "disabled" : ""}`}
-          >
-            Tạo
-          </button>
+          {!data && (
+            <button
+              type="submit"
+              className={`add-btn ${submitted ? "disabled" : ""}`}
+            >
+              Tạo
+            </button>
+          )}
+          {data && (
+            <button
+              type="submit"
+              className={`add-btn ${update ? "disabled" : ""}`}
+            >
+              Cập Nhật
+            </button>
+          )}
         </form>
       </div>
     </Fragment>
   );
 };
 
-export default NewCategory;
+export default CategoryForm;

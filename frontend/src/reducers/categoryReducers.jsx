@@ -60,12 +60,15 @@ export const categoryReducer = (
       };
 
     case CREATE_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        success: true,
+      };
+
     case UPDATE_CATEGORY_SUCCESS:
       return {
         ...state,
-        loading: false,
-        success: true,
-        category: action.payload,
+        updated: true,
       };
 
     case DELETE_CATEGORY_SUCCESS:
@@ -92,14 +95,16 @@ export const categoryReducer = (
       return {
         ...state,
         success: false,
+        updated: false,
         deleted: false,
-        category: null,
       };
+
     case GET_ALLCATEGORIES_REQUEST:
       return {
         ...state,
         loading: true,
       };
+
     case GET_ALLCATEGORIES_SUCCESS:
       return {
         ...state,

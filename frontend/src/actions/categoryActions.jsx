@@ -84,7 +84,8 @@ export const updateCategory = (categoryData) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.put(
+
+    await axios.put(
       `/api/v1/admin/category/update/${categoryData._id}`,
       categoryData,
       config
@@ -92,7 +93,6 @@ export const updateCategory = (categoryData) => async (dispatch) => {
 
     dispatch({
       type: UPDATE_CATEGORY_SUCCESS,
-      payload: data.success,
     });
   } catch (error) {
     dispatch({

@@ -47,26 +47,25 @@ exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
     totalCategories,
   });
 });
-// Controller function to update a category
+
 exports.updateCategory = catchAsyncErrors(async (req, res, next) => {
   const { categoryId } = req.params;
-  const { categoryName, vietnameseName } = req.body;
+  const { categoryName, vietnameseName, image } = req.body;
 
-  // Tìm danh mục cần cập nhật theo categoryId
   let category = await Category.findById(categoryId);
 
   if (!category) {
     return next(new ErrorHandler("Danh mục không tồn tại", 404));
   }
 
-  // Cập nhật thông tin mới của danh mục
+  category.image = image;
   category.categoryName = categoryName;
   category.vietnameseName = vietnameseName;
+
   await category.save();
 
   res.status(200).json({
     success: true,
-    category,
   });
 });
 

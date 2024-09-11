@@ -1,28 +1,24 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import DataTable from "../layout/DataTable";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories, deleteCategory } from "../../actions/categoryActions";
 import Pagination from "react-js-pagination";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  DELETE_CATEGORY_RESET,
-  UPDATE_CATEGORY_RESET,
-  CREATE_CATEGORY_RESET,
-} from "../../constants/categoryConstants";
-import NewCategory from "./NewCategory";
+import { DELETE_CATEGORY_RESET } from "../../constants/categoryConstants";
+import CategoryForm from "./CategoryForm";
 
 const ManageCategories = () => {
   const dispatch = useDispatch();
-  const { loading, error, categories, totalCategories, deleted } = useSelector(
+  const { error, categories, totalCategories, deleted } = useSelector(
     (state) => state.category
   );
 
   const [currentPage, setCurrentPage] = useState(1);
   const [keyword, setKeyword] = useState("");
   const [show, setShow] = useState(false);
-  const [addCategory, setAddCategory] = useState(false);
+  const [action, setAction] = useState("");
+  const [categoryData, setCategoryData] = useState(null);
   const [categoryToDelete, setCategoryToDelete] = useState(null);
 
   useEffect(() => {
@@ -36,7 +32,7 @@ const ManageCategories = () => {
     if (error) {
       toast.error(error);
     }
-  }, [dispatch, deleted, error, currentPage, keyword]);
+  }, [dispatch, deleted, error, currentPage, keyword, action]);
 
   const deleteHandler = (id) => {
     setShow(true);
@@ -80,14 +76,17 @@ const ManageCategories = () => {
           action: (
             <Fragment>
               <div className="manage-category-table-btns">
-                <Link
-                  to={`/admin/category/update/${category._id}`}
-                  className="btn btn-primary py-1 px-2"
+                <button
+                  className="btn-container-1 update"
+                  onClick={() => {
+                    setCategoryData(category);
+                    setAction("update");
+                  }}
                 >
                   <i className="fa fa-pencil"></i>
-                </Link>
+                </button>
                 <button
-                  className="btn btn-danger py-1 px-2 ml-2"
+                  className="btn-container-1 delete"
                   onClick={() => deleteHandler(category._id)}
                 >
                   <i className="fa fa-trash"></i>
@@ -129,12 +128,13 @@ const ManageCategories = () => {
             </div>
             <div className="manage-category-form">
               <div className="horizontal-1 size-1 manage-category-form-btns">
-                <button onClick={() => setAddCategory(true)}>
+                <button onClick={() => setAction("add")}>
                   <i className="fa fa-plus" />
                   <p>Tạo Danh Mục</p>
                 </button>
                 <form onSubmit={handleSearch}>
                   <input
+                    className="input-style-1"
                     type="text"
                     placeholder="Tìm kiếm danh mục..."
                     value={keyword}
@@ -181,7 +181,10 @@ const ManageCategories = () => {
           </div>
         </div>
       </div>
-      {addCategory && <NewCategory onClose={() => setAddCategory(false)} />}
+      {action === "add" && <CategoryForm onClose={() => setAction("")} />}
+      {action === "update" && (
+        <CategoryForm onClose={() => setAction("")} data={categoryData} />
+      )}
     </Fragment>
   );
 };

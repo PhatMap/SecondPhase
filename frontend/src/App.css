@@ -4055,6 +4055,28 @@ body {
   background-color: #a3f7c7;
 }
 
+.btn-container-1 {
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+.btn-container-1.update {
+  color: #0a68ff;
+}
+
+.btn-container-1.update:hover {
+  color: #5495ff;
+}
+
+.btn-container-1.delete {
+  color: #dd3843;
+}
+
+.btn-container-1.delete:hover {
+  color: #e7747b;
+}
+
 /* AddCategory.css or your relevant CSS file */
 
 .update-category-container {
@@ -5403,6 +5425,14 @@ i {
   border: 1px solid #ccc;
 }
 
+.input-style-1:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
 .manage-category-form {
   width: fit-content;
   display: flex;
@@ -5451,11 +5481,6 @@ i {
   justify-items: center;
   row-gap: 80px;
 }
-/* display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.8);
-} */
 
 .error {
   color: red;

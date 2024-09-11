@@ -56,7 +56,7 @@ const Sidebar = React.memo(({ path }) => {
                 path === "/admin/categories" ? "active" : ""
               }`}
             >
-              <i className="fa fa-user"></i> Quản Lý Danh Mục
+              <i className="fa fa-th-large"></i> Quản Lý Danh Mục
             </Link>
           </li>
           <li>
@@ -66,7 +66,7 @@ const Sidebar = React.memo(({ path }) => {
                 path === "/admin/coupons" ? "active" : ""
               }`}
             >
-              <i className="fa fa-user"></i> Quản Lý Khuyễn Mãi
+              <i className="fa fa-ticket"></i> Quản Lý Khuyễn Mãi
             </Link>
           </li>
 
