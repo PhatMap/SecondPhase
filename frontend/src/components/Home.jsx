@@ -48,17 +48,25 @@ const Home = () => {
           className="fixed-image"
           onClick={toggleChatBox}
         />
-        {isChatOpen && (
-          <div className="chat-box">
-            <Chatbox />
-          </div>
-        )}
-        <img
-          src={"../images/masage.png"}
-          alt="massage"
-          className="fixed-image"
-          onClick={toggleChatBox}
-        />
+        
+        <img 
+        src={'../images/masage.png'} 
+        alt="massage"
+        className="fixed-image"
+        onClick={toggleChatBox}
+      />
+      
+      {/* Chat box */}
+      {isChatOpen && (
+        <div className="chat-box">
+          <Chatbox />
+        </div>
+      )}
+ 
+
+
+
+
         <div className="home-form">
           <div className="home-component">
             <h1>Danh Mục Sản Phẩm</h1>

@@ -13,7 +13,8 @@ const boxChatSchema = new mongoose.Schema({
             required: true
         },
         content: {
-            type: String
+            type: String,
+            default: ''
         },
         icon: {
             type: String

@@ -4995,6 +4995,7 @@ body {
   align-items: center;
   padding: 10px;
   cursor: pointer;
+  border-bottom: 1px solid #ddd; /* Đường kẻ dưới */
 }
 
 .chat-item.selected {
@@ -5079,10 +5080,10 @@ body {
 .received {
   text-align: left;
 }
-.user-list {
+/* .user-list {
   display: flex;
   flex-direction: column;
-}
+} */
 
 .user-item {
   display: flex;
@@ -5091,8 +5092,8 @@ body {
 }
 
 .user-avatar {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -5125,14 +5126,26 @@ body {
 }
 
 .message.sent .message-content {
-  background-color: #4caf50; /* Màu khác cho tin nhắn của người dùng hiện tại */
   color: white;
+  border-radius: 50%
 }
 
 .message.sent .message-bubble {
-  background-color: #0084ff; /* Màu xanh nền */
-  color: white; /* Màu chữ trắng */
+  background-color: #0084ff; 
+  color: white; 
 }
+
+.like-image {
+  position: absolute;
+  top: -5px; /* Điều chỉnh giá trị này để di chuyển ảnh ra ngoài phần nền */
+  left: 50%; /* Căn giữa hình ảnh */
+  transform: translateX(-50%);
+  width: 50px; 
+  height: 50px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+}
+
 
 .chat-header-participant {
   display: flex;
@@ -5562,8 +5575,8 @@ i {
 }
 
 .search-result-avatar {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -5574,9 +5587,10 @@ i {
 
 .chat-item.selected {
   font-weight: bold;
-  background-color: #9cf7f7;
+  background-color: #cee5fd;
 }
 .chat-images-preview {
+  
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -5605,4 +5619,247 @@ i {
   padding: 4px;
   border-radius: 50%;
   cursor: pointer;
+}
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.chat-header-left, .chat-header-center, .chat-header-right {
+  flex: 1;
+}
+
+.chat-header-center {
+  text-align: center;
+}
+
+.chat-header-right {
+  text-align: right;
+}
+
+.chat-header-user {
+  display: flex;
+  align-items: center;
+}
+
+.header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.header-name {
+  font-weight: bold;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+.chat-list {
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+.search-container {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 30px 10px 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #ffffff;
+  font-size: 14px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #65676b;
+}
+
+.user-list {
+  overflow-y: auto;
+  max-height: calc(100vh - 200px); 
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+.user-item:hover, .user-item.selected {
+  background-color: #cee5fd;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #fff;
+}
+
+.user-info {
+  flex-grow: 1;
+}
+
+.user-name {
+  font-weight: bold;
+  margin: 0;
+}
+
+.user-status {
+  font-size: 12px;
+  color: #65676b;
+  margin: 0;
+}
+
+.user-date {
+  font-size: 12px;
+  color: #65676b;
+}
+.emoji-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin: 0 2px;
+}
+
+.icon-picker {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  padding: 4px;
+}
+
+.message-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.message-icon {
+  width: 20px; /* Kích thước icon */
+  height: 20px;
+  margin-left: 4px;
+  position: absolute;
+  bottom: -10px; /* Hiển thị icon ở vị trí bên dưới của message */
+  right: -10px;  /* Căn chỉnh icon với phần bên phải của message */
+  border-radius: 50%; /* Tạo hình tròn */
+  background-color: white; /* Màu nền trắng */
+  padding: 2px; /* Khoảng cách bên trong icon */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng làm nổi bật icon */
+}
+
+.icon-wrapper {
+  position: relative; /* Đảm bảo icon được định vị tương đối so với cha */
+}
+.like-button {
+  background-color: transparent; /* Bỏ nền */
+  border: none; /* Bỏ viền */
+  padding: 0; /* Bỏ khoảng cách */
+  margin: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.like-button img {
+  width: 20px;  /* Kích thước của ảnh */
+  height: 20px;
+  background-color: transparent; /* Đảm bảo nền của ảnh trong suốt */
+  border-radius: 0; /* Bỏ viền bo tròn */
+}
+
+
+.message-images-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* Frame around the images */
+.message-images-frame {
+  padding: 10px;
+  border: 2px solid #d1d1d1; /* Adjust the border color as needed */
+  border-radius: 10px;
+  background-color: #f9f9f9; /* Optional background color */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Adds space between images */
+}
+
+/* Styling for individual message images */
+.message-image {
+  max-width: 150px; /* Adjust size */
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+
+.message-input-container {
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  margin-left: 10px;
+}
+
+.message-input {
+  flex-grow: 1; /* Giúp ô nhập chiếm toàn bộ chiều rộng còn lại */
+  display: flex;
+  align-items: center;
+}
+
+.message-input-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Khoảng cách giữa các nút */
+}
+
+.upload-btn {
+  background-color: transparent; /* Không có nền */
+  border: none; /* Không có đường viền */
+  cursor: pointer;
+  margin-right: 10px; /* Khoảng cách giữa nút tải ảnh và ô nhập */
+  display: flex;
+  align-items: center;
+}
+
+.upload-btn i {
+  font-size: 20px; /* Kích thước icon */
+  color: #000; /* Màu sắc icon */
 }

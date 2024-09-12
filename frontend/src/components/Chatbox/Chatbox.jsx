@@ -34,11 +34,12 @@ const Chatbox = ({ onClose }) => {
   const [chatImagesPreview, setChatImagesPreview] = useState([]);
 
   const iconList = [
-    { class: 'fa-thumbs-o-up', label: '👍' },
-    { class: 'fa-heart-o', label: '❤️' },
-    { class: 'fa-smile-o', label: '😊' },
-    { class: 'fa-thumbs-down', label: '👎' },
+    { url: 'https://static.xx.fbcdn.net/images/emoji.php/v9/t7b/1/32/1f62e.png' },
+    { url: 'https://static.xx.fbcdn.net/images/emoji.php/v9/t72/1/32/2764.png' },
+    { url: 'https://static.xx.fbcdn.net/images/emoji.php/v9/tb6/1/32/1f44d.png'},
+    { url: 'https://static.xx.fbcdn.net/images/emoji.php/v9/t47/1/32/1f621.png' },
   ];
+  const LIKE_IMAGE_URL = 'https://res.cloudinary.com/dyeelociz/image/upload/v1726151496/e66c3a34-f651-46d2-ad36-2602581a469c.png';
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -94,52 +95,73 @@ const Chatbox = ({ onClose }) => {
   };
 
   const handleSendMessage = async () => {
-    if (message.trim() && selectedChat) {
+    if ((message.trim() || chatImages.length > 0) && selectedChat) {
       const formData = new FormData();
-      formData.set('message', message);
-
+  
+      formData.append('chatId', selectedChat);
+      formData.append('content', message || "");
+  
       let cloudinaryChatImages = [];
-
-      await Promise.all(
-        chatImages.map(async (image) => {
-          const upload = new FormData();
-          upload.append('images', image);
-          try {
-            const result = await dispatch(uploadChatImages(upload));
-            cloudinaryChatImages.push({
-              public_id: result.public_id,
-              url: result.url,
-            });
-          } catch (error) {
-            console.error('Error uploading image:', error);
-          }
-        })
-      );
-
-      formData.set('images', JSON.stringify(cloudinaryChatImages));
-
-      dispatch(sendMessage(selectedChat, formData));
-      setMessage('');
-      setChatImages([]);
-      setChatImagesPreview([]);
+  
+      if (chatImages.length > 0) {
+        cloudinaryChatImages = await Promise.all(
+          chatImages.map(async (image) => {
+            const upload = new FormData();
+            upload.append('images', image);
+            try {
+              const result = await dispatch(uploadChatImages(upload));
+              if (result && result.success && result.images && result.images.length > 0) {
+                return result.images.map(img => ({
+                  public_id: img.public_id,
+                  url: img.url
+                }));
+              } else {
+                console.error('Unexpected result structure from uploadChatImages:', result);
+                return null;
+              }
+            } catch (error) {
+              console.error('Error uploading image:', error);
+              return null;
+            }
+          })
+        );
+  
+        // Flatten the array and filter out any null results
+        cloudinaryChatImages = cloudinaryChatImages.flat().filter(img => img !== null);
+      }
+  
+      if (cloudinaryChatImages.length > 0) {
+        formData.append('images', JSON.stringify(cloudinaryChatImages));
+      }
+  
+      console.log("FormData contents",[...formData]);
+      try {
+        await dispatch(sendMessage(selectedChat, formData));
+        // Reset the form after successfully sending the message
+        setMessage('');
+        setChatImages([]);
+        setChatImagesPreview([]);
+      } catch (error) {
+        console.error('Error sending message:', error);
+        // Handle the error (e.g., show an error message to the user)
+      }
     }
   };
 
-  const handleIconClick = (messageId, iconClass) => {
+  const handleIconClick = (messageId, iconUrl) => {
     if (expandedIconPicker === messageId) {
-      // If the icon picker is already expanded for this message, update the icon
-      if (iconClass === 'fa-times') {
+      if (iconUrl === 'fa-times') {
         dispatch(removeMessageIcon(selectedChat, messageId));
       } else {
-        dispatch(updateMessageIcon(selectedChat, messageId, iconClass));
+        dispatch(updateMessageIcon(selectedChat, messageId, iconUrl));
       }
-      setExpandedIconPicker(null); // Collapse the icon picker
+      setExpandedIconPicker(null); 
+    
     } else {
-      // If the icon picker is not expanded, expand it
       setExpandedIconPicker(messageId);
     }
   };
-
+  console.log("user._id",user._id);
   const currentChatParticipant = chatDetails?.participants?.find(p => p._id !== user._id);
 
   const handleUserSelect = async (selectedUser) => {
@@ -177,61 +199,84 @@ const Chatbox = ({ onClose }) => {
     setChatImagesPreview(prevImages => prevImages.filter((_, i) => i !== index));
     setChatImages(prevImages => prevImages.filter((_, i) => i !== index));
   };
+
+  const handleSendLike = () => {
+    if (selectedChat) {
+      const formData = new FormData();
+      formData.append('chatId', selectedChat);
+      formData.append('content', LIKE_IMAGE_URL);
+      formData.append('icon', "");
+      
+      dispatch(sendMessage(selectedChat, formData));
+    }
+  };
+
   return (
     <div className="chat-popup">
       <div className="chat-header">
-        <h3>Tin nhắn</h3>
-        {currentChatParticipant && (
-          <div className="chat-header-participant">
-            <img src={currentChatParticipant.avatar.url} alt="Avatar" className="header-avatar" />
-            <span className="header-name">{currentChatParticipant.name}</span>
-          </div>
-        )}
+        <div className="chat-header-left">
+          {user && (
+            <div className="chat-header-user">
+              <img src={user.avatar.url} alt="Avatar" className="header-avatar" />
+              <span className="header-name">{user.name}</span>
+            </div>
+          )}
+        </div>
+        <div className="chat-header-right">
+          <button onClick={onClose} className="close-button">
+            <i className="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
+
 
       <div className="chat-body">
       <div className="chat-list">
-        <div className="search-container">
-          <input
-            type="text"
-            placeholder="Tìm kiếm người dùng..."
-            value={searchQuery}
-            onChange={handleSearchInputChange}
-            className="search-input"
-          />
-          {showSearchResults ? (
-            <div className="search-results">
-              {searchResults && searchResults.length > 0 ? (
-                searchResults.map(user => (
-                  <div 
-                    key={user._id} 
-                    className="search-result-item highlighted"
-                    onClick={() => handleUserSelect(user)}
-                  >
-                    <img src={user.avatar.url} alt="Avatar" className="search-result-avatar" />
-                    <span className="search-result-name">{user.name}</span>
-                  </div>
-                ))
-              ) : (
-                <div className="no-results">Không tìm thấy kết quả</div>
-              )}
-            </div>
-          ) : (
-            usersInChats.map(chatUser => (
-              <div 
-                key={chatUser._id} 
-                className={`chat-item ${selectedChat === chatUser.chatId ? 'selected' : ''}`}
-                onClick={() => handleChatSelect(chatUser.chatId, chatUser)}
-              >
-                <img src={chatUser.avatar.url} alt="Avatar" className="chat-avatar" />
-                <div className="chat-info">
-                  <p className="chat-name">{chatUser.name}</p>
-                </div>
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Tìm theo người dùng..."
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+              className="search-input"
+            />
+            <i className="fa fa-search search-icon"></i>
+          </div>
+          
+          <div className="user-list">
+            {showSearchResults ? (
+              <div className="chat-item ">
+                {searchResults && searchResults.length > 0 ? (
+                  searchResults.map(user => (
+                    <div 
+                      key={user._id} 
+                      className="search-result-item highlighted"
+                      onClick={() => handleUserSelect(user)}
+                    >
+                      <img src={user.avatar.url} alt="Avatar" className="search-result-avatar" />
+                      <span className="search-result-name">{user.name}</span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="no-results">Không tìm thấy kết quả</div>
+                )}
               </div>
-            ))
-          )}
+            ) : (
+              usersInChats.map(chatUser => (
+                <div 
+                  key={chatUser._id} 
+                  className={`chat-item ${selectedChat === chatUser.chatId ? 'selected' : ''}`}
+                  onClick={() => handleChatSelect(chatUser.chatId, chatUser)}
+                >
+                  <img src={chatUser.avatar.url} alt="Avatar" className="chat-avatar" />
+                  <div className="chat-info">
+                    <p className="chat-name">{chatUser.name}</p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
-      </div>
 
 
         <div className="chat-messages">
@@ -275,56 +320,74 @@ const Chatbox = ({ onClose }) => {
                       />
                     )}
                     <div className="message-content">
-                    <div className="message-bubble">
-                  <span>{msg.content ? msg.content : 'No content available'}</span>
-                  {msg.icon && <i className={`fa ${msg.icon}`} aria-hidden="true"></i>}
-                  {msg.images && msg.images.length > 0 && (
-                    <div className="message-images">
-                      {msg.images.map((image, index) => (
-                        <img
-                          key={index}
-                          src={image.url}
-                          alt={`Message Image ${index}`}
-                          className="message-image"
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
+                    <div className="message-content">
 
-
-
-
-
-                      <div className="message-actions">
-                        {expandedIconPicker === msg._id ? (
-                          <div className="icon-picker">
-                            {iconList.map((icon) => (
-                              <i 
-                                key={icon.class}
-                                className={`fa ${icon.class}`} 
-                                aria-hidden="true"
-                                onClick={() => handleIconClick(msg._id, icon.class)}
-                              ></i>
-                            ))}
-                            {msg.icon && (
-                              <i 
-                                className="fa fa-times" 
-                                aria-hidden="true"
-                                onClick={() => handleIconClick(msg._id, 'fa-times')}
-                              ></i>
-                            )}
-                          </div>
+                      <div className="message-bubble">
+                      {msg.content === LIKE_IMAGE_URL ? (
+                          <img src={LIKE_IMAGE_URL} alt="Liked Image" className="like-image" />
                         ) : (
-                          <i 
-                            className="fa fa-heart-o" 
-                            aria-hidden="true"
-                            onClick={() => setExpandedIconPicker(msg._id)}
-                          ></i>
+                          <span>{msg.content ? msg.content : 'No content available'}</span>
                         )}
+                        
+                        {msg.icon && <img src={msg.icon} className="message-icon" />}
                       </div>
+
+                      {msg.senderId._id !== user._id && (
+                        <div className="message-actions">
+                          
+                          {expandedIconPicker === msg._id ? (
+                            <div className="icon-picker">
+                              {iconList.map((icon) => (
+                                <img
+                                  key={icon.url}
+                                  src={icon.url}
+                                  alt={icon.label}
+                                  className="emoji-icon"
+                                  onClick={() => handleIconClick(msg._id, icon.url)}
+                                />
+                              ))}
+                              {msg.icon && (
+                                <img
+                                  src="https://static.xx.fbcdn.net/images/emoji.php/v9/t7b/1/32/1f62e.png"
+                                  alt="Remove"
+                                  className="emoji-icon"
+                                  onClick={() => handleIconClick(msg._id, 'remove')}
+                                />
+                              )}
+                            </div>
+                            
+                          ) : (
+                          <div className="icon-circle" onClick={() => setExpandedIconPicker(msg._id)}>
+                            <img
+                              src="https://static.xx.fbcdn.net/images/emoji.php/v9/tb6/1/32/1f44d.png"
+                            
+                              className="emoji-icon"
+                            />
+                          </div>
+                          )}
+                        </div>
+                        )}
                     </div>
+
+                    {msg.images && msg.images.length > 0 && (
+                    <div className="message-images-wrapper">
+                      <div className="message-images-frame">
+                        {msg.images.map((image, index) => (
+                          <img
+                            key={index}
+                            src={image.url}
+                            alt={`Message Image ${index}`}
+                            className="message-image"
+                          />
+                        ))}
+                      </div>
+                      </div>
+                    )}
+
+                    </div>
+                    
                   </div>
+                  
                 ))
               ) : (
                 <p className="no-messages">Không có tin nhắn nào.</p>
@@ -332,15 +395,21 @@ const Chatbox = ({ onClose }) => {
                 <div ref={messagesEndRef} />
               </div>
               
-        <div className="message-input-container">
-        <div className="message-input">
+
+
+
+                <div className="message-input-container">
+                <div className="message-input">
                 <input
                   type="text"
                   value={message}
                   onChange={handleInputChange}
                   placeholder="Nhập tin nhắn..."
                 />
+
+
                 <div className="message-input-actions">
+                  {/* Nút tải file */}
                   <label htmlFor="chat-images-upload" className="upload-btn">
                     <i className="fa fa-paperclip" aria-hidden="true"></i>
                   </label>
@@ -352,28 +421,36 @@ const Chatbox = ({ onClose }) => {
                     multiple
                     hidden
                   />
-                  <button onClick={handleSendMessage} disabled={message.trim() === ''}>
-                    {message.trim() === '' ? (
+  
+
+                    <button 
+                    onClick={message.trim() === '' && chatImagesPreview.length === 0 ? handleSendLike : handleSendMessage} 
+                    className="send-btn"
+                  >
+                    {message.trim() === '' && chatImagesPreview.length === 0 ? (
                       <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
                     ) : (
                       'Gửi'
                     )}
                   </button>
-                </div>
+
+            </div>
+
               </div>
+              
               {chatImagesPreview.length > 0 && (
-          <div className="chat-images-preview">
-            {chatImagesPreview.map((img, index) => (
-              <div key={index} className="chat-image-preview">
-                <img src={img} alt={`Chat Image ${index}`} />
-                <i
-                  className="fa fa-remove chat-image-remove-btn"
-                  onClick={() => handleChatImageRemove(index)}
-                ></i>
-              </div>
-            ))}
-          </div>
-        )}
+                <div className="chat-images-preview">
+                  {chatImagesPreview.map((img, index) => (
+                    <div key={index} className="chat-image-preview">
+                      <img src={img} alt={`Chat Image ${index}`} />
+                      <i
+                        className="fa fa-remove chat-image-remove-btn"
+                        onClick={() => handleChatImageRemove(index)}
+                      ></i>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
               
             </>

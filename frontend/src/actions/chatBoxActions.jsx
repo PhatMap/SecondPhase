@@ -99,29 +99,32 @@ export const uploadChatImages = (image) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `/api/v1//chats/uploadChatImages`,
+      `/api/v1/chats/uploadChatImages`,
       image,
       config
     );
-
-    return data;
+    return data; // Đảm bảo trả về dữ liệu sau khi upload
   } catch (error) {
     console.log(error);
+    return null; // Trả về null nếu có lỗi
   }
 };
 
-// Send message
-export const sendMessage = (chatId, content) => async (dispatch) => {
+
+
+export const sendMessage = (chatId, formData) => async (dispatch) => {
   try {
+    console.log("chatId, formData", chatId, formData);
     dispatch({ type: SEND_MESSAGE_REQUEST });
 
     const config = {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'multipart/form-data' // Điều chỉnh thành 'multipart/form-data'
       }
     };
 
-    const { data } = await axios.post('/api/v1/chat/message', { chatId, content }, config);
+    // Không cần đóng gói lại formData vào đối tượng, chỉ cần truyền formData trực tiếp
+    const { data } = await axios.post(`/api/v1/chat/message`, formData, config);
 
     dispatch({
       type: SEND_MESSAGE_SUCCESS,
@@ -134,6 +137,7 @@ export const sendMessage = (chatId, content) => async (dispatch) => {
     });
   }
 };
+
 export const getAllUsersInChats = (currentUserId) => async (dispatch, getState) => {
     try {
         dispatch({ type: GET_ALL_USERS_IN_CHATS_REQUEST });

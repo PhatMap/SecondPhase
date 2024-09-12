@@ -18,7 +18,7 @@ exports.uploadChatImages = catchAsyncErrors(async (req, res, next) => {
             url: result.secure_url,
         });
     }
-
+    console.log("imagesLinks",imagesLinks);
     res.status(201).json({
         success: true,
         images: imagesLinks,
@@ -41,19 +41,27 @@ exports.getChat = catchAsyncErrors(async (req, res, next) => {
 
 // Add new message
 exports.addMessage = catchAsyncErrors(async (req, res, next) => {
-    const { chatId, content, icon, images } = req.body;
+    const { chatId, content, icon,  } = req.body;
     const senderId = req.user.id;
-
+    let Chatimage = [];
+    if (req.body.images) {
+        try {
+            Chatimage = JSON.parse(req.body.images);
+        } catch (error) {
+            return res.status(400).json({ success: false, message: 'Dữ liệu hình ảnh không hợp lệ' });
+        }
+    }
     const chat = await BoxChat.findById(chatId);
     if (!chat) {
         return res.status(404).json({ success: false, message: 'Chat không tồn tại' });
     }
 
+
     const newMessage = {
         senderId,
-        content,
-        icon,
-        images
+        content: content || '', 
+        icon: icon || null,     
+        images: Chatimage || []    
     };
 
     chat.messages.push(newMessage);
