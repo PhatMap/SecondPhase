@@ -13,19 +13,19 @@ const DeleteNotify = (props) => {
   return (
     <div className="delete-notify-container">
       <div className="delete-notify-form">
-        <h1>Confirm delete?</h1>
+        <h1>Xác nhận xóa?</h1>
         <div className="delete-notify-btn-container">
-          <button
-            className="delete-notify-btn-container-yes"
-            onClick={handlerYes}
-          >
-            Yes
-          </button>
           <button
             className="delete-notify-btn-container-no"
             onClick={handlerNo}
           >
-            No
+            Hủy
+          </button>
+          <button
+            className="delete-notify-btn-container-yes"
+            onClick={handlerYes}
+          >
+            Xác nhận
           </button>
         </div>
       </div>

@@ -5,21 +5,28 @@ class APIFeatures {
   }
 
   filterUser() {
-    const { keyword, status } = this.queryStr;
+    const { keyword, status, roles } = this.queryStr;
 
     let query = {};
 
     if (keyword) {
       query.$or = [
-        { shopName: { $regex: keyword, $options: "i" } },
-        { ownerName: { $regex: keyword, $options: "i" } },
-        { primaryPhone: { $regex: keyword, $options: "i" } },
+        { name: { $regex: keyword, $options: "i" } },
         { email: { $regex: keyword, $options: "i" } },
+        { role: { $regex: keyword, $options: "i" } },
       ];
     }
 
     if (status) {
       query.status = status;
+    }
+
+    if (roles) {
+      const rolesArray = typeof roles === "string" ? roles.split(",") : roles;
+
+      if (rolesArray && rolesArray.length > 0) {
+        query.role = { $in: rolesArray };
+      }
     }
 
     this.query = this.query.find(query);
@@ -125,6 +132,7 @@ class APIFeatures {
     this.query = this.query.find(query);
     return this;
   }
+
   filterCoupon() {
     const queryCopy = { ...this.queryStr };
     const removeFields = ["keyword", "limit", "page"];
@@ -135,7 +143,6 @@ class APIFeatures {
 
     this.query = this.query.find(JSON.parse(queryStr));
 
-    // Add filtering by status and role
     if (this.queryStr.status) {
       this.query = this.query.find({ status: this.queryStr.status });
     }

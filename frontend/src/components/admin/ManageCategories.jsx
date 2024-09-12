@@ -7,6 +7,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DELETE_CATEGORY_RESET } from "../../constants/categoryConstants";
 import CategoryForm from "./CategoryForm";
+import DeleteNotify from "../layout/DeleteNotify";
 
 const ManageCategories = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const ManageCategories = () => {
   const [show, setShow] = useState(false);
   const [action, setAction] = useState("");
   const [categoryData, setCategoryData] = useState(null);
-  const [categoryToDelete, setCategoryToDelete] = useState(null);
+  const [categoryId, setCategoryId] = useState(null);
 
   useEffect(() => {
     dispatch(getCategories(currentPage, keyword));
@@ -34,19 +35,8 @@ const ManageCategories = () => {
     }
   }, [dispatch, deleted, error, currentPage, keyword, action]);
 
-  const deleteHandler = (id) => {
-    setShow(true);
-    setCategoryToDelete(id);
-  };
-
-  const confirmDelete = () => {
-    dispatch(deleteCategory(categoryToDelete));
-    setShow(false);
-  };
-
-  const cancelDelete = () => {
-    setShow(false);
-    setCategoryToDelete(null);
+  const handlerDelete = () => {
+    dispatch(deleteCategory(categoryId));
   };
 
   const setCategories = () => {
@@ -87,7 +77,10 @@ const ManageCategories = () => {
                 </button>
                 <button
                   className="btn-container-1 delete"
-                  onClick={() => deleteHandler(category._id)}
+                  onClick={() => {
+                    setShow(true);
+                    setCategoryId(category._id);
+                  }}
                 >
                   <i className="fa fa-trash"></i>
                 </button>
@@ -157,30 +150,10 @@ const ManageCategories = () => {
               itemClass="page-item"
               linkClass="page-link"
             />
-            {show && (
-              <div className="delete-notify-container">
-                <div className="delete-notify-form">
-                  <h1 style={{ marginBottom: "20px" }}>Xóa Danh Mục Này?</h1>
-                  <div className="delete-notify-btn-container">
-                    <button
-                      className="delete-notify-btn-container-yes"
-                      onClick={confirmDelete}
-                    >
-                      Yes
-                    </button>
-                    <button
-                      className="delete-notify-btn-container-no"
-                      onClick={cancelDelete}
-                    >
-                      No
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>
+      {show && <DeleteNotify show={setShow} func={handlerDelete} paras={[]} />}
       {action === "add" && <CategoryForm onClose={() => setAction("")} />}
       {action === "update" && (
         <CategoryForm onClose={() => setAction("")} data={categoryData} />

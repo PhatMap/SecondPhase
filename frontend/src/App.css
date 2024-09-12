@@ -3078,8 +3078,8 @@ body {
   height: 100%;
   width: 100%;
   backdrop-filter: blur(1px);
-  background-color: rgba(255, 255, 255, 0.5);
-  z-index: 1;
+  background-color: rgba(179, 179, 180, 0.5);
+  z-index: 1000;
 }
 
 .delete-notify-form {
@@ -3088,8 +3088,7 @@ body {
   justify-content: space-evenly;
   align-items: center;
   background-color: white;
-  border-radius: 5px;
-  box-shadow: #080808 0px 4px 8px;
+  border-radius: 10px;
   width: 300px;
   height: 200px;
 }
@@ -3104,12 +3103,17 @@ body {
   gap: 20px;
 }
 
-.delete-notify-btn-container-yes {
+.delete-notify-btn-container button {
   width: 100px;
   height: 40px;
   border-radius: 5px;
-  background-color: green;
+  outline: none;
+  border: none;
   color: white;
+}
+
+.delete-notify-btn-container-yes {
+  background-color: rgb(1, 129, 2);
 }
 
 .delete-notify-btn-container-yes:hover {
@@ -3117,11 +3121,7 @@ body {
 }
 
 .delete-notify-btn-container-no {
-  width: 100px;
-  height: 40px;
-  border-radius: 5px;
-  background-color: red;
-  color: white;
+  background-color: #dd3843;
 }
 
 .delete-notify-btn-container-no:hover {
@@ -3624,14 +3624,14 @@ body {
 }
 
 .flex-center-screen {
-  width: 100%;
+  width: fit-content;
   height: fit-content;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-color: white;
   border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .manage-application-container {
@@ -3652,17 +3652,38 @@ body {
   overflow: auto;
 }
 
-.select-bar {
+.select-bar-1 {
   width: 100%;
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f2f2f2;
+  background-color: white;
   gap: 10px;
 }
 
-.select-bar button {
+.select-bar-1 button {
+  width: 125px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.select-bar-2 {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  gap: 10px;
+}
+
+.select-bar-2 button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 125px;
   height: 30px;
   border-radius: 5px;
@@ -3691,11 +3712,12 @@ body {
   width: 150px;
   gap: 10px;
   padding: 5px;
-  border: #050709 1px solid;
 }
 
 .check-btn p {
   user-select: none;
+  margin: 0;
+  padding: 0;
 }
 
 .active-btn {
@@ -3714,19 +3736,35 @@ body {
 
 .tabs {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
   gap: 10px;
-  background: black;
-  color: white;
+  color: black;
+  align-self: flex-start;
+  padding: 3px;
+  border-radius: 5px;
 }
 
 .tabs label {
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 5px;
+  margin: 0;
+  border-radius: 5px;
+  border: solid 1px #dddde3;
+}
+
+.tabs label:hover {
+  background: #dddde3;
 }
 
 .tabs label.marked {
-  background: white;
-  color: black;
+  border: solid 1px #0a68ff;
+  color: #0a68ff;
+}
+
+.tabs label.marked:hover {
+  background: #e1edff;
 }
 
 .tabs input[type="radio"] {
@@ -4076,8 +4114,6 @@ body {
 .btn-container-1.delete:hover {
   color: #e7747b;
 }
-
-/* AddCategory.css or your relevant CSS file */
 
 .update-category-container {
   display: flex;
@@ -5368,6 +5404,9 @@ body {
   align-items: center;
   height: 100%;
   width: fit-content;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  overflow: auto;
 }
 
 .manage-category-body {

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DataTable from "../layout/DataTable";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,7 +34,7 @@ const ManageUsers = () => {
   const [filter, setFilter] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [resPerPage, setResPerPage] = useState(1);
-  const [checkList, setCheckList] = useState([]);
+  const [checkList, setCheckList] = useState([false, false, false]);
   const [status, setStatus] = useState("");
 
   const setCurrentPageNo = (pageNumber) => {
@@ -68,11 +68,13 @@ const ManageUsers = () => {
     dispatch(getUsers());
   }, []);
 
+  const fetchUsers = useCallback(() => {
+    dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
+  }, [dispatch, currentPage, filter, keyword, resPerPage, status]);
+
   useEffect(() => {
-    if (currentPage || filter || keyword || resPerPage || status) {
-      dispatch(getUsers(currentPage, filter, keyword, resPerPage, status));
-    }
-  }, [currentPage, filter, keyword, resPerPage, status]);
+    fetchUsers();
+  }, [fetchUsers]);
 
   useEffect(() => {
     if (users) {
@@ -121,15 +123,19 @@ const ManageUsers = () => {
   const roles = ["customer", "shopkeeper", "admin"];
 
   const handleCheckbox = (index) => {
-    const list = [...checkList];
-    list[index] = !list[index];
-    setCheckList(list);
+    setCheckList((prevList) => {
+      const newList = [...prevList];
+      newList[index] = !newList[index];
+      return newList;
+    });
 
-    if (list[index] === true) {
-      setFilter([...filter, roles[index]]);
-    } else {
-      setFilter(filter.filter((role) => role !== roles[index]));
-    }
+    setFilter((prevFilter) => {
+      if (!checkList[index]) {
+        return [...prevFilter, roles[index]];
+      } else {
+        return prevFilter.filter((role) => role !== roles[index]);
+      }
+    });
   };
 
   const handleCheckAll = () => {
@@ -252,113 +258,127 @@ const ManageUsers = () => {
 
   return (
     <Fragment>
+      <ToastContainer />
+      <div className="admin-layout">
+        <div className="admin-container">
+          <div className="flex-center-screen">
+            <div className="manage-category-head">
+              <h1>Quản Lý Người Dùng</h1>
+            </div>
+            <div className="tabs">
+              <label htmlFor="all" className={status === "" ? "marked" : ""}>
+                <input
+                  type="radio"
+                  id="all"
+                  name="status"
+                  value="all"
+                  onChange={() => handleSegmentedTab("all")}
+                  checked={status === ""}
+                />
+                Tất cả trạng thái
+              </label>
+
+              <label
+                htmlFor="active"
+                className={status === "active" ? "marked" : ""}
+              >
+                <input
+                  type="radio"
+                  id="active"
+                  name="status"
+                  value="active"
+                  onChange={() => handleSegmentedTab("active")}
+                  checked={status === "active"}
+                />
+                Đang hoạt động
+              </label>
+              <label
+                htmlFor="inactive"
+                className={status === "inactive" ? "marked" : ""}
+              >
+                <input
+                  type="radio"
+                  id="inactive"
+                  name="status"
+                  value="inactive"
+                  onChange={() => handleSegmentedTab("inactive")}
+                  checked={status === "inactive"}
+                />
+                Ngưng hoạt động
+              </label>
+            </div>
+
+            <div className="flex-horizental">
+              <div className="select-bar-1">
+                <button onClick={() => handleResPerPage(1)}>1</button>
+                <button onClick={() => handleResPerPage(10)}>10</button>
+                <button onClick={() => handleResPerPage(100)}>100</button>
+              </div>
+              <div className="select-bar-2">
+                <button onClick={() => handleCheckAll()}>Tất cả</button>
+                <label className="check-btn">
+                  <input
+                    type="checkbox"
+                    checked={checkList[0]}
+                    onChange={() => handleCheckbox(0)}
+                    className="cart-checkbox"
+                  />
+                  <p>Khách hàng</p>
+                </label>
+                <label className="check-btn">
+                  <input
+                    type="checkbox"
+                    checked={checkList[1]}
+                    onChange={() => handleCheckbox(1)}
+                    className="cart-checkbox"
+                  />
+                  <p>Chủ cửa hàng</p>
+                </label>
+                <label className="check-btn">
+                  <input
+                    type="checkbox"
+                    checked={checkList[2]}
+                    onChange={() => handleCheckbox(2)}
+                    className="cart-checkbox"
+                  />
+                  <p>Quản trị viên</p>
+                </label>
+              </div>
+            </div>
+            <div className="horizontal-1 size-1 manage-category-form-btns">
+              <button
+                className="add-btn"
+                onClick={() => history("/admin/addUser")}
+              >
+                <i className="fa fa-plus"></i> Thêm người dùng
+              </button>
+              <input
+                className="Search-input"
+                type="search"
+                placeholder="Search here..."
+                onChange={(e) => handleSearch(e)}
+              />
+            </div>
+            <DataTable data={setUsers()} />
+            <Pagination
+              activePage={currentPage}
+              itemsCountPerPage={total > resPerPage ? resPerPage : total}
+              totalItemsCount={total > resPerPage ? total : 1}
+              onChange={setCurrentPageNo}
+              nextPageText={"Tiếp"}
+              prevPageText={"Trước"}
+              firstPageText={"Đầu"}
+              lastPageText={"Cuối"}
+              itemClass="page-item"
+              linkClass="page-link"
+            />
+          </div>
+        </div>
+      </div>
+
       {show && (
         <DeleteNotify show={setShow} func={handleDeleteUser} paras={[]} />
       )}
-      <ToastContainer />
-      <div className="flex-center-screen">
-        <div className="tabs">
-          <label htmlFor="all" className={status === "" ? "marked" : ""}>
-            <input
-              type="radio"
-              id="all"
-              name="status"
-              value="all"
-              onChange={() => handleSegmentedTab("all")}
-              checked={status === ""}
-            />
-            Tất cả trạng thái
-          </label>
-
-          <label
-            htmlFor="active"
-            className={status === "active" ? "marked" : ""}
-          >
-            <input
-              type="radio"
-              id="active"
-              name="status"
-              value="active"
-              onChange={() => handleSegmentedTab("active")}
-              checked={status === "active"}
-            />
-            Đang hoạt động
-          </label>
-          <label
-            htmlFor="inactive"
-            className={status === "inactive" ? "marked" : ""}
-          >
-            <input
-              type="radio"
-              id="inactive"
-              name="status"
-              value="inactive"
-              onChange={() => handleSegmentedTab("inactive")}
-              checked={status === "inactive"}
-            />
-            Ngưng hoạt động
-          </label>
-        </div>
-        <button className="add-btn" onClick={() => history("/admin/addUser")}>
-          <i className="fa fa-plus"></i> Thêm người dùng
-        </button>
-        <div className="flex-horizental">
-          <div className="select-bar">
-            <button onClick={() => handleResPerPage(1)}>1</button>
-            <button onClick={() => handleResPerPage(10)}>10</button>
-            <button onClick={() => handleResPerPage(100)}>100</button>
-          </div>
-          <div className="select-bar">
-            <button onClick={() => handleCheckAll()}>Tất cả</button>
-            <label className="check-btn">
-              <input
-                type="checkbox"
-                checked={checkList[0]}
-                onChange={() => handleCheckbox(0)}
-                className="cart-checkbox"
-              />
-              <p>Khách hàng</p>
-            </label>
-            <label className="check-btn">
-              <input
-                type="checkbox"
-                checked={checkList[1]}
-                onChange={() => handleCheckbox(1)}
-                className="cart-checkbox"
-              />
-              <p>Chủ cửa hàng</p>
-            </label>
-            <label className="check-btn">
-              <input
-                type="checkbox"
-                checked={checkList[2]}
-                onChange={() => handleCheckbox(2)}
-                className="cart-checkbox"
-              />
-              <p>Quản trị viên</p>
-            </label>
-          </div>
-          <input
-            className="Search-input"
-            type="search"
-            placeholder="Search here..."
-            onChange={(e) => handleSearch(e)}
-          />
-        </div>
-        <DataTable data={setUsers()} />
-        <Pagination
-          activePage={currentPage}
-          itemsCountPerPage={total > resPerPage ? resPerPage : total}
-          totalItemsCount={total > resPerPage ? total : 1}
-          onChange={setCurrentPageNo}
-          nextPageText={"Tiếp"}
-          prevPageText={"Trước"}
-          firstPageText={"Đầu"}
-          lastPageText={"Cuối"}
-          itemClass="page-item"
-          linkClass="page-link"
-        />
-      </div>
     </Fragment>
   );
 };
