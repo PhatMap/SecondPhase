@@ -15,7 +15,6 @@ import { UPDATE_USER_RESET } from "../../constants/userConstants";
 import { useNavigate, useParams } from "react-router-dom";
 import Back from "../layout/Back";
 import Address from "../user/Address";
-import { set } from "mongoose";
 
 const UpdateUser = () => {
   const { error, isUpdated } = useSelector((state) => state.user);

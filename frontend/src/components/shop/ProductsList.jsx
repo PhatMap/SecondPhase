@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MDBDataTable } from "mdbreact";
 import Pagination from "react-js-pagination";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";

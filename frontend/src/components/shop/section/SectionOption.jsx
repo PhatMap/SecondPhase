@@ -1,4 +1,3 @@
-import { set } from "mongoose";
 import React, { Fragment, useEffect, useState } from "react";
 
 const SectionOption = ({ setOption, shop, categories, setIndex }) => {

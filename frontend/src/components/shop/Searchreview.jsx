@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MDBDataTable } from "mdbreact";
+import LegacyDataTable from "../layout/LegacyDataTable";
 
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
@@ -110,7 +110,7 @@ const ProductsList = () => {
             {loading ? (
               <Loader />
             ) : (
-              <MDBDataTable
+              <LegacyDataTable
                 data={setProducts()}
                 className="px-3"
                 bordered

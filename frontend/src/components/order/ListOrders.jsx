@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { MDBDataTable } from "mdbreact";
+import LegacyDataTable from "../layout/LegacyDataTable";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import { toast } from "react-toastify";
@@ -98,7 +98,7 @@ const ListOrders = () => {
         {loading ? (
           <Loader />
         ) : (
-          <MDBDataTable
+          <LegacyDataTable
             data={setOrders()}
             className="px-3"
             bordered

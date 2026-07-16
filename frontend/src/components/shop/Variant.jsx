@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddInventory from "./AddInventory";
-import { set } from "mongoose";
 
 const variant = ({
   variant,
